@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "coffee-script": "1.4.0",
-    "jasmine-node": "1.0.28",
+    "jasmine-node": "1.10.0",
     "glob": "3.1.12",
     "js-yaml": "1.0.3",
     "backbone": "0.9.2",

@@ -33,6 +33,7 @@ class BH.Views.SearchResultsView extends Backbone.View
     visit
 
   _wrapMatchInProperty: (regExp, property, match) ->
+    return unless property
     match = property.match(regExp)
     if match then property.replace(regExp, '<span class="match">' + match + '</span>') else property
 

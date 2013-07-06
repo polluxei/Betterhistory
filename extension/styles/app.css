@@ -1,6 +1,9 @@
 .intervals {
   margin-top: 0;
 }
+.location .match {
+  -webkit-text-fill-color: #999;
+}
 .spinner {
   background: url(/images/spinner.gif);
   width: 33px;
