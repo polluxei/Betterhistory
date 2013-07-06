@@ -45,3 +45,8 @@ if(typeof(Backbone) != 'undefined') {
   Backbone.Model.include = Backbone.View.include = Backbone.Collection.include = Module.include;
 }
 BH.Base.include = Module.include;
+
+BH.Base.prototype.halt = function(message) {
+  objectName = this.constructor.name;
+  throw new Error(objectName + ": " + message);
+}

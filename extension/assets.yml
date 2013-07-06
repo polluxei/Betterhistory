@@ -8,7 +8,6 @@
  - frameworks/moment
  - frameworks/moment_hacks
  - frameworks/mixin
- - frameworks/error
  - templates
  - modules/*
  - lib/date_i18n
