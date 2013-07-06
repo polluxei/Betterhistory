@@ -6,9 +6,9 @@ class BH.Models.Visit extends Backbone.Model
 
   initialize: ->
     @chromeAPI = chrome
-    @set
-      title: @defaults.title if @get('title') == ''
-      id: @cid
+
+    @set id: @cid
+    @set(title: @defaults.title) if @get('title') == ''
 
   sync: (method, model, options) ->
     if method == 'delete'
