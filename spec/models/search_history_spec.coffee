@@ -7,6 +7,7 @@ describe 'BH.Models.SearchHistory', ->
     it 'returns the reading properties when reading is true', ->
       expect(@searchHistory.toChrome()).toEqual
         text: 'search term'
+        searching: true
 
   describe '#toTemplate', ->
     beforeEach ->
@@ -24,4 +25,5 @@ describe 'BH.Models.SearchHistory', ->
       @searchHistory.fetch()
       expect(@searchHistory.historyQuery.run).toHaveBeenCalledWith
         text: 'search term'
+        searching: true
       , jasmine.any(Function)

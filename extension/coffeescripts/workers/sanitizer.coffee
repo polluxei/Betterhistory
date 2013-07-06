@@ -4,11 +4,11 @@ BH.Workers = BH.Workers ? {}
 class BH.Workers.Sanitizer
   run: (results, @options) ->
     if @options.text
-      @terms = @options.text.split(' ')
+      @terms = options.text.split(' ')
 
     prunedResults = []
     for result in results
-      if @options.text? && @options.text != ''
+      if @options.searching?
         if prunedResults.length >= 100
           true
         else
