@@ -6,38 +6,71 @@ fs = require 'fs'
 path = require 'path'
 yaml = require 'js-yaml'
 
-coffeeCompile = (file) ->
-  code = fs.readFileSync(file).toString()
-  jsFile = file
-    .replace('.coffee', '.js')
-    .replace('coffeescripts', 'javascripts')
-  fs.writeFileSync jsFile, coffee.compile(code)
 
-task 'run', 'start up development', ->
-  invoke 'clean'
-  invoke 'compile'
-  invoke 'concat'
-  invoke 'watch'
-  invoke 'build'
+buildScriptTag = (src) ->
+  "<script src='#{src}'></script>"
 
-task 'build','build extension to install or distribute', ->
-  console.log 'Building extension'
-  exec 'make build'
+buildStyleTag = (src) ->
+  "<link rel='stylesheet' type='text/css' href='#{src}'/>"
 
-task 'clean', 'remove all generated javascript', ->
-  console.log "Cleaning javascript"
-  for file in glob.sync("extension/javascripts/**/*.js")
-    unless file.match(/framework/)
-      fs.unlinkSync(file)
+styles = [
+  'styles/chrome-bootstrap.css',
+  'styles/app.css'
+]
 
-task 'compile', 'compile extension coffee', ->
-  console.log "Compiling coffee"
-  for file in glob.sync("extension/**/*.coffee")
-    coffeeCompile(file)
-
-task 'concat', 'concat templates and js', ->
-  invoke 'concat:templates'
-  invoke 'concat:js'
+scripts = [
+  'scripts/namespace.js',
+  'scripts/frameworks/underscore-min.js',
+  'scripts/frameworks/zepto.min.js',
+  'scripts/frameworks/backbone-min.js',
+  'scripts/frameworks/backbone_hacks.js',
+  'scripts/frameworks/mustache.js',
+  'scripts/frameworks/moment.js',
+  'scripts/frameworks/moment_hacks.js',
+  'scripts/frameworks/mixin.js',
+  'scripts/templates.js',
+  'scripts/modules/i18n.js',
+  'scripts/modules/url.js',
+  'scripts/modules/worker.js',
+  'scripts/lib/date_i18n.js',
+  'scripts/lib/history_query.js',
+  'scripts/views/modal_view.js',
+  'scripts/views/main_view.js',
+  'scripts/views/app_view.js',
+  'scripts/views/cache.js',
+  'scripts/views/credits_view.js',
+  'scripts/views/day_results_view.js',
+  'scripts/views/day_view.js',
+  'scripts/views/main_view.js',
+  'scripts/views/menu_view.js',
+  'scripts/views/modal_view.js',
+  'scripts/views/prompt_view.js',
+  'scripts/views/search_results_view.js',
+  'scripts/views/search_view.js',
+  'scripts/views/settings_view.js',
+  'scripts/views/visit_view.js',
+  'scripts/views/week_view.js',
+  'scripts/models/history.js',
+  'scripts/models/day.js',
+  'scripts/models/day_history.js',
+  'scripts/models/grouped_visit.js',
+  'scripts/models/history.js',
+  'scripts/models/interval.js',
+  'scripts/models/prompt.js',
+  'scripts/models/search.js',
+  'scripts/models/search_history.js',
+  'scripts/models/settings.js',
+  'scripts/models/state.js',
+  'scripts/models/visit.js',
+  'scripts/models/week.js',
+  'scripts/models/week_history.js',
+  'scripts/collections/grouped_visits.js',
+  'scripts/collections/intervals.js',
+  'scripts/collections/visits.js',
+  'scripts/collections/weeks.js',
+  'scripts/router.js',
+  'scripts/initialize_extension.js'
+]
 
 task 'concat:templates', 'concat templates', ->
   console.log "Concating templates"
@@ -48,62 +81,35 @@ task 'concat:templates', 'concat templates', ->
     code = fs.readFileSync(filepath).toString()
     template = code.replace(/\n/g, '').replace(/\"/, '\"')
     concatedTemplates += "BH.Templates.#{key} = \"#{template}\";\n\n"
-  filepath = 'extension/javascripts/templates.js'
+  filepath = 'build/scripts/templates.js'
   fs.writeFileSync filepath, concatedTemplates
 
-task 'concat:js', 'concat javascript', ->
-  console.log "Concating javascript"
-  assets = fs.readFileSync('extension/assets.yml')
-  assets = yaml.load assets.toString()
-  for section in ['extension', 'background']
-    concatedFile = "extension/javascripts/generated_#{section}.js"
-    if fs.existsSync concatedFile
-      fs.unlinkSync concatedFile
-    license = fs.readFileSync("LICENSE")
-    packaged = "/* \n#{license}*/\n"
-    for asset in assets[section]
-      if asset.match(/\*/)
-        filepaths = glob.sync("extension/javascripts/#{asset}")
-        for filepath in filepaths
-          packaged += "\n\n// #{filepath}\n"
-          packaged += fs.readFileSync(filepath)
-      else
-        filepath = "extension/javascripts/#{asset}.js"
-        packaged += "\n\n// #{filepath}\n"
-        packaged += fs.readFileSync(filepath)
-    sectionPath = "extension/javascripts/generated_#{section}.js"
-    fs.writeFileSync(sectionPath, packaged)
+task 'build:assets:dev', '', ->
+  code = fs.readFileSync('extension/index.html').toString()
 
-task 'watch', 'watch coffee and template files', ->
-  invoke 'watch:coffee'
-  invoke 'watch:templates'
-  invoke 'watch:locales'
-  invoke 'watch:styles'
+  scriptTags = (buildScriptTag(script) for script in scripts)
+  styleTags = (buildStyleTag(style) for style in styles)
 
-task 'watch:coffee', 'watch coffee for changes', ->
-  for filepath in glob.sync("extension/coffeescripts/**/*.coffee")
-    fs.watchFile filepath, {}, ->
-      console.log '== Coffee changed'
-      invoke 'compile'
-      invoke 'concat:js'
-      invoke 'build'
+  code = code.replace '<%= scripts %>', scriptTags.join("\n    ")
+  code = code.replace '<%= styles %>', styleTags.join("\n    ")
 
-task 'watch:templates', 'watch templates for changes', ->
-  for filepath in glob.sync("extension/templates/*.html")
-    fs.watchFile filepath, {}, ->
-      console.log '== Template Changed'
-      invoke 'concat:templates'
-      invoke 'concat:js'
-      invoke 'build'
+  fs.writeFileSync 'build/index.html', code
 
-task 'watch:locales', 'watch locales for changed', ->
-  for filepath in glob.sync("extension/_locales/**/*.json")
-    fs.watchFile filepath, {}, ->
-      console.log '== Locale Changed'
-      invoke 'build'
+task 'build:assets:prod', '', ->
+  code = fs.readFileSync('extension/index.html').toString()
 
-task 'watch:styles', 'watch styles for changed', ->
-  for filepath in glob.sync("extension/styles/**/*.css")
-    fs.watchFile filepath, {}, ->
-      console.log '== Styles Changed'
-      invoke 'build'
+  scriptContent = ''
+  styleContent = ''
+
+  for script in scripts
+    scriptContent += fs.readFileSync("build/#{script}") + "\n\n\n"
+  fs.writeFileSync('build/scripts.js', scriptContent)
+
+  for style in styles
+    styleContent += fs.readFileSync("build/#{style}") + "\n\n\n"
+  fs.writeFileSync('build/styles.css', styleContent)
+
+  code = code.replace '<%= scripts %>', buildScriptTag('scripts.js')
+  code = code.replace '<%= styles %>', buildStyleTag('styles.css')
+
+  fs.writeFileSync 'build/index.html', code
