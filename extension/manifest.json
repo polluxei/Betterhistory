@@ -17,7 +17,17 @@
     "default_title": "__MSG_manifest_browser_action_title__"
   },
   "background": {
-    "scripts": ["javascripts/generated_background.js"],
+    "scripts": [
+      "scripts/namespace.js",
+      "scripts/frameworks/mixin.js",
+      "scripts/modules/worker.js",
+      "scripts/modules/i18n.js",
+      "scripts/modules/url.js",
+      "scripts/lib/page_context_menu.js",
+      "scripts/lib/selection_context_menu.js",
+      "scripts/lib/browser_actions.js",
+      "scripts/initialize_background.js"
+    ],
     "persistent": false
   },
   "permissions": [

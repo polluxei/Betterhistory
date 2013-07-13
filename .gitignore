@@ -5,5 +5,5 @@ build
 node_modules
 *.log
 
-/extension/javascripts/*
-!/extension/javascripts/frameworks
+/extension/scripts/**/*.js
+/extension/scripts/**/*.map

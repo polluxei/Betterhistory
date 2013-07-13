@@ -1,6 +1,6 @@
 BH.Modules.Worker =
   worker: (name, options, callback) ->
-    basePath = 'javascripts/workers'
+    basePath = 'scripts/workers'
     path = switch name
       when 'sanitizer'
         "#{basePath}/sanitizer.js"
