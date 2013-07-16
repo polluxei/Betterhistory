@@ -900,5 +900,22 @@
   "search_title": {
     "message": "Search",
     "description": "title for the search page"
+  },
+
+  "mailing_list_title": {
+    "message": "Big things are coming to Better History!",
+    "description": "the title for the sign up modal"
+  },
+  "mailing_list_description": {
+    "message": "Join the mailing list to receive updates about new features that will help you get the most out of your browsing history.",
+    "description": "description as to why it's good to join the mailing list"
+  },
+  "mailing_list_link": {
+    "message": "Join the mailing list",
+    "description": " link text to join the mailing list"
+  },
+  "mailing_list_promise": {
+    "message": "We respect your email privacy. No spam ever.",
+    "description": "no spamming and privacy message"
   }
 }
