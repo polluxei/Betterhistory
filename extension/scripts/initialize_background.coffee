@@ -2,13 +2,13 @@ settings = if localStorage['settings']? then JSON.parse(localStorage['settings']
 
 window.selectionContextMenu = new BH.Lib.SelectionContextMenu()
 
-if settings.searchBySelection
+if settings.searchBySelection != false
   selectionContextMenu.create()
 
 window.pageContextMenu = new BH.Lib.PageContextMenu()
 pageContextMenu.listenToTabs()
 
-if settings.searchByDomain
+if settings.searchByDomain != false
   pageContextMenu.create()
 
 browserActions = new BH.Lib.BrowserActions()
