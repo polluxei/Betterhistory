@@ -202,7 +202,7 @@
   display: inline;
   -webkit-margin-end: 10px;
 }
-.version_view .logo,
+.mailing_list_view .logo,
 .credits_view .logo {
   position: absolute;
   opacity: 0.4;
@@ -232,6 +232,20 @@
 .prompt_view .spinner {
   -webkit-transition: opacity .2s ease-in .2s;
 }
+.mailing_list_view .page {
+  width: 500px;
+}
+.mailing_list_view p {
+  width: 300px;
+}
+.mailing_list_view #join_mailing_list {
+  background: #F0F6FE;
+  padding: 5px 10px;
+}
+.mailing_list_view #join_mailing_list:hover {
+  background: #8AAAED;
+  color: #FFF;
+}
 
 body {
   direction: __MSG_@@bidi_dir__;
@@ -258,7 +272,7 @@ header .corner {
   background-position:__MSG_@@bidi_start_edge__ 0;
   padding-__MSG_@@bidi_start_edge__: 25px;
 }
-.version_view .logo,
+.mailing_list_view .logo,
 .credits_view .logo {
   __MSG_@@bidi_end_edge__: -50px;
 }

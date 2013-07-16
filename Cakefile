@@ -39,6 +39,7 @@ scripts = [
   'scripts/views/app_view.js',
   'scripts/views/cache.js',
   'scripts/views/credits_view.js',
+  'scripts/views/mailing_list_view.js',
   'scripts/views/day_results_view.js',
   'scripts/views/day_view.js',
   'scripts/views/main_view.js',

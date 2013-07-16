@@ -129,7 +129,8 @@ class BH.Views.SettingsView extends BH.Views.MainView
       'open_location',
       'starting_week_day',
       'week_day_order',
-      'general_section_title'
+      'general_section_title',
+      'mailing_list_link'
     ])
     properties['i18n_credits_link'] = @t('credits_link', [
       '<strong>',
