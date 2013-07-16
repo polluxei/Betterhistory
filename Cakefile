@@ -20,9 +20,9 @@ styles = [
 
 scripts = [
   'scripts/namespace.js',
-  'scripts/frameworks/underscore-min.js',
+  'scripts/frameworks/underscore.js',
   'scripts/frameworks/zepto.min.js',
-  'scripts/frameworks/backbone-min.js',
+  'scripts/frameworks/backbone.js',
   'scripts/frameworks/backbone_hacks.js',
   'scripts/frameworks/mustache.js',
   'scripts/frameworks/moment.js',
