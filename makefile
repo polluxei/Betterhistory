@@ -7,6 +7,10 @@ build:
 	cp -r extension/* build
 	cake concat:templates
 	cp node_modules/chrome-bootstrap/chrome-bootstrap.css build/styles/
+	cp node_modules/backbone/backbone.js build/scripts/frameworks/
+	cp node_modules/underscore/underscore.js build/scripts/frameworks/
+	cp node_modules/mustache/mustache.js build/scripts/frameworks/
+	cp node_modules/moment/moment.js build/scripts/frameworks/
 	cake build:assets:dev
 	sed -i '' 's/\$$VERSION\$$/${VERSION}/g' build/manifest.json
 
