@@ -4,7 +4,7 @@ class BH.Router extends Backbone.Router
     'weeks/:id': 'week'
     'days/:id': 'day'
     'settings': 'settings'
-    'search/:query(/p:page)': 'search'
+    'search/*query(/p:page)': 'search'
     'search': 'search'
 
   initialize: ->
