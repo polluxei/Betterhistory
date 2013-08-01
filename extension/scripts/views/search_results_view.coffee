@@ -10,7 +10,8 @@ class BH.Views.SearchResultsView extends Backbone.View
     'click .delete_visit': 'deleteClicked'
 
   render: ->
-    collectionToTemplate = @model.toTemplate()
+    [start, end] = BH.Lib.Pagination.calculateBounds(@options.page)
+    collectionToTemplate = @model.toTemplate(start, end)
 
     highlightedVisits = for visit in collectionToTemplate.visits
       @markMatches(visit)
@@ -24,12 +25,13 @@ class BH.Views.SearchResultsView extends Backbone.View
   markMatches: (visit) ->
     regExp = titleMatch = locationMatch = timeMatch = null
 
-    for term in @model.get('query').split(' ')
-      regExp = new RegExp(term, "i")
-      visit.title = @_wrapMatchInProperty(regExp, visit.title)
-      visit.location = @_wrapMatchInProperty(regExp, visit.location)
-      visit.time = @_wrapMatchInProperty(regExp, visit.time)
-      visit.extendedDate = @_wrapMatchInProperty(regExp, visit.extendedDate)
+    if visit?
+      for term in @model.get('query').split(' ')
+        regExp = new RegExp(term, "i")
+        visit.title = @_wrapMatchInProperty(regExp, visit.title)
+        visit.location = @_wrapMatchInProperty(regExp, visit.location)
+        visit.time = @_wrapMatchInProperty(regExp, visit.time)
+        visit.extendedDate = @_wrapMatchInProperty(regExp, visit.extendedDate)
     visit
 
   _wrapMatchInProperty: (regExp, property, match) ->

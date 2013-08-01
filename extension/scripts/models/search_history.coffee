@@ -9,8 +9,8 @@ class BH.Models.SearchHistory extends BH.Models.History
       @historyQuery.run @toChrome(), (history) ->
         options.success(history)
 
-  toTemplate: ->
-    @get('history').toTemplate grouped: false
+  toTemplate: (start, end) ->
+    @get('history').toTemplate(start, end)
 
   toChrome: ->
     text: @get('query')
