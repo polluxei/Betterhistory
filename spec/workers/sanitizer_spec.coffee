@@ -3,10 +3,10 @@ describe "BH.Workers.Sanitizer", ->
     @visits = []
     @sanitizer = new BH.Workers.Sanitizer()
 
-  it "returns a max of 100 results when searching", ->
+  it "returns a max of 1000 results when searching", ->
     a = 0
 
-    while a < 150
+    while a < 1001
       @visits.push
         title: "title"
         url: "google.com"
@@ -20,7 +20,7 @@ describe "BH.Workers.Sanitizer", ->
       searching: true
 
     sanitizedVisits = @sanitizer.run(@visits, options)
-    expect(sanitizedVisits.length).toEqual(100)
+    expect(sanitizedVisits.length).toEqual(1000)
 
   it "returns as many results as found when filtering by date", ->
     a = 0

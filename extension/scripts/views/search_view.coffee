@@ -1,5 +1,6 @@
 class BH.Views.SearchView extends BH.Views.MainView
   @include BH.Modules.I18n
+  @include BH.Modules.Url
 
   className: 'search_view with_controls'
   template: BH.Templates['search']
@@ -13,8 +14,11 @@ class BH.Views.SearchView extends BH.Views.MainView
   initialize: ->
     @chromeAPI = chrome
     @history = @options.history
+    @page = new Backbone.Model(page: 1)
+
     @history.on('change:history', @onSearchHistoryChanged, @)
     @model.on('change:query', @onQueryChanged, @)
+    @page.on('change:page', @renderSearchResults, @)
 
   render: ->
     properties = _.extend(@getI18nValues(), @model.toTemplate())
@@ -40,35 +44,49 @@ class BH.Views.SearchView extends BH.Views.MainView
 
   onQueryChanged: ->
     @updateQueryReferences()
+    $('.pagination').html('')
     if @model.validQuery()
       @history.set {query: @model.get('query')}, silent: true
       @$('.corner').addClass('cancelable')
+
+  onPageClicked: (ev) ->
+    ev.preventDefault()
+    $el = $(ev.currentTarget)
+    $('.pagination a').removeClass('selected')
+    $el.addClass('selected')
+
+    @renderSearchResults()
 
   updateQueryReferences: ->
     properties = @model.toTemplate()
     @$el.removeClass('loaded')
     @$('.title').text properties.title
-    @$('.search').val properties.query
     @$('.content').html('')
+
+    # if we are on the first page, don't show it in the URL
+    page = if @page.get('page') != 1 then "/p#{@page.get('page')}" else ""
+
+    router.navigate @urlFor('search', properties.query) + page
 
   renderVisits: ->
     @$el.addClass('loaded')
-
     @$('.search').focus()
-    contentElement = @$el.children('.content')
 
-    if @history.get('history').length == 100
-      key = 'max_number_of_search_results'
-    else
-      key = 'number_of_search_results'
+    searchPaginationView = new BH.Views.SearchPaginationView
+      results: @history.get('history').length
+      query: @model.get('query')
+      el: $('.pagination')
+      model: @page
+    searchPaginationView.render()
 
-    @$('.number_of_results').text(@t(key, [@history.get('history').length]))
+    @renderSearchResults()
 
-
-    new BH.Views.SearchResultsView(
+  renderSearchResults: ->
+    searchResultsView = new BH.Views.SearchResultsView
       model: @history
-      el: contentElement
-    ).render()
+      el: @$el.children('.content')
+      page: @page.get('page') - 1
+    searchResultsView.render()
 
   updateDeleteButton: ->
     deleteButton = @$('.delete_all')

@@ -1,6 +1,18 @@
 .intervals {
   margin-top: 0;
 }
+.number_of_visits {
+  line-height: 23px;
+  color: #999;
+  display: inline-block;
+}
+.pagination {
+  display: inline-block;
+  margin: 0
+}
+.pagination li:last-child {
+  margin-right: 20px;
+}
 .location .match {
   -webkit-text-fill-color: #999;
 }
@@ -245,6 +257,9 @@
 .mailing_list_view #join_mailing_list:hover {
   background: #8AAAED;
   color: #FFF;
+}
+body .hidden {
+  display: none;
 }
 
 body {

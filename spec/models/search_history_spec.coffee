@@ -17,6 +17,11 @@ describe 'BH.Models.SearchHistory', ->
     it 'returns the properties for the view template', ->
       expect(@searchHistory.toTemplate()).toEqual 'templated history'
 
+    describe 'when a segment of history is requested', ->
+      it 'called the history model with a start and end range', ->
+        @searchHistory.toTemplate(1, 5)
+        expect(@searchHistory.get('history').toTemplate).toHaveBeenCalledWith(1, 5)
+
   describe 'fetching history', ->
     beforeEach ->
       spyOn(@searchHistory.historyQuery, 'run')

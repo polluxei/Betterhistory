@@ -9,7 +9,7 @@ class BH.Workers.Sanitizer
     prunedResults = []
     for result in results
       if @options.searching?
-        if prunedResults.length >= 100
+        if prunedResults.length >= 1000
           true
         else
           @setAdditionalProperties(result)

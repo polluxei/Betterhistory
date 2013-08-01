@@ -1,11 +1,11 @@
 class BH.Router extends Backbone.Router
   routes:
     '': 'reset'
-    'settings': 'settings'
-    'search': 'search'
-    'search/*query': 'search'
     'weeks/:id': 'week'
     'days/:id': 'day'
+    'settings': 'settings'
+    'search/:query(/p:page)': 'search'
+    'search': 'search'
 
   initialize: ->
     settings = new BH.Models.Settings()
@@ -46,11 +46,12 @@ class BH.Router extends Backbone.Router
     view = @app.loadSettings()
     view.select()
 
-  search: (query = '') ->
+  search: (query = '', page) ->
     # Load a fresh search view when the query is empty to
     # ensure a new WeekHistory instance is created because
     # this usually means a search has been canceled
-    view = @app.loadSearch(expired: true if query == '')
+    view = @app.loadSearch(expired: true if query == '' || page)
+    view.page.set(page: parseInt(page, 10), {silent: true}) if page?
     view.model.set query: decodeURIComponent(query)
     view.select()
     @_delay ->
