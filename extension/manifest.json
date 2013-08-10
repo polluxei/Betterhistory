@@ -4,6 +4,9 @@
   "manifest_version": 2,
   "description": "__MSG_manifest_description__",
   "default_locale":"en",
+  "omnibox": {
+    "keyword" : "__MSG_history_title__"
+  },
   "icons": {
     "16": "images/icons/icon16.png",
     "48": "images/icons/icon48.png",
@@ -26,6 +29,7 @@
       "scripts/lib/page_context_menu.js",
       "scripts/lib/selection_context_menu.js",
       "scripts/lib/browser_actions.js",
+      "scripts/lib/omnibox.js",
       "scripts/initialize_background.js"
     ],
     "persistent": false

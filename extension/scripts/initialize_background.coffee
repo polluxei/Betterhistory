@@ -13,3 +13,6 @@ if settings.searchByDomain != false
 
 browserActions = new BH.Lib.BrowserActions()
 browserActions.listen()
+
+omnibox = new BH.Lib.Omnibox()
+omnibox.listen()

@@ -21,6 +21,8 @@ module.exports = ->
 
   tabs:
     create: jasmine.createSpy("create")
+    query: jasmine.createSpy("query")
+    update: jasmine.createSpy("update")
     get: jasmine.createSpy("get").andCallFake((id, callback) ->
       callback url: "http://code.google.com/projects"
     )
@@ -29,3 +31,12 @@ module.exports = ->
 
     onUpdated:
       addListener: jasmine.createSpy("addListener")
+
+  omnibox:
+    onInputChanged:
+      addListener: jasmine.createSpy("addListener")
+
+    onInputEntered:
+      addListener: jasmine.createSpy("addListener")
+
+    setDefaultSuggestion: jasmine.createSpy("setDefaultSuggestion")
