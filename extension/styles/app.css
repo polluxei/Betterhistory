@@ -10,7 +10,7 @@
   display: inline-block;
   margin: 0
 }
-.pagination li:last-child {
+.chrome-bootstrap .pagination li:last-child {
   margin-right: 20px;
 }
 .location .match {
