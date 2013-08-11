@@ -1,7 +1,7 @@
 {
   "name": "better-history",
   "description": "Better History extension for Chrome",
-  "version": "1.14.0",
+  "version": "1.14.1",
   "author": "Roy Kolak <roy.kolak@gmail.com>",
   "scripts": {
     "start": "node_modules/coffee-script/bin/cake run",
