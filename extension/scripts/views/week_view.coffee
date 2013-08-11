@@ -49,6 +49,7 @@ class BH.Views.WeekView extends BH.Views.MainView
 
   promptAction: (prompt) ->
     if prompt.get('action')
+      track.weekVisitsDeletion()
       @history.destroy()
       @promptView.close()
       @history.fetch()
