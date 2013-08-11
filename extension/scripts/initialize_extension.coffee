@@ -1,5 +1,6 @@
 new BH.Lib.DateI18n().configure()
 window.router = new BH.Router()
+window.track = new BH.Lib.Track(_gaq)
 Backbone.history.start()
 
 unless localStorage.mailingListPromptSeen?
