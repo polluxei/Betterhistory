@@ -46,3 +46,13 @@ describe 'BH.Lib.Track', ->
     it 'tracks search results deletion', ->
       @track.searchResultsDeletion()
       expect(@analytics.push).toHaveBeenCalledWith ['_trackEvent', 'Delete', 'Clicked', 'search results']
+
+  describe '#paginationClick', ->
+    it 'tracks pagination click', ->
+      @track.paginationClick()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Pagination', 'Clicked'])
+
+  describe '#error', ->
+    it 'tracks an error', ->
+      @track.error('message', 'url', 'line number')
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Error', 'message', 'url', 'line number'])

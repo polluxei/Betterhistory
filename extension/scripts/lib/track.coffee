@@ -28,6 +28,14 @@ class BH.Lib.Track
   searchResultsDeletion: ->
     @trackEvent(['Delete', 'Clicked', 'search results'])
 
+  paginationClick: ->
+    @trackEvent(['Pagination', 'Clicked'])
+
+  error: (msg, url, lineNumber) ->
+    @trackEvent(['Error', msg, url, lineNumber])
+
   trackEvent: (params) ->
     params.unshift('_trackEvent')
     @analytics.push(params)
+
+
