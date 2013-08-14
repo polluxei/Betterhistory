@@ -10,9 +10,6 @@
   display: inline-block;
   margin: 0
 }
-.chrome-bootstrap .pagination li:last-child {
-  margin-right: 20px;
-}
 .location .match {
   -webkit-text-fill-color: #999;
 }
@@ -305,4 +302,7 @@ header .corner {
 .cancelable .delete {
   __MSG_@@bidi_start_edge__: auto;
   __MSG_@@bidi_end_edge__: 5px;
+}
+.chrome-bootstrap .pagination li:last-child {
+  margin-__MSG_@@bidi_end_edge__: 20px;
 }
