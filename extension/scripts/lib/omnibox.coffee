@@ -9,6 +9,7 @@ class BH.Lib.Omnibox extends BH.Base
       @setDefaultSuggestion(text)
 
     @chromeAPI.omnibox.onInputEntered.addListener (text) =>
+      window.track.omniboxSearch()
       @getActiveTab (tabId) => @updateTabURL(tabId, text)
 
   setDefaultSuggestion: (text) ->

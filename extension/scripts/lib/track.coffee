@@ -31,6 +31,18 @@ class BH.Lib.Track
   paginationClick: ->
     @trackEvent(['Pagination', 'Click'])
 
+  omniboxSearch: ->
+    @trackEvent(['Omnibox', 'Search'])
+
+  browserActionClick: ->
+    @trackEvent(['Browser action', 'Click'])
+
+  contextMenuClick: ->
+    @trackEvent(['Context menu', 'Click'])
+
+  selectionContextMenuClick: ->
+    @trackEvent(['Selection context menu', 'Click'])
+
   error: (msg, url, lineNumber) ->
     @trackEvent(['Error', msg, url, lineNumber])
 

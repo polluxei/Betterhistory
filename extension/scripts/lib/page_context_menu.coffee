@@ -20,6 +20,8 @@ class BH.Lib.PageContextMenu extends BH.Base
       urlOptions = absolute: true
       url = @urlFor('search', @_getDomain(data.pageUrl)[1], urlOptions)
 
+      track.contextMenuClick()
+
       @chromeAPI.tabs.create
         url: url
 
