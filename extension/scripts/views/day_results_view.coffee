@@ -36,7 +36,7 @@ class BH.Views.DayResultsView extends Backbone.View
   deleteGroupedVisitClicked: (ev) ->
     ev.preventDefault()
     ev.stopPropagation()
-    track.groupedVisitDeletion()
+    track.groupedVisitsDeletion()
     $(ev.currentTarget).siblings('.visits').children().each (i, visit) ->
       $(visit).find('.delete_visit').trigger('click')
 
