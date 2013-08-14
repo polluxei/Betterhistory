@@ -52,6 +52,26 @@ describe 'BH.Lib.Track', ->
       @track.paginationClick()
       expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Pagination', 'Click'])
 
+  describe '#omniboxSearch', ->
+    it 'tracks omnibox searches', ->
+      @track.omniboxSearch()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Omnibox', 'Search'])
+
+  describe '#browserActionClick', ->
+    it 'tracks browser action click', ->
+      @track.browserActionClick()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Browser action', 'Click'])
+
+  describe '#contextMenuClick', ->
+    it 'tracks context menu click', ->
+      @track.contextMenuClick()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Context menu', 'Click'])
+
+  describe '#selectionContextMenuClick', ->
+    it 'tracks selection context menu click', ->
+      @track.selectionContextMenuClick()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Selection context menu', 'Click'])
+
   describe '#error', ->
     it 'tracks an error', ->
       @track.error('message', 'url', 'line number')

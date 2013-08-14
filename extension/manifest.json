@@ -23,6 +23,7 @@
     "scripts": [
       "scripts/namespace.js",
       "scripts/frameworks/mixin.js",
+      "scripts/frameworks/analytics.js",
       "scripts/modules/worker.js",
       "scripts/modules/i18n.js",
       "scripts/modules/url.js",
@@ -30,6 +31,7 @@
       "scripts/lib/selection_context_menu.js",
       "scripts/lib/browser_actions.js",
       "scripts/lib/omnibox.js",
+      "scripts/lib/track.js",
       "scripts/initialize_background.js"
     ],
     "persistent": false

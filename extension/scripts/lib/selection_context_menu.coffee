@@ -20,6 +20,8 @@ class BH.Lib.SelectionContextMenu extends BH.Base
       urlOptions = absolute: true
       url = @urlFor('search', data.selectionText, urlOptions)
 
+      track.selectionContextMenuClick()
+
       @chromeAPI.tabs.create
         url: url
 

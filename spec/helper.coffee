@@ -46,3 +46,4 @@ require '../extension/scripts/collections/weeks.coffee'
 require '../extension/scripts/collections/visits.coffee'
 
 new BH.Lib.DateI18n().configure()
+global.track = new BH.Lib.Track([])

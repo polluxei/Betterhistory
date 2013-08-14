@@ -10,5 +10,6 @@ class BH.Lib.BrowserActions extends BH.Base
       @openHistory()
 
   openHistory: ->
+    track.browserActionClick()
     @chromeAPI.tabs.create
       url: @urlFor()
