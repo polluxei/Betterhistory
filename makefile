@@ -1,6 +1,6 @@
 VERSION=$(shell grep -E '"version":.*?[^\\]",' package.json | sed 's/[^0-9\.]//g')
 DEV_ANALYTICS=$(shell grep -E '"dev_analytics":.*?[^\\]",' package.json | sed 's/.*:[^\s][^.*]//g' | sed s/\",//g)
-PROD_ANALYTICS=$(shell grep -E '"prod_analytics":.*?[^\\]",' package.json | sed 's/.*:[^\s][^.*]//g' | sed s/\",//g)
+PROD_ANALYTICS=$(shell grep -E '"prod_analytics":.*?[^\\]"' package.json | sed 's/.*:[^\s][^.*]//g' | sed s/\"//g)
 
 build:
 	rm -fr build
@@ -18,6 +18,7 @@ build:
 	sed -i '' 's/\$$ANALYTICS_ID\$$/${DEV_ANALYTICS}/g' build/scripts/frameworks/analytics.js
 
 release: build
+	coffee -c build/scripts/
 	cp extension/scripts/frameworks/analytics.js build/scripts/frameworks/
 	sed -i '' 's/\$$ANALYTICS_ID\$$/${PROD_ANALYTICS}/g' build/scripts/frameworks/analytics.js
 	cake build:assets:prod
