@@ -82,11 +82,12 @@ class BH.Views.SearchView extends BH.Views.MainView
     @renderSearchResults()
 
   renderSearchResults: ->
-    searchResultsView = new BH.Views.SearchResultsView
+    @searchResultsView.undelegateEvents() if @searchResultsView
+    @searchResultsView = new BH.Views.SearchResultsView
       model: @history
       el: @$el.children('.content')
       page: @page.get('page') - 1
-    searchResultsView.render()
+    @searchResultsView.render()
 
   updateDeleteButton: ->
     deleteButton = @$('.delete_all')
