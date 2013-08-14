@@ -13,7 +13,7 @@
   },
   "config": {
     "dev_analytics": "UA-43184519-1",
-    "prod_analytics": "UA-43103609-1"
+    "prod_analytics": "UA-43186716-1"
   },
   "devDependencies": {
     "chrome-bootstrap": "git://github.com/roykolak/chrome-bootstrap.git#v1.0.0",
