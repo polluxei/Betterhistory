@@ -1,7 +1,7 @@
 window.track = new BH.Lib.Track(_gaq)
 
 window.onerror = (msg, url, lineNumber) ->
-  track(msg, url, lineNumber)
+  track.error(msg, url, lineNumber)
 
 new BH.Lib.DateI18n().configure()
 window.router = new BH.Router()

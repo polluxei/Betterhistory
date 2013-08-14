@@ -8,28 +8,28 @@ class BH.Lib.Track
     @analytics.push(['_trackPageview', "/#{url}"])
 
   weekView: (date, distanceFromCurrentWeek) ->
-    @trackEvent(['Weeks', 'Clicked', date, distanceFromCurrentWeek])
+    @trackEvent(['Weeks', 'Click', date, distanceFromCurrentWeek])
 
   visitDeletion: ->
-    @trackEvent(['Delete', 'Clicked', 'visit'])
+    @trackEvent(['Visit', 'Delete'])
 
-  groupedVisitDeletion: ->
-    @trackEvent(['Delete', 'Clicked', 'grouped visit'])
+  groupedVisitsDeletion: ->
+    @trackEvent(['Grouped visits', 'Delete'])
 
   timeIntervalDeletion: ->
-    @trackEvent(['Delete', 'Clicked', 'time interval'])
+    @trackEvent(['Time interval', 'Delete'])
 
   dayVisitsDeletion: ->
-    @trackEvent(['Delete', 'Clicked', 'day visits'])
+    @trackEvent(['Day visits', 'Delete'])
 
   weekVisitsDeletion: ->
-    @trackEvent(['Delete', 'Clicked', 'week visits'])
+    @trackEvent(['Week visits', 'Delete'])
 
   searchResultsDeletion: ->
-    @trackEvent(['Delete', 'Clicked', 'search results'])
+    @trackEvent(['Search results', 'Delete'])
 
   paginationClick: ->
-    @trackEvent(['Pagination', 'Clicked'])
+    @trackEvent(['Pagination', 'Click'])
 
   error: (msg, url, lineNumber) ->
     @trackEvent(['Error', msg, url, lineNumber])
