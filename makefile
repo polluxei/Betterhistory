@@ -15,11 +15,15 @@ build:
 	cp node_modules/moment/moment.js build/scripts/frameworks/
 	cake build:assets:dev
 	sed -i '' 's/\$$VERSION\$$/${VERSION}/g' build/manifest.json
+	sed -i '' 's/\$$LABEL\$$/ DEV/g' build/manifest.json
 	sed -i '' 's/\$$ANALYTICS_ID\$$/${DEV_ANALYTICS}/g' build/scripts/frameworks/analytics.js
 
 release: build
 	coffee -c build/scripts/
 	cp extension/scripts/frameworks/analytics.js build/scripts/frameworks/
+	cp extension/manifest.json build/manifest.json
+	sed -i '' 's/\$$VERSION\$$/${VERSION}/g' build/manifest.json
+	sed -i '' 's/\$$LABEL\$$//g' build/manifest.json
 	sed -i '' 's/\$$ANALYTICS_ID\$$/${PROD_ANALYTICS}/g' build/scripts/frameworks/analytics.js
 	cake build:assets:prod
 	./node_modules/uglify-js/bin/uglifyjs build/scripts.js -o build/scripts.js

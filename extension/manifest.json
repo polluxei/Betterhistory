@@ -1,5 +1,5 @@
 {
-  "name": "__MSG_manifest_name__",
+  "name": "__MSG_manifest_name__$LABEL$",
   "version": "$VERSION$",
   "manifest_version": 2,
   "description": "__MSG_manifest_description__",
