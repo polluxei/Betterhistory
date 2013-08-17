@@ -24,6 +24,3 @@ class BH.Models.State extends Backbone.Model
 
   startingWeekDate: ->
     moment(new Date()).past(@settings.get('startingWeekDay'), 0)
-
-  parse: (data) ->
-    JSON.parse data

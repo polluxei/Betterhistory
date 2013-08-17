@@ -47,15 +47,3 @@ class BH.Models.Settings extends Backbone.Model
         value: timeGrouping
 
     properties
-
-  parse: (data) ->
-    attributes = try
-      JSON.parse(data)
-    attributes = {} unless attributes?
-
-    attributes.timeGrouping = if attributes.timeGrouping?
-      parseInt attributes.timeGrouping, 10
-    else
-      @defaults.timeGrouping
-
-    attributes

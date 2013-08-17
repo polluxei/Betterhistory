@@ -3,15 +3,32 @@ window.track = new BH.Lib.Track(_gaq)
 window.onerror = (msg, url, lineNumber) ->
   track.error(msg, url, lineNumber)
 
-new BH.Lib.DateI18n().configure()
-window.router = new BH.Router()
-Backbone.history.start()
+BH.Lib.SyncStore.migrate(localStorage)
 
-unless localStorage.mailingListPromptSeen?
-  mailingListPromptTimer = parseInt(localStorage.mailingListPromptTimer, 10) || 3
-  if mailingListPromptTimer == 1
-    new BH.Views.MailingListView().open()
-    delete localStorage.mailingListPromptTimer
-    localStorage.mailingListPromptSeen = true
-  else
-    localStorage.mailingListPromptTimer = mailingListPromptTimer - 1
+new BH.Lib.DateI18n().configure()
+
+settings = new BH.Models.Settings({})
+state = new BH.Models.State({}, settings: settings)
+settings.fetch
+  success: =>
+    state.fetch
+      success: =>
+        state.updateRoute()
+
+        window.router = new BH.Router
+          settings: settings
+          state: state
+
+        Backbone.history.start()
+
+BH.Lib.SyncStore.get ['mailingListPromptTimer', 'mailingListPromptSeen'], (data) ->
+  mailingListPromptTimer = data.mailingListPromptTimer || 3
+  mailingListPromptSeen = data.mailingListPromptSeen
+  unless mailingListPromptSeen?
+    if mailingListPromptTimer == 1
+      new BH.Views.MailingListView().open()
+      BH.Lib.SyncStore.remove 'mailingListPromptTimer'
+      BH.Lib.SyncStore.set mailingListPromptSeen: true
+    else
+      BH.Lib.SyncStore.set mailingListPromptTimer: (mailingListPromptTimer - 1)
+

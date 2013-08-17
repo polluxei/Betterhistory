@@ -40,3 +40,9 @@ module.exports = ->
       addListener: jasmine.createSpy("addListener")
 
     setDefaultSuggestion: jasmine.createSpy("setDefaultSuggestion")
+
+  storage:
+    sync:
+      set: jasmine.createSpy("set")
+      get: jasmine.createSpy("get")
+      remove: jasmine.createSpy("remove")

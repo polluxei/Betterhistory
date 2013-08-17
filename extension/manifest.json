@@ -32,6 +32,7 @@
       "scripts/lib/browser_actions.js",
       "scripts/lib/omnibox.js",
       "scripts/lib/track.js",
+      "scripts/lib/sync_store.js",
       "scripts/initialize_background.js"
     ],
     "persistent": false
@@ -40,7 +41,8 @@
     "chrome://favicon/",
     "history",
     "tabs",
-    "contextMenus"
+    "contextMenus",
+    "storage"
   ],
   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com https://platform.twitter.com https://apis.google.com; object-src 'self'"
 }

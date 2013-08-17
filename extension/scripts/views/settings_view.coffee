@@ -20,7 +20,7 @@ class BH.Views.SettingsView extends BH.Views.MainView
   initialize: ->
     @chromeAPI = chrome
     @model.off 'change'
-    @model.on 'change', @model.save, @model
+    @model.on 'change', (() => @model.save()), @model
     @model.on 'change:openLocation', @options.state.updateRoute, @options.state
     @model.on 'change:startingWeekDay', @options.state.updateRoute, @options.state
     @on 'selected', @activateSocialLinks, @
