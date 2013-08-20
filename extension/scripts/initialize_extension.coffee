@@ -3,7 +3,11 @@ window.track = new BH.Lib.Track(_gaq)
 window.onerror = (msg, url, lineNumber) ->
   track.error(msg, url, lineNumber)
 
-BH.Lib.SyncStore.migrate(localStorage)
+window.syncStore = new BH.Lib.SyncStore
+  chrome: chrome
+  tracker: track
+
+syncStore.migrate(localStorage)
 
 new BH.Lib.DateI18n().configure()
 
@@ -21,14 +25,14 @@ settings.fetch
 
         Backbone.history.start()
 
-BH.Lib.SyncStore.get ['mailingListPromptTimer', 'mailingListPromptSeen'], (data) ->
+syncStore.get ['mailingListPromptTimer', 'mailingListPromptSeen'], (data) ->
   mailingListPromptTimer = data.mailingListPromptTimer || 3
   mailingListPromptSeen = data.mailingListPromptSeen
   unless mailingListPromptSeen?
     if mailingListPromptTimer == 1
       new BH.Views.MailingListView().open()
-      BH.Lib.SyncStore.remove 'mailingListPromptTimer'
-      BH.Lib.SyncStore.set mailingListPromptSeen: true
+      syncStore.remove 'mailingListPromptTimer'
+      syncStore.set mailingListPromptSeen: true
     else
-      BH.Lib.SyncStore.set mailingListPromptTimer: (mailingListPromptTimer - 1)
+      syncStore.set mailingListPromptTimer: (mailingListPromptTimer - 1)
 

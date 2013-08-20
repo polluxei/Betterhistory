@@ -46,6 +46,9 @@ class BH.Lib.Track
   error: (msg, url, lineNumber) ->
     @trackEvent(['Error', msg, url, lineNumber])
 
+  syncStorageError: (operation, msg) ->
+    @trackEvent(['Storage Error', operation, 'Sync', msg])
+
   trackEvent: (params) ->
     params.unshift('_trackEvent')
     @analytics.push(params)
