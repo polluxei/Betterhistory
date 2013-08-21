@@ -8,7 +8,6 @@ global._ = underscore
 global.Backbone = backbone
 global.moment = moment
 global.timekeeper = timekeeper
-global.localStorage = {}
 global.mockChromeAPI = require './chrome_api'
 global.chrome = mockChromeAPI()
 global.BH = require '../extension/scripts/namespace'
@@ -27,6 +26,7 @@ require '../extension/scripts/lib/history_query.coffee'
 require '../extension/scripts/lib/pagination.coffee'
 require '../extension/scripts/lib/omnibox.coffee'
 require '../extension/scripts/lib/track.coffee'
+require '../extension/scripts/lib/sync_store.coffee'
 require '../extension/scripts/workers/day_grouper.coffee'
 require '../extension/scripts/workers/domain_grouper.coffee'
 require '../extension/scripts/workers/time_grouper.coffee'

@@ -7,13 +7,9 @@ class BH.Router extends Backbone.Router
     'search/*query(/p:page)': 'search'
     'search': 'search'
 
-  initialize: ->
-    settings = new BH.Models.Settings()
-    settings.fetch()
-
-    @state = new BH.Models.State({}, settings: settings)
-    @state.fetch()
-    @state.updateRoute()
+  initialize: (options) ->
+    settings = options.settings
+    @state = options.state
 
     @app = new BH.Views.AppView
       el: $('.app')

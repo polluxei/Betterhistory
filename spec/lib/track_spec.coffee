@@ -72,6 +72,11 @@ describe 'BH.Lib.Track', ->
       @track.selectionContextMenuClick()
       expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Selection context menu', 'Click'])
 
+  describe '#syncStorageError', ->
+    it 'tracks a storage error', ->
+      @track.syncStorageError('get', 'the error')
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Storage Error', 'get', 'Sync', 'the error'])
+
   describe '#error', ->
     it 'tracks an error', ->
       @track.error('message', 'url', 'line number')
