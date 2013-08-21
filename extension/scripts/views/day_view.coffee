@@ -59,7 +59,7 @@ class BH.Views.DayView extends BH.Views.MainView
 
   promptAction: (prompt) ->
     if prompt.get('action')
-      track.dayVisitsDeletion()
+      tracker.dayVisitsDeletion()
       @history.destroy()
       @history.fetch
         success: =>

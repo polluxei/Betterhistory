@@ -12,4 +12,4 @@ class BH.Views.MenuView extends Backbone.View
     @$('.menu > *').removeClass 'selected'
     $el = $(ev.currentTarget)
     $el.addClass 'selected'
-    track.weekView($el.data('week-id'), $el.index())
+    tracker.weekView($el.data('week-id'), $el.index())

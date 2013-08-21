@@ -31,7 +31,7 @@
       "scripts/lib/selection_context_menu.js",
       "scripts/lib/browser_actions.js",
       "scripts/lib/omnibox.js",
-      "scripts/lib/track.js",
+      "scripts/lib/tracker.js",
       "scripts/lib/sync_store.js",
       "scripts/initialize_background.js"
     ],

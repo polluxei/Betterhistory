@@ -25,7 +25,7 @@ require '../extension/scripts/lib/selection_context_menu.coffee'
 require '../extension/scripts/lib/history_query.coffee'
 require '../extension/scripts/lib/pagination.coffee'
 require '../extension/scripts/lib/omnibox.coffee'
-require '../extension/scripts/lib/track.coffee'
+require '../extension/scripts/lib/tracker.coffee'
 require '../extension/scripts/lib/sync_store.coffee'
 require '../extension/scripts/workers/day_grouper.coffee'
 require '../extension/scripts/workers/domain_grouper.coffee'
@@ -46,4 +46,4 @@ require '../extension/scripts/collections/weeks.coffee'
 require '../extension/scripts/collections/visits.coffee'
 
 new BH.Lib.DateI18n().configure()
-global.track = new BH.Lib.Track([])
+global.tracker = new BH.Lib.Tracker([])

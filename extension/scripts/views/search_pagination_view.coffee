@@ -33,7 +33,7 @@ class BH.Views.SearchPaginationView extends BH.Views.MainView
 
   onPageClicked: (ev) ->
     $el = $(ev.currentTarget)
-    track.paginationClick()
+    tracker.paginationClick()
 
     router.navigate($el.attr('href'))
 

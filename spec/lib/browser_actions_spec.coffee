@@ -1,14 +1,15 @@
 describe "BH.Lib.BrowserActions", ->
   beforeEach ->
-    @browserActions = new BH.Lib.BrowserActions()
-    @chromeAPI = @browserActions.chromeAPI
+    @browserActions = new BH.Lib.BrowserActions
+      chrome: chrome
+      tracker: browserActionClick: jasmine.createSpy()
 
   describe "#listen", ->
     it "listens for onClick on the browser action", ->
       @browserActions.listen()
-      expect(@chromeAPI.browserAction.onClicked.addListener).toHaveBeenCalledWith jasmine.any(Function)
+      expect(chrome.browserAction.onClicked.addListener).toHaveBeenCalledWith jasmine.any(Function)
 
   describe "#openHistory", ->
     it "opens history in a new tab", ->
       @browserActions.openHistory()
-      expect(@chromeAPI.tabs.create).toHaveBeenCalledWith url: 'chrome://history/'
+      expect(chrome.tabs.create).toHaveBeenCalledWith url: 'chrome://history/'

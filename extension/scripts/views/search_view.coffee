@@ -109,7 +109,7 @@ class BH.Views.SearchView extends BH.Views.MainView
 
   deleteAction: (prompt) ->
     if prompt.get('action')
-      track.searchResultsDeletion()
+      tracker.searchResultsDeletion()
       @history.get('history').destroyAll()
       @history.fetch
         success: (model) =>

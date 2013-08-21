@@ -1,4 +1,4 @@
-class BH.Lib.Track
+class BH.Lib.Tracker
   constructor: (analytics) ->
     @analytics = analytics
 
@@ -48,6 +48,9 @@ class BH.Lib.Track
 
   syncStorageError: (operation, msg) ->
     @trackEvent(['Storage Error', operation, 'Sync', msg])
+
+  mailingListPrompt: ->
+    @trackEvent(['Mailing List Prompt', 'Seen'])
 
   trackEvent: (params) ->
     params.unshift('_trackEvent')

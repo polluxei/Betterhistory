@@ -1,11 +1,11 @@
-window.track = new BH.Lib.Track(_gaq)
+window.tracker = new BH.Lib.Tracker(_gaq)
 
 window.onerror = (msg, url, lineNumber) ->
-  track.error(msg, url, lineNumber)
+  tracker.error(msg, url, lineNumber)
 
 window.syncStore = new BH.Lib.SyncStore
   chrome: chrome
-  tracker: track
+  tracker: tracker
 
 syncStore.migrate(localStorage)
 
@@ -33,6 +33,7 @@ syncStore.get ['mailingListPromptTimer', 'mailingListPromptSeen'], (data) ->
       new BH.Views.MailingListView().open()
       syncStore.remove 'mailingListPromptTimer'
       syncStore.set mailingListPromptSeen: true
+      tracker.mailingListPrompt()
     else
       syncStore.set mailingListPromptTimer: (mailingListPromptTimer - 1)
 

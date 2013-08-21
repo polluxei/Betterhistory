@@ -36,7 +36,7 @@ scripts = [
   'scripts/lib/date_i18n.js',
   'scripts/lib/history_query.js',
   'scripts/lib/pagination.js',
-  'scripts/lib/track.js',
+  'scripts/lib/tracker.js',
   'scripts/lib/sync_store.js',
   'scripts/views/modal_view.js',
   'scripts/views/main_view.js',

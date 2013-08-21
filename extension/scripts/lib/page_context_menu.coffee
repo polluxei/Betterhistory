@@ -2,8 +2,13 @@ class BH.Lib.PageContextMenu extends BH.Base
   @include BH.Modules.I18n
   @include BH.Modules.Url
 
-  constructor: ->
-    @chromeAPI = chrome
+  constructor: (options = {}) ->
+    throw "Chrome API not set" unless options.chrome?
+    throw "Tracker not set" unless options.tracker?
+
+    @chromeAPI = options.chrome
+    @tracker = options.tracker
+
     @id = 'better_history_page_context_menu'
 
   create: ->
@@ -20,7 +25,7 @@ class BH.Lib.PageContextMenu extends BH.Base
       urlOptions = absolute: true
       url = @urlFor('search', @_getDomain(data.pageUrl)[1], urlOptions)
 
-      track.contextMenuClick()
+      @tracker.contextMenuClick()
 
       @chromeAPI.tabs.create
         url: url
