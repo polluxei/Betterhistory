@@ -1,4 +1,4 @@
-class BH.Lib.Track
+class BH.Lib.Tracker
   constructor: (analytics) ->
     @analytics = analytics
 

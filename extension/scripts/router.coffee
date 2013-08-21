@@ -19,7 +19,7 @@ class BH.Router extends Backbone.Router
     @app.render()
 
     @on 'route', (route) =>
-      track.pageView(Backbone.history.getFragment())
+      tracker.pageView(Backbone.history.getFragment())
       window.scroll 0, 0
       if settings.get('openLocation') == 'last_visit'
         @state.set route: location.hash

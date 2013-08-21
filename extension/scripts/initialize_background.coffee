@@ -1,26 +1,26 @@
-window.track = new BH.Lib.Track(_gaq)
+tracker = new BH.Lib.Tracker(_gaq)
 
 window.syncStore = new BH.Lib.SyncStore
   chrome: chrome
-  tracker: track
+  tracker: tracker
 
 browserActions = new BH.Lib.BrowserActions
   chrome: chrome
-  tracker: track
+  tracker: tracker
 browserActions.listen()
 
 omnibox = new BH.Lib.Omnibox
   chrome: chrome
-  tracker: track
+  tracker: tracker
 omnibox.listen()
 
 window.selectionContextMenu = new BH.Lib.SelectionContextMenu
   chrome: chrome
-  tracker: track
+  tracker: tracker
 
 window.pageContextMenu = new BH.Lib.PageContextMenu
   chrome: chrome
-  tracker: track
+  tracker: tracker
 pageContextMenu.listenToTabs()
 
 syncStore.get 'settings', (data) ->
