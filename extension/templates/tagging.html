@@ -1,0 +1,20 @@
+<div class='container'>
+  <h1>Tag {{title}}</h1>
+  <div class='url'>{{url}}</div>
+  <div class='active_tags'></div>
+  <form id='tag_form'>
+    <input id='tag_name' class='tags' type='text' placeholder='Enter a tag name' />
+    <button id='add_tag' class='submit'>Tag</button>
+  <form>
+</div>
+<ul class='links'>
+  <li>
+    <a id='explore_tags' href='chrome://history/#tags'>Explore tags</a>
+  </li>
+  <li>
+    <a id='search_domain' href='chrome://history/#search/{{domain}}'>Search {{domain}} visits</a>
+  </li>
+  <li>
+    <a id='view_history' href='chrome://history'>View all history</a>
+  </li>
+</div>

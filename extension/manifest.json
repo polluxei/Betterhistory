@@ -16,9 +16,18 @@
   "chrome_url_overrides": {
     "history": "index.html"
   },
+  "commands": {
+    "add-to-collection": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+E"
+      },
+      "description": "Add website to collections"
+    }
+  },
   "browser_action": {
     "default_icon": "images/icons/icon19.png",
-    "default_title": "__MSG_manifest_browser_action_title__"
+    "default_title": "__MSG_manifest_browser_action_title__",
+    "default_popup": "popup.html"
   },
   "background": {
     "scripts": [
@@ -45,7 +54,11 @@
     "history",
     "tabs",
     "contextMenus",
-    "storage"
+    "storage",
+    "notifications",
+    "infobars",
+    "http://*/*",
+    "https://*/*"
   ],
   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com https://platform.twitter.com https://apis.google.com; object-src 'self'"
 }

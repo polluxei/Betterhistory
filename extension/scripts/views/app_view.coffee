@@ -46,6 +46,16 @@ class BH.Views.AppView extends Backbone.View
     @collection.reset()
     @collection.reload @settings.get('startingWeekDay')
 
+  loadTags: ->
+    @updateMenuSelection()
+    @$('.menu .tags').parent().addClass 'selected'
+    @cache.tagsView()
+
+  loadTag: (id) ->
+    @updateMenuSelection()
+    @$('.menu .tags').parent().addClass 'selected'
+    @cache.tagView(id)
+
   loadWeek: (id) ->
     @updateMenuSelection(id)
     @cache.weekView(id)
@@ -70,4 +80,4 @@ class BH.Views.AppView extends Backbone.View
     @$("[data-week-id='#{id}']").addClass('selected') if id?
 
   getI18nValues: ->
-    @t ['history_title', 'settings_link']
+    @t ['history_title', 'settings_link', 'collections_link']

@@ -1,0 +1,81 @@
+.tags {
+  margin: 0;
+}
+.tags li {
+  margin: 3px 0 0;
+  display: inline-block;
+  background: #8AAAED;
+  color: #FFF;
+  padding: 3px 19px 3px 5px;
+  border-radius: 3px;
+  position: relative;
+}
+.tags .delete {
+  right: 3px;
+  top: 3px;
+  opacity: 1;
+}
+.tags a.tag {
+  color: #FFF;
+}
+.tags a:hover {
+  text-decoration: underline;
+}
+.links {
+  background: #EEE;
+  margin: 0;
+}
+.links li:first-child {
+  border-top: 1px solid #BBB;
+}
+.links li {
+  border-top: 1px solid #DDD;
+}
+.links a {
+  padding:10px;
+  font-size: 13px;
+  display: block;
+  color: #555;
+}
+.links a:hover {
+  background: #F0F6FE;
+}
+.no_tags {
+  margin: 10px 0 0;
+}
+form {
+  margin-top: 10px;
+}
+body {
+  width: 300px;
+}
+.chrome-bootstrap h1 {
+  color: #000;
+  font-size: 13px;
+  margin: 0;
+  font-weight: bold;
+}
+input[type=text] {
+  width: 225px;
+}
+.url {
+  font-size: 11px;
+  padding-bottom: 5px;
+  color: #AAA;
+}
+.container {
+  padding: 10px;
+}
+.glow {
+  -webkit-animation-name: glow;
+  -webkit-animation-duration: 0.5s;
+  -webkit-animation-iteration-count: 2;
+}
+@-webkit-keyframes glow {
+  50% {
+    opacity: 0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}

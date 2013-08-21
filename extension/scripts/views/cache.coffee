@@ -9,6 +9,23 @@ class BH.Views.Cache
       weeks: {}
       days: {}
 
+  tagsView: ->
+    if !@cache.tags
+      @cache.tags = new BH.Views.TagsView
+        state: @state
+      @insert @cache.tags.render().el
+
+    @cache.tags
+
+  tagView: (id) ->
+    if !@cache.tag
+      @cache.tag = new BH.Views.TagView
+        name: id
+        state: @state
+      @insert @cache.tag.render().el
+
+    @cache.tag
+
   weekView: (id) ->
     if !@cache.weeks[id]
       week = new BH.Models.Week(

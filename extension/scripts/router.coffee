@@ -1,6 +1,8 @@
 class BH.Router extends Backbone.Router
   routes:
     '': 'reset'
+    'tags': 'tags'
+    'tags/:id': 'tag'
     'weeks/:id': 'week'
     'days/:id': 'day'
     'settings': 'settings'
@@ -29,6 +31,14 @@ class BH.Router extends Backbone.Router
 
   reset: ->
     @navigate @state.get('route'), trigger: true
+
+  tags: ->
+    view = @app.loadTags()
+    view.select()
+
+  tag: (id) ->
+    view = @app.loadTag(id)
+    view.select()
 
   week: (id) ->
     view = @app.loadWeek(id)

@@ -13,10 +13,37 @@ buildScriptTag = (src) ->
 buildStyleTag = (src) ->
   "<link rel='stylesheet' type='text/css' href='#{src}'/>"
 
+popupStyles = [
+  'styles/chrome-bootstrap.css',
+  'styles/app.css'
+  'styles/popup.css'
+]
+
 styles = [
   'styles/chrome-bootstrap.css',
   'styles/app.css'
 ]
+
+popupScripts = [
+  'scripts/namespace.js',
+  'scripts/frameworks/underscore.js',
+  'scripts/frameworks/zepto.min.js',
+  'scripts/frameworks/backbone.js',
+  'scripts/frameworks/mustache.js',
+  'scripts/frameworks/analytics.js',
+  'scripts/frameworks/mixin.js',
+  'scripts/templates.js',
+  'scripts/lib/tracker.js',
+  'scripts/lib/local_store.js',
+  'scripts/modules/i18n.js',
+  'scripts/modules/url.js',
+  'scripts/models/site.js',
+  'scripts/views/main_view.js',
+  'scripts/views/tagging_view.js',
+  'scripts/views/active_tags_view.js',
+  'scripts/initialize_popup.js'
+]
+
 
 scripts = [
   'scripts/namespace.js',
@@ -58,6 +85,8 @@ scripts = [
   'scripts/views/settings_view.js',
   'scripts/views/visit_view.js',
   'scripts/views/week_view.js',
+  'scripts/views/tags_view.js',
+  'scripts/views/tag_view.js',
   'scripts/models/history.js',
   'scripts/models/day.js',
   'scripts/models/day_history.js',
@@ -102,6 +131,16 @@ task 'build:assets:dev', '', ->
   code = code.replace '<%= styles %>', styleTags.join("\n    ")
 
   fs.writeFileSync 'build/index.html', code
+
+  code = fs.readFileSync('extension/popup.html').toString()
+
+  scriptTags = (buildScriptTag(script) for script in popupScripts)
+  styleTags = (buildStyleTag(style) for style in popupStyles)
+
+  code = code.replace '<%= scripts %>', scriptTags.join("\n    ")
+  code = code.replace '<%= styles %>', styleTags.join("\n    ")
+
+  fs.writeFileSync 'build/popup.html', code
 
 task 'build:assets:prod', '', ->
   code = fs.readFileSync('extension/index.html').toString()

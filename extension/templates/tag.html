@@ -1,0 +1,28 @@
+<header>
+  <h1>{{i18n_collection_title}}</h1>
+  <div class='corner'>
+    <input class='search' placeholder='{{i18n_search_input_placeholder_text}}' tabindex='1' type='text' />
+  </div>
+  <div class='controls'>
+    <a class='text back_to_collections' href='{{collectionsUrl}}'>
+      {{{i18n_back_to_collections_link}}}
+    </a>
+    <div class='spacer'></div>
+    <button class='delete_sites'>
+      {{i18n_delete_all_sites_in_collection}}
+    </button>
+  </div>
+</header>
+<div class='content'>
+  <ul class='highlightable editable'>
+    <li>
+      <a href='#'>
+        <dl>
+          <dt>Baking Cookies</dt>
+          <dd>http://www.baking.com/cookies</dd>
+        </dl>
+      </a>
+      <a class='delete' href='#' title=''></a>
+    </li>
+  </ul>
+</div>

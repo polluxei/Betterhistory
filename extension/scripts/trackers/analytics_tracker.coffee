@@ -50,6 +50,9 @@ class BH.Trackers.AnalyticsTracker
   syncStorageAccess: (operation) ->
     @trackEvent(['Storage Access', operation, 'Sync'])
 
+  localStorageError: (operation, msg) ->
+    @trackEvent(['Storage Error', operation, 'Local', msg])
+
   mailingListPrompt: ->
     @trackEvent(['Mailing List Prompt', 'Seen'])
 

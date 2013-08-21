@@ -1,3 +1,53 @@
+.collections li {
+  width: 243px;
+  display: inline-block;
+}
+.collections a .label {
+  padding: 10px;
+  border-radius: 3px;
+  background: #EEE;
+  margin-bottom: 15px;
+}
+.collections li:nth-child(3n+1) a .label {
+  margin-right: 5px;
+}
+.collections li:nth-child(3n+2) a .label {
+  margin-right: 5px;
+  margin-left: 5px;
+}
+.collections li:nth-child(3n+3) a .label {
+  margin-left: 5px;
+}
+.collections a:hover .label {
+  background: #DDD;
+}
+.collections .title {
+  margin: 0 0 5px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #CCC;
+}
+.collections .count {
+  color: #888;
+}
+.favicons {
+  float: right;
+  font-size: 0;
+}
+.favicons li {
+  display: inline-block;
+  width: 16px;
+}
+.favicons .favicon {
+  width: 16px;
+  height: 16px;
+  background: #BBB;
+}
+.favicons li {
+  margin-right: 5px;
+}
+.favicons li:last-child {
+  margin-right: 0;
+}
 .intervals {
   margin-top: 0;
 }

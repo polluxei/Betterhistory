@@ -917,5 +917,66 @@
   "mailing_list_promise": {
     "message": "We respect your email privacy. No spam ever.",
     "description": "no spamming and privacy message"
+  },
+
+  "collections_link": {
+    "message": "Tags",
+    "description": "Collections link text in the main nav"
+  },
+  "collections_title": {
+    "message": "Tagged Sites",
+    "description": "Collections title text in the collections view"
+  },
+  "collection_title": {
+    "message": "$name$ tag",
+    "description": "Individual collection title",
+    "placeholders": {
+      "name": {
+        "content": "$1",
+        "example": "recipes, news, technology, etc..."
+      }
+    }
+  },
+  "back_to_collections_link": {
+    "message": "$arrow$ Back to Tags",
+    "description": "back to collections link",
+    "placeholders": {
+      "arrow": {
+        "content": "$1",
+        "example": "an arrow"
+      }
+    }
+  },
+  "delete_all_collections": {
+    "message": "Delete...",
+    "description": "Text for delete all sites in a collections"
+  },
+  "confirm_delete_all_collections": {
+    "message": "Delete all tags?",
+    "description": "Text for delete all collections"
+  },
+  "delete_all_sites_in_collection": {
+    "message": "Delete...",
+    "description": "Text for delete all sites in a collection"
+  },
+  "confirm_delete_all_sites_in_collection": {
+    "message": "Delete all sites in the $name$ tag",
+    "description": "Text for delete all sites in a collection",
+    "placeholders": {
+      "name": {
+        "content": "$1",
+        "example": "recipes, news, technology, etc..."
+      }
+    }
+  },
+  "number_of_collections": {
+    "message": "$number$ tags",
+    "description": "Number of collections",
+    "placeholders": {
+      "number": {
+        "content": "$1",
+        "example": "1,2,3,..."
+      }
+    }
   }
 }
