@@ -49,6 +49,9 @@ class BH.Lib.Tracker
   syncStorageError: (operation, msg) ->
     @trackEvent(['Storage Error', operation, 'Sync', msg])
 
+  mailingListPrompt: ->
+    @trackEvent(['Mailing List Prompt', 'Seen'])
+
   trackEvent: (params) ->
     params.unshift('_trackEvent')
     @analytics.push(params)

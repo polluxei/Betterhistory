@@ -33,6 +33,7 @@ syncStore.get ['mailingListPromptTimer', 'mailingListPromptSeen'], (data) ->
       new BH.Views.MailingListView().open()
       syncStore.remove 'mailingListPromptTimer'
       syncStore.set mailingListPromptSeen: true
+      tracker.mailingListPrompt()
     else
       syncStore.set mailingListPromptTimer: (mailingListPromptTimer - 1)
 

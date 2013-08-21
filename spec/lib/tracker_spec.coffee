@@ -77,6 +77,11 @@ describe 'BH.Lib.Tracker', ->
       @tracker.syncStorageError('get', 'the error')
       expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Storage Error', 'get', 'Sync', 'the error'])
 
+  describe '#mailingListPrompt', ->
+    it 'tracks the mailing list prompt being seen', ->
+      @tracker.mailingListPrompt()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Mailing List Prompt', 'Seen'])
+
   describe '#error', ->
     it 'tracks an error', ->
       @tracker.error('message', 'url', 'line number')
