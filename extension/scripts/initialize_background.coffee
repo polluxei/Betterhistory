@@ -4,15 +4,23 @@ window.syncStore = new BH.Lib.SyncStore
   chrome: chrome
   tracker: track
 
-browserActions = new BH.Lib.BrowserActions()
+browserActions = new BH.Lib.BrowserActions
+  chrome: chrome
+  tracker: track
 browserActions.listen()
 
-omnibox = new BH.Lib.Omnibox()
+omnibox = new BH.Lib.Omnibox
+  chrome: chrome
+  tracker: track
 omnibox.listen()
 
-window.selectionContextMenu = new BH.Lib.SelectionContextMenu()
+window.selectionContextMenu = new BH.Lib.SelectionContextMenu
+  chrome: chrome
+  tracker: track
 
-window.pageContextMenu = new BH.Lib.PageContextMenu()
+window.pageContextMenu = new BH.Lib.PageContextMenu
+  chrome: chrome
+  tracker: track
 pageContextMenu.listenToTabs()
 
 syncStore.get 'settings', (data) ->

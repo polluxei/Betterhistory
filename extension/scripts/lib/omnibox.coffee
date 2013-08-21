@@ -1,15 +1,19 @@
 class BH.Lib.Omnibox extends BH.Base
   @include BH.Modules.Url
 
-  constructor: ->
-    @chromeAPI = chrome
+  constructor: (options = {})->
+    throw "Chrome API not set" unless options.chrome?
+    throw "Tracker not set" unless options.tracker?
+
+    @chromeAPI = options.chrome
+    @tracker = options.tracker
 
   listen: ->
     @chromeAPI.omnibox.onInputChanged.addListener (text, suggest) =>
       @setDefaultSuggestion(text)
 
     @chromeAPI.omnibox.onInputEntered.addListener (text) =>
-      window.track.omniboxSearch()
+      @tracker.omniboxSearch()
       @getActiveTab (tabId) => @updateTabURL(tabId, text)
 
   setDefaultSuggestion: (text) ->

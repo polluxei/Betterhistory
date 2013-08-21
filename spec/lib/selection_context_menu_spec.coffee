@@ -1,12 +1,13 @@
 describe "BH.Lib.SelectionContextMenu", ->
   beforeEach ->
-    @selectionContextMenu = new BH.Lib.SelectionContextMenu()
-    @chromeAPI = @selectionContextMenu.chromeAPI
+    @selectionContextMenu = new BH.Lib.SelectionContextMenu
+      chrome: chrome
+      tracker: selectionContextMenuClick: jasmine.createSpy()
 
   describe "#create", ->
     it "creates a selection context menu", ->
       @selectionContextMenu.create()
-      expect(@chromeAPI.contextMenus.create).toHaveBeenCalledWith
+      expect(chrome.contextMenus.create).toHaveBeenCalledWith
         title: "[translated search_in_history]"
         contexts: [ "selection" ]
         id: 'better_history_selection_context_menu'
@@ -20,7 +21,7 @@ describe "BH.Lib.SelectionContextMenu", ->
       @selectionContextMenu.onClick
         menuItemId: 'better_history_selection_context_menu'
         selectionText: 'text here'
-      expect(@chromeAPI.tabs.create).toHaveBeenCalledWith url:'chrome://history/#search/text here'
+      expect(chrome.tabs.create).toHaveBeenCalledWith url:'chrome://history/#search/text here'
 
   describe "#remove", ->
     beforeEach ->
@@ -29,7 +30,7 @@ describe "BH.Lib.SelectionContextMenu", ->
     it "removes the context menu", ->
       menu = @selectionContextMenu.menu
       @selectionContextMenu.remove()
-      expect(@chromeAPI.contextMenus.remove).toHaveBeenCalledWith menu
+      expect(chrome.contextMenus.remove).toHaveBeenCalledWith menu
 
     it "deletes the stored reference", ->
       @selectionContextMenu.remove()
