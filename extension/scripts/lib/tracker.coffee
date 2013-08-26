@@ -1,6 +1,12 @@
 class BH.Lib.Tracker
-  constructor: (analytics) ->
+  constructor: (analytics, page) ->
+    throw "Analytics not set" unless analytics?
+    throw "Window not set" unless page?
+
     @analytics = analytics
+
+    page.onerror = (msg, url, lineNumber) =>
+      @error(msg, url, lineNumber)
 
   pageView: (url) ->
     # Don't track what people search for

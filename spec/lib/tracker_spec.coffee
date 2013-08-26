@@ -1,7 +1,12 @@
 describe 'BH.Lib.Tracker', ->
   beforeEach ->
+    @page = {}
     @analytics = push: jasmine.createSpy('push')
-    @tracker = new BH.Lib.Tracker(@analytics)
+    @tracker = new BH.Lib.Tracker(@analytics, @page)
+
+  describe '#constructor', ->
+    it 'listens for errors on the page', ->
+      expect(@page.onerror).toBeDefined()
 
   describe '#pageView', ->
     it 'tracks the current url fragment', ->
