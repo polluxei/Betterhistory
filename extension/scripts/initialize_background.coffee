@@ -1,4 +1,4 @@
-tracker = new BH.Lib.Tracker(_gaq)
+tracker = new BH.Lib.Tracker(_gaq, window)
 
 window.syncStore = new BH.Lib.SyncStore
   chrome: chrome
