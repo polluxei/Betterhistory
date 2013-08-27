@@ -26,7 +26,7 @@ module.exports = ->
     get: jasmine.createSpy("get").andCallFake((id, callback) ->
       callback url: "http://code.google.com/projects"
     )
-    onSelectionChanged:
+    onActivated:
       addListener: jasmine.createSpy("addListener")
 
     onUpdated:
