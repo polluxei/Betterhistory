@@ -1,26 +1,27 @@
-tracker = new BH.Lib.Tracker(_gaq, window)
+errorTracker = new BH.Trackers.ErrorTracker(Honeybadger)
+analyticsTracker = new BH.Trackers.AnalyticsTracker(_gaq)
 
 window.syncStore = new BH.Lib.SyncStore
   chrome: chrome
-  tracker: tracker
+  tracker: analyticsTracker
 
 browserActions = new BH.Lib.BrowserActions
   chrome: chrome
-  tracker: tracker
+  tracker: analyticsTracker
 browserActions.listen()
 
 omnibox = new BH.Lib.Omnibox
   chrome: chrome
-  tracker: tracker
+  tracker: analyticsTracker
 omnibox.listen()
 
 window.selectionContextMenu = new BH.Lib.SelectionContextMenu
   chrome: chrome
-  tracker: tracker
+  tracker: analyticsTracker
 
 window.pageContextMenu = new BH.Lib.PageContextMenu
   chrome: chrome
-  tracker: tracker
+  tracker: analyticsTracker
 pageContextMenu.listenToTabs()
 
 syncStore.get 'settings', (data) ->

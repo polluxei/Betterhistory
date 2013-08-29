@@ -9,6 +9,7 @@ class BH.Router extends Backbone.Router
 
   initialize: (options) ->
     settings = options.settings
+    tracker = options.tracker
     @state = options.state
 
     @app = new BH.Views.AppView
