@@ -84,10 +84,45 @@ describe 'BH.Trackers.AnalyticsTracker', ->
 
   describe '#localStorageError', ->
     it 'tracks a storage error', ->
-      @tracker.localStorageError('get', 'the error')
+      @analyticsTracker.localStorageError('get', 'the error')
       expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Storage Error', 'get', 'Local', 'the error'])
 
   describe '#mailingListPrompt', ->
     it 'tracks the mailing list prompt being seen', ->
       @analyticsTracker.mailingListPrompt()
       expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Mailing List Prompt', 'Seen'])
+
+  describe '#popupVisible', ->
+    it 'tracks the popup being seen', ->
+      @analyticsTracker.popupVisible()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Popup', 'Seen'])
+
+  describe '#exploreTagsPopupClick', ->
+    it 'tracks the explore tags click in the popup', ->
+      @analyticsTracker.exploreTagsPopupClick()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Popup', 'Explore Tags Click'])
+
+  describe '#searchByDomainPopupClick', ->
+    it 'tracks the search by domain click in the popup', ->
+      @analyticsTracker.searchByDomainPopupClick()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Popup', 'Search by Domain Click'])
+
+  describe '#viewAllHistoryPopupClick', ->
+    it 'tracks the view all history click in the popup', ->
+      @analyticsTracker.viewAllHistoryPopupClick()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Popup', 'View all History Click'])
+
+  describe '#addTagPopup', ->
+    it 'tracks the tagging of a site', ->
+      @analyticsTracker.addTagPopup()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Popup', 'Add Tag'])
+
+  describe '#removeTagPopup', ->
+    it 'tracks the removal of a tag from a site', ->
+      @analyticsTracker.removeTagPopup()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Popup', 'Remove Tag'])
+
+  describe '#tagPopupClick', ->
+    it 'tracks the click of a tag in the popup', ->
+      @analyticsTracker.tagPopupClick()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Popup', 'Tag Click'])

@@ -1,6 +1,7 @@
 class BH.Trackers.AnalyticsTracker
   constructor: (analytics) ->
     throw "Analytics not set" unless analytics?
+
     @analytics = analytics
 
   pageView: (url) ->
@@ -55,6 +56,27 @@ class BH.Trackers.AnalyticsTracker
 
   mailingListPrompt: ->
     @trackEvent(['Mailing List Prompt', 'Seen'])
+
+  popupVisible: ->
+    @trackEvent(['Popup', 'Seen'])
+
+  exploreTagsPopupClick: ->
+    @trackEvent(['Popup', 'Explore Tags Click'])
+
+  searchByDomainPopupClick: ->
+    @trackEvent(['Popup', 'Search by Domain Click'])
+
+  viewAllHistoryPopupClick: ->
+    @trackEvent(['Popup', 'View all History Click'])
+
+  addTagPopup: ->
+    @trackEvent(['Popup', 'Add Tag'])
+
+  removeTagPopup: ->
+    @trackEvent(['Popup', 'Remove Tag'])
+
+  tagPopupClick: ->
+    @trackEvent(['Popup', 'Tag Click'])
 
   trackEvent: (params) ->
     params.unshift('_trackEvent')

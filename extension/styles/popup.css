@@ -54,6 +54,10 @@ body {
   font-size: 13px;
   margin: 0;
   font-weight: bold;
+  white-space: nowrap;
+  background-image: -webkit-gradient(linear, left top, right top, color-stop(90%, #000), to(white));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 input[type=text] {
   width: 225px;
@@ -61,7 +65,18 @@ input[type=text] {
 .url {
   font-size: 11px;
   padding-bottom: 5px;
-  color: #AAA;
+  color: #999;
+  white-space: nowrap;
+  background-image: -webkit-gradient(linear, left top, right top, color-stop(90%, #999), to(white));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.scroll {
+  -webkit-transition: all 3s ease;
+  position: relative;
+}
+.header {
+  border-bottom: 1px solid #DDD;
 }
 .container {
   padding: 10px;

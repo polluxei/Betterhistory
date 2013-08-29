@@ -26,6 +26,7 @@ styles = [
 
 popupScripts = [
   'scripts/namespace.js',
+  'scripts/frameworks/honeybadger.js',
   'scripts/frameworks/underscore.js',
   'scripts/frameworks/zepto.min.js',
   'scripts/frameworks/backbone.js',
@@ -33,7 +34,8 @@ popupScripts = [
   'scripts/frameworks/analytics.js',
   'scripts/frameworks/mixin.js',
   'scripts/templates.js',
-  'scripts/lib/tracker.js',
+  'scripts/trackers/error_tracker.js',
+  'scripts/trackers/analytics_tracker.js',
   'scripts/lib/local_store.js',
   'scripts/modules/i18n.js',
   'scripts/modules/url.js',

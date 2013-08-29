@@ -1,8 +1,9 @@
-tracker = new BH.Lib.Tracker(_gaq)
+errorTracker = new BH.Trackers.ErrorTracker(Honeybadger)
+analyticsTracker = new BH.Trackers.AnalyticsTracker(_gaq)
 
 localStore = new BH.Lib.LocalStore
   chrome: chrome
-  tracker: tracker
+  tracker: analyticsTracker
 
 site = new BH.Models.Site {},
   chrome: chrome
@@ -11,5 +12,6 @@ site = new BH.Models.Site {},
 taggingView = new BH.Views.TaggingView
   el: $('.app')
   model: site
+  tracker: analyticsTracker
 
 site.fetch()

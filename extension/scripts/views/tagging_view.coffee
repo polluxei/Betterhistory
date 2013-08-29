@@ -14,11 +14,13 @@ class BH.Views.TaggingView extends BH.Views.MainView
 
   initialize: ->
     @chromeAPI = chrome
+    @tracker = @options.tracker
     @model.on('change:url', @render, @)
     @model.on('change:tags', @renderTags, @)
 
   render: ->
     html = Mustache.to_html(@template, @model.toJSON())
+    @tracker.popupVisible()
     @$el.html html
     setTimeout =>
       @$('#tag_name').focus()
@@ -29,20 +31,24 @@ class BH.Views.TaggingView extends BH.Views.MainView
     @activeTagsView.remove() if @activeTagsView
     @activeTagsView = new BH.Views.ActiveTagsView
       model: @model
+      tracker: @tracker
     @$('.active_tags').html @activeTagsView.render().el
 
   viewHistoryClicked: (ev) ->
     ev.preventDefault()
+    @tracker.viewAllHistoryPopupClick()
     chrome.tabs.create
       url: $(ev.currentTarget).attr('href')
 
   exploreTagsClicked: (ev) ->
     ev.preventDefault()
+    @tracker.exploreTagsPopupClick()
     chrome.tabs.create
       url: $(ev.currentTarget).attr('href')
 
   searchDomainClicked: (ev) ->
     ev.preventDefault()
+    @tracker.searchByDomainPopupClick()
     chrome.tabs.create
       url: $(ev.currentTarget).attr('href')
 
@@ -51,6 +57,7 @@ class BH.Views.TaggingView extends BH.Views.MainView
     $tagName = @$('#tag_name')
     tag = $tagName.val()
     $tagName.val('')
+    @tracker.addTagPopup()
 
     if @model.addTag(tag) == false
       if parent = $("[data-tag='#{tag}']").parents('li')
