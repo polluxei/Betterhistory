@@ -22,6 +22,8 @@ class BH.Lib.SyncStore
     if @chromeAPI.runtime.lastError?
       message = @chromeAPI.runtime.lastError?.message
       @tracker.syncStorageError(operation, message)
+    else
+      @tracker.syncStorageAccess(operation)
     callback(data)
 
   # Keep localStorage clean. Use Chrome storage

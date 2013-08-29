@@ -55,6 +55,9 @@ class BH.Lib.Tracker
   syncStorageError: (operation, msg) ->
     @trackEvent(['Storage Error', operation, 'Sync', msg])
 
+  syncStorageAccess: (operation) ->
+    @trackEvent(['Storage Access', operation, 'Sync'])
+
   mailingListPrompt: ->
     @trackEvent(['Mailing List Prompt', 'Seen'])
 
