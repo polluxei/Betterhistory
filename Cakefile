@@ -20,6 +20,7 @@ styles = [
 
 scripts = [
   'scripts/namespace.js',
+  'scripts/frameworks/honeybadger.js',
   'scripts/frameworks/underscore.js',
   'scripts/frameworks/zepto.min.js',
   'scripts/frameworks/backbone.js',
@@ -33,10 +34,11 @@ scripts = [
   'scripts/modules/i18n.js',
   'scripts/modules/url.js',
   'scripts/modules/worker.js',
+  'scripts/trackers/error_tracker.js',
+  'scripts/trackers/analytics_tracker.js',
   'scripts/lib/date_i18n.js',
   'scripts/lib/history_query.js',
   'scripts/lib/pagination.js',
-  'scripts/lib/tracker.js',
   'scripts/lib/sync_store.js',
   'scripts/views/modal_view.js',
   'scripts/views/main_view.js',

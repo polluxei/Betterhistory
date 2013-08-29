@@ -23,16 +23,18 @@
   "background": {
     "scripts": [
       "scripts/namespace.js",
+      "scripts/frameworks/honeybadger.js",
       "scripts/frameworks/mixin.js",
       "scripts/frameworks/analytics.js",
       "scripts/modules/worker.js",
       "scripts/modules/i18n.js",
       "scripts/modules/url.js",
+      "scripts/trackers/error_tracker.js",
+      "scripts/trackers/analytics_tracker.js",
       "scripts/lib/page_context_menu.js",
       "scripts/lib/selection_context_menu.js",
       "scripts/lib/browser_actions.js",
       "scripts/lib/omnibox.js",
-      "scripts/lib/tracker.js",
       "scripts/lib/sync_store.js",
       "scripts/initialize_background.js"
     ],

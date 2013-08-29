@@ -1,8 +1,9 @@
-window.tracker = new BH.Lib.Tracker(_gaq, window)
+window.errorTracker = new BH.Trackers.ErrorTracker(Honeybadger)
+window.analyticsTracker = new BH.Trackers.AnalyticsTracker(_gaq)
 
 window.syncStore = new BH.Lib.SyncStore
   chrome: chrome
-  tracker: tracker
+  tracker: analyticsTracker
 
 syncStore.migrate(localStorage)
 
@@ -19,6 +20,7 @@ settings.fetch
         window.router = new BH.Router
           settings: settings
           state: state
+          tracker: analyticsTracker
 
         Backbone.history.start()
 
@@ -30,7 +32,6 @@ syncStore.get ['mailingListPromptTimer', 'mailingListPromptSeen'], (data) ->
       new BH.Views.MailingListView().open()
       syncStore.remove 'mailingListPromptTimer'
       syncStore.set mailingListPromptSeen: true
-      tracker.mailingListPrompt()
+      analyticsTracker.mailingListPrompt()
     else
       syncStore.set mailingListPromptTimer: (mailingListPromptTimer - 1)
-

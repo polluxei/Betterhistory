@@ -1,6 +1,10 @@
 VERSION=$(shell grep -E '"version":.*?[^\\]",' package.json | sed 's/[^0-9\.]//g')
+
 DEV_ANALYTICS=$(shell grep -E '"dev_analytics":.*?[^\\]",' package.json | sed 's/.*:[^\s][^.*]//g' | sed s/\",//g)
 PROD_ANALYTICS=$(shell grep -E '"prod_analytics":.*?[^\\]"' package.json | sed 's/.*:[^\s][^.*]//g' | sed s/\"//g)
+
+DEV_ERROR_TRACKING=$(shell grep -E '"dev_error_tracking":.*?[^\\]",' package.json | sed 's/.*:[^\s][^.*]//g' | sed s/\",//g)
+PROD_ERROR_TRACKING=$(shell grep -E '"prod_error_tracking":.*?[^\\]"' package.json | sed 's/.*:[^\s][^.*]//g' | sed s/\"//g)
 
 build:
 	rm -fr build
@@ -17,6 +21,7 @@ build:
 	sed -i '' 's/\$$VERSION\$$/${VERSION}/g' build/manifest.json
 	sed -i '' 's/\$$LABEL\$$/ DEV/g' build/manifest.json
 	sed -i '' 's/\$$ANALYTICS_ID\$$/${DEV_ANALYTICS}/g' build/scripts/frameworks/analytics.js
+	sed -i '' 's/\$$ERROR_TRACKER_ID\$$/${DEV_ERROR_TRACKING}/g' build/scripts/trackers/error_tracker.js
 
 release: build
 	coffee -c build/scripts/
@@ -25,6 +30,7 @@ release: build
 	sed -i '' 's/\$$VERSION\$$/${VERSION}/g' build/manifest.json
 	sed -i '' 's/\$$LABEL\$$//g' build/manifest.json
 	sed -i '' 's/\$$ANALYTICS_ID\$$/${PROD_ANALYTICS}/g' build/scripts/frameworks/analytics.js
+	sed -i '' 's/\$$ERROR_TRACKER_ID\$$/${PROD_ERROR_TRACKING}/g' build/scripts/trackers/error_tracker.js
 	cake build:assets:prod
 	./node_modules/uglify-js/bin/uglifyjs build/scripts.js -o build/scripts.js
 	rm -f extension.zip

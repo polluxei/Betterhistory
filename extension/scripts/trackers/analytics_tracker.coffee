@@ -1,12 +1,7 @@
-class BH.Lib.Tracker
-  constructor: (analytics, page) ->
+class BH.Trackers.AnalyticsTracker
+  constructor: (analytics) ->
     throw "Analytics not set" unless analytics?
-    throw "Window not set" unless page?
-
     @analytics = analytics
-
-    page.onerror = (msg, url, lineNumber) =>
-      @error(msg, url, lineNumber)
 
   pageView: (url) ->
     # Don't track what people search for
@@ -48,9 +43,6 @@ class BH.Lib.Tracker
 
   selectionContextMenuClick: ->
     @trackEvent(['Selection context menu', 'Click'])
-
-  error: (msg, url, lineNumber) ->
-    @trackEvent(['Error', msg, url, lineNumber])
 
   syncStorageError: (operation, msg) ->
     @trackEvent(['Storage Error', operation, 'Sync', msg])
