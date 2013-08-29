@@ -24,7 +24,7 @@ class BH.Lib.PageContextMenu extends BH.Base
     if data.menuItemId == @id
       urlOptions = absolute: true
       url = if domain = @getDomain(data.pageUrl)
-        @urlFor('search', @getDomain(data.pageUrl), urlOptions)
+        @urlFor('search', domain, urlOptions)
       else
         "chrome://history/#search"
 
@@ -33,7 +33,7 @@ class BH.Lib.PageContextMenu extends BH.Base
       @chromeAPI.tabs.create
         url: url
 
-  updateTitleDomain: (tab) ->
+  updateTitleDomain: (tab = {}) ->
     if domain = @getDomain(tab.url)
       @chromeAPI.contextMenus.update @menu,
         title: @t('visits_to_domain', [domain])
@@ -50,13 +50,13 @@ class BH.Lib.PageContextMenu extends BH.Base
       @updateTitleDomain(tab)
 
   onTabUpdated: (tab) ->
-    @updateTitleDomain(tab) if tab.selected
+    @updateTitleDomain(tab) if tab?.selected
 
   remove: ->
     @chromeAPI.contextMenus.remove(@menu)
     delete(@menu)
 
-  getDomain: (url) ->
+  getDomain: (url = '') ->
     match = url.match(/\w+:\/\/(.*?)\//)
     if match? then match[1].replace('www.', '') else false
 
