@@ -18,7 +18,7 @@ class BH.Lib.SyncStore
     @chromeAPI.storage.sync.get key, (data) =>
       @wrappedCallback('Get', data, callback)
 
-  wrappedCallback: (operation, data, callback) ->
+  wrappedCallback: (operation, data = {}, callback) ->
     if @chromeAPI.runtime.lastError?
       message = @chromeAPI.runtime.lastError?.message
       @tracker.syncStorageError(operation, message)

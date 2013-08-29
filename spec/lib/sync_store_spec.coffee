@@ -39,6 +39,10 @@ describe 'BH.Lib.SyncStore', ->
       @syncStore.wrappedCallback('get', 'data', @callback)
       expect(@callback).toHaveBeenCalledWith('data')
 
+    it 'returns an empty object when no data is provided', ->
+      @syncStore.wrappedCallback('get', null, @callback)
+      expect(@callback).toHaveBeenCalledWith({})
+
     it 'does not report any errors', ->
       @syncStore.wrappedCallback('get', 'data', @callback)
       expect(@tracker.syncStorageError).not.toHaveBeenCalled()
