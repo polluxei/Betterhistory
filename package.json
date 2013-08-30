@@ -14,8 +14,7 @@
   "config": {
     "dev_analytics": "UA-43184519-1",
     "prod_analytics": "UA-43186716-1",
-    "dev_error_tracking": "0a6636abe432699d814cc416b62d7251",
-    "prod_error_tracking": "eb2245d5729a3c65d7e429f4e7690a62"
+    "error_tracking": "eb2245d5729a3c65d7e429f4e7690a62"
   },
   "devDependencies": {
     "chrome-bootstrap": "git://github.com/roykolak/chrome-bootstrap.git#v1.0.0",
