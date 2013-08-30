@@ -1,34 +1,37 @@
 errorTracker = new BH.Trackers.ErrorTracker(Honeybadger)
 analyticsTracker = new BH.Trackers.AnalyticsTracker(_gaq)
 
-window.syncStore = new BH.Lib.SyncStore
-  chrome: chrome
-  tracker: analyticsTracker
+try
+  window.syncStore = new BH.Lib.SyncStore
+    chrome: chrome
+    tracker: analyticsTracker
 
-browserActions = new BH.Lib.BrowserActions
-  chrome: chrome
-  tracker: analyticsTracker
-browserActions.listen()
+  browserActions = new BH.Lib.BrowserActions
+    chrome: chrome
+    tracker: analyticsTracker
+  browserActions.listen()
 
-omnibox = new BH.Lib.Omnibox
-  chrome: chrome
-  tracker: analyticsTracker
-omnibox.listen()
+  omnibox = new BH.Lib.Omnibox
+    chrome: chrome
+    tracker: analyticsTracker
+  omnibox.listen()
 
-window.selectionContextMenu = new BH.Lib.SelectionContextMenu
-  chrome: chrome
-  tracker: analyticsTracker
+  window.selectionContextMenu = new BH.Lib.SelectionContextMenu
+    chrome: chrome
+    tracker: analyticsTracker
 
-window.pageContextMenu = new BH.Lib.PageContextMenu
-  chrome: chrome
-  tracker: analyticsTracker
-pageContextMenu.listenToTabs()
+  window.pageContextMenu = new BH.Lib.PageContextMenu
+    chrome: chrome
+    tracker: analyticsTracker
+  pageContextMenu.listenToTabs()
 
-syncStore.get 'settings', (data) ->
-  settings = data.settings || {}
+  syncStore.get 'settings', (data) ->
+    settings = data.settings || {}
 
-  if settings.searchBySelection != false
-    selectionContextMenu.create()
+    if settings.searchBySelection != false
+      selectionContextMenu.create()
 
-  if settings.searchByDomain != false
-    pageContextMenu.create()
+    if settings.searchByDomain != false
+      pageContextMenu.create()
+catch e
+  errorTracker.report e
