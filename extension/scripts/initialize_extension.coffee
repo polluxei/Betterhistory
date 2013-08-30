@@ -5,8 +5,6 @@ window.syncStore = new BH.Lib.SyncStore
   chrome: chrome
   tracker: analyticsTracker
 
-syncStore.migrate(localStorage)
-
 new BH.Lib.DateI18n().configure()
 
 settings = new BH.Models.Settings({})

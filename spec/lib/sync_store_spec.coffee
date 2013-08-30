@@ -58,20 +58,3 @@ describe 'BH.Lib.SyncStore', ->
       it 'calls to the tracker', ->
         @syncStore.wrappedCallback('get', 'data', @callback)
         expect(@tracker.syncStorageError).toHaveBeenCalledWith('get', 'the error')
-
-  describe '#migrate', ->
-    beforeEach ->
-      @dataSource =
-        mailingListPromptTimer: '2'
-        state: "{\"route\":\"#weeks/8-12-13\"}"
-
-    it 'calls the chrome api to set the data for each key in the data source', ->
-      @syncStore.migrate(@dataSource)
-      expect(chrome.storage.sync.set).toHaveBeenCalledWith({mailingListPromptTimer: 2}, jasmine.any(Function))
-      expect(chrome.storage.sync.set).toHaveBeenCalledWith({state: {route: "#weeks/8-12-13"}}, jasmine.any(Function))
-
-    it 'deletes the keys and data on the passed data source', ->
-      modifiedSource = @syncStore.migrate(@dataSource)
-      expect(modifiedSource.mailingListPromptTimer).toBeUndefined()
-      expect(modifiedSource.state).toBeUndefined()
-

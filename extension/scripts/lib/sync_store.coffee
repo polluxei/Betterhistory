@@ -25,12 +25,3 @@ class BH.Lib.SyncStore
     else
       @tracker.syncStorageAccess(operation)
     callback(data)
-
-  # Keep localStorage clean. Use Chrome storage
-  migrate: (dataSource) ->
-    for key,value of dataSource
-      data = {}
-      data[key] = JSON.parse(dataSource[key])
-      @set data
-      delete dataSource[key]
-    dataSource
