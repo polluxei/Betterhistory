@@ -1,7 +1,7 @@
 VERSION=$(shell grep -E '"version":.*?[^\\]",' package.json | sed 's/[^0-9\.]//g')
 
 DEV_ANALYTICS=$(shell grep -E '"dev_analytics":.*?[^\\]",' package.json | sed 's/.*:[^\s][^.*]//g' | sed s/\",//g)
-PROD_ANALYTICS=$(shell grep -E '"prod_analytics":.*?[^\\]"' package.json | sed 's/.*:[^\s][^.*]//g' | sed s/\"//g)
+PROD_ANALYTICS=$(shell grep -E '"prod_analytics":.*?[^\\]",' package.json | sed 's/.*:[^\s][^.*]//g' | sed s/\",//g)
 
 ERROR_TRACKING=$(shell grep -E '"error_tracking":.*?[^\\]"' package.json | sed 's/.*:[^\s][^.*]//g' | sed s/\"//g)
 
