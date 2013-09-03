@@ -10,7 +10,7 @@ class BH.Lib.BrowserActions extends BH.Base
     @tracker = options.tracker
 
   listen: ->
-    @chromeAPI.browserAction.onClicked.addListener =>
+    @chromeAPI.browserAction?.onClicked.addListener =>
       @openHistory()
 
   openHistory: ->
