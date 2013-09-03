@@ -9,15 +9,15 @@ class BH.Lib.Omnibox extends BH.Base
     @tracker = options.tracker
 
   listen: ->
-    @chromeAPI.omnibox.onInputChanged.addListener (text, suggest) =>
+    @chromeAPI.omnibox?.onInputChanged.addListener (text, suggest) =>
       @setDefaultSuggestion(text)
 
-    @chromeAPI.omnibox.onInputEntered.addListener (text) =>
+    @chromeAPI.omnibox?.onInputEntered.addListener (text) =>
       @tracker.omniboxSearch()
       @getActiveTab (tabId) => @updateTabURL(tabId, text)
 
   setDefaultSuggestion: (text) ->
-    @chromeAPI.omnibox.setDefaultSuggestion
+    @chromeAPI.omnibox?.setDefaultSuggestion
       description: "Search <match>#{text}</match> in history"
 
   getActiveTab: (callback) ->
