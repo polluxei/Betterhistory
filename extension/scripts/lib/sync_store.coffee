@@ -23,5 +23,6 @@ class BH.Lib.SyncStore
       message = @chromeAPI.runtime.lastError?.message
       @tracker.syncStorageError(operation, message)
     else
-      @tracker.syncStorageAccess(operation)
+      # Don't track Get access because it happens a lot
+      @tracker.syncStorageAccess(operation) if operation != 'Get'
     callback(data)

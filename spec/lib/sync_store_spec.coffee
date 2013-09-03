@@ -48,6 +48,13 @@ describe 'BH.Lib.SyncStore', ->
       @syncStore.wrappedCallback('get', 'data', @callback)
       expect(@tracker.syncStorageError).not.toHaveBeenCalled()
 
+    it 'calls to the tracker when the operation is not get', ->
+      @syncStore.wrappedCallback('Set', null, @callback)
+      expect(@tracker.syncStorageAccess).toHaveBeenCalledWith 'Set'
+
+    it 'does not call to the tracker when the operation is Get', ->
+      @syncStore.wrappedCallback('Get', null, @callback)
+      expect(@tracker.syncStorageAccess).not.toHaveBeenCalled()
     describe "when as error is detected", ->
       beforeEach ->
         chrome.runtime = lastError: message: 'the error'
