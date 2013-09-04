@@ -8,23 +8,35 @@ class BH.Views.Cache
     @cache =
       weeks: {}
       days: {}
+      tags: {}
 
   tagsView: ->
-    if !@cache.tags
-      @cache.tags = new BH.Views.TagsView
-        state: @state
-      @insert @cache.tags.render().el
+    if !@cache.allTags
+      tags = new BH.Collections.Tags {},
+        chrome: chrome
+        localStore: localStore
 
-    @cache.tags
+      @cache.allTags = new BH.Views.TagsView
+        collection: tags
+        state: @state
+
+      @insert @cache.allTags.render().el
+
+    @cache.allTags
 
   tagView: (id) ->
-    if !@cache.tag
-      @cache.tag = new BH.Views.TagView
-        name: id
-        state: @state
-      @insert @cache.tag.render().el
+    if !@cache.tags[id]
+      tag = new BH.Models.Tag name: id,
+        chrome: chrome
+        localStore: localStore
 
-    @cache.tag
+      @cache.tags[id] = new BH.Views.TagView
+        name: id
+        model: tag
+        state: @state
+      @insert @cache.tags[id].render().el
+
+    @cache.tags[id]
 
   weekView: (id) ->
     if !@cache.weeks[id]

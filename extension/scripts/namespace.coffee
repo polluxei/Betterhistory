@@ -8,6 +8,7 @@
   Modules: {}
   Templates: {}
   Trackers: {}
+  Presenters: {}
   Base: ->
 
 module.exports = @BH if onServer?

@@ -45,7 +45,11 @@ require '../extension/scripts/models/week_history.coffee'
 require '../extension/scripts/models/search_history.coffee'
 require '../extension/scripts/models/settings.coffee'
 require '../extension/scripts/models/site.coffee'
+require '../extension/scripts/models/tag.coffee'
 require '../extension/scripts/collections/weeks.coffee'
 require '../extension/scripts/collections/visits.coffee'
+require '../extension/scripts/collections/tags.coffee'
+require '../extension/scripts/presenters/tag_presenter.coffee'
+require '../extension/scripts/presenters/tags_presenter.coffee'
 
 new BH.Lib.DateI18n().configure()

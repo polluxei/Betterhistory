@@ -1,0 +1,23 @@
+<ul class='collections'>
+  {{#tags}}
+    <li>
+    <a href='#tags/{{name}}'>
+        <div class='label'>
+          <h3 class='title'>{{name}}</h3>
+          <ul class='favicons'>
+            {{#sites}}
+            <li>
+              <div class='favicon' style='background-image: url(chrome://favicon/{{url}})'></div>
+            </li>
+            {{/sites}}
+          </ul>
+          <div class='count'>{{count}} visits</div>
+        </div>
+      </a>
+    </li>
+  {{/tags}}
+</ul>
+{{^tags}}
+  <p class='no_results'>{{i18n_no_tags_found}}</p>
+{{/tags}}
+

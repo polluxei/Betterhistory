@@ -10,6 +10,7 @@ class BH.Views.TagsView extends BH.Views.MainView
 
   initialize: ->
     @chromeAPI = chrome
+    @collection.on 'reset', @onTagsLoaded, @
 
   pageTitle: ->
     @t('collections_title')
@@ -18,6 +19,17 @@ class BH.Views.TagsView extends BH.Views.MainView
     html = Mustache.to_html @template, @getI18nValues()
     @$el.append html
     @
+
+  onTagsLoaded: ->
+    tag_count = @t 'number_of_collections', [@collection.length]
+    @$('.tag_count').text tag_count
+    @renderTags()
+
+  renderTags: ->
+    @tagsListView.remove() if @tagsListView
+    @tagsListView = new BH.Views.TagsListView
+      collection: @collection
+    @$('.content').html @tagsListView.render().el
 
   onDeleteTagsClicked: (ev) ->
     @promptToDeleteTags()
@@ -30,11 +42,9 @@ class BH.Views.TagsView extends BH.Views.MainView
 
   promptAction: (prompt) ->
     if prompt.get('action')
-      track.dayVisitsDeletion()
-      @history.destroy()
-      @history.fetch
-        success: =>
-          @promptView.close()
+      @collection.destroy()
+      @collection.fetch()
+      @promptView.close()
     else
       @promptView.close()
 

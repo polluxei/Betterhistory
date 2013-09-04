@@ -924,7 +924,7 @@
     "description": "Collections link text in the main nav"
   },
   "collections_title": {
-    "message": "Tagged Sites",
+    "message": "All Tags",
     "description": "Collections title text in the collections view"
   },
   "collection_title": {
@@ -978,5 +978,13 @@
         "example": "1,2,3,..."
       }
     }
+  },
+  "no_tagged_sites_found": {
+    "message": "Sorry couldn't find any tagged sites",
+    "description": "message for a tag with no sites"
+  },
+  "no_tags_found": {
+    "message": "No tags found, you should tag some sites!",
+    "description": "message for no tags found"
   }
 }

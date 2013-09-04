@@ -35,10 +35,12 @@ class BH.Router extends Backbone.Router
   tags: ->
     view = @app.loadTags()
     view.select()
+    @_delay -> view.collection.fetch()
 
   tag: (id) ->
     view = @app.loadTag(id)
     view.select()
+    @_delay -> view.model.fetch()
 
   week: (id) ->
     view = @app.loadWeek(id)

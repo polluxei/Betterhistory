@@ -10,6 +10,7 @@ class BH.Views.TagView extends BH.Views.MainView
 
   initialize: ->
     @chromeAPI = chrome
+    @model.on 'change', @onSitesLoaded, @
 
   pageTitle: ->
     @t('collection_title', [@options.name])
@@ -19,6 +20,15 @@ class BH.Views.TagView extends BH.Views.MainView
     html = Mustache.to_html @template, properties
     @$el.append html
     @
+
+  onSitesLoaded: ->
+    @renderTaggedSites()
+
+  renderTaggedSites: ->
+    @taggedSitesView.remove() if @taggedSitesView
+    @taggedSitesView = new BH.Views.TaggedSitesView
+      model: @model
+    @$('.content').html @taggedSitesView.render().el
 
   onDeleteSitesClicked: (ev) ->
     @promptToDeleteAllSites()
@@ -31,10 +41,8 @@ class BH.Views.TagView extends BH.Views.MainView
 
   promptAction: (prompt) ->
     if prompt.get('action')
-      track.dayVisitsDeletion()
-      @history.destroy()
-      @history.fetch
-        success: =>
+      @model.destroy =>
+        @model.fetch =>
           @promptView.close()
     else
       @promptView.close()

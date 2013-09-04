@@ -6,6 +6,10 @@ try
     chrome: chrome
     tracker: analyticsTracker
 
+  window.localStore = new BH.Lib.LocalStore
+    chrome: chrome
+    tracker: analyticsTracker
+
   new BH.Lib.DateI18n().configure()
 
   settings = new BH.Models.Settings({})
