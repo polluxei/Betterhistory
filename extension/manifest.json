@@ -54,11 +54,7 @@
     "history",
     "tabs",
     "contextMenus",
-    "storage",
-    "notifications",
-    "infobars",
-    "http://*/*",
-    "https://*/*"
+    "storage"
   ],
   "content_security_policy": "script-src 'self' https://ssl.google-analytics.com https://platform.twitter.com https://apis.google.com; object-src 'self'"
 }
