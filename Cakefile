@@ -94,6 +94,7 @@ scripts = [
   'scripts/views/tags_list_view.js',
   'scripts/views/tag_view.js',
   'scripts/views/tagged_sites_view.js',
+  'scripts/views/rename_tag_view.js',
   'scripts/models/history.js',
   'scripts/models/day.js',
   'scripts/models/day_history.js',

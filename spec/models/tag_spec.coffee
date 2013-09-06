@@ -4,6 +4,7 @@ describe 'BH.Models.Tag', ->
       fetchTagSites: jasmine.createSpy('fetchTagSites')
       removeTag: jasmine.createSpy('removeTag')
       removeSiteFromTag: jasmine.createSpy('removeSiteFromTag')
+      renameTag: jasmine.createSpy('renameTag')
 
     @tag = new BH.Models.Tag name: 'recipes',
       persistence: persistence
@@ -70,3 +71,21 @@ describe 'BH.Models.Tag', ->
             datetime: new Date('4/2/13').getTime()
           }
         ]
+
+  describe '#renameTag', ->
+    beforeEach ->
+      @tag.persistence.renameTag.andCallFake (oldTag, newTag, callback) ->
+        callback()
+
+    it 'calls to the persistence to rename the tag', ->
+      @tag.renameTag('baking')
+      expect(@tag.persistence.renameTag).toHaveBeenCalledWith 'recipes', 'baking', jasmine.any(Function)
+
+    it 'sets the name on the model', ->
+      @tag.renameTag 'baking', =>
+        expect(@tag.get('name')).toEqual 'baking'
+
+    it 'calls the passed callback', ->
+      callback = jasmine.createSpy('callback')
+      @tag.renameTag('baking', callback)
+      expect(callback).toHaveBeenCalled()

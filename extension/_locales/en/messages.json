@@ -986,5 +986,27 @@
   "no_tags_found": {
     "message": "No tags found, you should tag some sites!",
     "description": "message for no tags found"
+  },
+  "rename_tag_link": {
+    "message": "Rename",
+    "description": "rename link text from tags"
+  },
+  "rename_tag_title": {
+    "message": "Rename $name$ tag",
+    "description": "rename link text from tags",
+    "placeholders": {
+      "name": {
+        "content": "$1",
+        "example": "tech, cooking, news, etc..."
+      }
+    }
+  },
+  "rename_tag_button": {
+    "message": "Rename",
+    "description": "rename button text"
+  },
+  "new_tag_placeholder": {
+    "message": "New name",
+    "description": "placeholder text for tag rename input"
   }
 }

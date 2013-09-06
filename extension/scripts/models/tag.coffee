@@ -17,3 +17,8 @@ class BH.Models.Tag extends Backbone.Model
     @persistence.removeSiteFromTag url, @get('name'), (sites) =>
       @set sites: sites
       callback()
+
+  renameTag: (name, callback = ->) ->
+    @persistence.renameTag @get('name'), name, =>
+      @set name: name
+      callback()

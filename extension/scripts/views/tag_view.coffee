@@ -1,5 +1,6 @@
 class BH.Views.TagView extends BH.Views.MainView
   @include BH.Modules.I18n
+  @include BH.Modules.Url
 
   className: 'tag_view with_controls'
 
@@ -7,10 +8,12 @@ class BH.Views.TagView extends BH.Views.MainView
 
   events:
     'click .delete_sites': 'onDeleteSitesClicked'
+    'click .rename': 'onRenameClicked'
 
   initialize: ->
     @chromeAPI = chrome
     @model.on 'change', @onSitesLoaded, @
+    @model.on 'change:name', @onNameChange, @
 
   pageTitle: ->
     @t('collection_title', [@options.name])
@@ -24,6 +27,10 @@ class BH.Views.TagView extends BH.Views.MainView
   onSitesLoaded: ->
     @renderTaggedSites()
 
+  onNameChange: ->
+    router.navigate @urlFor('tag', @model.get('name')),
+      trigger: true
+
   renderTaggedSites: ->
     @taggedSitesView.remove() if @taggedSitesView
     @taggedSitesView = new BH.Views.TaggedSitesView
@@ -32,6 +39,13 @@ class BH.Views.TagView extends BH.Views.MainView
 
   onDeleteSitesClicked: (ev) ->
     @promptToDeleteAllSites()
+
+  onRenameClicked: (ev) ->
+    ev.preventDefault()
+    renameTagView = new BH.Views.RenameTagView
+      model: @model
+    $('body').append(renameTagView.render().el)
+    renameTagView.open()
 
   promptToDeleteAllSites: ->
     promptMessage = @t('confirm_delete_all_sites_in_collection', [@options.name])
@@ -49,7 +63,7 @@ class BH.Views.TagView extends BH.Views.MainView
 
   getI18nValues: ->
     name = @options.name.charAt(0).toUpperCase() + @options.name.slice(1)
-    properties = @t ['delete_all_sites_in_collection', 'search_input_placeholder_text']
+    properties = @t ['delete_all_sites_in_collection', 'search_input_placeholder_text', 'rename_tag_link']
     properties['i18n_collection_title'] = @t 'collection_title', [name]
     properties['i18n_back_to_collections_link'] = @t('back_to_collections_link', [
       @t('back_arrow')
