@@ -19,7 +19,7 @@ describe 'BH.Presenters.TagPresenter', ->
 
     model = new BH.Models.Tag attrs,
       chrome: {}
-      localStore: {}
+      persistence: {}
 
     @presenter = new BH.Presenters.TagPresenter(model)
 

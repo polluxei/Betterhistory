@@ -13,8 +13,7 @@ class BH.Views.Cache
   tagsView: ->
     if !@cache.allTags
       tags = new BH.Collections.Tags {},
-        chrome: chrome
-        localStore: localStore
+        persistence: new BH.Persistence.Tag(localStore: localStore)
 
       @cache.allTags = new BH.Views.TagsView
         collection: tags
@@ -27,8 +26,7 @@ class BH.Views.Cache
   tagView: (id) ->
     if !@cache.tags[id]
       tag = new BH.Models.Tag name: id,
-        chrome: chrome
-        localStore: localStore
+        persistence: new BH.Persistence.Tag(localStore: localStore)
 
       @cache.tags[id] = new BH.Views.TagView
         name: id

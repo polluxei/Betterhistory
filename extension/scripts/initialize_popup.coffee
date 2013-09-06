@@ -5,9 +5,12 @@ localStore = new BH.Lib.LocalStore
   chrome: chrome
   tracker: analyticsTracker
 
+persistence = new BH.Persistence.Tag
+  localStore: localStore
+
 site = new BH.Models.Site {},
   chrome: chrome
-  localStore: localStore
+  persistence: persistence
 
 taggingView = new BH.Views.TaggingView
   el: $('.app')

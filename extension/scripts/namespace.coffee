@@ -9,6 +9,7 @@
   Templates: {}
   Trackers: {}
   Presenters: {}
+  Persistence: {}
   Base: ->
 
 module.exports = @BH if onServer?

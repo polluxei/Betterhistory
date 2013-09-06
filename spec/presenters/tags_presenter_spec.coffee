@@ -45,9 +45,10 @@ describe 'BH.Presenters.TagsPresenter', ->
       sites: [@site8, @site9, @site7]
     }]
 
-    collection = new BH.Collections.Tags attrs,
-      chrome: {}
-      localStore: {}
+    collection = new BH.Collections.Tags [],
+      persistence: {}
+
+    collection.add attrs, persistence: {}
 
     @presenter = new BH.Presenters.TagsPresenter(collection)
 
