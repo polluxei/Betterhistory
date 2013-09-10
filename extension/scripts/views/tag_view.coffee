@@ -56,8 +56,8 @@ class BH.Views.TagView extends BH.Views.MainView
   promptAction: (prompt) ->
     if prompt.get('action')
       @model.destroy =>
-        @model.fetch =>
-          @promptView.close()
+      @promptView.close()
+      router.navigate '#tags', trigger: true
     else
       @promptView.close()
 
