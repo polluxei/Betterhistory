@@ -44,6 +44,7 @@ popupScripts = [
   'scripts/views/main_view.js',
   'scripts/views/tagging_view.js',
   'scripts/views/active_tags_view.js',
+  'scripts/presenters/site_presenter.js',
   'scripts/initialize_popup.js'
 ]
 
@@ -95,6 +96,9 @@ scripts = [
   'scripts/views/tag_view.js',
   'scripts/views/tagged_sites_view.js',
   'scripts/views/rename_tag_view.js',
+  'scripts/views/tag_visit_view.js',
+  'scripts/views/drag_and_tag_view.js',
+  'scripts/views/active_tags_view.js',
   'scripts/models/history.js',
   'scripts/models/day.js',
   'scripts/models/day_history.js',
@@ -110,6 +114,7 @@ scripts = [
   'scripts/models/week.js',
   'scripts/models/week_history.js',
   'scripts/models/tag.js',
+  'scripts/models/site.js',
   'scripts/collections/grouped_visits.js',
   'scripts/collections/intervals.js',
   'scripts/collections/visits.js',

@@ -5,19 +5,16 @@ describe 'BH.Models.Site', ->
       addSiteToTag: jasmine.createSpy('addSiteToTag')
       removeSiteFromTag: jasmine.createSpy('removeSiteFromTag')
 
-    @site = new BH.Models.Site {},
+    attrs =
+      url: 'http://www.recipes.com/pound_cake'
+      title: 'Pound cake recipe'
+
+    @site = new BH.Models.Site attrs,
       chrome: chrome
       persistence: persistence
 
   describe '#fetch', ->
     beforeEach ->
-      tabs = [{
-        url: 'http://www.recipes.com/pound_cake'
-        title: 'Pound cake recipe'
-      }]
-      chrome.tabs.query.andCallFake (options, callback) ->
-        callback(tabs)
-
       @site.persistence.fetchSiteTags.andCallFake (url, callback) ->
         callback ['recipes', 'cooking']
 
@@ -26,7 +23,6 @@ describe 'BH.Models.Site', ->
       expect(@site.toJSON()).toEqual
         url: 'http://www.recipes.com/pound_cake'
         title: 'Pound cake recipe'
-        domain: 'recipes.com'
         tags: ['recipes', 'cooking']
 
     it 'calls the passed callback', ->

@@ -22,6 +22,11 @@ class BH.Views.SearchResultsView extends Backbone.View
     @$el.html html
     @
 
+  attachDragging: ->
+    dragAndTagView = new BH.Views.DragAndTagView
+      model: @model
+    dragAndTagView.render()
+
   markMatches: (visit) ->
     regExp = titleMatch = locationMatch = timeMatch = null
 

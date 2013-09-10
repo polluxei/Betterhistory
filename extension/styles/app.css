@@ -1,3 +1,52 @@
+.tag_visit_view .tags {
+  margin: 0;
+}
+.tag_visit_view .page {
+  width: 430px;
+}
+.chrome-bootstrap .tag_visit_view .overlay .page .tags li {
+  margin: 3px 0 0;
+  display: inline-block;
+  background: #8AAAED;
+  color: #FFF;
+  padding: 3px 19px 3px 5px;
+  border-radius: 3px;
+  position: relative;
+}
+.tag_visit_view .tags .delete {
+  right: 3px;
+  top: 3px;
+  opacity: 1;
+}
+.tag_visit_view .tags a.tag {
+  color: #FFF;
+}
+.tag_visit_view .tags a:hover {
+  text-decoration: underline;
+}
+.menu .tags.pulse {
+  -webkit-animation: pulse 0.7s infinite alternate;
+  padding: 10px 0 10px 10px;
+  margin: -10px 0 -10px -10px;
+  width: 100px;
+  box-shadow: inset 0px 0px 7px -1px #EEE;
+  color: #000;
+}
+.menu .tags.over {
+  -webkit-animation: none;
+  background-color: #F0F6FE;
+}
+@-webkit-keyframes pulse {
+  0% {
+    background-color: #F0F6FE;
+  }
+  100% {
+    background-color: #FFF;
+  }
+}
+.chrome-bootstrap .frame .content {
+  overflow-x: visible;
+}
 .rename {
   margin-right: 15px;
 }
@@ -136,6 +185,47 @@
 .visit .show_visits {
   display: block;
 }
+.visits li.visit > .site {
+  padding-left: 15px;
+}
+.visits li.visit:hover > .drag_handle {
+  display: block;
+}
+.drag_handle {
+  z-index: 100;
+  width: 10px;
+  height: 41px;
+  position: absolute;
+  top: 2px;
+  left: 0;
+  display: none;
+}
+.search_view .drag_handle {
+  height: 95%;
+  top: 2px;
+}
+.drag_handle:hover {
+  cursor: move;
+  cursor: -webkit-grab;
+  display: block;
+}
+.visit.dragging .drag_handle {
+  display: block;
+}
+.visit.dragging .site {
+  background-color: #F0F6FE;
+  color: #555;
+}
+.visit.dragging a.action,
+.visit.dragging a.delete {
+  display: none;
+}
+.line {
+  width: 1px;
+  height: 100%;
+  float: left;
+  border-left: 1px solid #CCC;
+}
 .week_view .days .title {
   margin:0 0 3px;
 }
@@ -213,7 +303,31 @@
 .loaded .spinner {
   opacity: 0;
 }
-
+.tag_visit_view .site {
+  background-repeat: no-repeat;
+  padding: 10px 10px 10px 35px;
+  background-color: #F0F6FE;
+  background-position-y: 10px;
+  background-position-x: 10px;
+}
+.tag_visit_view .site {
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+.tag_visit_view .site .title {
+  color: #000;
+  background-image: -webkit-gradient(linear, left top, right top, color-stop(90%, #000), to(white));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.tag_visit_view .url {
+  font-size: 11px;
+  margin-top: 3px;
+  color: #999;
+  background-image: -webkit-gradient(linear, left top, right top, color-stop(90%, #999), to(white));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 .visit .description {
   background-repeat: no-repeat;
   padding: 0;

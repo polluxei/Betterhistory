@@ -18,7 +18,13 @@ class BH.Views.DayResultsView extends Backbone.View
     properties = _.extend @getI18nValues(), @model.toTemplate()
     html = Mustache.to_html @template, properties
     @$el.html html
+
     @
+
+  attachDragging: ->
+    dragAndTagView = new BH.Views.DragAndTagView
+      model: @model
+    dragAndTagView.render()
 
   visitClicked: (ev) ->
     if $(ev.target).hasClass('search_domain')

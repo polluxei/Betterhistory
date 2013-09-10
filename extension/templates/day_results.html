@@ -11,7 +11,7 @@
         {{#visits}}
           {{#isGrouped}}
             <li class='visit' data-id='{{id}}'>
-              <a href='{{url}}'>
+              <a href='{{url}}' class='site'>
                 <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
                   <dt>{{domain}}</dt>
                   <dd class='time'>{{time}}</dd>
@@ -31,8 +31,15 @@
               <a class='delete_grouped_visit delete' href='#' title='{{i18n_prompt_delete_button}}'>{{i18n_prompt_delete_button}}</a>
               <ol class='visits highlightable'>
                 {{#groupedVisits}}
-                  <li class='visit' data-id='{{id}}'>
-                    <a href='{{url}}'>
+                  <li class='visit' draggable='true' data-id='{{id}}'>
+                    <div class='drag_handle'>
+                      <div class='line'></div>
+                      <div class='line'></div>
+                      <div class='line'></div>
+                      <div class='line'></div>
+                      <div class='line'></div>
+                    </div>
+                    <a href='{{url}}' class='site'>
                       <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
                         <dt>{{{title}}}</dt>
                         <dd class='time'>{{time}}</dd>
@@ -47,8 +54,15 @@
             </li>
           {{/isGrouped}}
           {{^isGrouped}}
-            <li class='visit' data-id='{{id}}'>
-              <a href='{{url}}'>
+            <li class='visit' draggable='true' data-id='{{id}}'>
+              <div class='drag_handle'>
+                <div class='line'></div>
+                <div class='line'></div>
+                <div class='line'></div>
+                <div class='line'></div>
+                <div class='line'></div>
+              </div>
+              <a href='{{url}}' class='site'>
                 <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
                   <dt>{{{title}}}</dt>
                   <dd class='time'>{{time}}</dd>

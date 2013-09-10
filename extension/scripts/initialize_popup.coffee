@@ -8,13 +8,21 @@ localStore = new BH.Lib.LocalStore
 persistence = new BH.Persistence.Tag
   localStore: localStore
 
-site = new BH.Models.Site {},
-  chrome: chrome
-  persistence: persistence
+chrome.tabs.query active: true, (tabs) =>
+  tab = tabs[0] || {}
 
-taggingView = new BH.Views.TaggingView
-  el: $('.app')
-  model: site
-  tracker: analyticsTracker
+  attrs =
+    title: tab.title
+    url: tab.url
 
-site.fetch()
+  site = new BH.Models.Site attrs,
+    chrome: chrome
+    persistence: persistence
+
+  taggingView = new BH.Views.TaggingView
+    el: $('.app')
+    model: site
+    tracker: analyticsTracker
+  taggingView.render()
+
+  site.fetch()

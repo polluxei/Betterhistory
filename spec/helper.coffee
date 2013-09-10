@@ -52,5 +52,6 @@ require '../extension/scripts/collections/visits.coffee'
 require '../extension/scripts/collections/tags.coffee'
 require '../extension/scripts/presenters/tag_presenter.coffee'
 require '../extension/scripts/presenters/tags_presenter.coffee'
+require '../extension/scripts/presenters/site_presenter.coffee'
 
 new BH.Lib.DateI18n().configure()

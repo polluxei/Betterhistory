@@ -1,7 +1,14 @@
 <ol class='visits highlightable editable'>
   {{#visits}}
-    <li class='visit visit_view'>
-      <a data-id='{{id}}' href='{{url}}'>
+    <li class='visit visit_view searched' draggable='true' data-id='{{id}}'>
+      <div class='drag_handle'>
+        <div class='line'></div>
+        <div class='line'></div>
+        <div class='line'></div>
+        <div class='line'></div>
+        <div class='line'></div>
+      </div>
+      <a data-id='{{id}}' href='{{url}}' class='site'>
         <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
           <dt>{{{title}}}</dt>
           <dd class='location'>{{{location}}}</dd>

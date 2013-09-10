@@ -15,11 +15,11 @@ class BH.Views.TaggingView extends BH.Views.MainView
   initialize: ->
     @chromeAPI = chrome
     @tracker = @options.tracker
-    @model.on('change:url', @render, @)
     @model.on('change:tags', @renderTags, @)
 
   render: ->
-    html = Mustache.to_html(@template, @model.toJSON())
+    presenter = new BH.Presenters.SitePresenter(@model)
+    html = Mustache.to_html(@template, presenter.site())
     @tracker.popupVisible()
     @$el.html html
     setTimeout =>

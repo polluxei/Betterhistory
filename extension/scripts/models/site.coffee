@@ -1,5 +1,5 @@
 class BH.Models.Site extends Backbone.Model
-  initialize: ({}, options = {}) ->
+  initialize: (attrs = {}, options = {}) ->
     throw "Chrome API not set" unless options.chrome?
     throw "Persistence is not set" unless options.persistence?
 
@@ -7,16 +7,9 @@ class BH.Models.Site extends Backbone.Model
     @persistence = options.persistence
 
   fetch: (callback = ->) ->
-    @chromeAPI.tabs.query active: true, (tabs) =>
-      tab = tabs[0] || {}
-
-      @persistence.fetchSiteTags tab.url, (tags) =>
-        @set
-          title: tab.title
-          url: tab.url
-          tags: tags
-          domain: extractDomain(tab.url)
-        callback()
+    @persistence.fetchSiteTags @get('url'), (tags) =>
+      @set tags: tags
+      callback()
 
   addTag: (tag) ->
     tag = tag.replace(/^\s\s*/, '').replace(/\s\s*$/, '')
@@ -43,8 +36,3 @@ class BH.Models.Site extends Backbone.Model
     @set tags: _.without(newTags, tag)
 
     @persistence.removeSiteFromTag @get('url'), tag
-
-extractDomain = (url) ->
-  match = url.match(/\/\/(.*?)\//)
-  domain = if match == null then null else match[1]
-  domain.replace('www.', '')

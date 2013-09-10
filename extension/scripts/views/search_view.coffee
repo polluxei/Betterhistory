@@ -88,6 +88,7 @@ class BH.Views.SearchView extends BH.Views.MainView
       el: @$el.children('.content')
       page: @page.get('page') - 1
     @searchResultsView.render()
+    @searchResultsView.attachDragging()
 
   updateDeleteButton: ->
     deleteButton = @$('.delete_all')
