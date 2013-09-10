@@ -47,7 +47,7 @@ form {
   margin-top: 10px;
 }
 body {
-  width: 300px;
+  width: 350px;
 }
 .chrome-bootstrap h1 {
   color: #000;
@@ -76,6 +76,8 @@ input[type=text] {
   position: relative;
 }
 .header {
+  background-repeat: no-repeat;
+  padding-left: 25px;
   border-bottom: 1px solid #DDD;
 }
 .container {
