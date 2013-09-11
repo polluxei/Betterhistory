@@ -80,4 +80,4 @@ class BH.Views.AppView extends Backbone.View
     @$("[data-week-id='#{id}']").addClass('selected') if id?
 
   getI18nValues: ->
-    @t ['history_title', 'settings_link', 'collections_link']
+    @t ['history_title', 'settings_link', 'tags_link']

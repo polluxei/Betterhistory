@@ -13,7 +13,7 @@ class BH.Views.TagsView extends BH.Views.MainView
     @collection.on 'reset', @onTagsLoaded, @
 
   pageTitle: ->
-    @t('collections_title')
+    @t('tags_title')
 
   render: ->
     html = Mustache.to_html @template, @getI18nValues()
@@ -21,7 +21,7 @@ class BH.Views.TagsView extends BH.Views.MainView
     @
 
   onTagsLoaded: ->
-    tag_count = @t 'number_of_collections', [@collection.length]
+    tag_count = @t 'number_of_tags', [@collection.length]
     @$('.tag_count').text tag_count
     @renderTags()
 
@@ -35,7 +35,7 @@ class BH.Views.TagsView extends BH.Views.MainView
     @promptToDeleteTags()
 
   promptToDeleteTags: ->
-    promptMessage = @t('confirm_delete_all_collections')
+    promptMessage = @t('confirm_delete_all_tags')
     @promptView = BH.Views.CreatePrompt(promptMessage)
     @promptView.open()
     @promptView.model.on('change', @promptAction, @)
@@ -49,6 +49,5 @@ class BH.Views.TagsView extends BH.Views.MainView
       @promptView.close()
 
   getI18nValues: ->
-    properties = @t ['collections_title', 'search_input_placeholder_text', 'delete_all_collections']
-    properties.i18n_number_of_collections = @t 'number_of_collections', [5]
+    properties = @t ['tags_title', 'search_input_placeholder_text', 'delete_all_tags']
     properties

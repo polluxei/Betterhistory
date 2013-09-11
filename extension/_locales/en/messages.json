@@ -919,17 +919,17 @@
     "description": "no spamming and privacy message"
   },
 
-  "collections_link": {
+  "tags_link": {
     "message": "Tags",
-    "description": "Collections link text in the main nav"
+    "description": "Tags link text in the main nav"
   },
-  "collections_title": {
+  "tags_title": {
     "message": "All Tags",
-    "description": "Collections title text in the collections view"
+    "description": "Tags title text in the tags view"
   },
-  "collection_title": {
+  "tag_title": {
     "message": "$name$ tag",
-    "description": "Individual collection title",
+    "description": "Individual tag title",
     "placeholders": {
       "name": {
         "content": "$1",
@@ -937,9 +937,9 @@
       }
     }
   },
-  "back_to_collections_link": {
+  "back_to_tags_link": {
     "message": "$arrow$ Back to Tags",
-    "description": "back to collections link",
+    "description": "back to tags link",
     "placeholders": {
       "arrow": {
         "content": "$1",
@@ -947,21 +947,21 @@
       }
     }
   },
-  "delete_all_collections": {
+  "delete_all_tags": {
     "message": "Delete...",
-    "description": "Text for delete all sites in a collections"
+    "description": "Text for delete all sites in a tags"
   },
-  "confirm_delete_all_collections": {
+  "confirm_delete_all_tags": {
     "message": "Delete all tags?",
-    "description": "Text for delete all collections"
+    "description": "Text for delete all tags"
   },
-  "delete_all_sites_in_collection": {
+  "delete_tag": {
     "message": "Delete...",
-    "description": "Text for delete all sites in a collection"
+    "description": "Text for delete all sites in a tag"
   },
-  "confirm_delete_all_sites_in_collection": {
-    "message": "Delete all sites in the $name$ tag",
-    "description": "Text for delete all sites in a collection",
+  "confirm_delete_tag": {
+    "message": "Delete $name$ tag and all sites in the tag?",
+    "description": "Text for delete all sites in a tag",
     "placeholders": {
       "name": {
         "content": "$1",
@@ -969,9 +969,9 @@
       }
     }
   },
-  "number_of_collections": {
+  "number_of_tags": {
     "message": "$number$ tags",
-    "description": "Number of collections",
+    "description": "Number of tags",
     "placeholders": {
       "number": {
         "content": "$1",

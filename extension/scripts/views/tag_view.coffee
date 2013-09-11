@@ -19,7 +19,7 @@ class BH.Views.TagView extends BH.Views.MainView
     @t('collection_title', [@options.name])
 
   render: ->
-    properties = _.extend @getI18nValues(), collectionsUrl: '#tags'
+    properties = _.extend @getI18nValues(), tagsUrl: '#tags'
     html = Mustache.to_html @template, properties
     @$el.append html
     @
@@ -46,9 +46,10 @@ class BH.Views.TagView extends BH.Views.MainView
       model: @model
     $('body').append(renameTagView.render().el)
     renameTagView.open()
+    $('.new_tag').focus()
 
   promptToDeleteAllSites: ->
-    promptMessage = @t('confirm_delete_all_sites_in_collection', [@options.name])
+    promptMessage = @t('confirm_delete_tag', [@options.name])
     @promptView = BH.Views.CreatePrompt(promptMessage)
     @promptView.open()
     @promptView.model.on('change', @promptAction, @)
@@ -63,9 +64,9 @@ class BH.Views.TagView extends BH.Views.MainView
 
   getI18nValues: ->
     name = @options.name.charAt(0).toUpperCase() + @options.name.slice(1)
-    properties = @t ['delete_all_sites_in_collection', 'search_input_placeholder_text', 'rename_tag_link']
-    properties['i18n_collection_title'] = @t 'collection_title', [name]
-    properties['i18n_back_to_collections_link'] = @t('back_to_collections_link', [
+    properties = @t ['delete_tag', 'search_input_placeholder_text', 'rename_tag_link']
+    properties['i18n_tag_title'] = @t 'tag_title', [name]
+    properties['i18n_back_to_tags_link'] = @t('back_to_tags_link', [
       @t('back_arrow')
     ])
     properties
