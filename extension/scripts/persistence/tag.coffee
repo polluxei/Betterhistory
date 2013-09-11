@@ -77,12 +77,27 @@ class BH.Persistence.Tag
     @localStore.get 'tags', (data) =>
       data.tags ||= []
       index = data.tags.indexOf(oldTag)
-      data.tags[index] = newTag
+      if data.tags.indexOf(newTag) == -1
+        data.tags[index] = newTag
+      else
+        data.tags = _.without(data.tags, oldTag)
+        newTagExisits = true
+
       @localStore.set data, =>
         @localStore.get oldTag, (data) =>
           sites = data[oldTag]
-          @localStore.remove oldTag, =>
-            data = {}
-            data[newTag] = sites
-            @localStore.set data, ->
-              callback()
+
+          if newTagExisits
+            @localStore.get newTag, (data) =>
+              @localStore.remove oldTag, =>
+                for site in sites
+                  data[newTag].push site
+
+                @localStore.set data, ->
+                  callback()
+          else
+            @localStore.remove oldTag, =>
+              data = {}
+              data[newTag] = sites
+              @localStore.set data, ->
+                callback()

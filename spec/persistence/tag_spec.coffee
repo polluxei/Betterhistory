@@ -360,31 +360,67 @@ describe 'BH.Persistence.Tag', ->
               datetime: new Date('4/3/12').getTime()
             }
           ]
+        else if key == 'recipes'
+          callback recipes: [
+            {
+              title: 'Key lime pie',
+              url: 'http://www.atk.com/key_pie',
+              datetime: new Date('4/3/12').getTime()
+            }
+          ]
+
       @persistence.localStore.set.andCallFake (data, callback) =>
         callback()
       @persistence.localStore.remove.andCallFake (keys, callback) =>
         callback()
 
-    it 'updates the tag keys with the new tag name', ->
-      @persistence.renameTag('cooking', 'baking')
-      expect(@persistence.localStore.set).toHaveBeenCalledWith {tags: ['recipes', 'baking']}, jasmine.any(Function)
-
-    it 'updates the tag with the new tag name', ->
-      @persistence.renameTag('cooking', 'baking')
-      expect(@persistence.localStore.set).toHaveBeenCalledWith {
-        baking: [
-          {
-            title: 'Pan Frying'
-            url: 'http://www.atk.com/pan_frying'
-            datetime: new Date('2/2/12').getTime()
-          }, {
-            title: 'Baking'
-            url: 'http://www.recipes.com/pound_cake'
-            datetime: new Date('4/3/12').getTime()
-          }
-        ]
-      }, jasmine.any(Function)
-
     it 'removes the old tag', ->
       @persistence.renameTag('cooking', 'baking')
       expect(@persistence.localStore.remove).toHaveBeenCalledWith 'cooking', jasmine.any(Function)
+
+    describe 'when the new tag does not exist', ->
+      it 'updates the tag keys with the new tag name', ->
+        @persistence.renameTag('cooking', 'baking')
+        expect(@persistence.localStore.set).toHaveBeenCalledWith {tags: ['recipes', 'baking']}, jasmine.any(Function)
+
+      it 'creates the new tag with the old tag content', ->
+        @persistence.renameTag('cooking', 'baking')
+        expect(@persistence.localStore.set).toHaveBeenCalledWith {
+          baking: [
+            {
+              title: 'Pan Frying'
+              url: 'http://www.atk.com/pan_frying'
+              datetime: new Date('2/2/12').getTime()
+            }, {
+              title: 'Baking'
+              url: 'http://www.recipes.com/pound_cake'
+              datetime: new Date('4/3/12').getTime()
+            }
+          ]
+        }, jasmine.any(Function)
+
+    describe 'when the new tag does exist', ->
+      it 'removes the old tag from the tags key', ->
+        @persistence.renameTag('cooking', 'recipes')
+        expect(@persistence.localStore.set).toHaveBeenCalledWith {tags: ['recipes']}, jasmine.any(Function)
+
+      it 'merges the old and new tag content', ->
+        @persistence.renameTag('cooking', 'recipes')
+        expect(@persistence.localStore.set).toHaveBeenCalledWith {
+          recipes: [
+            {
+              title: 'Key lime pie',
+              url: 'http://www.atk.com/key_pie',
+              datetime: new Date('4/3/12').getTime()
+            }, {
+              title: 'Pan Frying'
+              url: 'http://www.atk.com/pan_frying'
+              datetime: new Date('2/2/12').getTime()
+            }, {
+              title: 'Baking'
+              url: 'http://www.recipes.com/pound_cake'
+              datetime: new Date('4/3/12').getTime()
+            }
+          ]
+        }, jasmine.any(Function)
+
