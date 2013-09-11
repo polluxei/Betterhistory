@@ -55,11 +55,12 @@ class BH.Views.DragAndTagView extends Backbone.View
         site.fetch()
         tagVisitView.open()
         tagVisitView.onDone = (tags) ->
+          $container = $("[data-id=#{data.id}]")
           activeTagsView = new BH.Views.ActiveTagsView
             model: new Backbone.Model(tags: tags)
             editable: false
-          $container = $("[data-id=#{data.id}] .active_tags")
-          $container.html activeTagsView.render().el
+          $container.find('.active_tags').html activeTagsView.render().el
+          $container.addClass('fade_out')
 
     handleDragOver = (ev) =>
       ev.preventDefault()

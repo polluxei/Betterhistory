@@ -24,6 +24,9 @@
   box-shadow: inset 0px 0px 7px -1px #EEE;
   color: #000;
 }
+.fade_out {
+  -webkit-animation: pulse 1s;
+}
 .menu .tags.over {
   -webkit-animation: none;
   background-color: #F0F6FE;
