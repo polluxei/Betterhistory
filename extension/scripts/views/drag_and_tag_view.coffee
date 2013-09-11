@@ -17,6 +17,7 @@ class BH.Views.DragAndTagView extends Backbone.View
       site =
         url: visit.get('url')
         title: visit.get('title')
+        id: visit.get('id')
 
       ev.dataTransfer.setData 'application/json', JSON.stringify(site)
 
@@ -53,6 +54,12 @@ class BH.Views.DragAndTagView extends Backbone.View
 
         site.fetch()
         tagVisitView.open()
+        tagVisitView.onDone = (tags) ->
+          activeTagsView = new BH.Views.ActiveTagsView
+            model: new Backbone.Model(tags: tags)
+            editable: false
+          $container = $("[data-id=#{data.id}] .active_tags")
+          $container.html activeTagsView.render().el
 
     handleDragOver = (ev) =>
       ev.preventDefault()

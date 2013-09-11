@@ -2,7 +2,9 @@
   {{#tags}}
     <li>
       <a href='#' data-tag='{{.}}' class='tag'>{{.}}</a>
-      <a href='#' data-tag='{{.}}' class='delete'>delete</a>
+      {{#editable}}
+        <a href='#' data-tag='{{.}}' class='delete'>delete</a>
+      {{/editable}}
     </li>
   {{/tags}}
 </ul>

@@ -12,9 +12,12 @@ class BH.Views.ActiveTagsView extends BH.Views.MainView
   initialize: ->
     @chromeAPI = chrome
     @tracker = @options.tracker
+    @options.editable = true unless @options.editable?
 
   render: ->
-    html = Mustache.to_html(@template, @model.toJSON())
+    properties = @model.toJSON()
+    properties.editable = @options.editable
+    html = Mustache.to_html(@template, properties)
     @$el.html html
     @
 

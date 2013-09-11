@@ -22,6 +22,16 @@ class BH.Views.SearchResultsView extends Backbone.View
     @$el.html html
     @
 
+  insertTags: ->
+    persistence = new BH.Persistence.Tag localStore: localStore
+    $('.site').each ->
+      $el = $(this)
+      persistence.fetchSiteTags $el.attr('href'), (tags) =>
+        activeTagsView = new BH.Views.ActiveTagsView
+          model: new Backbone.Model(tags: tags)
+          editable: false
+        $el.find('.active_tags').html activeTagsView.render().el
+
   attachDragging: ->
     dragAndTagView = new BH.Views.DragAndTagView
       model: @model

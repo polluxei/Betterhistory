@@ -4,26 +4,18 @@
 .tag_visit_view .page {
   width: 430px;
 }
-.chrome-bootstrap .tag_visit_view .overlay .page .tags li {
-  margin: 3px 0 0;
-  display: inline-block;
-  background: #8AAAED;
-  color: #FFF;
-  padding: 3px 19px 3px 5px;
-  border-radius: 3px;
-  position: relative;
-}
 .tag_visit_view .tags .delete {
   right: 3px;
   top: 3px;
   opacity: 1;
 }
-.tag_visit_view .tags a.tag {
-  color: #FFF;
+.visits .active_tags .delete {
+  display: none;
 }
-.tag_visit_view .tags a:hover {
-  text-decoration: underline;
+.visits .active_tags .no_tags {
+  display: none;
 }
+
 .menu .tags.pulse {
   -webkit-animation: pulse 0.7s infinite alternate;
   padding: 10px 0 10px 10px;
@@ -352,6 +344,9 @@
 .visit .location {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+.chrome-bootstrap .visits .visit .location {
+  margin-top: 5px;
 }
 .visit .location > .search_domain:hover {
   color: #15C;

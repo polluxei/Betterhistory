@@ -30,6 +30,7 @@ class BH.Views.TagVisitView extends BH.Views.ModalView
 
   doneClicked: (ev) ->
     ev.preventDefault()
+    @onDone(@model.get('tags')) if @onDone
     @close()
 
   addTagClicked: (ev) ->

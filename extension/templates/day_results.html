@@ -41,7 +41,10 @@
                     </div>
                     <a href='{{url}}' class='site'>
                       <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
-                        <dt>{{{title}}}</dt>
+                        <dt>
+                          <div class='active_tags'></div>
+                          {{{title}}}
+                        </dt>
                         <dd class='time'>{{time}}</dd>
                         <dd class='location'>{{host}}{{path}}</dd>
                       </dl>
@@ -64,7 +67,10 @@
               </div>
               <a href='{{url}}' class='site'>
                 <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
-                  <dt>{{{title}}}</dt>
+                  <dt>
+                    <div class='active_tags'></div>
+                    {{{title}}}
+                  </dt>
                   <dd class='time'>{{time}}</dd>
                   <dd class='location'>{{host}}{{path}}</dd>
                 </dl>
