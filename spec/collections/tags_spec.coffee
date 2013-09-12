@@ -7,10 +7,10 @@ describe 'BH.Collections.Tags', ->
     @tags = new BH.Collections.Tags [],
       persistence: persistence
 
-  describe '#fetchTags', ->
+  describe '#fetch', ->
     beforeEach ->
       @tags.persistence.fetchTags.andCallFake (callback) ->
-        callback [
+        callback ['recipes', 'cooking'], [
           {
             name: 'recipes'
             sites: [{
@@ -48,6 +48,10 @@ describe 'BH.Collections.Tags', ->
     it 'sets the tags on the model', ->
       @tags.fetch =>
         expect(@tags.models.length).toEqual 2
+
+    it 'stores the tag order on the model', ->
+      @tags.fetch =>
+        expect(@tags.tagOrder).toEqual ['recipes', 'cooking']
 
   describe '#destroy', ->
     it 'removes all the tag data and the keys key', ->

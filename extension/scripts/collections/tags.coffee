@@ -6,8 +6,9 @@ class BH.Collections.Tags extends Backbone.Collection
     @persistence = options.persistence
 
   fetch: (callback = ->) ->
-    @persistence.fetchTags (tags) =>
-      @reset tags, persistence: @persistence
+    @persistence.fetchTags (tags, compiledTags) =>
+      @tagOrder = tags
+      @reset compiledTags, persistence: @persistence
       callback()
 
   destroy: (callback = ->)->

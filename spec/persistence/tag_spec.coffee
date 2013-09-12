@@ -9,15 +9,16 @@ describe 'BH.Persistence.Tag', ->
     @persistence = new BH.Persistence.Tag
       localStore: localStore
 
-  describe '#fetch', ->
+  describe '#fetchTags', ->
     describe 'when no tags exist', ->
       beforeEach ->
         @persistence.localStore.get.andCallFake (key, callback) =>
           callback {}
 
       it 'resets the collection to an empty models arrays', ->
-        @persistence.fetchTags (tags) ->
+        @persistence.fetchTags (tags, compiledTags) ->
           expect(tags).toEqual []
+          expect(compiledTags).toEqual []
 
     describe 'when tags exist', ->
       beforeEach ->
@@ -48,9 +49,10 @@ describe 'BH.Persistence.Tag', ->
                 datetime: new Date('4/3/12').getTime()
               }]
 
-      it 'resets the collection to the found tags and sites', ->
-        @persistence.fetchTags (tags) ->
-          expect(tags).toEqual [{
+      it 'returns the found tags and sites', ->
+        @persistence.fetchTags (tags, compiledTags) ->
+          expect(tags).toEqual ['recipes', 'cooking']
+          expect(compiledTags).toEqual [{
             name: 'recipes'
             sites: [{
               title: 'Pound Cake'
@@ -172,10 +174,10 @@ describe 'BH.Persistence.Tag', ->
           else if key == 'recipes'
             callback {}
 
-      it 'adds the tag to the tags key', ->
+      it 'prepends the tag to the tags key', ->
         @persistence.addSiteToTag(@site, 'recipes')
         expect(@persistence.localStore.set).toHaveBeenCalledWith
-          'tags': ['cooking', 'recipes']
+          'tags': ['recipes', 'cooking']
 
       it 'creates the tag with the site in localStore', ->
         @persistence.addSiteToTag(@site, 'recipes')
@@ -347,7 +349,7 @@ describe 'BH.Persistence.Tag', ->
     beforeEach ->
       @persistence.localStore.get.andCallFake (key, callback) =>
         if key == 'tags'
-          callback tags: ['recipes', 'cooking']
+          callback tags: ['sports', 'recipes', 'cooking']
         else if key == 'cooking'
           callback cooking: [
             {
@@ -381,7 +383,7 @@ describe 'BH.Persistence.Tag', ->
     describe 'when the new tag does not exist', ->
       it 'updates the tag keys with the new tag name', ->
         @persistence.renameTag('cooking', 'baking')
-        expect(@persistence.localStore.set).toHaveBeenCalledWith {tags: ['recipes', 'baking']}, jasmine.any(Function)
+        expect(@persistence.localStore.set).toHaveBeenCalledWith {tags: ['baking', 'sports', 'recipes']}, jasmine.any(Function)
 
       it 'creates the new tag with the old tag content', ->
         @persistence.renameTag('cooking', 'baking')
@@ -402,7 +404,7 @@ describe 'BH.Persistence.Tag', ->
     describe 'when the new tag does exist', ->
       it 'removes the old tag from the tags key', ->
         @persistence.renameTag('cooking', 'recipes')
-        expect(@persistence.localStore.set).toHaveBeenCalledWith {tags: ['recipes']}, jasmine.any(Function)
+        expect(@persistence.localStore.set).toHaveBeenCalledWith {tags: ['recipes', 'sports']}, jasmine.any(Function)
 
       it 'merges the old and new tag content', ->
         @persistence.renameTag('cooking', 'recipes')

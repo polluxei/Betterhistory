@@ -9,9 +9,9 @@ class BH.Persistence.Tag
 
       @localStore.get tags, (data) =>
         foundTags = []
-        tags = for tag, sites of data
+        compiledTags = for tag, sites of data
           {name: tag, sites: sites}
-        callback(tags)
+        callback(tags, compiledTags)
 
   fetchTagSites: (name, callback = ->) ->
     @localStore.get name, (data) =>
@@ -40,7 +40,7 @@ class BH.Persistence.Tag
     @localStore.get "tags", (data) =>
       data = tags: [] unless data.tags?
       if data.tags.indexOf(tag) == -1
-        data.tags.push tag
+        data.tags.unshift tag
       @localStore.set data
 
     @localStore.get tag, (data) =>
@@ -76,18 +76,17 @@ class BH.Persistence.Tag
   renameTag: (oldTag, newTag, callback = ->) ->
     @localStore.get 'tags', (data) =>
       data.tags ||= []
-      index = data.tags.indexOf(oldTag)
-      if data.tags.indexOf(newTag) == -1
-        data.tags[index] = newTag
-      else
-        data.tags = _.without(data.tags, oldTag)
-        newTagExisits = true
+
+      newTagExists = true if data.tags.indexOf(newTag) != -1
+      data.tags = _.without(data.tags, oldTag)
+      data.tags = _.without(data.tags, newTag) if newTagExists
+      data.tags.unshift(newTag)
 
       @localStore.set data, =>
         @localStore.get oldTag, (data) =>
           sites = data[oldTag]
 
-          if newTagExisits
+          if newTagExists
             @localStore.get newTag, (data) =>
               @localStore.remove oldTag, =>
                 for site in sites

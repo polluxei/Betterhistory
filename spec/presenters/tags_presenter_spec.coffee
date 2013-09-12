@@ -49,6 +49,7 @@ describe 'BH.Presenters.TagsPresenter', ->
       persistence: {}
 
     collection.add attrs, persistence: {}
+    collection.tagOrder = ['recipes', 'cooking']
 
     @presenter = new BH.Presenters.TagsPresenter(collection)
 
@@ -63,4 +64,17 @@ describe 'BH.Presenters.TagsPresenter', ->
           name: 'cooking'
           count: 3
           sites: [@site9, @site7, @site8]
+        }]
+
+    it 'returns all the tags with a summary of their sites orders by the tag order', ->
+      @presenter.collection.tagOrder = ['cooking', 'recipes']
+      expect(@presenter.tagsSummary()).toEqual
+        tags: [{
+          name: 'cooking'
+          count: 3
+          sites: [@site9, @site7, @site8]
+        }, {
+          name: 'recipes'
+          count: 6
+          sites: [@site6, @site3, @site5, @site2, @site1]
         }]

@@ -3,13 +3,14 @@ class BH.Presenters.TagsPresenter
     @collection = collection
 
   tagsSummary: ->
-    out = for model in @collection.models
-      sites = model.get('sites')
-      orderedSites = sites.sort (a,b) ->
+    out = for tag in @collection.tagOrder
+      model = @collection.findWhere(name: tag)
+
+      orderedSites = model.get('sites').sort (a,b) ->
         b.datetime - a.datetime
 
       name: model.get('name')
-      count: sites.length
+      count: model.get('sites').length
       sites: orderedSites.slice(0, 5)
 
     tags: out
