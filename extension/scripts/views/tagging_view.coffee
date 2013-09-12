@@ -32,6 +32,7 @@ class BH.Views.TaggingView extends BH.Views.MainView
     @activeTagsView = new BH.Views.ActiveTagsView
       model: @model
       tracker: @tracker
+      openInTab: true
     @$('.active_tags').html @activeTagsView.render().el
 
   viewHistoryClicked: (ev) ->

@@ -13,6 +13,7 @@ class BH.Views.ActiveTagsView extends BH.Views.MainView
     @chromeAPI = chrome
     @tracker = @options.tracker
     @options.editable = true unless @options.editable?
+    @options.openInTab = false unless @options.openInTab?
 
   render: ->
     properties = @model.toJSON()
@@ -27,8 +28,9 @@ class BH.Views.ActiveTagsView extends BH.Views.MainView
     @tracker.removeTagPopup()
 
   tagClicked: (ev) ->
-    ev.preventDefault()
-    tag = $(ev.currentTarget).data('tag')
-    @tracker.tagPopupClick()
-    @chromeAPI.tabs.create
-      url: "chrome://history#tags/#{tag}"
+    if @options.openInTab
+      ev.preventDefault()
+      tag = $(ev.currentTarget).data('tag')
+      @tracker.tagPopupClick()
+      @chromeAPI.tabs.create
+        url: "chrome://history#tags/#{tag}"
