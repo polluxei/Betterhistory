@@ -17,11 +17,12 @@
     "history": "index.html"
   },
   "commands": {
-    "add-to-collection": {
+    "_execute_browser_action": {
       "suggested_key": {
-        "default": "Ctrl+Shift+E"
+        "default": "Ctrl+Shift+E",
+        "mac": "Command+Shift+E"
       },
-      "description": "Add website to collections"
+      "description": "Show browser action popup"
     }
   },
   "browser_action": {

@@ -33,5 +33,6 @@ try
 
     if settings.searchByDomain != false
       pageContextMenu.create()
+
 catch e
   errorTracker.report e

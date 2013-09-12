@@ -18,14 +18,19 @@ class BH.Views.TaggingView extends BH.Views.MainView
     @model.on('change:tags', @renderTags, @)
 
   render: ->
-    presenter = new BH.Presenters.SitePresenter(@model)
-    html = Mustache.to_html(@template, presenter.site())
-    @tracker.popupVisible()
-    @$el.html html
-    setTimeout =>
-      @$('#tag_name').focus()
-    , 0
-    @
+    @chromeAPI.commands.getAll (commands) =>
+      presenter = new BH.Presenters.SitePresenter(@model)
+      properties = presenter.site()
+      debugger
+      properties.shortcut = _.where(commands, name: '_execute_browser_action')[0].shortcut
+
+      html = Mustache.to_html(@template, properties)
+      @tracker.popupVisible()
+      @$el.html html
+      setTimeout =>
+        @$('#tag_name').focus()
+      , 0
+      @
 
   renderTags: ->
     @activeTagsView.remove() if @activeTagsView

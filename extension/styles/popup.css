@@ -1,3 +1,11 @@
+.shortcut {
+  font-size: 9px;
+  color: #888;
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  margin: 0;
+}
 .tags {
   margin: 0;
 }
@@ -81,7 +89,8 @@ input[type=text] {
   border-bottom: 1px solid #DDD;
 }
 .container {
-  padding: 10px;
+  padding: 10px 10px 20px;
+  position: relative;
 }
 .glow {
   -webkit-animation-name: glow;
