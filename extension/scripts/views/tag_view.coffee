@@ -12,11 +12,13 @@ class BH.Views.TagView extends BH.Views.MainView
 
   initialize: ->
     @chromeAPI = chrome
+    @tracker = analyticsTracker
+
     @model.on 'change', @onSitesLoaded, @
     @model.on 'change:name', @onNameChange, @
 
   pageTitle: ->
-    @t('collection_title', [@options.name])
+    @t('tag_title', [@options.name])
 
   render: ->
     properties = _.extend @getI18nValues(), tagsUrl: '#tags'
@@ -38,10 +40,12 @@ class BH.Views.TagView extends BH.Views.MainView
     @$('.content').html @taggedSitesView.render().el
 
   onDeleteSitesClicked: (ev) ->
+    @tracker.deleteTagClick()
     @promptToDeleteAllSites()
 
   onRenameClicked: (ev) ->
     ev.preventDefault()
+    @tracker.renameTagClick()
     renameTagView = new BH.Views.RenameTagView
       model: @model
     $('body').append(renameTagView.render().el)

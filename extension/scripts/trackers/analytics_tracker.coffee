@@ -78,8 +78,27 @@ class BH.Trackers.AnalyticsTracker
   tagPopupClick: ->
     @trackEvent(['Popup', 'Tag Click'])
 
+  howToTagClick: ->
+    @trackEvent(['Tags', 'How to Tag Click'])
+
+  deleteAllTagsClick: ->
+    @trackEvent(['Tags', 'Delete all Click'])
+
+  siteTagDrag: ->
+    @trackEvent(['Tags', 'Site Drag'])
+
+  siteTagDrop: ->
+    @trackEvent(['Tags', 'Site Drop'])
+
+  droppedTagModalVisible: ->
+    @trackEvent(['Tags', 'Dropped Tag Modal Seen'])
+
+  renameTagClick: ->
+    @trackEvent(['Tags', 'Rename Click'])
+
+  deleteTagClick: ->
+    @trackEvent(['Tags', 'Delete Tag Click'])
+
   trackEvent: (params) ->
     params.unshift('_trackEvent')
     @analytics.push(params)
-
-

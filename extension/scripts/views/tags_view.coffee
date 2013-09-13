@@ -12,6 +12,7 @@ class BH.Views.TagsView extends BH.Views.MainView
 
   initialize: ->
     @chromeAPI = chrome
+    @tracker = analyticsTracker
     @collection.on 'reset', @onTagsLoaded, @
 
   pageTitle: ->
@@ -39,11 +40,13 @@ class BH.Views.TagsView extends BH.Views.MainView
     $('.about_tags').hide()
 
   onHowToTagClicked: (ev) ->
+    @tracker.howToTagClick()
     ev.preventDefault()
     howToTagView = new BH.Views.HowToTagView()
     howToTagView.open()
 
   onDeleteTagsClicked: (ev) ->
+    @tracker.deleteAllTagsClick()
     @promptToDeleteTags()
 
   promptToDeleteTags: ->

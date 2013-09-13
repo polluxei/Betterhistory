@@ -126,3 +126,38 @@ describe 'BH.Trackers.AnalyticsTracker', ->
     it 'tracks the click of a tag in the popup', ->
       @analyticsTracker.tagPopupClick()
       expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Popup', 'Tag Click'])
+
+  describe '#howToTagClick', ->
+    it 'tracks the click of how to tag link', ->
+      @analyticsTracker.howToTagClick()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Tags', 'How to Tag Click'])
+
+  describe '#deleteAllTagsClick', ->
+    it 'tracks the deleting of all tags', ->
+      @analyticsTracker.deleteAllTagsClick()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Tags', 'Delete all Click'])
+
+  describe '#siteTagDrag', ->
+    it 'tracks the drag of a site', ->
+      @analyticsTracker.siteTagDrag()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Tags', 'Site Drag'])
+
+  describe '#siteTagDrop', ->
+    it 'tracks the drop of a site', ->
+      @analyticsTracker.siteTagDrop()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Tags', 'Site Drop'])
+
+  describe '#droppedTagModalVisible', ->
+    it 'tracks the visibility of the drag and dropped tag modal', ->
+      @analyticsTracker.droppedTagModalVisible()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Tags', 'Dropped Tag Modal Seen'])
+
+  describe '#renameTagClick', ->
+    it 'tracks the rename tag click', ->
+      @analyticsTracker.renameTagClick()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Tags', 'Rename Click'])
+
+  describe '#deleteTagClick', ->
+    it 'tracks the deleting of a tag', ->
+      @analyticsTracker.deleteTagClick()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Tags', 'Delete Tag Click'])

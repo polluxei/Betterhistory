@@ -1,4 +1,7 @@
 class BH.Views.DragAndTagView extends Backbone.View
+  initialize: ->
+    @tracker = analyticsTracker
+
   render: ->
     handleDragStart = (ev) =>
       ev.stopPropagation()
@@ -19,6 +22,7 @@ class BH.Views.DragAndTagView extends Backbone.View
         title: visit.get('title')
         id: visit.get('id')
 
+      @tracker.siteTagDrag()
       ev.dataTransfer.setData 'application/json', JSON.stringify(site)
 
     handleDragEnd = (ev) =>
@@ -36,8 +40,10 @@ class BH.Views.DragAndTagView extends Backbone.View
 
     handleDrop = (ev) =>
       $el = $(ev.currentTarget)
+      ev.stopPropagation()
 
       if $('body .tag_visit_view').length == 0
+        @tracker.siteTagDrop()
         $el.removeClass('over')
         data = JSON.parse(ev.dataTransfer.getData('application/json'))
 
@@ -53,7 +59,9 @@ class BH.Views.DragAndTagView extends Backbone.View
         $('body').append tagVisitView.render().el
 
         site.fetch()
-        tagVisitView.open()
+        tagVisitView.open =>
+          @tracker.droppedTagModalVisible()
+
         tagVisitView.onDone = (tags) ->
           $container = $("[data-id=#{data.id}]")
           activeTagsView = new BH.Views.ActiveTagsView
