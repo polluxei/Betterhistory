@@ -7,6 +7,8 @@ class BH.Views.TagsView extends BH.Views.MainView
 
   events:
     'click .delete_all': 'onDeleteTagsClicked'
+    'click .how_to_tag': 'onHowToTagClicked'
+    'click .dismiss_instructions': 'onDismissInstructionsClicked'
 
   initialize: ->
     @chromeAPI = chrome
@@ -31,6 +33,16 @@ class BH.Views.TagsView extends BH.Views.MainView
       collection: @collection
     @$('.content').html @tagsListView.render().el
 
+  onDismissInstructionsClicked: (ev) ->
+    ev.preventDefault()
+    syncStore.set tagInstructionsDismissed: true
+    $('.about_tags').hide()
+
+  onHowToTagClicked: (ev) ->
+    ev.preventDefault()
+    howToTagView = new BH.Views.HowToTagView()
+    howToTagView.open()
+
   onDeleteTagsClicked: (ev) ->
     @promptToDeleteTags()
 
@@ -49,5 +61,5 @@ class BH.Views.TagsView extends BH.Views.MainView
       @promptView.close()
 
   getI18nValues: ->
-    properties = @t ['tags_title', 'search_input_placeholder_text', 'delete_all_tags']
+    properties = @t ['tags_title', 'search_input_placeholder_text', 'delete_all_tags', 'how_to_tag']
     properties

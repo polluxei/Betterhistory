@@ -100,6 +100,7 @@ scripts = [
   'scripts/views/tag_visit_view.js',
   'scripts/views/drag_and_tag_view.js',
   'scripts/views/active_tags_view.js',
+  'scripts/views/how_to_tag_view.js',
   'scripts/models/history.js',
   'scripts/models/day.js',
   'scripts/models/day_history.js',

@@ -333,12 +333,18 @@ describe 'BH.Persistence.Tag', ->
       @persistence.localStore.get.andCallFake (key, callback) =>
         if key == 'tags'
           callback tags: ['recipes', 'cooking']
+      @persistence.localStore.set.andCallFake (data, callback) ->
+        callback()
       @persistence.localStore.remove.andCallFake (keys, callback) ->
         callback()
 
-    it 'removes all the tag data and the keys key', ->
+    it 'removes all the tag data', ->
       @persistence.removeAllTags()
-      expect(@persistence.localStore.remove).toHaveBeenCalledWith ['recipes', 'cooking', 'tags'], jasmine.any(Function)
+      expect(@persistence.localStore.remove).toHaveBeenCalledWith ['recipes', 'cooking'], jasmine.any(Function)
+
+    it 'sets the tag key to an empty array', ->
+      @persistence.removeAllTags()
+      expect(@persistence.localStore.set).toHaveBeenCalledWith {tags: []}, jasmine.any(Function)
 
     it 'calls the passed the callback', ->
       callback = jasmine.createSpy('callback')

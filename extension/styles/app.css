@@ -1,3 +1,38 @@
+.menu .tags .new,
+.about_tags {
+  display: none;
+}
+body.new_tags .menu .tags .new {
+  color: #FFF;
+  background: rgba(189, 64, 51, 0.7);
+  border-radius: 2px;
+  display: inline-block;
+  float: right;
+  padding: 1px 4px;
+  line-height: 15px;
+  margin: 7px 52px 0 0;
+}
+body.new_tags .about_tags {
+  border-radius: 3px;
+  background: rgba(147, 184, 252, 0.2);
+  display: block;
+  position: relative;
+  padding: 10px 30px 10px 10px;
+  line-height: 17px;
+}
+body.new_tags .about_tags a {
+  text-decoration: underline;
+}
+body.new_tags .about_tags strong {
+  display: block;
+  margin-bottom: 10px;
+}
+.about_tags .dismiss_instructions {
+  position: absolute;
+  top: 5px;
+  right: 8px;
+  opacity: 1;
+}
 .tag_visit_view .tags {
   margin: 0;
 }
@@ -42,7 +77,8 @@
 .chrome-bootstrap .frame .content {
   overflow-x: visible;
 }
-.rename {
+.rename,
+.how_to_tag {
   margin-right: 15px;
 }
 .no_results {

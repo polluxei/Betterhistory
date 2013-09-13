@@ -584,6 +584,10 @@
     "message": "Delete",
     "description": "Button to delete history"
   },
+  "prompt_done_button": {
+    "message": "Done",
+    "description": "Button to dismiss modal"
+  },
   "prompt_title": {
     "message": "Confirm",
     "description": "Title of prompt"
@@ -1008,5 +1012,31 @@
   "new_tag_placeholder": {
     "message": "New name",
     "description": "placeholder text for tag rename input"
+  },
+  "how_to_tag": {
+    "message": "How to tag",
+    "description": "link text for how to tag link"
+  },
+  "about_tags_title": {
+    "message": "Tag your favorite sites and create your own library of topics and interests!",
+    "description": "about tags title shown on first visit to tags page"
+  },
+  "about_tags_instructions": {
+    "message": "Checkout the example tags below. Once you get the idea, delete the tags and start creating your own! Tag sites that you visit easily by watching $link_open$How to tag$link_close$.",
+    "description": "about tags description shown on the first visit to the tags page",
+    "placeholders": {
+      "link_open": {
+        "content": "$1",
+        "example": "open link tag"
+      },
+      "link_close": {
+        "content": "$2",
+        "example": "close link tag"
+      }
+    }
+  },
+  "how_to_tag_title": {
+    "message": "How to tag",
+    "description": "title for how to tag content"
   }
 }

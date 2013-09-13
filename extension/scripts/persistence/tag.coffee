@@ -68,10 +68,10 @@ class BH.Persistence.Tag
   removeAllTags: (callback = ->) ->
     @localStore.get 'tags', (data) =>
       tags = data.tags || []
-      tags.push 'tags'
 
-      @localStore.remove tags, ->
-        callback()
+      @localStore.remove tags, =>
+        @localStore.set tags: [], ->
+          callback()
 
   renameTag: (oldTag, newTag, callback = ->) ->
     @localStore.get 'tags', (data) =>

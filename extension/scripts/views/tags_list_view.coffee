@@ -16,4 +16,8 @@ class BH.Views.TagsListView extends BH.Views.MainView
     @
 
   getI18nValues: ->
-    @t ['no_tags_found']
+    properties = @t ['no_tags_found', 'about_tags_title']
+    properties.i18n_about_tags_instructions = @t 'about_tags_instructions', [
+      '<a href="#">', '</a>'
+    ]
+    properties

@@ -36,10 +36,30 @@ describe 'BH.Presenters.TagsPresenter', ->
       title: 'Preparing Meat'
       url: 'http://www.atk.com/preparing_meat'
       datetime: new Date('2/2/13 8:00 PM').getTime()
+    @site10 =
+      title: 'baking 101'
+      url: 'http://www.atk.com/baking_101'
+      datetime: new Date('1/3/10 8:00 PM').getTime()
+    @site11 =
+      title: 'baking 102'
+      url: 'http://www.atk.com/baking_102'
+      datetime: new Date('1/3/10 7:00 PM').getTime()
+    @site12 =
+      title: 'baking 103'
+      url: 'http://www.atk.com/baking_103'
+      datetime: new Date('1/3/10 6:00 PM').getTime()
+    @site13 =
+      title: 'baking 104'
+      url: 'http://www.atk.com/baking_104'
+      datetime: new Date('1/3/10 5:00 PM').getTime()
+    @site14 =
+      title: 'baking 105'
+      url: 'http://www.atk.com/baking_105'
+      datetime: new Date('1/3/10 4:00 PM').getTime()
 
     attrs = [{
       name: 'recipes'
-      sites: [@site2, @site1, @site3, @site5, @site4, @site6]
+      sites: [@site2, @site1, @site3, @site5, @site4, @site6, @site10, @site11, @site12, @site13, @site14]
     }, {
       name: 'cooking'
       sites: [@site8, @site9, @site7]
@@ -58,8 +78,8 @@ describe 'BH.Presenters.TagsPresenter', ->
       expect(@presenter.tagsSummary()).toEqual
         tags: [{
           name: 'recipes'
-          count: 6
-          sites: [@site6, @site3, @site5, @site2, @site1]
+          count: 11
+          sites: [@site6, @site3, @site5, @site2, @site1, @site4, @site10, @site11, @site12, @site13]
         }, {
           name: 'cooking'
           count: 3
@@ -75,6 +95,6 @@ describe 'BH.Presenters.TagsPresenter', ->
           sites: [@site9, @site7, @site8]
         }, {
           name: 'recipes'
-          count: 6
-          sites: [@site6, @site3, @site5, @site2, @site1]
+          count: 11
+          sites: [@site6, @site3, @site5, @site2, @site1, @site4, @site10, @site11, @site12, @site13]
         }]

@@ -38,5 +38,10 @@ try
         analyticsTracker.mailingListPrompt()
       else
         syncStore.set mailingListPromptTimer: (mailingListPromptTimer - 1)
+
+  syncStore.get 'tagInstructionsDismissed', (data) ->
+    tagInstructionsDismissed = data.tagInstructionsDismissed || false
+    unless tagInstructionsDismissed
+      $('body').addClass('new_tags')
 catch e
   errorTracker.report e
