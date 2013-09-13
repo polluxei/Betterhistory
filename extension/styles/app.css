@@ -77,8 +77,8 @@ body.new_tags .about_tags strong {
 .chrome-bootstrap .frame .content {
   overflow-x: visible;
 }
-.rename,
-.how_to_tag {
+.controls .rename,
+.controls .how_to_tag {
   margin-right: 15px;
 }
 .no_results {
