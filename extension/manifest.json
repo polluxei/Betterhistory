@@ -46,6 +46,7 @@
       "scripts/lib/browser_actions.js",
       "scripts/lib/omnibox.js",
       "scripts/lib/sync_store.js",
+      "scripts/persistence/tag.js",
       "scripts/initialize_background.js"
     ],
     "persistent": false

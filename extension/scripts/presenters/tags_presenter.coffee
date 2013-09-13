@@ -11,6 +11,6 @@ class BH.Presenters.TagsPresenter
 
       name: model.get('name')
       count: model.get('sites').length
-      sites: orderedSites.slice(0, 5)
+      sites: orderedSites.slice(0, 10)
 
     tags: out

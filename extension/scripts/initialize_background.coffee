@@ -6,6 +6,10 @@ try
     chrome: chrome
     tracker: analyticsTracker
 
+  localStore = new BH.Lib.LocalStore
+    chrome: chrome
+    tracker: analyticsTracker
+
   browserActions = new BH.Lib.BrowserActions
     chrome: chrome
     tracker: analyticsTracker
