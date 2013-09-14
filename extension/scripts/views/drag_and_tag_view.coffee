@@ -23,6 +23,14 @@ class BH.Views.DragAndTagView extends Backbone.View
         id: visit.get('id')
 
       @tracker.siteTagDrag()
+
+      unless summaryEl = document.getElementsByClassName('drag_ghost')[0]
+        summaryEl = document.createElement 'div'
+        summaryEl.innerHTML = '1 visit'
+        summaryEl.className = 'drag_ghost'
+        $('body').append(summaryEl)
+
+      ev.dataTransfer.setDragImage summaryEl, -15, -10
       ev.dataTransfer.setData 'application/json', JSON.stringify(site)
 
     handleDragEnd = (ev) =>

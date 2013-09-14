@@ -59,6 +59,9 @@ body.new_tags .about_tags strong {
   box-shadow: inset 0px 0px 7px -1px #EEE;
   color: #000;
 }
+body.new_tags .menu .tags.pulse .new {
+  display: none;
+}
 .fade_out {
   -webkit-animation: pulse 1s;
 }
@@ -237,11 +240,37 @@ body.new_tags .about_tags strong {
 }
 .visit.dragging .drag_handle {
   display: block;
+  border-left: 5px solid #8AAAED;
+}
+.visit.dragging .drag_handle .line {
+  display: none;
 }
 .visit.dragging .site {
   background-color: #F0F6FE;
   color: #555;
 }
+.drag_ghost {
+  background: #FFF;
+  padding: 5px 10px;
+  width: 45px;
+  border: 2px solid #999;
+  border-radius: 3px;
+  text-align: center;
+  z-index: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+#coverup {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  background: #FFF;
+  width: 70px;
+  height:30px;
+}
+
 .visit.dragging a.action,
 .visit.dragging a.delete {
   display: none;
