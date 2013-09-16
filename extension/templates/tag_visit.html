@@ -1,4 +1,12 @@
 <h1 class='title'>{{i18n_tag_visits_title}}</h1>
+{{#tagAllSites}}
+  <div class='tag_mode'>
+    <label>
+      <input class='tag_all_visits' type='checkbox' checked='checked' />
+      Apply to all sites
+    </label>
+  </div>
+{{/tagAllSites}}
 <div class='content-area'>
   <ul class='sites'>
     {{#sites}}

@@ -7,14 +7,17 @@ class BH.Views.TagVisitView extends BH.Views.ModalView
   events:
     'click .done': 'doneClicked'
     'click #add_tag': 'addTagClicked'
+    'click .site': 'onSiteClicked'
+    'change .tag_all_visits': 'tagAllVisitsClicked'
 
   initialize: ->
     @chromeAPI = chrome
     @attachGeneralEvents()
+    @tagAllSites = if @collection.length > 1 then true else false
     @collection.on('change:allTags', @renderTags, @)
 
   render: ->
-    properties = _.extend @getI18nValues(), sites: @collection.toJSON()
+    properties = _.extend @getI18nValues(), {sites: @collection.toJSON(), tagAllSites: @tagAllSites}
     @$el.html @renderTemplate(properties)
     setTimeout =>
       @$('#tag_name').focus()
@@ -32,6 +35,24 @@ class BH.Views.TagVisitView extends BH.Views.ModalView
     ev.preventDefault()
     @close =>
       @trigger 'close'
+
+  tagAllVisitsClicked: (ev) ->
+    ev.preventDefault()
+    $el = $(ev.currentTarget)
+    @$('.site').removeClass('selected')
+    if $el.prop('checked')
+      @tagAllSites = true
+    else
+      @$('.site').eq(0).addClass('selected')
+      @tagAllSites = false
+    true
+
+  onSiteClicked: (ev) ->
+    ev.preventDefault()
+    $el = $(ev.currentTarget)
+    if !@tagAllSites && @collection.length > 1
+      @$('.site').removeClass('selected')
+      $el.addClass('selected')
 
   addTagClicked: (ev) ->
     ev.preventDefault()

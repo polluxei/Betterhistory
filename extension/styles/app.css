@@ -1,6 +1,6 @@
-.menu .tags .new,
-.about_tags {
-  display: none;
+.tag_mode {
+  text-align: right;
+  padding-right: 20px;
 }
 .mainview .content ul.tags li a.tag {
   font-size: 11px;
@@ -46,7 +46,7 @@ body.new_tags .about_tags strong {
   margin: 0;
 }
 .tag_visit_view .page {
-  width: 430px;
+  width: 600px;
 }
 .tag_visit_view .tags .delete {
   right: 3px;
@@ -370,6 +370,19 @@ body.new_tags .menu .tags.pulse .new {
 }
 body.chrome-bootstrap .tag_visit_view ul.sites {
   margin: 0;
+}
+body.chrome-bootstrap .tag_visit_view ul.sites .selected {
+  background-color: #8AAAED;
+}
+body.chrome-bootstrap .tag_visit_view ul.sites .title,
+body.chrome-bootstrap .tag_visit_view ul.sites .url,
+body.chrome-bootstrap .tag_visit_view ul.sites .selected {
+  color: #FFF;
+}
+body.chrome-bootstrap .tag_visit_view ul.sites .selected .title,
+body.chrome-bootstrap .tag_visit_view ul.sites .selected .url {
+  background-image: -webkit-gradient(linear, left top, right top, color-stop(90%, #FFF), to(white));
+  font-weight: bold;
 }
 body.chrome-bootstrap .tag_visit_view ul li.site {
   background-repeat: no-repeat;

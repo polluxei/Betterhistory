@@ -1040,7 +1040,7 @@
     "description": "title for how to tag content"
   },
   "tag_visits_title": {
-    "message": "Tag visited sites",
+    "message": "Tag sites",
     "description": "title for tagging visited sites modal"
   },
   "shared_visits_tags_title": {
