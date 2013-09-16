@@ -8,6 +8,7 @@
 .mainview .content ul.tags li {
   margin-top: 1px;
   line-height: 12px;
+  padding-bottom: 3px;
 }
 
 body.new_tags .menu .tags .new {
