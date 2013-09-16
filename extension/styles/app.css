@@ -1,3 +1,7 @@
+.menu .tags .new,
+.about_tags {
+  display: none;
+}
 .tag_mode {
   text-align: right;
   padding-right: 20px;
