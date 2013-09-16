@@ -3,6 +3,16 @@ class BH.Persistence.Tag
     throw "Localstore is not set" unless options.localStore?
     @localStore = options.localStore
 
+  cached: (callback) ->
+    @localStore.get null, (data) ->
+      callback
+        siteTags: (url) ->
+          matches = []
+          for tag in data.tags
+            result = _.where data[tag], {url: url}
+            matches.push tag if result.length > 0
+          matches
+
   fetchTags: (callback) ->
     @localStore.get 'tags', (data) =>
       tags = data.tags || []

@@ -24,9 +24,10 @@ class BH.Views.SearchResultsView extends Backbone.View
 
   insertTags: ->
     persistence = new BH.Persistence.Tag localStore: localStore
-    $('.site').each ->
-      $el = $(this)
-      persistence.fetchSiteTags $el.attr('href'), (tags) =>
+    persistence.cached (operations) ->
+      $('.site').each ->
+        $el = $(this)
+        tags = operations.siteTags $el.attr('href')
         activeTagsView = new BH.Views.ActiveTagsView
           model: new BH.Models.Site(tags: tags)
           editable: false
