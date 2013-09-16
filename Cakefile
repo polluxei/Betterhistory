@@ -122,8 +122,10 @@ scripts = [
   'scripts/collections/visits.js',
   'scripts/collections/weeks.js',
   'scripts/collections/tags.js',
+  'scripts/collections/sites.js',
   'scripts/presenters/tag_presenter.js',
   'scripts/presenters/tags_presenter.js',
+  'scripts/presenters/sites_presenter.js',
   'scripts/router.js',
   'scripts/initialize_extension.js'
 ]

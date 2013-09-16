@@ -36,24 +36,46 @@ class BH.Persistence.Tag
 
         callback(foundTags)
 
-  addSiteToTag: (site, tag) ->
+  addSiteToTag: (site, tag, callback = ->) ->
     @localStore.get "tags", (data) =>
       data = tags: [] unless data.tags?
       if data.tags.indexOf(tag) == -1
         data.tags.unshift tag
-      @localStore.set data
+      @localStore.set data, =>
+        @localStore.get tag, (data) =>
+          data[tag] ||= []
+          site.datetime = new Date().getTime()
+          data[tag].push site
+          @localStore.set data, ->
+            callback()
 
-    @localStore.get tag, (data) =>
-      data[tag] ||= []
-      site.datetime = new Date().getTime()
-      data[tag].push site
-      @localStore.set data
+  addSitesToTag: (sites, tag, callback = ->) ->
+    @localStore.get "tags", (data) =>
+      data = tags: [] unless data.tags?
+      if data.tags.indexOf(tag) == -1
+        data.tags.unshift tag
+      @localStore.set data, =>
+        @localStore.get tag, (data) =>
+          for site in sites
+            data[tag] ||= []
+            site.datetime = new Date().getTime()
+            data[tag].push site
+          @localStore.set data, ->
+            callback()
 
   removeSiteFromTag: (url, tag, callback = ->) ->
     @localStore.get tag, (data) =>
       data[tag] ||= []
       data[tag] = _.reject data[tag], (site) =>
         url == site.url
+      @localStore.set data, =>
+        callback(data[tag])
+
+  removeSitesFromTag: (urls, tag, callback = ->) ->
+    @localStore.get tag, (data) =>
+      data[tag] ||= []
+      data[tag] = _.reject data[tag], (site) =>
+        _.find urls, (url) -> site.url == url
       @localStore.set data, =>
         callback(data[tag])
 

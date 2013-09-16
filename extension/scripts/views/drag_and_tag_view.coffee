@@ -9,29 +9,46 @@ class BH.Views.DragAndTagView extends Backbone.View
       $el.addClass 'dragging'
       $('.menu .tags').addClass('pulse')
 
+      data = sites: []
       if $el.hasClass('searched')
+        count = 1
         history = @model.get('history')
         visit = history.get($el.data('id'))
+        data.sites.push
+          url: visit.get('url')
+          title: visit.get('title')
+          id: visit.get('id')
       else
         intervalId = $el.parents('.interval').data('id')
         interval = @model.get('history').get(intervalId)
-        visit = interval.findVisitById($el.data('id'))
 
-      site =
-        url: visit.get('url')
-        title: visit.get('title')
-        id: visit.get('id')
+        if $el.find('ol.visits').length > 0
+          count = $el.find('.visits .visit').length
+          $el.find('ol.visits .visit').each ->
+            visit = interval.findVisitById($(this).data('id'))
+            data.sites.push
+              url: visit.get('url')
+              title: visit.get('title')
+              id: visit.get('id')
+        else
+          visit = interval.findVisitById($el.data('id'))
+          count = 1
+          data.sites.push
+            url: visit.get('url')
+            title: visit.get('title')
+            id: visit.get('id')
+
 
       @tracker.siteTagDrag()
 
       unless summaryEl = document.getElementsByClassName('drag_ghost')[0]
         summaryEl = document.createElement 'div'
-        summaryEl.innerHTML = '1 visit'
         summaryEl.className = 'drag_ghost'
         $('body').append(summaryEl)
+      summaryEl.innerHTML = "#{count} visits"
 
       ev.dataTransfer.setDragImage summaryEl, -15, -10
-      ev.dataTransfer.setData 'application/json', JSON.stringify(site)
+      ev.dataTransfer.setData 'application/json', JSON.stringify(data)
 
     handleDragEnd = (ev) =>
       $el = $(ev.currentTarget)
@@ -58,25 +75,39 @@ class BH.Views.DragAndTagView extends Backbone.View
         persistence = new BH.Persistence.Tag
           localStore: localStore
 
-        site = new BH.Models.Site data,
+        collection = new BH.Collections.Sites data.sites,
           chrome: chrome
           persistence: persistence
 
         tagVisitView = new BH.Views.TagVisitView
-          model: site
+          collection: collection
         $('body').append tagVisitView.render().el
 
-        site.fetch()
-        tagVisitView.open =>
+        collection.fetch()
+
+        tagVisitView.on 'open', =>
           @tracker.droppedTagModalVisible()
 
-        tagVisitView.onDone = (tags) ->
-          $container = $("[data-id=#{data.id}]")
-          activeTagsView = new BH.Views.ActiveTagsView
-            model: new Backbone.Model(tags: tags)
-            editable: false
-          $container.find('.active_tags').html activeTagsView.render().el
-          $container.addClass('fade_out')
+        tagVisitView.on 'close', ->
+          for site in @collection.toJSON()
+            activeTagsView = new BH.Views.ActiveTagsView
+              model: new BH.Models.Site(site)
+              editable: false
+            $container = $("[data-id=#{site.id}]")
+            $container.find('.active_tags').html activeTagsView.render().el
+            $container.addClass('fade_out')
+
+          $parentVisit = $("[data-id=#{@collection.at(0).id}").parents('.visit')
+          if $parentVisit.length > 0
+            # Are we dealing with all the children tags?
+            if @collection.length == $parentVisit.find('.site').length
+              activeTagsView = new BH.Views.ActiveTagsView
+                model: new BH.Models.Site(tags: @collection.sharedTags())
+                editable: false
+              $parentVisit.find('.active_tags').eq(0).html activeTagsView.render().el
+
+
+        tagVisitView.open()
 
     handleDragOver = (ev) =>
       ev.preventDefault()

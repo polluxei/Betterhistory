@@ -161,9 +161,15 @@ describe 'BH.Persistence.Tag', ->
         title: 'Pound cake recipes'
 
       @persistence.localStore.get.andCallFake (key, callback) ->
-        if key == 'tags'
-          callback
-            tags: ['cooking']
+        callback {}
+
+      @persistence.localStore.set.andCallFake (data, callback) ->
+        callback()
+
+    it 'calls the passed callback', ->
+      callback = jasmine.createSpy('callback')
+      @persistence.addSiteToTag(@site, 'recipes', callback)
+      expect(callback).toHaveBeenCalled()
 
     describe 'when the tag is brand new', ->
       beforeEach ->
@@ -176,19 +182,21 @@ describe 'BH.Persistence.Tag', ->
 
       it 'prepends the tag to the tags key', ->
         @persistence.addSiteToTag(@site, 'recipes')
-        expect(@persistence.localStore.set).toHaveBeenCalledWith
-          'tags': ['recipes', 'cooking']
+        expect(@persistence.localStore.set).toHaveBeenCalledWith {
+          tags: ['recipes', 'cooking']
+        }, jasmine.any(Function)
 
       it 'creates the tag with the site in localStore', ->
         @persistence.addSiteToTag(@site, 'recipes')
-        expect(@persistence.localStore.set).toHaveBeenCalledWith
-          'recipes': [
+        expect(@persistence.localStore.set).toHaveBeenCalledWith {
+          recipes: [
             {
               title: 'Pound cake recipes'
               url: 'http://www.recipes.com/pound_cake'
               datetime: 1350968400000
             }
           ]
+        }, jasmine.any(Function)
 
     describe 'when the tag already exists in localStore', ->
       beforeEach ->
@@ -208,12 +216,13 @@ describe 'BH.Persistence.Tag', ->
 
       it 'does not add the tag to the tags key', ->
         @persistence.addSiteToTag(@site, 'recipes')
-        expect(@persistence.localStore.set).toHaveBeenCalledWith
+        expect(@persistence.localStore.set).toHaveBeenCalledWith {
           tags: ['cooking', 'recipes']
+        }, jasmine.any(Function)
 
       it 'appends the site to the tag in localStore', ->
         @persistence.addSiteToTag(@site, 'recipes')
-        expect(@persistence.localStore.set).toHaveBeenCalledWith
+        expect(@persistence.localStore.set).toHaveBeenCalledWith {
           recipes: [
             {
               title: 'Angel Cake'
@@ -225,6 +234,101 @@ describe 'BH.Persistence.Tag', ->
               datetime: 1350968400000
             }
           ]
+        }, jasmine.any(Function)
+
+  describe '#addSitesToTag', ->
+    beforeEach ->
+      @sites = [{
+        url: 'http://www.recipes.com/pound_cake'
+        title: 'Pound cake recipes'
+      }, {
+        url: 'http://www.recipes.com/fruit_cake'
+        title: 'Fruit cake recipes'
+      }]
+
+      @persistence.localStore.get.andCallFake (key, callback) ->
+        callback {}
+
+      @persistence.localStore.set.andCallFake (data, callback) ->
+        callback()
+
+    it 'calls the passed callback', ->
+      callback = jasmine.createSpy('callback')
+      @persistence.addSitesToTag(@sites, 'recipes', callback)
+      expect(callback).toHaveBeenCalled()
+
+    describe 'when the tag does not exist', ->
+      beforeEach ->
+        @persistence.localStore.get.andCallFake (key, callback) ->
+          if key == 'tags'
+            callback
+              tags: ['cooking']
+          else if key == 'recipes'
+            callback {}
+
+      it 'prepends the tag to the tag key', ->
+        @persistence.addSitesToTag(@sites, 'recipes')
+        expect(@persistence.localStore.set).toHaveBeenCalledWith {
+          tags: ['recipes', 'cooking']
+        }, jasmine.any(Function)
+
+      it 'creates the tag with the site', ->
+        @persistence.addSitesToTag(@sites, 'recipes')
+        expect(@persistence.localStore.set).toHaveBeenCalledWith {
+          recipes: [
+            {
+              url: 'http://www.recipes.com/pound_cake'
+              title: 'Pound cake recipes'
+              datetime: 1350968400000
+            }, {
+              title: 'Fruit cake recipes'
+              url: 'http://www.recipes.com/fruit_cake'
+              datetime: 1350968400000
+            }
+          ]
+        }, jasmine.any(Function)
+
+    describe 'when the tag exists', ->
+      beforeEach ->
+        @persistence.localStore.get.andCallFake (key, callback) ->
+          if key == 'tags'
+            callback
+              tags: ['cooking', 'recipes']
+          else if key == 'recipes'
+            callback
+              'recipes': [
+                {
+                  title: 'Angel Cake'
+                  url: 'http://www.recipes.com/angel_cake'
+                  datetime: 1350968400000
+                }
+              ]
+
+      it 'does not add the tag to the tag key', ->
+        @persistence.addSitesToTag @sites, 'recipes'
+        expect(@persistence.localStore.set).toHaveBeenCalledWith {
+          tags: ['cooking', 'recipes']
+        }, jasmine.any(Function)
+
+      it 'appends the site to the tag', ->
+        @persistence.addSitesToTag(@sites, 'recipes')
+        expect(@persistence.localStore.set).toHaveBeenCalledWith {
+          recipes: [
+            {
+              title: 'Angel Cake'
+              url: 'http://www.recipes.com/angel_cake'
+              datetime: 1350968400000
+            }, {
+              title: 'Pound cake recipes'
+              url: 'http://www.recipes.com/pound_cake'
+              datetime: 1350968400000
+            }, {
+              title: 'Fruit cake recipes'
+              url: 'http://www.recipes.com/fruit_cake'
+              datetime: 1350968400000
+            }
+          ]
+        }, jasmine.any(Function)
 
   describe '#removeTag', ->
     beforeEach ->
@@ -327,6 +431,106 @@ describe 'BH.Persistence.Tag', ->
             }
           ]
         }, jasmine.any(Function)
+
+  describe '#removeSitesFromTag', ->
+    beforeEach ->
+      @urls = [
+        'http://www.recipes.com/pound_cake',
+        'http://www.recipes.com/fruit_cake'
+      ]
+
+    describe 'when the sites are present in the tag', ->
+      beforeEach ->
+        @persistence.localStore.get.andCallFake (key, callback) ->
+          callback
+            recipes: [{
+              title: 'Pound Cake'
+              url: 'http://www.recipes.com/pound_cake'
+              datetime: new Date('2/3/12').getTime()
+            }, {
+              title: 'Fruit Cake'
+              url: 'http://www.recipes.com/fruit_cake'
+              datetime: new Date('2/3/12').getTime()
+            }, {
+              title: 'Angel Food Cake'
+              url: 'http://www.recipes.com/food'
+              datetime: new Date('4/2/13').getTime()
+            }]
+        @persistence.localStore.set.andCallFake (key, callback) =>
+          callback()
+
+      it 'removes the sites from the tag in localStore', ->
+        @persistence.removeSitesFromTag(@urls, 'recipes')
+        expect(@persistence.localStore.set).toHaveBeenCalledWith
+          recipes: [{
+            title: 'Angel Food Cake'
+            url: 'http://www.recipes.com/food'
+            datetime: new Date('4/2/13').getTime()
+          }]
+        , jasmine.any(Function)
+
+      it 'calls the passed callback with the new sites', ->
+        callback = jasmine.createSpy('callback')
+        @persistence.removeSitesFromTag(@urls, 'recipes', callback)
+        expect(callback).toHaveBeenCalledWith [
+          {
+            title: 'Angel Food Cake'
+            url: 'http://www.recipes.com/food'
+            datetime: new Date('4/2/13').getTime()
+          }
+        ]
+
+    describe 'when the sites is not present in the tag', ->
+      beforeEach ->
+        @urls = ['http://www.recipes.com/chocolate_cake']
+
+        @persistence.localStore.get.andCallFake (key, callback) ->
+          if key == 'tags'
+            callback
+              tags: ['cooking', 'recipes']
+          else if key == 'recipes'
+            callback
+              'recipes': [
+                {
+                  title: 'Angel Cake'
+                  url: 'http://www.recipes.com/angel_cake'
+                  datetime: 1350968400000
+                }, {
+                  title: 'Pound cake recipes'
+                  url: 'http://www.recipes.com/pound_cake'
+                  datetime: 1350968400000
+                }
+              ]
+
+      it 'does not modify the tagged sites in localStore', ->
+        @persistence.removeSitesFromTag(@urls, 'recipes')
+        expect(@persistence.localStore.set).toHaveBeenCalledWith {
+          recipes: [
+            {
+              title: 'Angel Cake'
+              url: 'http://www.recipes.com/angel_cake'
+              datetime: 1350968400000
+            }, {
+              title: 'Pound cake recipes'
+              url: 'http://www.recipes.com/pound_cake'
+              datetime: 1350968400000
+            }
+          ]
+        }, jasmine.any(Function)
+
+  describe '#addSitesToTag', ->
+    beforeEach ->
+      @persistence.localStore.get.andCallFake (key, callback) ->
+        callback {}
+      @persistence.localStore.set.andCallFake (data, callback) ->
+        callback {}
+
+    it 'calls the passed callback when all sites have been tagged', ->
+      sites = ['site1', 'site2']
+      callback = jasmine.createSpy('callback')
+      @persistence.addSitesToTag(sites, 'recipes', callback)
+      expect(callback).toHaveBeenCalled()
+
 
   describe '#removeAllTags', ->
     beforeEach ->

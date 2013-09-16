@@ -27,9 +27,25 @@ class BH.Views.DayResultsView extends Backbone.View
       $el = $(this)
       persistence.fetchSiteTags $el.attr('href'), (tags) =>
         activeTagsView = new BH.Views.ActiveTagsView
-          model: new Backbone.Model(tags: tags)
+          model: new BH.Models.Site(tags: tags)
           editable: false
         $el.find('.active_tags').html activeTagsView.render().el
+
+        $('.sites').each (i, siteEl) =>
+          $el = $(siteEl)
+          tagsBySite = []
+          $el.parents('.visit').find('.site').each ->
+            siteTags = []
+            $(this).find('.tag').each ->
+              siteTags.push $(this).data('tag')
+            tagsBySite.push siteTags
+
+          sharedTags = _.intersection.apply(@, tagsBySite)
+
+          activeTagsView = new BH.Views.ActiveTagsView
+            model: new BH.Models.Site(tags: sharedTags)
+            editable: false
+          $el.find('.active_tags').eq(0).html activeTagsView.render().el
 
   attachDragging: ->
     dragAndTagView = new BH.Views.DragAndTagView

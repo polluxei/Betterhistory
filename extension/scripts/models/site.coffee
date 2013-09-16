@@ -1,17 +1,21 @@
 class BH.Models.Site extends Backbone.Model
   initialize: (attrs = {}, options = {}) ->
-    throw "Chrome API not set" unless options.chrome?
-    throw "Persistence is not set" unless options.persistence?
-
     @chromeAPI = options.chrome
     @persistence = options.persistence
 
   fetch: (callback = ->) ->
+    throw "Persistence is not set" unless @persistence?
+
     @persistence.fetchSiteTags @get('url'), (tags) =>
       @set tags: tags
       callback()
 
+  tags: ->
+    @get('tags')
+
   addTag: (tag) ->
+    throw "Persistence is not set" unless @persistence?
+
     tag = tag.replace(/^\s\s*/, '').replace(/\s\s*$/, '')
 
     return false if @get('tags').indexOf(tag) != -1
@@ -29,6 +33,7 @@ class BH.Models.Site extends Backbone.Model
     @persistence.addSiteToTag site, tag
 
   removeTag: (tag) ->
+    throw "Persistence is not set" unless @persistence?
     return false if @get('tags').indexOf(tag) == -1
 
     # generate a new array to ensure a change event fires

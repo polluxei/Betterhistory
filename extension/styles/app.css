@@ -2,6 +2,14 @@
 .about_tags {
   display: none;
 }
+.mainview .content ul.tags li a.tag {
+  font-size: 11px;
+}
+.mainview .content ul.tags li {
+  margin-top: 1px;
+  line-height: 12px;
+}
+
 body.new_tags .menu .tags .new {
   color: #FFF;
   background: rgba(189, 64, 51, 0.7);
@@ -214,14 +222,15 @@ body.new_tags .menu .tags.pulse .new {
 .visit .show_visits {
   display: block;
 }
-.visits li.visit > .site {
+.visits li.visit > .site,
+.visits li.visit > .sites {
   padding-left: 15px;
 }
 .visits li.visit:hover > .drag_handle {
   display: block;
 }
 .drag_handle {
-  z-index: 100;
+  z-index: 1;
   width: 10px;
   height: 41px;
   position: absolute;
@@ -358,12 +367,16 @@ body.new_tags .menu .tags.pulse .new {
 .loaded .spinner {
   opacity: 0;
 }
-.tag_visit_view .site {
+body.chrome-bootstrap .tag_visit_view ul.sites {
+  margin: 0;
+}
+body.chrome-bootstrap .tag_visit_view ul li.site {
   background-repeat: no-repeat;
   padding: 10px 10px 10px 35px;
   background-color: #F0F6FE;
   background-position-y: 10px;
   background-position-x: 10px;
+  margin-bottom: 5px;
 }
 .tag_visit_view .site {
   white-space: nowrap;

@@ -11,10 +11,10 @@ class BH.Views.TagVisitView extends BH.Views.ModalView
   initialize: ->
     @chromeAPI = chrome
     @attachGeneralEvents()
-    @model.on('change:tags', @renderTags, @)
+    @collection.on('change:allTags', @renderTags, @)
 
   render: ->
-    properties = _.extend @getI18nValues(), @model.toJSON()
+    properties = _.extend @getI18nValues(), sites: @collection.toJSON()
     @$el.html @renderTemplate(properties)
     setTimeout =>
       @$('#tag_name').focus()
@@ -24,14 +24,14 @@ class BH.Views.TagVisitView extends BH.Views.ModalView
   renderTags: ->
     @activeTagsView.remove() if @activeTagsView
     @activeTagsView = new BH.Views.ActiveTagsView
-      model: @model
+      model: @collection
       tracker: analyticsTracker
     @$('.active_tags').html @activeTagsView.render().el
 
   doneClicked: (ev) ->
     ev.preventDefault()
-    @onDone(@model.get('tags')) if @onDone
-    @close()
+    @close =>
+      @trigger 'close'
 
   addTagClicked: (ev) ->
     ev.preventDefault()
@@ -39,7 +39,7 @@ class BH.Views.TagVisitView extends BH.Views.ModalView
     tag = $tagName.val()
     $tagName.val('')
 
-    if @model.addTag(tag) == false
+    if @collection.addTag(tag) == false
       if parent = $("[data-tag='#{tag}']").parents('li')
         parent.addClass('glow')
         setTimeout ->
@@ -47,4 +47,4 @@ class BH.Views.TagVisitView extends BH.Views.ModalView
         , 1000
 
   getI18nValues: ->
-    []
+    @t ['tag_visits_title', 'shared_visits_tags_title', 'prompt_done_button']

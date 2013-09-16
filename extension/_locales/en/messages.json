@@ -1038,5 +1038,13 @@
   "how_to_tag_title": {
     "message": "How to tag",
     "description": "title for how to tag content"
+  },
+  "tag_visits_title": {
+    "message": "Tag visited sites",
+    "description": "title for tagging visited sites modal"
+  },
+  "shared_visits_tags_title": {
+    "message": "Shared tags for sites",
+    "description": "caption for shared tagging of sites"
   }
 }

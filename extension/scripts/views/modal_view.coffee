@@ -13,13 +13,13 @@ class BH.Views.ModalView extends Backbone.View
     $('.page', overlay).append(Mustache.to_html(@template, json))
     overlay
 
-  open: (callback = ->) ->
+  open: ->
     $('body').append(@render().el)
     @_globalBinds()
     $(window).trigger('resize')
-    setTimeout( ->
+    setTimeout( =>
       @$('.overlay').removeClass('transparent')
-      callback()
+      @trigger('open')
     , 0)
 
   overlayClicked: ->
@@ -28,12 +28,13 @@ class BH.Views.ModalView extends Backbone.View
       @$('.page').removeClass('pulse')
 
   close: ->
-    @trigger('close')
     @$('.overlay').addClass('transparent')
     setTimeout( =>
       @remove()
+      @trigger('close:removed')
     , 1000)
     @_globalUnbinds()
+    @trigger('close')
 
   _globalBinds: ->
     $(window).resize(@_updateHeight)

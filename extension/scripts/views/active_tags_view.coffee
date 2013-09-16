@@ -16,7 +16,7 @@ class BH.Views.ActiveTagsView extends BH.Views.MainView
     @options.openInTab = false unless @options.openInTab?
 
   render: ->
-    properties = @model.toJSON()
+    properties = tags: @model.tags()
     properties.editable = @options.editable
     html = Mustache.to_html(@template, properties)
     @$el.html html

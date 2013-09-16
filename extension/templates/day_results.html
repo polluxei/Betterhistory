@@ -10,10 +10,20 @@
       <ol class='visits highlightable editable'>
         {{#visits}}
           {{#isGrouped}}
-            <li class='visit' data-id='{{id}}'>
-              <a href='{{url}}' class='site'>
+            <li class='visit' draggable='true' data-id='{{id}}'>
+              <div class='drag_handle'>
+                <div class='line'></div>
+                <div class='line'></div>
+                <div class='line'></div>
+                <div class='line'></div>
+                <div class='line'></div>
+              </div>
+              <a href='{{url}}' class='sites'>
                 <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
-                  <dt>{{domain}}</dt>
+                  <dt>
+                    <div class='active_tags'></div>
+                    {{domain}}
+                  </dt>
                   <dd class='time'>{{time}}</dd>
                   <dd class='toggle_grouping'>
                     <span class='show_visits'>

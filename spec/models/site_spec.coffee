@@ -30,6 +30,11 @@ describe 'BH.Models.Site', ->
       @site.fetch(callback)
       expect(callback).toHaveBeenCalled()
 
+  describe '#tags', ->
+    it 'returns the tags set', ->
+      @site.set tags: ['recipes', 'baking']
+      expect(@site.tags()).toEqual ['recipes', 'baking']
+
   describe '#addTag', ->
     beforeEach ->
       @site.set

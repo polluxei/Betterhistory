@@ -1,9 +1,14 @@
-<h1 class='title'>Tag visited site</h1>
+<h1 class='title'>{{i18n_tag_visits_title}}</h1>
 <div class='content-area'>
-  <div class='site' style='background-image: url(chrome://favicon/{{url}})'>
-    <div class='title'>{{title}}</div>
-    <div class='url'>{{url}}</div>
-  </div>
+  <ul class='sites'>
+    {{#sites}}
+      <li class='site' style='background-image: url(chrome://favicon/{{url}})'>
+        <div class='title'>{{title}}</div>
+        <div class='url'>{{url}}</div>
+      </li>
+    {{/sites}}
+  </ul>
+  <h4><strong>{{i18n_shared_visits_tags_title}}</strong></h4>
   <div class='active_tags'></div>
   <form id='tag_form'>
     <input id='tag_name' class='tags' type='text' placeholder='Enter a tag name' />
@@ -13,7 +18,7 @@
 <div class='action-area'>
   <div class='action-area-right'>
     <div class='button-strip'>
-      <button class='done'>Done</button>
+      <button class='done'>{{i18n_prompt_done_button}}</button>
     </div>
   </div>
 </div>
