@@ -28,7 +28,7 @@ class BH.Views.SearchResultsView extends Backbone.View
       $el = $(this)
       persistence.fetchSiteTags $el.attr('href'), (tags) =>
         activeTagsView = new BH.Views.ActiveTagsView
-          model: new Backbone.Model(tags: tags)
+          model: new BH.Models.Site(tags: tags)
           editable: false
         $el.find('.active_tags').html activeTagsView.render().el
 
