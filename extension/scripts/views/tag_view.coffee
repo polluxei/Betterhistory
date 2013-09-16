@@ -9,6 +9,8 @@ class BH.Views.TagView extends BH.Views.MainView
   events:
     'click .delete_sites': 'onDeleteSitesClicked'
     'click .rename': 'onRenameClicked'
+    'keyup .search': 'onSearchTyped'
+    'blur .search': 'onSearchBlurred'
 
   initialize: ->
     @chromeAPI = chrome

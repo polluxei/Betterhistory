@@ -9,6 +9,8 @@ class BH.Views.TagsView extends BH.Views.MainView
     'click .delete_all': 'onDeleteTagsClicked'
     'click .how_to_tag': 'onHowToTagClicked'
     'click .dismiss_instructions': 'onDismissInstructionsClicked'
+    'keyup .search': 'onSearchTyped'
+    'blur .search': 'onSearchBlurred'
 
   initialize: ->
     @chromeAPI = chrome
