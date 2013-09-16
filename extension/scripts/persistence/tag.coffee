@@ -12,6 +12,15 @@ class BH.Persistence.Tag
             result = _.where data[tag], {url: url}
             matches.push tag if result.length > 0
           matches
+        sitesTags: (urls) ->
+          siteTags = []
+          for url in urls
+            matches = []
+            for tag in data.tags
+              result = _.where data[tag], {url: url}
+              matches.push tag if result.length > 0
+            siteTags.push matches
+          _.intersection.apply @, siteTags
 
   fetchTags: (callback) ->
     @localStore.get 'tags', (data) =>
