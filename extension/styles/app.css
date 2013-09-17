@@ -57,6 +57,12 @@ body.new_tags .about_tags strong {
   top: 3px;
   opacity: 1;
 }
+.tag_visit_view .active_tags_view {
+  margin: 5px 0;
+}
+.tag_visit_view .active_tags_view .no_tags {
+  margin: 7px 0 6px;
+}
 .visits .active_tags .delete {
   display: none;
 }

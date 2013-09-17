@@ -25,9 +25,12 @@ class BH.Views.TagVisitView extends BH.Views.ModalView
     @
 
   renderTags: ->
+    if $el = @$('li.selected').eq(0)
+      model = @collection.findWhere(url: $el.data('url'))
+
     @activeTagsView.remove() if @activeTagsView
     @activeTagsView = new BH.Views.ActiveTagsView
-      model: @collection
+      model: model || @collection
       tracker: analyticsTracker
     @$('.active_tags').html @activeTagsView.render().el
 
@@ -45,6 +48,7 @@ class BH.Views.TagVisitView extends BH.Views.ModalView
     else
       @$('.site').eq(0).addClass('selected')
       @tagAllSites = false
+    @renderTags()
     true
 
   onSiteClicked: (ev) ->
@@ -53,6 +57,7 @@ class BH.Views.TagVisitView extends BH.Views.ModalView
     if !@tagAllSites && @collection.length > 1
       @$('.site').removeClass('selected')
       $el.addClass('selected')
+      @renderTags()
 
   addTagClicked: (ev) ->
     ev.preventDefault()
@@ -60,7 +65,13 @@ class BH.Views.TagVisitView extends BH.Views.ModalView
     tag = $tagName.val()
     $tagName.val('')
 
-    if @collection.addTag(tag) == false
+    $selectedEl = @$('.selected').eq(0)
+    if $selectedEl.length > 0
+      model = @collection.findWhere(url: $selectedEl.data('url'))
+      model.on 'change', @renderTags, @
+      model.addTag(tag)
+
+    else if @collection.addTag(tag) == false
       if parent = $("[data-tag='#{tag}']").parents('li')
         parent.addClass('glow')
         setTimeout ->
@@ -68,4 +79,4 @@ class BH.Views.TagVisitView extends BH.Views.ModalView
         , 1000
 
   getI18nValues: ->
-    @t ['tag_visits_title', 'shared_visits_tags_title', 'prompt_done_button']
+    @t ['tag_visits_title', 'prompt_done_button']

@@ -10,13 +10,12 @@
 <div class='content-area'>
   <ul class='sites'>
     {{#sites}}
-      <li class='site' style='background-image: url(chrome://favicon/{{url}})'>
+      <li class='site' data-url='{{url}}' style='background-image: url(chrome://favicon/{{url}})'>
         <div class='title'>{{title}}</div>
         <div class='url'>{{url}}</div>
       </li>
     {{/sites}}
   </ul>
-  <h4><strong>{{i18n_shared_visits_tags_title}}</strong></h4>
   <div class='active_tags'></div>
   <form id='tag_form'>
     <input id='tag_name' class='tags' type='text' placeholder='Enter a tag name' />

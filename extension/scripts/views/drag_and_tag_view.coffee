@@ -1,6 +1,9 @@
 class BH.Views.DragAndTagView extends Backbone.View
+  @include BH.Modules.I18n
+
   initialize: ->
     @tracker = analyticsTracker
+    @chromeAPI = chrome
 
   render: ->
     handleDragStart = (ev) =>
@@ -45,7 +48,7 @@ class BH.Views.DragAndTagView extends Backbone.View
         summaryEl = document.createElement 'div'
         summaryEl.className = 'drag_ghost'
         $('body').append(summaryEl)
-      summaryEl.innerHTML = "#{count} visits"
+      summaryEl.innerHTML = @t('number_of_visits', [count])
 
       ev.dataTransfer.setDragImage summaryEl, -15, -10
       ev.dataTransfer.setData 'application/json', JSON.stringify(data)
