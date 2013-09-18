@@ -10,7 +10,7 @@ class BH.Collections.Sites extends Backbone.Collection
     index = 1
     callback = =>
       if index == @length
-        @trigger 'change:allTags'
+        @trigger 'reset:allTags'
       else
         index++
 

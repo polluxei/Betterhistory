@@ -36,7 +36,7 @@ describe 'BH.Collections.Site', ->
 
     it 'triggers a change event for all tags', ->
       @sites.fetch()
-      expect(@sites.trigger).toHaveBeenCalledWith('change:allTags')
+      expect(@sites.trigger).toHaveBeenCalledWith('reset:allTags')
 
   describe '#sharedTags', ->
     it 'returns an array of tags that all sites have in common', ->

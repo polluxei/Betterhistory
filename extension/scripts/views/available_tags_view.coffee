@@ -38,7 +38,7 @@ class BH.Views.AvailableTagsView extends Backbone.View
         draggedData = ev.dataTransfer.getData('application/json')
         collection = @inflateDraggedData(draggedData)
         collection.fetch()
-        collection.on 'change:allTags', =>
+        collection.on 'reset:allTags', =>
           if $el.hasClass('new_tag')
             tagName = prompt('Enter new tag name')
             return unless tagName?

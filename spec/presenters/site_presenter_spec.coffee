@@ -2,7 +2,7 @@ describe 'BH.Presenters.SitePresenter', ->
   beforeEach ->
     attrs =
       title: 'Google',
-      url: 'http://www.google.com'
+      url: 'http://www.google.com/'
 
     model = new BH.Models.Site attrs,
       chrome: {}
@@ -14,12 +14,12 @@ describe 'BH.Presenters.SitePresenter', ->
     it 'returns the properties with an added domain', ->
       expect(@presenter.site()).toEqual
         title: 'Google'
-        url: 'http://www.google.com'
+        url: 'http://www.google.com/'
         domain: 'google.com'
 
     it 'does not strip the subdomain if it is something other than www', ->
-      @presenter.model.set url: 'http://test.google.com'
+      @presenter.model.set url: 'http://test.google.com/'
       expect(@presenter.site()).toEqual
         title: 'Google'
-        url: 'http://test.google.com'
+        url: 'http://test.google.com/'
         domain: 'test.google.com'
