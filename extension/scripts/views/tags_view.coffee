@@ -67,4 +67,5 @@ class BH.Views.TagsView extends BH.Views.MainView
 
   getI18nValues: ->
     properties = @t ['tags_title', 'search_input_placeholder_text', 'delete_all_tags', 'how_to_tag']
+    properties.i18n_sync_tags_link = @t 'sync_tags_link', ['<a style="text-decoration: underline;" href="http://mad.ly/signups/89926/join">', '</a>']
     properties

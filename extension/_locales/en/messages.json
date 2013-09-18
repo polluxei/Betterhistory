@@ -1042,5 +1042,19 @@
   "tag_visits_title": {
     "message": "Tag sites",
     "description": "title for tagging visited sites modal"
+  },
+  "sync_tags_link": {
+    "message": "Keep your tags save, $link_open$Sync them!$link_close$",
+    "description": "link to sign up for syncing",
+    "placeholders": {
+      "link_open": {
+        "content": "$1",
+        "example": "open link tag"
+      },
+      "link_close": {
+        "content": "$2",
+        "example": "close link tag"
+      }
+    }
   }
 }

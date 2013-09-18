@@ -10,7 +10,7 @@ class BH.Views.DragAndTagView extends Backbone.View
       ev.stopPropagation()
       $el = $(ev.currentTarget)
       $el.addClass 'dragging'
-      $('.menu .tags').addClass('pulse')
+      $('.navigation').addClass('dropzone')
 
       data = sites: []
       if $el.hasClass('searched')
@@ -53,77 +53,20 @@ class BH.Views.DragAndTagView extends Backbone.View
       ev.dataTransfer.setDragImage summaryEl, -15, -10
       ev.dataTransfer.setData 'application/json', JSON.stringify(data)
 
+      collection = new BH.Collections.Tags {},
+        persistence: new BH.Persistence.Tag(localStore: localStore)
+
+      availableTagsView = new BH.Views.AvailableTagsView
+        collection: collection
+        draggedSites: data.sites
+        el: '.available_tags'
+      collection.fetch()
+
     handleDragEnd = (ev) =>
       $el = $(ev.currentTarget)
       $el.removeClass 'dragging'
-      $('.menu .tags').removeClass('pulse')
-
-    handleDragEnter = (ev) =>
-      $el = $(ev.currentTarget)
-      $el.addClass('over')
-
-    handleDragLeave = (ev) =>
-      $el = $(ev.currentTarget)
-      $el.removeClass('over')
-
-    handleDrop = (ev) =>
-      $el = $(ev.currentTarget)
-      ev.stopPropagation()
-
-      if $('body .tag_visit_view').length == 0
-        @tracker.siteTagDrop()
-        $el.removeClass('over')
-        data = JSON.parse(ev.dataTransfer.getData('application/json'))
-
-        persistence = new BH.Persistence.Tag
-          localStore: localStore
-
-        collection = new BH.Collections.Sites data.sites,
-          chrome: chrome
-          persistence: persistence
-
-        tagVisitView = new BH.Views.TagVisitView
-          collection: collection
-        $('body').append tagVisitView.render().el
-
-        collection.fetch()
-
-        tagVisitView.on 'open', =>
-          @tracker.droppedTagModalVisible()
-
-        tagVisitView.on 'close', ->
-          for site in @collection.toJSON()
-            activeTagsView = new BH.Views.ActiveTagsView
-              model: new BH.Models.Site(site)
-              editable: false
-            $container = $("[data-id=#{site.id}]")
-            $container.find('.active_tags').html activeTagsView.render().el
-            $container.addClass('fade_out')
-
-          $parentVisit = $("[data-id=#{@collection.at(0).id}").parents('.visit')
-          if $parentVisit.length > 0
-            # Are we dealing with all the children tags?
-            if @collection.length == $parentVisit.find('.site').length
-              activeTagsView = new BH.Views.ActiveTagsView
-                model: new BH.Models.Site(tags: @collection.sharedTags())
-                editable: false
-              $parentVisit.find('.active_tags').eq(0).html activeTagsView.render().el
-
-
-        tagVisitView.open()
-
-    handleDragOver = (ev) =>
-      ev.preventDefault()
-      ev.dataTransfer.effect = 'move'
-      false
+      $('.navigation').removeClass('dropzone')
 
     $('.visit').each (i, visit) ->
       visit.addEventListener('dragstart', handleDragStart, false)
       visit.addEventListener('dragend', handleDragEnd, false)
-
-    $dropZone = $('.menu .tags')[0]
-    $dropZone.addEventListener('dragenter', handleDragEnter, false)
-    $dropZone.addEventListener('dragleave', handleDragLeave, false)
-    $dropZone.addEventListener('dragover', handleDragOver, false)
-    $dropZone.addEventListener('drop', handleDrop, false)
-

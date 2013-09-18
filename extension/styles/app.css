@@ -1,6 +1,48 @@
+.navigation .available_tags {
+  transition: left 0.2s;
+  position: absolute;
+  top: 100px;
+  left: -124px;
+  width: 124px;
+}
+.navigation .disappearable {
+  transition: opacity 0.2s;
+  opacity: 1;
+}
+.dropzone.navigation .available_tags {
+  left: 0;
+}
+.dropzone.navigation .disappearable {
+  opacity: 0;
+}
 .menu .tags .new,
 .about_tags {
   display: none;
+}
+.available_tags {
+  background: #FFF;
+}
+.available_tags ul.tags li {
+  width: 100px;
+  margin-bottom: 3px;
+  border-radius: 0;
+  padding: 8px 0 8px 24px;
+  z-index: 2;
+}
+.available_tags ul.tags li,
+.available_tags ul.tags li.over.tagged {
+  background: #F0F6FE;
+  color: #15C;
+}
+.available_tags ul.tags li.over,
+.available_tags ul.tags li.tagged {
+  background: #8AAAED;
+  color: #FFF;
+}
+.available_tags ul.tags li.new_tag {
+  padding-left: 10px;
+  padding-right: 14px;
+  font-weight: bold;
 }
 .tag_mode {
   text-align: right;
@@ -20,10 +62,9 @@ body.new_tags .menu .tags .new {
   background: rgba(189, 64, 51, 0.7);
   border-radius: 2px;
   display: inline-block;
-  float: right;
   padding: 1px 4px;
   line-height: 15px;
-  margin: 7px 52px 0 0;
+  margin: 7px 0 0 20px;
 }
 body.new_tags .about_tags {
   border-radius: 3px;

@@ -98,3 +98,28 @@ describe 'BH.Presenters.TagsPresenter', ->
           count: 11
           sites: [@site6, @site3, @site5, @site2, @site1, @site4, @site10, @site11, @site12, @site13]
         }]
+
+  describe '#selectedAndUnselectedTagsforSites', ->
+    beforeEach ->
+      @sites = [
+        {
+          title: 'Pan Frying'
+          url: 'http://www.atk.com/pan_frying'
+        }, {
+          title: 'Preparing Meat'
+          url: 'http://www.atk.com/preparing_meat'
+        }
+      ]
+
+    it 'returns all the tags with the currently tagged sites marked', ->
+      results = @presenter.selectedAndUnselectedTagsforSites(@sites)
+      expect(results).toEqual tags: [
+        {
+          name: 'recipes'
+          tagged: false
+        }, {
+          name: 'cooking'
+          tagged: true
+        }
+      ]
+
