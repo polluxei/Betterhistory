@@ -44,7 +44,8 @@ ul.suggestions li {
   padding: 5px;
   color: #555;
 }
-ul.suggestions li.selected {
+ul.suggestions li.selected,
+ul.suggestions li:hover {
   background: #F0F6FE;
 }
 .active_tags {
