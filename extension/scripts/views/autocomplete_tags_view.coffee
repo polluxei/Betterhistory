@@ -27,7 +27,7 @@ class BH.Views.AutocompleteTagsView extends Backbone.View
     if ev.keyCode == 8 && enteredTag.length == 0 && @previousEnteredTag.length == 0
       $tags = $('ul.tags')
       if $tags.length > 0
-        $tag = $tags.find('li.tag').last()
+        $tag = $tags.find('li').last()
         if $tag
           @model.removeTag $tag.find('a.tag').data('tag')
           $tag.remove()
