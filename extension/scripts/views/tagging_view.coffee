@@ -21,7 +21,6 @@ class BH.Views.TaggingView extends BH.Views.MainView
     @chromeAPI.commands.getAll (commands) =>
       presenter = new BH.Presenters.SitePresenter(@model)
       properties = presenter.site()
-      debugger
       properties.shortcut = _.where(commands, name: '_execute_browser_action')[0].shortcut
 
       html = Mustache.to_html(@template, properties)
@@ -33,12 +32,14 @@ class BH.Views.TaggingView extends BH.Views.MainView
       @
 
   renderTags: ->
-    @activeTagsView.remove() if @activeTagsView
-    @activeTagsView = new BH.Views.ActiveTagsView
+    @autocompleteTagsView.remove() if @autocompleteTagsView
+    @autocompleteTagsView = new BH.Views.AutocompleteTagsView
       model: @model
+      collection: @collection
       tracker: @tracker
-      openInTab: true
-    @$('.active_tags').html @activeTagsView.render().el
+    @$('.active_tags').html @autocompleteTagsView.render().el
+    @collection.fetch()
+
 
   viewHistoryClicked: (ev) ->
     ev.preventDefault()

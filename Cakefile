@@ -41,9 +41,11 @@ popupScripts = [
   'scripts/modules/i18n.js',
   'scripts/modules/url.js',
   'scripts/models/site.js',
+  'scripts/models/tag.js',
+  'scripts/collections/tags.js',
   'scripts/views/main_view.js',
   'scripts/views/tagging_view.js',
-  'scripts/views/active_tags_view.js',
+  'scripts/views/autocomplete_tags_view.js',
   'scripts/presenters/site_presenter.js',
   'scripts/initialize_popup.js'
 ]
