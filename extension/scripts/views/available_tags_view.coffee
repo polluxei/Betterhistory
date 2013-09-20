@@ -6,7 +6,7 @@ class BH.Views.AvailableTagsView extends Backbone.View
   initialize: ->
     @tracker = analyticsTracker
     @draggedSites = @options.draggedSites
-
+    @excludedTag = @options.excludedTag
     @collection.on 'reset', @render, @
 
   render: ->
@@ -71,10 +71,11 @@ class BH.Views.AvailableTagsView extends Backbone.View
 
   rerenderTags: (collection) ->
     for site in collection.toJSON()
+      site.tags = _.without(site.tags, @excludedTag) if @excludedTag?
       activeTagsView = new BH.Views.ActiveTagsView
         model: new BH.Models.Site(site)
         editable: false
-      $container = $("[data-id=#{site.id}]")
+      $container = $("[data-id='#{site.id}']")
       $container.find('.active_tags').html activeTagsView.render().el
       $container.addClass('fade_out')
 

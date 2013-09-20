@@ -4,6 +4,7 @@ class BH.Views.DragAndTagView extends Backbone.View
   initialize: ->
     @tracker = analyticsTracker
     @chromeAPI = chrome
+    @excludeTag = @options.excludeTag
 
   render: ->
     handleDragStart = (ev) =>
@@ -21,6 +22,14 @@ class BH.Views.DragAndTagView extends Backbone.View
           url: visit.get('url')
           title: visit.get('title')
           id: visit.get('id')
+      else if $el.hasClass('tagged')
+        count = 1
+        sites = @model.get('sites')
+        visit = _.where(sites, url: $el.data('id'))
+        data.sites.push
+          url: visit[0].url
+          title: visit[0].title
+          id: visit[0].url
       else
         intervalId = $el.parents('.interval').data('id')
         interval = @model.get('history').get(intervalId)
@@ -60,6 +69,7 @@ class BH.Views.DragAndTagView extends Backbone.View
         collection: collection
         draggedSites: data.sites
         el: '.available_tags'
+        excludedTag: (@model.get('name') if @excludeTag)
       collection.fetch()
 
     handleDragEnd = (ev) =>

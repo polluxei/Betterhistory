@@ -1,6 +1,13 @@
-<ul class='highlightable editable'>
+<ul class='visits highlightable editable'>
   {{#sites}}
-    <li class='visit'>
+    <li class='visit tagged' draggable='true' data-id='{{url}}'>
+      <div class='drag_handle'>
+        <div class='line'></div>
+        <div class='line'></div>
+        <div class='line'></div>
+        <div class='line'></div>
+        <div class='line'></div>
+      </div>
       <a href='{{url}}' class='site'>
         <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
           <dt>

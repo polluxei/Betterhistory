@@ -31,6 +31,12 @@ class BH.Views.TaggedSitesView extends BH.Views.MainView
             editable: false
           $el.find('.active_tags').html activeTagsView.render().el
 
+  attachDragging: ->
+    dragAndTagView = new BH.Views.DragAndTagView
+      model: @model
+      excludeTag: true
+    dragAndTagView.render()
+
   deleteClicked: (ev) ->
     ev.preventDefault()
     $el = $(ev.currentTarget)

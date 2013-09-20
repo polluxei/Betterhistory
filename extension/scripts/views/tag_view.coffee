@@ -40,6 +40,7 @@ class BH.Views.TagView extends BH.Views.MainView
     @taggedSitesView = new BH.Views.TaggedSitesView
       model: @model
     @$('.content').html @taggedSitesView.render().el
+    @taggedSitesView.attachDragging()
     @taggedSitesView.insertTags()
 
   onDeleteSitesClicked: (ev) ->
