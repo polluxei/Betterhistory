@@ -10,6 +10,7 @@ class BH.Views.RenameTagView extends BH.Views.ModalView
 
   initialize: ->
     @chromeAPI = chrome
+    @tracker = @options.tracker
     @attachGeneralEvents()
 
   render: ->
@@ -27,6 +28,7 @@ class BH.Views.RenameTagView extends BH.Views.ModalView
     return false if tag.length == 0
 
     @model.renameTag @$('input.new_tag').val(), =>
+      @tracker.tagRenamed()
       @close()
 
   getI18nValues: ->

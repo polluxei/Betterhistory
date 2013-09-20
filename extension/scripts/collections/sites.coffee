@@ -39,9 +39,9 @@ class BH.Collections.Sites extends Backbone.Collection
           url: model.get('url')
           title: model.get('title')
 
-    @persistence.addSitesToTag sites, tag, =>
+    @persistence.addSitesToTag sites, tag, (operations) =>
       @trigger 'change:allTags'
-      callback()
+      callback(true, operations)
 
   removeTag: (tag, callback = ->) ->
     tag = tag.replace(/^\s\s*/, '').replace(/\s\s*$/, '')

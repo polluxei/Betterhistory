@@ -42,6 +42,7 @@ class BH.Views.AutocompleteTagsView extends Backbone.View
     activeTagsView = new BH.Views.ActiveTagsView
       model: @model
       editable: true
+      tracker: @tracker
     @$('.active_tags').html activeTagsView.render().el
 
   newTagChanged: (ev) ->
@@ -57,6 +58,7 @@ class BH.Views.AutocompleteTagsView extends Backbone.View
         if $tag
           tag = $tag.find('a.tag').data('tag')
           @model.removeTag tag
+          @tracker.siteUntagged()
           @suggestionsView.requalifyTag(tag)
           $tag.remove()
     else
@@ -83,18 +85,22 @@ class BH.Views.AutocompleteTagsView extends Backbone.View
           @previousEnteredTag = enteredTag
 
   attemptToAddTag: (tag) ->
-    if @model.addTag(tag)
-      # make sure the added tag does not appear in suggestions
-      @suggestionsView.disqualifyTag tag
-    else
-      # Assume the tag is already in use
-      $usedTag = @$(".active_tags [data-tag='#{tag}']")
-      $usedTag.addClass 'glow'
-      setTimeout (-> $usedTag.removeClass('glow')), 1000
+    @model.addTag tag, (result, operations) =>
+      @tracker.siteTagged()
+      @tracker.tagAdded() if operations.tagCreated
 
-    @$('.new_tag').val ''
-    @suggestionsView.hide()
-    @previousEnteredTag = ''
+      if result
+        # make sure the added tag does not appear in suggestions
+        @suggestionsView.disqualifyTag tag
+      else
+        # Assume the tag is already in use
+        $usedTag = @$(".active_tags [data-tag='#{tag}']")
+        $usedTag.addClass 'glow'
+        setTimeout (-> $usedTag.removeClass('glow')), 1000
+
+      @$('.new_tag').val ''
+      @suggestionsView.hide()
+      @previousEnteredTag = ''
 
   getI18nValues: ->
     @t ['add_a_tag_placeholder']

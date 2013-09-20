@@ -14,7 +14,7 @@ class BH.Models.Site extends Backbone.Model
   tags: ->
     @get('tags')
 
-  addTag: (tag) ->
+  addTag: (tag, callback = ->) ->
     throw "Persistence is not set" unless @persistence?
 
     tag = tag.replace(/^\s\s*/, '').replace(/\s\s*$/, '')
@@ -31,8 +31,8 @@ class BH.Models.Site extends Backbone.Model
       url: @get('url')
       title: @get('title')
 
-    @persistence.addSiteToTag site, tag
-    true
+    @persistence.addSiteToTag site, tag, (operations) ->
+      callback(true, operations)
 
   removeTag: (tag) ->
     throw "Persistence is not set" unless @persistence?
@@ -43,4 +43,3 @@ class BH.Models.Site extends Backbone.Model
     @set tags: _.without(newTags, tag)
 
     @persistence.removeSiteFromTag @get('url'), tag
-    true

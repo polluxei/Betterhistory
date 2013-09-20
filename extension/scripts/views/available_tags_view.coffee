@@ -47,9 +47,14 @@ class BH.Views.AvailableTagsView extends Backbone.View
 
           if $el.hasClass('tagged')
             collection.removeTag tagName, =>
+              collection.each =>
+                @tracker.siteUntagged()
               @rerenderTags(collection)
           else
-            collection.addTag tagName, =>
+            collection.addTag tagName, (result, operations) =>
+              collection.each =>
+                @tracker.siteTagged()
+              @tracker.tagAdded() if operations.tagCreated
               @rerenderTags(collection)
         false
       , false)

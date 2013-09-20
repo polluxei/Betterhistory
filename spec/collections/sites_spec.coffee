@@ -66,6 +66,14 @@ describe 'BH.Collections.Site', ->
         }]
         expect(@sites.persistence.addSitesToTag).toHaveBeenCalledWith(sites, 'recipes', jasmine.any(Function))
 
+      it 'calls the passed callback with the result and operations performed during the persistence', ->
+        callback = jasmine.createSpy('callback')
+        @sites.persistence.addSitesToTag.andCallFake (sites, tag, callback) ->
+          callback('operations')
+        @sites.addTag('recipes', callback)
+        expect(callback).toHaveBeenCalledWith(true, 'operations')
+
+
   describe '#removeTag', ->
     describe 'when the tag is present in the tags', ->
       it 'removes the passed tag from the tags attribute', ->

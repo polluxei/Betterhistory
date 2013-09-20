@@ -50,6 +50,7 @@ class BH.Views.TagView extends BH.Views.MainView
     @tracker.renameTagClick()
     renameTagView = new BH.Views.RenameTagView
       model: @model
+      tracker: @tracker
     $('body').append(renameTagView.render().el)
     renameTagView.open()
     $('.new_tag').focus()
@@ -64,6 +65,7 @@ class BH.Views.TagView extends BH.Views.MainView
     if prompt.get('action')
       @model.destroy =>
       @promptView.close()
+      @tracker.tagRemoved()
       router.navigate '#tags', trigger: true
     else
       @promptView.close()

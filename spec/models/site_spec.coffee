@@ -59,7 +59,14 @@ describe 'BH.Models.Site', ->
         site =
           url: @site.get('url')
           title: @site.get('title')
-        expect(@site.persistence.addSiteToTag).toHaveBeenCalledWith(site, 'recipes')
+        expect(@site.persistence.addSiteToTag).toHaveBeenCalledWith(site, 'recipes', jasmine.any(Function))
+
+      it 'calls the passed callback with the result and operations performed during the persistence', ->
+        callback = jasmine.createSpy('callback')
+        @site.persistence.addSiteToTag.andCallFake (site, tag, callback) ->
+          callback('operations')
+        @site.addTag('recipes', callback)
+        expect(callback).toHaveBeenCalledWith(true, 'operations')
 
   describe '#removeTag', ->
     beforeEach ->

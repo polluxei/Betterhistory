@@ -56,9 +56,12 @@ class BH.Persistence.Tag
         callback(foundTags)
 
   addSiteToTag: (site, tag, callback = ->) ->
+    operations = tagCreated: false
+
     @localStore.get "tags", (data) =>
       data = tags: [] unless data.tags?
       if data.tags.indexOf(tag) == -1
+        operations.tagCreated = true
         data.tags.unshift tag
       @localStore.set data, =>
         @localStore.get tag, (data) =>
@@ -66,12 +69,15 @@ class BH.Persistence.Tag
           site.datetime = new Date().getTime()
           data[tag].push site
           @localStore.set data, ->
-            callback()
+            callback(operations)
 
   addSitesToTag: (sites, tag, callback = ->) ->
+    operations = tagCreated: false
+
     @localStore.get "tags", (data) =>
       data = tags: [] unless data.tags?
       if data.tags.indexOf(tag) == -1
+        operations.tagCreated = true
         data.tags.unshift tag
       @localStore.set data, =>
         @localStore.get tag, (data) =>
@@ -80,7 +86,7 @@ class BH.Persistence.Tag
             site.datetime = new Date().getTime()
             data[tag].push site
           @localStore.set data, ->
-            callback()
+            callback(operations)
 
   removeSiteFromTag: (url, tag, callback = ->) ->
     @localStore.get tag, (data) =>

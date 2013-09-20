@@ -166,11 +166,6 @@ describe 'BH.Persistence.Tag', ->
       @persistence.localStore.set.andCallFake (data, callback) ->
         callback()
 
-    it 'calls the passed callback', ->
-      callback = jasmine.createSpy('callback')
-      @persistence.addSiteToTag(@site, 'recipes', callback)
-      expect(callback).toHaveBeenCalled()
-
     describe 'when the tag is brand new', ->
       beforeEach ->
         @persistence.localStore.get.andCallFake (key, callback) ->
@@ -197,6 +192,12 @@ describe 'BH.Persistence.Tag', ->
             }
           ]
         }, jasmine.any(Function)
+
+    it 'calls the passed callback with the operations performed', ->
+      callback = jasmine.createSpy('callback')
+      @persistence.addSiteToTag(@site, 'recipes', callback)
+      expect(callback).toHaveBeenCalledWith
+        tagCreated: true
 
     describe 'when the tag already exists in localStore', ->
       beforeEach ->
@@ -236,6 +237,12 @@ describe 'BH.Persistence.Tag', ->
           ]
         }, jasmine.any(Function)
 
+      it 'calls the passed callback with the operations performed', ->
+        callback = jasmine.createSpy('callback')
+        @persistence.addSiteToTag(@site, 'recipes', callback)
+        expect(callback).toHaveBeenCalledWith
+          tagCreated: false
+
   describe '#addSitesToTag', ->
     beforeEach ->
       @sites = [{
@@ -251,11 +258,6 @@ describe 'BH.Persistence.Tag', ->
 
       @persistence.localStore.set.andCallFake (data, callback) ->
         callback()
-
-    it 'calls the passed callback', ->
-      callback = jasmine.createSpy('callback')
-      @persistence.addSitesToTag(@sites, 'recipes', callback)
-      expect(callback).toHaveBeenCalled()
 
     describe 'when the tag does not exist', ->
       beforeEach ->
@@ -287,6 +289,12 @@ describe 'BH.Persistence.Tag', ->
             }
           ]
         }, jasmine.any(Function)
+
+      it 'calls the passed callback with the operations performed', ->
+        callback = jasmine.createSpy('callback')
+        @persistence.addSitesToTag(@sites, 'recipes', callback)
+        expect(callback).toHaveBeenCalledWith
+          tagCreated: true
 
     describe 'when the tag exists', ->
       beforeEach ->
@@ -329,6 +337,12 @@ describe 'BH.Persistence.Tag', ->
             }
           ]
         }, jasmine.any(Function)
+
+      it 'calls the passed callback with the operations performed', ->
+        callback = jasmine.createSpy('callback')
+        @persistence.addSitesToTag(@sites, 'recipes', callback)
+        expect(callback).toHaveBeenCalledWith
+          tagCreated: false
 
   describe '#removeTag', ->
     beforeEach ->

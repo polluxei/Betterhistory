@@ -23,7 +23,9 @@ class BH.Views.ActiveTagsView extends BH.Views.MainView
 
   deleteTagClicked: (ev) ->
     ev.preventDefault()
-    @model.removeTag $(ev.currentTarget).data('tag')
+    tag = $(ev.currentTarget).data('tag')
+    @model.removeTag tag
+    @tracker.siteUntagged()
 
   tagClicked: (ev) ->
     if @inBrowserAction?
