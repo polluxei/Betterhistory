@@ -32,10 +32,7 @@ class BH.Views.AutocompleteTagsView extends Backbone.View
       collection: new Backbone.Collection(@collection.toJSON())
     $('.suggestions').html @suggestionsView.render().el
     @suggestionsView.on 'click:tag', (tag) =>
-      @model.addTag tag
-      @$('.new_tag').val ''
-      @suggestionsView.hide()
-      @previousEnteredTag = ''
+      @attemptToAddTag(tag)
     , @
 
   renderActiveTags: ->
@@ -76,19 +73,25 @@ class BH.Views.AutocompleteTagsView extends Backbone.View
           @previousEnteredTag = enteredTag
 
         else if ev.keyCode == 13
-          tag = @suggestionsView.selectedTag()
-
-          if tag?
-            model = @suggestionsView.collection.findWhere(name: tag)
-            @suggestionsView.collection.remove model
-
-          @model.addTag tag || enteredTag
-          $input.val ''
-          @suggestionsView.hide()
-          @previousEnteredTag = ''
+          tag = @suggestionsView.selectedTag() || enteredTag
+          @attemptToAddTag(tag)
         else
           @suggestionsView.filterBy enteredTag
           @previousEnteredTag = enteredTag
+
+  attemptToAddTag: (tag) ->
+    if @model.addTag(tag)
+      # make sure the added tag does not appear in suggestions
+      @suggestionsView.disqualifyTag tag
+    else
+      # Assume the tag is already in use
+      $usedTag = @$(".active_tags [data-tag='#{tag}']")
+      $usedTag.addClass 'glow'
+      setTimeout (-> $usedTag.removeClass('glow')), 1000
+
+    @$('.new_tag').val ''
+    @suggestionsView.hide()
+    @previousEnteredTag = ''
 
   getI18nValues: ->
     @t ['add_a_tag_placeholder']

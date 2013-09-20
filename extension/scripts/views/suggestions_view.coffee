@@ -7,11 +7,13 @@ class BH.Views.SuggestionsView extends Backbone.View
     'click li': 'onTagClicked'
 
   initialize: ->
+    @disqualifiedTags = []
     @collection.on 'remove', @render, @
     @collection.on 'add', @render, @
 
   render: ->
-    html = Mustache.to_html(@template, tags: @collection.pluck('name'))
+    tags = _.difference @collection.pluck('name'), @disqualifiedTags
+    html = Mustache.to_html(@template, tags: tags)
     @$el.hide()
     @$el.html html
     @
@@ -65,3 +67,5 @@ class BH.Views.SuggestionsView extends Backbone.View
 
     if hiddenTags == @collection.length then @hide() else @show()
 
+  disqualifyTag: (tag) ->
+    @disqualifiedTags.push tag
