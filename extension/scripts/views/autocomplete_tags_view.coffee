@@ -33,6 +33,9 @@ class BH.Views.AutocompleteTagsView extends Backbone.View
     $('.suggestions').html @suggestionsView.render().el
     @suggestionsView.on 'click:tag', (tag) =>
       @model.addTag tag
+      @$('.new_tag').val ''
+      @suggestionsView.hide()
+      @previousEnteredTag = ''
     , @
 
   renderActiveTags: ->
@@ -42,9 +45,11 @@ class BH.Views.AutocompleteTagsView extends Backbone.View
     @$('.active_tags').html activeTagsView.render().el
 
   newTagChanged: (ev) ->
+    ev.preventDefault()
     @previousEnteredTag ||= ''
     $input = $(ev.currentTarget)
     enteredTag = $input.val()
+
     if ev.keyCode == 8 && enteredTag.length == 0 && @previousEnteredTag.length == 0
       $tags = $('ul.tags')
       if $tags.length > 0
@@ -63,13 +68,16 @@ class BH.Views.AutocompleteTagsView extends Backbone.View
         if ev.keyCode == 40
           @suggestionsView.moveDown()
           $input.val @suggestionsView.selectedTag()
+          @previousEnteredTag = enteredTag
 
         else if ev.keyCode == 38
           @suggestionsView.moveUp()
           $input.val @suggestionsView.selectedTag()
+          @previousEnteredTag = enteredTag
 
         else if ev.keyCode == 13
           tag = @suggestionsView.selectedTag()
+
           if tag?
             model = @suggestionsView.collection.findWhere(name: tag)
             @suggestionsView.collection.remove model
@@ -77,10 +85,10 @@ class BH.Views.AutocompleteTagsView extends Backbone.View
           @model.addTag tag || enteredTag
           $input.val ''
           @suggestionsView.hide()
+          @previousEnteredTag = ''
         else
           @suggestionsView.filterBy enteredTag
-
-    @previousEnteredTag = enteredTag
+          @previousEnteredTag = enteredTag
 
   getI18nValues: ->
     @t ['add_a_tag_placeholder']
