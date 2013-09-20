@@ -94,7 +94,8 @@ body.new_tags .about_tags strong {
 .visits .active_tags .delete {
   display: none;
 }
-.visits .active_tags .no_tags {
+.visits .active_tags .no_tags,
+.tag_view .active_tags .no_tags {
   display: none;
 }
 .extra_help {

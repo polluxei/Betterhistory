@@ -1,9 +1,12 @@
 <ul class='highlightable editable'>
   {{#sites}}
     <li class='visit'>
-      <a href='{{url}}'>
+      <a href='{{url}}' class='site'>
         <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
-          <dt>{{title}}</dt>
+          <dt>
+            <div class='active_tags'></div>
+            {{title}}
+          </dt>
           <dd>{{url}}</dd>
         </dl>
       </a>

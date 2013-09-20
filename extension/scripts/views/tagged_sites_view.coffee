@@ -18,6 +18,19 @@ class BH.Views.TaggedSitesView extends BH.Views.MainView
     @$el.html html
     @
 
+  insertTags: ->
+    currentTag = @model.get('name')
+    persistence = new BH.Persistence.Tag localStore: localStore
+    persistence.cached (operations) ->
+      $('.site').each ->
+        $el = $(this)
+        tags = operations.siteTags $el.attr('href')
+        if tags.length > 0
+          activeTagsView = new BH.Views.ActiveTagsView
+            model: new BH.Models.Site(tags: _.without(tags, currentTag))
+            editable: false
+          $el.find('.active_tags').html activeTagsView.render().el
+
   deleteClicked: (ev) ->
     ev.preventDefault()
     $el = $(ev.currentTarget)
