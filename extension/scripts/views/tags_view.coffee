@@ -8,6 +8,7 @@ class BH.Views.TagsView extends BH.Views.MainView
   events:
     'click .delete_all': 'onDeleteTagsClicked'
     'click .how_to_tag': 'onHowToTagClicked'
+    'click .load_example_tags': 'onLoadExampleTagsClicked'
     'click .dismiss_instructions': 'onDismissInstructionsClicked'
     'keyup .search': 'onSearchTyped'
     'blur .search': 'onSearchBlurred'
@@ -29,6 +30,15 @@ class BH.Views.TagsView extends BH.Views.MainView
     tag_count = @t 'number_of_tags', [@collection.length]
     @$('.tag_count').text tag_count
     @renderTags()
+
+  onLoadExampleTagsClicked: (ev) ->
+    ev.preventDefault()
+    persistence = new BH.Persistence.Tag(localStore: localStore)
+    exampleTags = new BH.Lib.ExampleTags
+      persistence: persistence
+      chrome: chrome
+    exampleTags.load =>
+      @collection.fetch()
 
   renderTags: ->
     @tagsListView.remove() if @tagsListView
@@ -59,8 +69,8 @@ class BH.Views.TagsView extends BH.Views.MainView
 
   promptAction: (prompt) ->
     if prompt.get('action')
-      @collection.destroy()
-      @collection.fetch()
+      @collection.destroy =>
+        @collection.fetch()
       @promptView.close()
     else
       @promptView.close()

@@ -20,4 +20,8 @@ class BH.Views.TagsListView extends BH.Views.MainView
     properties.i18n_about_tags_instructions = @t 'about_tags_instructions', [
       '<a href="#" class="how_to_tag">', '</a>'
     ]
+    properties.i18n_extra_tag_help = @t 'extra_tag_help', [
+      '<a href="#" class="how_to_tag">', '</a>',
+      '<a href="#" class="load_example_tags">', '</a>'
+    ]
     properties

@@ -6,9 +6,10 @@ class BH.Lib.ExampleTags
     @chromeAPI = options.chrome
     @persistence = options.persistence
 
-  load: ->
+  load: (callback) ->
     @persistence.fetchTags (tags) =>
-      @chromeAPI.storage.local.set exampleTags
+      @chromeAPI.storage.local.set exampleTags, ->
+        callback()
 
 exampleTags =
   tags: ['games', 'places to travel', 'clothing', 'recipes', 'friends', 'funny videos', 'world news', 'productivity']

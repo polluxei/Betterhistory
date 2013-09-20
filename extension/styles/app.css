@@ -110,6 +110,15 @@ body.new_tags .about_tags strong {
 .visits .active_tags .no_tags {
   display: none;
 }
+.extra_help {
+  opacity: 0.7;
+  font-size: 11px;
+  margin-left: 15px;
+}
+.tags_list_view .no_results {
+  background: #EEE;
+  border-radius: 5px;
+}
 
 .menu .tags.pulse {
   -webkit-animation: pulse 0.7s infinite alternate;
