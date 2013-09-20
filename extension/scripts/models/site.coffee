@@ -8,6 +8,7 @@ class BH.Models.Site extends Backbone.Model
 
     @persistence.fetchSiteTags @get('url'), (tags) =>
       @set tags: tags
+      @trigger 'reset:tags'
       callback()
 
   tags: ->

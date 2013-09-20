@@ -1058,7 +1058,7 @@
     }
   },
   "add_a_tag_placeholder": {
-    "message": "Remember it, add a tag!",
+    "message": "Add a tag",
     "description": "add a tag placeholder text"
   }
 }

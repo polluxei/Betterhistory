@@ -45,8 +45,11 @@ popupScripts = [
   'scripts/collections/tags.js',
   'scripts/views/main_view.js',
   'scripts/views/tagging_view.js',
+  'scripts/views/active_tags_view.js',
   'scripts/views/autocomplete_tags_view.js',
+  'scripts/views/suggestions_view.js',
   'scripts/presenters/site_presenter.js',
+  'scripts/presenters/tags_presenter.js',
   'scripts/initialize_popup.js'
 ]
 

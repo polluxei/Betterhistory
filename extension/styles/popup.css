@@ -6,46 +6,74 @@
   bottom: 5px;
   margin: 0;
 }
-ul.tags {
+.autocomplete_shell {
   border: 1px solid #AAA;
-  padding: 0 4px;
   box-shadow: inset 0px 0px 2px 2px #EEE;
   background: #fafafa;
   border-radius: 2px;
+  padding: 1px 4px 0 4px;
+  position: relative;
+  margin: 8px 0 10px;
 }
-ul.tags li.input {
+.input {
+  float: right;
   border: none;
   background: none;
 }
-ul.tags li.input:focus {
-  border: none;
+ul.tags {
+  margin: 0;
 }
-ul.tags li.input input {
+.active_tags,
+ul.tags,
+.active_tags_view {
+  display: inline-block;
+}
+.active_tags .no_tags {
+  display: none;
+}
+ul.tags li {
+  margin-bottom: 3px;
+}
+.autocomplete input.new_tag {
   border: 0;
   padding-left: 0;
   background: #fafafa;
   width: 170px;
+  margin-left: 2px;
 }
-ul.suggestions {
+.suggestions {
+  position: relative;
+}
+.suggestions ul {
   z-index: 100;
   position: absolute;
-  top: 29px;
-  left: 0px;
+  top: -11px;
+  left: 0;
   border: 1px solid #AAA;
   width: 328px;
   margin: 0;
   background: #FFF;
   box-shadow: 0px 2px 6px 1px #CCC;
 }
+.suggestions li {
+  display: none;
+}
+.suggestions .active {
+  display: block;
+}
 .hide {
   display: none;
 }
-ul.suggestions li {
+.suggestions ul li {
   padding: 5px;
   color: #555;
 }
-ul.suggestions li.selected,
-ul.suggestions li:hover {
+.suggestions ul:hover li.selected {
+  background: #FFF;
+}
+.suggestions ul:hover li.selected:hover,
+.suggestions ul li.selected,
+.suggestions ul li:hover {
   background: #F0F6FE;
 }
 .active_tags {

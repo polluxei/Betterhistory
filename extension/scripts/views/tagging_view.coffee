@@ -15,7 +15,7 @@ class BH.Views.TaggingView extends BH.Views.MainView
   initialize: ->
     @chromeAPI = chrome
     @tracker = @options.tracker
-    @model.on('change:tags', @renderTags, @)
+    @model.on('reset:tags', @renderTags, @)
 
   render: ->
     @chromeAPI.commands.getAll (commands) =>
@@ -37,7 +37,7 @@ class BH.Views.TaggingView extends BH.Views.MainView
       model: @model
       collection: @collection
       tracker: @tracker
-    @$('.active_tags').html @autocompleteTagsView.render().el
+    @$('.autocomplete').html @autocompleteTagsView.render().el
     @collection.fetch()
 
 

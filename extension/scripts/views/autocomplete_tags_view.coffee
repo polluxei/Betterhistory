@@ -12,15 +12,34 @@ class BH.Views.AutocompleteTagsView extends Backbone.View
     @chromeAPI = chrome
     @tracker = @options.tracker
     @collection.on 'reset', @render, @
+    @model.on 'change:tags', @renderActiveTags, @
 
   render: ->
     properties = _.extend @getI18nValues(), {tags: @model.tags()}
     html = Mustache.to_html(@template, properties)
     @$el.html html
+
+    @renderSuggestionsView()
+    @renderActiveTags()
+
     setTimeout ->
       @$('input.new_tag').focus()
     , 0
     @
+
+  renderSuggestionsView: ->
+    @suggestionsView = new BH.Views.SuggestionsView
+      collection: new Backbone.Collection(@collection.toJSON())
+    $('.suggestions').html @suggestionsView.render().el
+    @suggestionsView.on 'click:tag', (tag) =>
+      @model.addTag tag
+    , @
+
+  renderActiveTags: ->
+    activeTagsView = new BH.Views.ActiveTagsView
+      model: @model
+      editable: true
+    @$('.active_tags').html activeTagsView.render().el
 
   newTagChanged: (ev) ->
     @previousEnteredTag ||= ''
@@ -31,68 +50,36 @@ class BH.Views.AutocompleteTagsView extends Backbone.View
       if $tags.length > 0
         $tag = $tags.find('li:not(.input)').last()
         if $tag
-          @model.removeTag $tag.find('a.tag').data('tag')
+          tag = $tag.find('a.tag').data('tag')
+          @model.removeTag tag
+          @suggestionsView.collection.add name: tag
           $tag.remove()
     else
-      if enteredTag.length >= 2
-        $suggestions = @$('.suggestions')
+      if enteredTag.length <= 1
+        @suggestionsView.hide()
+      else
+        @suggestionsView.show()
+
         if ev.keyCode == 40
-          if $suggestions.find('.selected').length > 0
-            index = $suggestions.find('.selected').index()
-            if index != $suggestions.find('li').length
-              $suggestions.find('.selected').removeClass('selected')
-              $selected = $suggestions.find('li').eq(index + 1)
-              $selected.addClass('selected')
-              $input.val $selected.data('tag')
-          else
-            $selected = $suggestions.find('li:first-child')
-            $selected.addClass('selected')
-            $input.val $selected.data('tag')
+          @suggestionsView.moveDown()
+          $input.val @suggestionsView.selectedTag()
 
         else if ev.keyCode == 38
-          if $suggestions.find('.selected').length > 0
-            index = $suggestions.find('.selected').index()
-            if index != 0
-              $suggestions.find('.selected').removeClass('selected')
-              $selected = $suggestions.find('li').eq(index - 1)
-              $selected.addClass('selected')
-              $input.val $selected.data('tag')
+          @suggestionsView.moveUp()
+          $input.val @suggestionsView.selectedTag()
 
         else if ev.keyCode == 13
-          $selectedTag = $suggestions.find('.selected')
-          if $selectedTag.length > 0
-            @model.addTag $selectedTag.data('tag')
-          else
-            @model.addTag enteredTag
+          tag = @suggestionsView.selectedTag()
+          if tag?
+            model = @suggestionsView.collection.findWhere(name: tag)
+            @suggestionsView.collection.remove model
 
+          @model.addTag tag || enteredTag
+          $input.val ''
         else
-          $suggestions.find('.selected').removeClass('selected')
-          matches = []
-          @collection.each (tag) =>
-            name = tag.get('name')
-            if name.match(enteredTag)
-              matches.push("<li data-tag='#{name}'>#{name}</li>")
-            if matches.length > 0
-              $suggestions.html(matches.join(''))
-              $suggestions.removeClass('hide')
-            else
-              $suggestions.addClass('hide')
-            $suggestions.find('li').click (ev) =>
-              @model.addTag $(ev.currentTarget).data('tag')
+          @suggestionsView.filterBy enteredTag
 
     @previousEnteredTag = enteredTag
-
-  deleteTagClicked: (ev) ->
-    ev.preventDefault()
-    @model.removeTag $(ev.currentTarget).data('tag')
-    @tracker.removeTagPopup()
-
-  tagClicked: (ev) ->
-    ev.preventDefault()
-    tag = $(ev.currentTarget).data('tag')
-    @tracker.tagPopupClick()
-    @chromeAPI.tabs.create
-      url: "chrome://history#tags/#{tag}"
 
   getI18nValues: ->
     @t ['add_a_tag_placeholder']
