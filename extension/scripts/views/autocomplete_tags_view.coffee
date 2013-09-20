@@ -76,6 +76,7 @@ class BH.Views.AutocompleteTagsView extends Backbone.View
 
           @model.addTag tag || enteredTag
           $input.val ''
+          @suggestionsView.hide()
         else
           @suggestionsView.filterBy enteredTag
 
