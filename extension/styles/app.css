@@ -1,16 +1,11 @@
 .navigation .available_tags {
-  transition: left 0.2s;
   position: absolute;
   top: 100px;
-  left: -124px;
   width: 124px;
 }
 .navigation .disappearable {
   transition: opacity 0.2s;
   opacity: 1;
-}
-.dropzone.navigation .available_tags {
-  left: 0;
 }
 .dropzone.navigation .disappearable {
   opacity: 0;
@@ -40,13 +35,7 @@
   color: #FFF;
 }
 .available_tags ul.tags li.new_tag {
-  padding-left: 10px;
-  padding-right: 14px;
   font-weight: bold;
-}
-.tag_mode {
-  text-align: right;
-  padding-right: 20px;
 }
 .mainview .content ul.tags li a.tag {
   font-size: 11px;
@@ -84,7 +73,6 @@ body.new_tags .about_tags strong {
 .about_tags .dismiss_instructions {
   position: absolute;
   top: 5px;
-  right: 8px;
   opacity: 1;
 }
 .tag_visit_view .tags {
@@ -94,7 +82,6 @@ body.new_tags .about_tags strong {
   width: 600px;
 }
 .tag_visit_view .tags .delete {
-  right: 3px;
   top: 3px;
   opacity: 1;
 }
@@ -113,7 +100,6 @@ body.new_tags .about_tags strong {
 .extra_help {
   opacity: 0.7;
   font-size: 11px;
-  margin-left: 15px;
 }
 .tags_list_view .no_results {
   background: #EEE;
@@ -149,10 +135,6 @@ body.new_tags .menu .tags.pulse .new {
 .chrome-bootstrap .frame .content {
   overflow-x: visible;
 }
-.controls .rename,
-.controls .how_to_tag {
-  margin-right: 15px;
-}
 .how_to_tag_view .page {
   height: 585px;
   width: 650px;
@@ -182,13 +164,10 @@ body.new_tags .menu .tags.pulse .new {
 .tag_list .details {
   position: absolute;
   top: 10px;
-  right: 10px;
   width: 250px;
-  text-align: right;
 }
 .favicons {
   opacity: 0.5;
-  float: right;
   height: 24px;
   font-size: 0;
 }
@@ -199,12 +178,6 @@ body.new_tags .menu .tags.pulse .new {
 .favicons .favicon {
   width: 16px;
   height: 16px;
-}
-.favicons li {
-  margin-right: 5px;
-}
-.favicons li:last-child {
-  margin-right: 0;
 }
 .intervals {
   margin-top: 0;
@@ -263,7 +236,6 @@ body.new_tags .menu .tags.pulse .new {
 .interval header .delete {
   opacity: 1;
   top: 10px;
-  right: 15px;
 }
 .visit.expanded .visits {
   max-height: 5000px;
@@ -287,10 +259,6 @@ body.new_tags .menu .tags.pulse .new {
 .visit .show_visits {
   display: block;
 }
-.visits li.visit > .site,
-.visits li.visit > .sites {
-  padding-left: 15px;
-}
 .visits li.visit:hover > .drag_handle {
   display: block;
 }
@@ -300,7 +268,6 @@ body.new_tags .menu .tags.pulse .new {
   height: 41px;
   position: absolute;
   top: 2px;
-  left: 0;
   display: none;
 }
 .search_view .drag_handle {
@@ -314,7 +281,6 @@ body.new_tags .menu .tags.pulse .new {
 }
 .visit.dragging .drag_handle {
   display: block;
-  border-left: 5px solid #8AAAED;
 }
 .visit.dragging .drag_handle .line {
   display: none;
@@ -333,12 +299,10 @@ body.new_tags .menu .tags.pulse .new {
   z-index: 0;
   position: absolute;
   top: 0;
-  right: 0;
 }
 #coverup {
   position: absolute;
   top: 0;
-  right: 0;
   z-index: 2;
   background: #FFF;
   width: 70px;
@@ -398,7 +362,6 @@ body.new_tags .menu .tags.pulse .new {
 .day_view .time {
   -webkit-transition: 150ms opacity;
   position: absolute;
-  right: 10px;
   top: 5px;
   opacity: 1;
 }
@@ -582,7 +545,7 @@ body .hidden {
 body {
   direction: __MSG_@@bidi_dir__;
 }
-header .corner {
+.chrome-bootstrap header .corner {
   __MSG_@@bidi_start_edge__: auto;
   __MSG_@@bidi_end_edge__: 0px;
 }
@@ -592,11 +555,11 @@ header .corner {
 .week_view .bar {
   __MSG_@@bidi_start_edge__: 0;
 }
-.highlightable li .action {
+.chrome-bootstrap .highlightable li .action {
   __MSG_@@bidi_start_edge__: auto;
   __MSG_@@bidi_end_edge__: 32px;
 }
-.highlightable.editable .delete {
+.chrome-bootstrap .highlightable.editable .delete {
   __MSG_@@bidi_start_edge__: auto;
   __MSG_@@bidi_end_edge__: 5px;
 }
@@ -625,4 +588,78 @@ header .corner {
 }
 .chrome-bootstrap .pagination li:last-child {
   margin-__MSG_@@bidi_end_edge__: 20px;
+}
+.available_tags ul.tags li.new_tag {
+  padding-__MSG_@@bidi_start_edge__: 10px;
+  padding-__MSG_@@bidi_end_edge__: 14px;
+}
+.tag_mode {
+  text-align: __MSG_@@bidi_end_edge__;
+  padding-__MSG_@@bidi_end_edge__: 20px;
+}
+.about_tags .dismiss_instructions {
+  __MSG_@@bidi_end_edge__: 8px;
+}
+.tag_visit_view .tags .delete {
+  __MSG_@@bidi_end_edge__: 3px;
+}
+.controls .rename,
+.controls .how_to_tag {
+  margin-__MSG_@@bidi_end_edge__: 15px;
+}
+.tag_list .details {
+  __MSG_@@bidi_end_edge__: 10px;
+  text-align: __MSG_@@bidi_end_edge__;
+}
+.favicons {
+  float: __MSG_@@bidi_end_edge__;
+}
+.favicons li {
+  margin-__MSG_@@bidi_end_edge__: 5px;
+}
+.favicons li:last-child {
+  margin-__MSG_@@bidi_end_edge__: 0;
+}
+.interval header .delete {
+  __MSG_@@bidi_end_edge__: 15px;
+}
+.drag_ghost {
+  __MSG_@@bidi_end_edge__: 0;
+}
+#coverup {
+  __MSG_@@bidi_end_edge__: 0;
+}
+.navigation .available_tags {
+  transition: __MSG_@@bidi_start_edge__ 0.2s;
+  __MSG_@@bidi_start_edge__: -124px;
+}
+.dropzone.navigation .available_tags {
+  __MSG_@@bidi_start_edge__: 0;
+}
+.extra_help {
+  margin-__MSG_@@bidi_start_edge__: 15px;
+}
+.drag_handle {
+  __MSG_@@bidi_start_edge__: 0;
+}
+.visit.dragging .drag_handle {
+  border-__MSG_@@bidi_start_edge__: 5px solid #8AAAED;
+}
+.visits li.visit > .site,
+.visits li.visit > .sites {
+  padding-__MSG_@@bidi_start_edge__: 15px;
+}
+.day_view .time {
+  __MSG_@@bidi_end_edge__: 10px;
+}
+.chrome-bootstrap .highlightable li .tags {
+  float: __MSG_@@bidi_start_edge__;
+}
+.chrome-bootstrap .highlightable li .tags li:last-child {
+  margin-__MSG_@@bidi_end_edge__: 5px;
+  margin-__MSG_@@bidi_start_edge__: 0;
+}
+.available_tags ul.tags li {
+  padding-__MSG_@@bidi_start_edge__: 24px;
+  padding-__MSG_@@bidi_end_edge__: 0;
 }

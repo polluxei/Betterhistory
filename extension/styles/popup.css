@@ -2,7 +2,6 @@
   font-size: 9px;
   color: #BBB;
   position: absolute;
-  right: 5px;
   bottom: 5px;
   margin: 0;
 }
@@ -114,7 +113,6 @@ body {
   margin: 0;
   font-weight: bold;
   white-space: nowrap;
-  background-image: -webkit-gradient(linear, left top, right top, color-stop(90%, #000), to(white));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -126,7 +124,6 @@ input[type=text] {
   padding-bottom: 5px;
   color: #999;
   white-space: nowrap;
-  background-image: -webkit-gradient(linear, left top, right top, color-stop(90%, #999), to(white));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -155,4 +152,18 @@ input[type=text] {
   100% {
     opacity: 1;
   }
+}
+
+.shortcut {
+  __MSG_@@bidi_end_edge__: 5px;
+}
+.chrome-bootstrap h1 {
+  background-image: -webkit-gradient(linear, __MSG_@@bidi_start_edge__ top, __MSG_@@bidi_end_edge__ top, color-stop(90%, #000), to(white));
+}
+.url {
+  background-image: -webkit-gradient(linear, __MSG_@@bidi_start_edge__ top, __MSG_@@bidi_end_edge__ top, color-stop(90%, #999), to(white));
+}
+.header {
+  padding-__MSG_@@bidi_start_edge__: 25px;
+  background-position: top __MSG_@@bidi_start_edge__;
 }
