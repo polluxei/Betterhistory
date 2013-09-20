@@ -21,10 +21,10 @@ ul.tags li.input:focus {
   border: none;
 }
 ul.tags li.input input {
-  width: 84px;
   border: 0;
   padding-left: 0;
   background: #fafafa;
+  width: 170px;
 }
 ul.suggestions {
   z-index: 100;

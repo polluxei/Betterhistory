@@ -1,4 +1,6 @@
 class BH.Views.AutocompleteTagsView extends Backbone.View
+  @include BH.Modules.I18n
+
   template: BH.Templates['autocomplete_tags']
 
   events:
@@ -12,7 +14,7 @@ class BH.Views.AutocompleteTagsView extends Backbone.View
     @collection.on 'reset', @render, @
 
   render: ->
-    properties = tags: @model.tags()
+    properties = _.extend @getI18nValues(), {tags: @model.tags()}
     html = Mustache.to_html(@template, properties)
     @$el.html html
     setTimeout ->
@@ -91,3 +93,6 @@ class BH.Views.AutocompleteTagsView extends Backbone.View
     @tracker.tagPopupClick()
     @chromeAPI.tabs.create
       url: "chrome://history#tags/#{tag}"
+
+  getI18nValues: ->
+    @t ['add_a_tag_placeholder']

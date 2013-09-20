@@ -1056,5 +1056,9 @@
         "example": "close link tag"
       }
     }
+  },
+  "add_a_tag_placeholder": {
+    "message": "Remember it, add a tag!",
+    "description": "add a tag placeholder text"
   }
 }
