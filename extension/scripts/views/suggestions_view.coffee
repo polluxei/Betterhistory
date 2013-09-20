@@ -7,9 +7,7 @@ class BH.Views.SuggestionsView extends Backbone.View
     'click li': 'onTagClicked'
 
   initialize: ->
-    @disqualifiedTags = []
-    @collection.on 'remove', @render, @
-    @collection.on 'add', @render, @
+    @disqualifiedTags = @options.disqualifiedTags || []
 
   render: ->
     tags = _.difference @collection.pluck('name'), @disqualifiedTags
@@ -57,7 +55,8 @@ class BH.Views.SuggestionsView extends Backbone.View
     $selected.data('tag')
 
   filterBy: (text) ->
-    hiddenTags = 0
+    # grab the number of existing tags that are current applied
+    hiddenTags = _.intersection(@disqualifiedTags, @collection.pluck('name')).length
     @$('li').each ->
       if $(this).data('tag').match(text)
         $(this).addClass('active')
@@ -69,3 +68,8 @@ class BH.Views.SuggestionsView extends Backbone.View
 
   disqualifyTag: (tag) ->
     @disqualifiedTags.push tag
+    @render()
+
+  requalifyTag: (tag) ->
+    @disqualifiedTags = _.without @disqualifiedTags, tag
+    @render()

@@ -30,7 +30,10 @@ class BH.Views.AutocompleteTagsView extends Backbone.View
   renderSuggestionsView: ->
     @suggestionsView = new BH.Views.SuggestionsView
       collection: new Backbone.Collection(@collection.toJSON())
+      disqualifiedTags: @model.tags()
+
     $('.suggestions').html @suggestionsView.render().el
+
     @suggestionsView.on 'click:tag', (tag) =>
       @attemptToAddTag(tag)
     , @
@@ -54,7 +57,7 @@ class BH.Views.AutocompleteTagsView extends Backbone.View
         if $tag
           tag = $tag.find('a.tag').data('tag')
           @model.removeTag tag
-          @suggestionsView.collection.add name: tag
+          @suggestionsView.requalifyTag(tag)
           $tag.remove()
     else
       if enteredTag.length <= 1
