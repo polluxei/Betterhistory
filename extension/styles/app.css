@@ -153,6 +153,10 @@ body.new_tags .menu .tags.pulse .new {
 .controls .how_to_tag {
   margin-right: 15px;
 }
+.how_to_tag_view .page {
+  height: 585px;
+  width: 650px;
+}
 .no_results {
   padding: 10px 15px;
 }

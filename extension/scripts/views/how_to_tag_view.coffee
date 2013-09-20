@@ -13,6 +13,22 @@ class BH.Views.HowToTagView extends BH.Views.ModalView
 
   render: ->
     @$el.html(@renderTemplate(@getI18nValues()))
+    @on 'open', ->
+      !(->
+        n = ->
+          n = document.getElementsByName('quickcast')
+          for e in n
+            t = e.offsetWidth
+            e.height=t/0.91+'px'
+        n()
+        window.onresize=n
+        window.addEventListener('message',(n) ->
+          if(n.data.indexOf('//quick.as/') != -1)
+            window.location.href=n.data
+        ,!1)
+      )()
+    , @
+
     return this
 
   doneClicked: (ev) ->
