@@ -1,7 +1,7 @@
 {
   "name": "better-history",
   "description": "Better History extension for Chrome",
-  "version": "2.0.0-beta",
+  "version": "2.0.0-beta.1",
   "author": "Roy Kolak <roy.kolak@gmail.com>",
   "scripts": {
     "start": "make build",
