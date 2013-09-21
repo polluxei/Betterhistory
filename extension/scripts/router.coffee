@@ -8,6 +8,7 @@ class BH.Router extends Backbone.Router
     'settings': 'settings'
     'search/*query(/p:page)': 'search'
     'search': 'search'
+    'today': 'today'
 
   initialize: (options) ->
     settings = options.settings
@@ -49,6 +50,11 @@ class BH.Router extends Backbone.Router
 
   day: (id) ->
     view = @app.loadDay id
+    view.history.fetch()
+    view.select()
+
+  today: ->
+    view = @app.loadDay moment(new Date()).id()
     view.history.fetch()
     view.select()
 
