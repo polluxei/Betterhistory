@@ -26,7 +26,10 @@
     }
   },
   "browser_action": {
-    "default_icon": "images/icons/icon19.png",
+    "default_icon": {
+      "19": "images/icons/icon19.png",
+      "38": "images/icons/icon38.png"
+    },
     "default_title": "__MSG_manifest_browser_action_title__",
     "default_popup": "popup.html"
   },
