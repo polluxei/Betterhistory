@@ -1,6 +1,6 @@
 describe 'BH.Persistence.Tag', ->
   beforeEach ->
-    timekeeper.freeze(new Date('10-23-12'))
+    timekeeper.freeze(new Date('10-23-12 5:00 PM'))
     localStore =
       get: jasmine.createSpy('get')
       set: jasmine.createSpy('set')
@@ -188,7 +188,7 @@ describe 'BH.Persistence.Tag', ->
             {
               title: 'Pound cake recipes'
               url: 'http://www.recipes.com/pound_cake'
-              datetime: 1350968400000
+              datetime: 1351029600000
             }
           ]
         }, jasmine.any(Function)
@@ -211,7 +211,7 @@ describe 'BH.Persistence.Tag', ->
                 {
                   title: 'Angel Cake'
                   url: 'http://www.recipes.com/angel_cake'
-                  datetime: 1350968400000
+                  datetime: 1351029600000
                 }
               ]
 
@@ -228,11 +228,11 @@ describe 'BH.Persistence.Tag', ->
             {
               title: 'Angel Cake'
               url: 'http://www.recipes.com/angel_cake'
-              datetime: 1350968400000
+              datetime: 1351029600000
             }, {
               title: 'Pound cake recipes'
               url: 'http://www.recipes.com/pound_cake'
-              datetime: 1350968400000
+              datetime: 1351029600000
             }
           ]
         }, jasmine.any(Function)
@@ -281,11 +281,11 @@ describe 'BH.Persistence.Tag', ->
             {
               url: 'http://www.recipes.com/pound_cake'
               title: 'Pound cake recipes'
-              datetime: 1350968400000
+              datetime: 1351029600000
             }, {
               title: 'Fruit cake recipes'
               url: 'http://www.recipes.com/fruit_cake'
-              datetime: 1350968400000
+              datetime: 1351029600000
             }
           ]
         }, jasmine.any(Function)
@@ -308,7 +308,7 @@ describe 'BH.Persistence.Tag', ->
                 {
                   title: 'Angel Cake'
                   url: 'http://www.recipes.com/angel_cake'
-                  datetime: 1350968400000
+                  datetime: 1351029600000
                 }
               ]
 
@@ -325,15 +325,15 @@ describe 'BH.Persistence.Tag', ->
             {
               title: 'Angel Cake'
               url: 'http://www.recipes.com/angel_cake'
-              datetime: 1350968400000
+              datetime: 1351029600000
             }, {
               title: 'Pound cake recipes'
               url: 'http://www.recipes.com/pound_cake'
-              datetime: 1350968400000
+              datetime: 1351029600000
             }, {
               title: 'Fruit cake recipes'
               url: 'http://www.recipes.com/fruit_cake'
-              datetime: 1350968400000
+              datetime: 1351029600000
             }
           ]
         }, jasmine.any(Function)
@@ -422,11 +422,11 @@ describe 'BH.Persistence.Tag', ->
                 {
                   title: 'Angel Cake'
                   url: 'http://www.recipes.com/angel_cake'
-                  datetime: 1350968400000
+                  datetime: 1351029600000
                 }, {
                   title: 'Pound cake recipes'
                   url: 'http://www.recipes.com/pound_cake'
-                  datetime: 1350968400000
+                  datetime: 1351029600000
                 }
               ]
 
@@ -437,11 +437,11 @@ describe 'BH.Persistence.Tag', ->
             {
               title: 'Angel Cake'
               url: 'http://www.recipes.com/angel_cake'
-              datetime: 1350968400000
+              datetime: 1351029600000
             }, {
               title: 'Pound cake recipes'
               url: 'http://www.recipes.com/pound_cake'
-              datetime: 1350968400000
+              datetime: 1351029600000
             }
           ]
         }, jasmine.any(Function)
@@ -508,11 +508,11 @@ describe 'BH.Persistence.Tag', ->
                 {
                   title: 'Angel Cake'
                   url: 'http://www.recipes.com/angel_cake'
-                  datetime: 1350968400000
+                  datetime: 1351029600000
                 }, {
                   title: 'Pound cake recipes'
                   url: 'http://www.recipes.com/pound_cake'
-                  datetime: 1350968400000
+                  datetime: 1351029600000
                 }
               ]
 
@@ -523,11 +523,11 @@ describe 'BH.Persistence.Tag', ->
             {
               title: 'Angel Cake'
               url: 'http://www.recipes.com/angel_cake'
-              datetime: 1350968400000
+              datetime: 1351029600000
             }, {
               title: 'Pound cake recipes'
               url: 'http://www.recipes.com/pound_cake'
-              datetime: 1350968400000
+              datetime: 1351029600000
             }
           ]
         }, jasmine.any(Function)
