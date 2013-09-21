@@ -25,7 +25,10 @@ class BH.Collections.Sites extends Backbone.Collection
 
   addTag: (tag, callback = ->) ->
     tag = tag.replace(/^\s\s*/, '').replace(/\s\s*$/, '')
-    return false if tag.length == 0
+
+    if tag.length == 0 || tag.match /[\"\'\~\,\.\|\(\)\{\}\[\]\;\:\<\>\^\*\%\^]/
+      callback(false, null)
+      return
 
     sites = []
     @each (model) ->

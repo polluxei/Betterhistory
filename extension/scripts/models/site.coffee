@@ -19,8 +19,9 @@ class BH.Models.Site extends Backbone.Model
 
     tag = tag.replace(/^\s\s*/, '').replace(/\s\s*$/, '')
 
-    return false if @get('tags').indexOf(tag) != -1
-    return false if tag.length == 0
+    if tag.length == 0 || tag.match(/[\"\'\~\,\.\|\(\)\{\}\[\]\;\:\<\>\^\*\%\^]/) || @get('tags').indexOf(tag) != -1
+      callback(false, null)
+      return
 
     # generate a new array to ensure a change event fires
     newTags = _.clone(@get('tags'))

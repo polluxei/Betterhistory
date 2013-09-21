@@ -9,6 +9,15 @@ describe 'BH.Models.Tag', ->
     @tag = new BH.Models.Tag name: 'recipes',
       persistence: persistence
 
+  describe '#validate', ->
+    it 'creates a validation error when the tag is empty', ->
+      @tag.set(name: '    ', {validate: true})
+      expect(@tag.validationError).not.toBeUndefined()
+
+    it 'creates a validation error when the tag contains special characters', ->
+      @tag.set(name: 'test"', {validate: true})
+      expect(@tag.validationError).not.toBeUndefined()
+
   describe '#fetch', ->
     beforeEach ->
       @tag.persistence.fetchTagSites.andCallFake (tag, callback) ->

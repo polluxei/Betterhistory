@@ -43,8 +43,26 @@ describe 'BH.Collections.Site', ->
       expect(@sites.sharedTags()).toEqual ['cooking']
 
   describe '#addTag', ->
-    it 'returns false if the tag is empty', ->
-      expect(@sites.addTag('   ')).toEqual false
+    beforeEach ->
+      @callback = jasmine.createSpy('callback')
+
+    it 'calls the callback with false if the tag is empty', ->
+      @sites.addTag('   ', @callback)
+      expect(@callback).toHaveBeenCalledWith(false, null)
+
+    it 'calls the callback with false if the tag contains special characters', ->
+      @sites.addTag('test"', @callback)
+      expect(@callback).toHaveBeenCalledWith(false, null)
+      @sites.addTag('\'test', @callback)
+      expect(@callback).toHaveBeenCalledWith(false, null)
+      @sites.addTag('{test}"', @callback)
+      expect(@callback).toHaveBeenCalledWith(false, null)
+      @sites.addTag('~test"', @callback)
+      expect(@callback).toHaveBeenCalledWith(false, null)
+      @sites.addTag('t%est"', @callback)
+      expect(@callback).toHaveBeenCalledWith(false, null)
+      @sites.addTag('<test>"', @callback)
+      expect(@callback).toHaveBeenCalledWith(false, null)
 
     describe 'when the tag is valid', ->
       it 'adds the passed tag to the tags attribute', ->

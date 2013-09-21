@@ -83,24 +83,28 @@ class BH.Views.AutocompleteTagsView extends Backbone.View
         else
           @suggestionsView.filterBy enteredTag
           @previousEnteredTag = enteredTag
+          @$('.new_tag').removeClass 'error'
 
   attemptToAddTag: (tag) ->
-    @model.addTag tag, (result, operations) =>
-      @tracker.siteTagged()
-      @tracker.tagAdded() if operations.tagCreated
-
+    @model.addTag tag, (result, operations = {}) =>
       if result
         # make sure the added tag does not appear in suggestions
         @suggestionsView.disqualifyTag tag
+        @tracker.siteTagged()
+        @tracker.tagAdded() if operations.tagCreated
       else
-        # Assume the tag is already in use
+        # Assume the tag is already in use or invalid
         $usedTag = @$(".active_tags [data-tag='#{tag}']")
-        $usedTag.addClass 'glow'
-        setTimeout (-> $usedTag.removeClass('glow')), 1000
+        if $usedTag.length > 0
+          $usedTag.addClass 'glow'
+          setTimeout (-> $usedTag.removeClass('glow')), 1000
+        else
+          @$('.new_tag').addClass('error')
 
-      @$('.new_tag').val ''
+      unless @$('.new_tag').hasClass('error')
+        @$('.new_tag').val ''
+        @previousEnteredTag = ''
       @suggestionsView.hide()
-      @previousEnteredTag = ''
 
   getI18nValues: ->
     @t ['add_a_tag_placeholder']

@@ -37,16 +37,33 @@ describe 'BH.Models.Site', ->
 
   describe '#addTag', ->
     beforeEach ->
+      @callback = jasmine.createSpy('callback')
       @site.set
         url: 'http://www.recipes.com/pound_cake'
         title: 'Pound cake recipes'
         tags: ['cooking']
 
-    it 'returns false if the tag is found in the tags', ->
-      expect(@site.addTag('cooking')).toEqual false
+    it 'calls the callback with false if the tag is found in the tags', ->
+      @site.addTag('cooking', @callback)
+      expect(@callback).toHaveBeenCalledWith(false, null)
 
     it 'returns false if the tag is empty', ->
-      expect(@site.addTag('   ')).toEqual false
+      @site.addTag('   ', @callback)
+      expect(@callback).toHaveBeenCalledWith(false, null)
+
+    it 'returns false if the tag contains special characters', ->
+      @site.addTag('test"', @callback)
+      expect(@callback).toHaveBeenCalledWith(false, null)
+      @site.addTag('\'test', @callback)
+      expect(@callback).toHaveBeenCalledWith(false, null)
+      @site.addTag('{test}"', @callback)
+      expect(@callback).toHaveBeenCalledWith(false, null)
+      @site.addTag('~test"', @callback)
+      expect(@callback).toHaveBeenCalledWith(false, null)
+      @site.addTag('t%est"', @callback)
+      expect(@callback).toHaveBeenCalledWith(false, null)
+      @site.addTag('<test>"', @callback)
+      expect(@callback).toHaveBeenCalledWith(false, null)
 
     describe 'when the tag is valid', ->
       it 'adds the passed tag to the tags attribute', ->

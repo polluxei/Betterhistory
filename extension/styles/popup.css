@@ -41,6 +41,9 @@ ul.tags li {
   width: 90px;
   margin: 0 0 3px 2px;
 }
+.autocomplete input.new_tag.error {
+  color: #FF3D00;
+}
 .suggestions {
   position: relative;
 }

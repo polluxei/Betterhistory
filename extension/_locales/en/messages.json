@@ -1082,5 +1082,13 @@
         "example": "close link tag"
       }
     }
+  },
+  "create_new_tag_title": {
+    "message": "Create new tag",
+    "description": "create new tag title"
+  },
+  "new_tag_button": {
+    "message": "Create",
+    "description": "create tag button"
   }
 }

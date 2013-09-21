@@ -1,3 +1,6 @@
+input.new_tag.error {
+  color: #FF3D00;
+}
 .navigation .available_tags {
   position: absolute;
   top: 100px;

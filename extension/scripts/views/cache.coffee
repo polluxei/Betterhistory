@@ -25,8 +25,7 @@ class BH.Views.Cache
 
   tagView: (id) ->
     if !@cache.tags[id]
-      tag = new BH.Models.Tag name: id,
-        persistence: new BH.Persistence.Tag(localStore: localStore)
+      tag = new BH.Models.Tag(name: id)
 
       @cache.tags[id] = new BH.Views.TagView
         name: id

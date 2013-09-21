@@ -40,26 +40,41 @@ class BH.Views.AvailableTagsView extends Backbone.View
         collection.fetch()
         collection.on 'reset:allTags', =>
           if $el.hasClass('new_tag')
-            tagName = prompt('Enter new tag name')
-            return unless tagName?
+            @renderNewTagView(collection)
           else
             tagName = $el.data('tag')
 
           if $el.hasClass('tagged')
-            collection.removeTag tagName, =>
-              collection.each =>
-                @tracker.siteUntagged()
-              @rerenderTags(collection)
+            @untagSites tagName, collection
           else
-            collection.addTag tagName, (result, operations) =>
-              collection.each =>
-                @tracker.siteTagged()
-              @tracker.tagAdded() if operations.tagCreated
-              @rerenderTags(collection)
+            @tagSites tagName, collection
         false
       , false)
 
     @
+
+  renderNewTagView: (collection) ->
+    newTagView = new BH.Views.NewTagView
+      model: new BH.Models.Tag()
+      tracker: @tracker
+    $('body').append(newTagView.render().el)
+    newTagView.open()
+    $('.new_tag').focus()
+    newTagView.model.on 'change:name', =>
+      @tagSites newTagView.model.get('name'), collection
+
+  untagSites: (tag, collection) ->
+    collection.removeTag tag, =>
+      collection.each =>
+        @tracker.siteUntagged()
+      @rerenderTags(collection)
+
+  tagSites: (tag, collection) ->
+    collection.addTag tag, (result, operations) =>
+      collection.each =>
+        @tracker.siteTagged()
+      @tracker.tagAdded() if operations.tagCreated
+      @rerenderTags(collection)
 
   inflateDraggedData: (data) ->
     sites = JSON.parse(data).sites
