@@ -62,8 +62,7 @@ class BH.Views.DragAndTagView extends Backbone.View
       ev.dataTransfer.setDragImage summaryEl, -15, -10
       ev.dataTransfer.setData 'application/json', JSON.stringify(data)
 
-      collection = new BH.Collections.Tags {},
-        persistence: new BH.Persistence.Tag(localStore: localStore)
+      collection = new BH.Collections.Tags []
 
       availableTagsView = new BH.Views.AvailableTagsView
         collection: collection

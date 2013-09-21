@@ -12,8 +12,7 @@ class BH.Views.Cache
 
   tagsView: ->
     if !@cache.allTags
-      tags = new BH.Collections.Tags {},
-        persistence: new BH.Persistence.Tag(localStore: localStore)
+      tags = new BH.Collections.Tags []
 
       @cache.allTags = new BH.Views.TagsView
         collection: tags

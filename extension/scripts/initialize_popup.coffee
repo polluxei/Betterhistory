@@ -19,8 +19,7 @@ chrome.tabs.query active: true, (tabs) =>
     chrome: chrome
     persistence: persistence
 
-  tags = new BH.Collections.Tags [],
-    persistence: new BH.Persistence.Tag(localStore: localStore)
+  tags = new BH.Collections.Tags []
 
   taggingView = new BH.Views.TaggingView
     el: $('.app')
