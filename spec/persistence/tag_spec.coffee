@@ -1,6 +1,6 @@
 describe 'BH.Persistence.Tag', ->
   beforeEach ->
-    timekeeper.freeze(new Date('10-23-12 5:00 PM'))
+    timekeeper.freeze(new Date(1351029600000))
     localStore =
       get: jasmine.createSpy('get')
       set: jasmine.createSpy('set')
