@@ -2,8 +2,6 @@ class BH.Collections.Sites extends Backbone.Collection
   model: BH.Models.Site
 
   initialize: (attrs = {}, options) ->
-    throw "Persistence not set" unless options.persistence?
-
     @persistence = options.persistence
 
   fetch: ->
@@ -24,6 +22,8 @@ class BH.Collections.Sites extends Backbone.Collection
     @sharedTags()
 
   addTag: (tag, callback = ->) ->
+    @persistence ||= lazyPersistence()
+
     tag = tag.replace(/^\s\s*/, '').replace(/\s\s*$/, '')
 
     if tag.length == 0 || tag.match /[\"\'\~\,\.\|\(\)\{\}\[\]\;\:\<\>\^\*\%\^]/
@@ -47,6 +47,8 @@ class BH.Collections.Sites extends Backbone.Collection
       callback(true, operations)
 
   removeTag: (tag, callback = ->) ->
+    @persistence ||= lazyPersistence()
+
     tag = tag.replace(/^\s\s*/, '').replace(/\s\s*$/, '')
     return false if tag.length == 0
 
@@ -61,3 +63,6 @@ class BH.Collections.Sites extends Backbone.Collection
     @persistence.removeSitesFromTag sites, tag, =>
       @trigger 'change:allTags'
       callback()
+
+lazyPersistence = ->
+  new BH.Persistence.Tag(localStore: localStore)

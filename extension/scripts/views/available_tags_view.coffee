@@ -82,7 +82,6 @@ class BH.Views.AvailableTagsView extends Backbone.View
 
     new BH.Collections.Sites sites,
       chrome: chrome
-      persistence: persistence
 
   rerenderTags: (collection) ->
     for site in collection.toJSON()

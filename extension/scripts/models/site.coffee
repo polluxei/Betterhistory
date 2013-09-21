@@ -4,8 +4,7 @@ class BH.Models.Site extends Backbone.Model
     @persistence = options.persistence
 
   fetch: (callback = ->) ->
-    throw "Persistence is not set" unless @persistence?
-
+    @persistence ||= lazyPersistence()
     @persistence.fetchSiteTags @get('url'), (tags) =>
       @set tags: tags
       @trigger 'reset:tags'
@@ -15,7 +14,7 @@ class BH.Models.Site extends Backbone.Model
     @get('tags')
 
   addTag: (tag, callback = ->) ->
-    throw "Persistence is not set" unless @persistence?
+    @persistence ||= lazyPersistence()
 
     tag = tag.replace(/^\s\s*/, '').replace(/\s\s*$/, '')
 
@@ -36,7 +35,8 @@ class BH.Models.Site extends Backbone.Model
       callback(true, operations)
 
   removeTag: (tag) ->
-    throw "Persistence is not set" unless @persistence?
+    @persistence ||= lazyPersistence()
+
     return false if @get('tags').indexOf(tag) == -1
 
     # generate a new array to ensure a change event fires
@@ -44,3 +44,6 @@ class BH.Models.Site extends Backbone.Model
     @set tags: _.without(newTags, tag)
 
     @persistence.removeSiteFromTag @get('url'), tag
+
+lazyPersistence = ->
+  new BH.Persistence.Tag(localStore: localStore)

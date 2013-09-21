@@ -5,9 +5,6 @@ localStore = new BH.Lib.LocalStore
   chrome: chrome
   tracker: analyticsTracker
 
-persistence = new BH.Persistence.Tag
-  localStore: localStore
-
 chrome.tabs.query active: true, (tabs) =>
   tab = tabs[0] || {}
 
@@ -17,7 +14,6 @@ chrome.tabs.query active: true, (tabs) =>
 
   site = new BH.Models.Site attrs,
     chrome: chrome
-    persistence: persistence
 
   tags = new BH.Collections.Tags []
 
