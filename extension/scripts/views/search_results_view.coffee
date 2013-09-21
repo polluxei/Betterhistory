@@ -22,6 +22,22 @@ class BH.Views.SearchResultsView extends Backbone.View
     @$el.html html
     @
 
+  insertTags: ->
+    persistence = new BH.Persistence.Tag localStore: localStore
+    persistence.cached (operations) ->
+      $('.site').each ->
+        $el = $(this)
+        tags = operations.siteTags $el.attr('href')
+        activeTagsView = new BH.Views.ActiveTagsView
+          model: new BH.Models.Site(tags: tags)
+          editable: false
+        $el.find('.active_tags').html activeTagsView.render().el
+
+  attachDragging: ->
+    dragAndTagView = new BH.Views.DragAndTagView
+      model: @model
+    dragAndTagView.render()
+
   markMatches: (visit) ->
     regExp = titleMatch = locationMatch = timeMatch = null
 

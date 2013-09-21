@@ -1,6 +1,7 @@
 class BH.Trackers.AnalyticsTracker
   constructor: (analytics) ->
     throw "Analytics not set" unless analytics?
+
     @analytics = analytics
 
   pageView: (url) ->
@@ -50,11 +51,57 @@ class BH.Trackers.AnalyticsTracker
   syncStorageAccess: (operation) ->
     @trackEvent(['Storage Access', operation, 'Sync'])
 
+  localStorageError: (operation, msg) ->
+    @trackEvent(['Storage Error', operation, 'Local', msg])
+
   mailingListPrompt: ->
     @trackEvent(['Mailing List Prompt', 'Seen'])
+
+  popupVisible: ->
+    @trackEvent(['Popup', 'Seen'])
+
+  exploreTagsPopupClick: ->
+    @trackEvent(['Popup', 'Explore Tags Click'])
+
+  searchByDomainPopupClick: ->
+    @trackEvent(['Popup', 'Search by Domain Click'])
+
+  viewAllHistoryPopupClick: ->
+    @trackEvent(['Popup', 'View all History Click'])
+
+  howToTagClick: ->
+    @trackEvent(['Tags', 'How to Tag Click'])
+
+  deleteAllTagsClick: ->
+    @trackEvent(['Tags', 'Delete all Click'])
+
+  siteTagDrag: ->
+    @trackEvent(['Tag', 'Site Drag'])
+
+  siteTagDrop: ->
+    @trackEvent(['Tag', 'Site Drop'])
+
+  renameTagClick: ->
+    @trackEvent(['Tag', 'Rename Click'])
+
+  deleteTagClick: ->
+    @trackEvent(['Tag', 'Delete Tag Click'])
+
+  tagAdded: ->
+    @trackEvent(['Tag', 'Added'])
+
+  tagRemoved: ->
+    @trackEvent(['Tag', 'Removed'])
+
+  tagRenamed: ->
+    @trackEvent(['Tag', 'Renamed'])
+
+  siteTagged: ->
+    @trackEvent(['Site', 'Tagged'])
+
+  siteUntagged: ->
+    @trackEvent(['Site', 'Untagged'])
 
   trackEvent: (params) ->
     params.unshift('_trackEvent')
     @analytics.push(params)
-
-

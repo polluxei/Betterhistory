@@ -40,6 +40,8 @@ class BH.Views.DayView extends BH.Views.MainView
     @dayResultsView = new BH.Views.DayResultsView
       model: @history
     @$('.content').html @dayResultsView.render().el
+    @dayResultsView.insertTags()
+    @dayResultsView.attachDragging()
 
   updateDeleteButton: ->
     deleteButton = @$('button')

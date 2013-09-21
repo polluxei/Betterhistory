@@ -13,10 +13,46 @@ buildScriptTag = (src) ->
 buildStyleTag = (src) ->
   "<link rel='stylesheet' type='text/css' href='#{src}'/>"
 
+popupStyles = [
+  'styles/chrome-bootstrap.css',
+  'styles/app.css'
+  'styles/popup.css'
+]
+
 styles = [
   'styles/chrome-bootstrap.css',
   'styles/app.css'
 ]
+
+popupScripts = [
+  'scripts/namespace.js',
+  'scripts/frameworks/honeybadger.js',
+  'scripts/frameworks/underscore.js',
+  'scripts/frameworks/zepto.min.js',
+  'scripts/frameworks/backbone.js',
+  'scripts/frameworks/mustache.js',
+  'scripts/frameworks/analytics.js',
+  'scripts/frameworks/mixin.js',
+  'scripts/templates.js',
+  'scripts/trackers/error_tracker.js',
+  'scripts/trackers/analytics_tracker.js',
+  'scripts/lib/local_store.js',
+  'scripts/persistence/tag.js',
+  'scripts/modules/i18n.js',
+  'scripts/modules/url.js',
+  'scripts/models/site.js',
+  'scripts/models/tag.js',
+  'scripts/collections/tags.js',
+  'scripts/views/main_view.js',
+  'scripts/views/tagging_view.js',
+  'scripts/views/active_tags_view.js',
+  'scripts/views/autocomplete_tags_view.js',
+  'scripts/views/suggestions_view.js',
+  'scripts/presenters/site_presenter.js',
+  'scripts/presenters/tags_presenter.js',
+  'scripts/initialize_popup.js'
+]
+
 
 scripts = [
   'scripts/namespace.js',
@@ -40,6 +76,9 @@ scripts = [
   'scripts/lib/history_query.js',
   'scripts/lib/pagination.js',
   'scripts/lib/sync_store.js',
+  'scripts/lib/local_store.js',
+  'scripts/lib/example_tags.js',
+  'scripts/persistence/tag.js',
   'scripts/views/modal_view.js',
   'scripts/views/main_view.js',
   'scripts/views/app_view.js',
@@ -58,6 +97,16 @@ scripts = [
   'scripts/views/settings_view.js',
   'scripts/views/visit_view.js',
   'scripts/views/week_view.js',
+  'scripts/views/tags_view.js',
+  'scripts/views/tags_list_view.js',
+  'scripts/views/tag_view.js',
+  'scripts/views/tagged_sites_view.js',
+  'scripts/views/rename_tag_view.js',
+  'scripts/views/drag_and_tag_view.js',
+  'scripts/views/active_tags_view.js',
+  'scripts/views/how_to_tag_view.js',
+  'scripts/views/available_tags_view.js',
+  'scripts/views/new_tag_view.js',
   'scripts/models/history.js',
   'scripts/models/day.js',
   'scripts/models/day_history.js',
@@ -72,10 +121,17 @@ scripts = [
   'scripts/models/visit.js',
   'scripts/models/week.js',
   'scripts/models/week_history.js',
+  'scripts/models/tag.js',
+  'scripts/models/site.js',
   'scripts/collections/grouped_visits.js',
   'scripts/collections/intervals.js',
   'scripts/collections/visits.js',
   'scripts/collections/weeks.js',
+  'scripts/collections/tags.js',
+  'scripts/collections/sites.js',
+  'scripts/presenters/tag_presenter.js',
+  'scripts/presenters/tags_presenter.js',
+  'scripts/presenters/sites_presenter.js',
   'scripts/router.js',
   'scripts/initialize_extension.js'
 ]
@@ -102,6 +158,16 @@ task 'build:assets:dev', '', ->
   code = code.replace '<%= styles %>', styleTags.join("\n    ")
 
   fs.writeFileSync 'build/index.html', code
+
+  code = fs.readFileSync('extension/popup.html').toString()
+
+  scriptTags = (buildScriptTag(script) for script in popupScripts)
+  styleTags = (buildStyleTag(style) for style in popupStyles)
+
+  code = code.replace '<%= scripts %>', scriptTags.join("\n    ")
+  code = code.replace '<%= styles %>', styleTags.join("\n    ")
+
+  fs.writeFileSync 'build/popup.html', code
 
 task 'build:assets:prod', '', ->
   code = fs.readFileSync('extension/index.html').toString()

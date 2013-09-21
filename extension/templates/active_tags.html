@@ -1,0 +1,15 @@
+<ul class='tags'>
+  {{#tags}}
+    <li>
+      <a href='#tags/{{.}}' data-tag='{{.}}' class='tag'>{{.}}</a>
+      {{#editable}}
+        <a href='#' data-tag='{{.}}' class='delete'></a>
+      {{/editable}}
+    </li>
+  {{/tags}}
+</ul>
+{{^tags}}
+  <p class='no_tags'>
+    No tags found. Add one!
+  </p>
+{{/tags}}

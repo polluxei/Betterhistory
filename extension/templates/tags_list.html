@@ -1,0 +1,28 @@
+<p class='about_tags'>
+  <a href='#' class='delete dismiss_instructions'></a>
+  <strong>{{i18n_about_tags_title}}</strong>
+  {{{i18n_about_tags_instructions}}}
+</p>
+<ul class='tag_list'>
+  {{#tags}}
+    <li>
+      <a href='#tags/{{name}}'>
+        <h3 class='title'>{{name}}</h3>
+        <div class='details'>
+          <ul class='favicons'>
+            {{#sites}}
+            <li>
+              <div class='favicon' style='background-image: url(chrome://favicon/{{url}})'></div>
+            </li>
+            {{/sites}}
+          </ul>
+        </div>
+      </a>
+    </li>
+  {{/tags}}
+</ul>
+{{^tags}}
+  <p class='no_results'>{{i18n_no_tags_found}}</p>
+  <p class='extra_help'>{{{i18n_extra_tag_help}}}</p>
+{{/tags}}
+

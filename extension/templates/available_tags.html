@@ -1,0 +1,8 @@
+<ul class='tags'>
+  <li class='new_tag'>&#43; New tag</li>
+  {{#tags}}
+    <li data-tag='{{name}}' class='{{#tagged}}tagged{{/tagged}}'>
+      {{name}}
+    </li>
+  {{/tags}}
+</ul>

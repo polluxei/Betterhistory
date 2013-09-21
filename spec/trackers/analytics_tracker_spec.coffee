@@ -82,7 +82,87 @@ describe 'BH.Trackers.AnalyticsTracker', ->
       @analyticsTracker.syncStorageAccess('get')
       expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Storage Access', 'get', 'Sync'])
 
+  describe '#localStorageError', ->
+    it 'tracks a storage error', ->
+      @analyticsTracker.localStorageError('get', 'the error')
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Storage Error', 'get', 'Local', 'the error'])
+
   describe '#mailingListPrompt', ->
     it 'tracks the mailing list prompt being seen', ->
       @analyticsTracker.mailingListPrompt()
       expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Mailing List Prompt', 'Seen'])
+
+  describe '#popupVisible', ->
+    it 'tracks the popup being seen', ->
+      @analyticsTracker.popupVisible()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Popup', 'Seen'])
+
+  describe '#exploreTagsPopupClick', ->
+    it 'tracks the explore tags click in the popup', ->
+      @analyticsTracker.exploreTagsPopupClick()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Popup', 'Explore Tags Click'])
+
+  describe '#searchByDomainPopupClick', ->
+    it 'tracks the search by domain click in the popup', ->
+      @analyticsTracker.searchByDomainPopupClick()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Popup', 'Search by Domain Click'])
+
+  describe '#viewAllHistoryPopupClick', ->
+    it 'tracks the view all history click in the popup', ->
+      @analyticsTracker.viewAllHistoryPopupClick()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Popup', 'View all History Click'])
+
+  describe '#howToTagClick', ->
+    it 'tracks the click of how to tag link', ->
+      @analyticsTracker.howToTagClick()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Tags', 'How to Tag Click'])
+
+  describe '#deleteAllTagsClick', ->
+    it 'tracks the deleting of all tags', ->
+      @analyticsTracker.deleteAllTagsClick()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Tags', 'Delete all Click'])
+
+  describe '#siteTagDrag', ->
+    it 'tracks the drag of a site', ->
+      @analyticsTracker.siteTagDrag()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Tag', 'Site Drag'])
+
+  describe '#siteTagDrop', ->
+    it 'tracks the drop of a site', ->
+      @analyticsTracker.siteTagDrop()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Tag', 'Site Drop'])
+
+  describe '#renameTagClick', ->
+    it 'tracks the rename tag click', ->
+      @analyticsTracker.renameTagClick()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Tag', 'Rename Click'])
+
+  describe '#deleteTagClick', ->
+    it 'tracks the deleting of a tag', ->
+      @analyticsTracker.deleteTagClick()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Tag', 'Delete Tag Click'])
+
+  describe '#tagAdded', ->
+    it 'tracks a tag added', ->
+      @analyticsTracker.tagAdded()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Tag', 'Added'])
+
+  describe '#tagRemoved', ->
+    it 'tracks a tag removed', ->
+      @analyticsTracker.tagRemoved()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Tag', 'Removed'])
+
+  describe '#tagRenamed', ->
+    it 'tracks a tag renamed', ->
+      @analyticsTracker.tagRenamed()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Tag', 'Renamed'])
+
+  describe '#siteTagged', ->
+    it 'tracks a site tagged', ->
+      @analyticsTracker.siteTagged()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Site', 'Tagged'])
+
+  describe '#siteUntagged', ->
+    it 'tracks a site untagged', ->
+      @analyticsTracker.siteUntagged()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Site', 'Untagged'])

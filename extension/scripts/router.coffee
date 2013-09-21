@@ -1,11 +1,14 @@
 class BH.Router extends Backbone.Router
   routes:
     '': 'reset'
+    'tags': 'tags'
+    'tags/:id': 'tag'
     'weeks/:id': 'week'
     'days/:id': 'day'
     'settings': 'settings'
     'search/*query(/p:page)': 'search'
     'search': 'search'
+    'today': 'today'
 
   initialize: (options) ->
     settings = options.settings
@@ -30,6 +33,16 @@ class BH.Router extends Backbone.Router
   reset: ->
     @navigate @state.get('route'), trigger: true
 
+  tags: ->
+    view = @app.loadTags()
+    view.select()
+    @_delay -> view.collection.fetch()
+
+  tag: (id) ->
+    view = @app.loadTag(id)
+    view.select()
+    @_delay -> view.model.fetch()
+
   week: (id) ->
     view = @app.loadWeek(id)
     view.select()
@@ -37,6 +50,11 @@ class BH.Router extends Backbone.Router
 
   day: (id) ->
     view = @app.loadDay id
+    view.history.fetch()
+    view.select()
+
+  today: ->
+    view = @app.loadDay moment(new Date()).id()
     view.history.fetch()
     view.select()
 

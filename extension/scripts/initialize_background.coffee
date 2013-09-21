@@ -6,6 +6,10 @@ try
     chrome: chrome
     tracker: analyticsTracker
 
+  localStore = new BH.Lib.LocalStore
+    chrome: chrome
+    tracker: analyticsTracker
+
   browserActions = new BH.Lib.BrowserActions
     chrome: chrome
     tracker: analyticsTracker
@@ -33,5 +37,19 @@ try
 
     if settings.searchByDomain != false
       pageContextMenu.create()
+
+  syncStore.get 'tagInstructionsDismissed', (data) ->
+    tagInstructionsDismissed = data.tagInstructionsDismissed || false
+
+    localStore.get 'tags', (data) ->
+      tags = data.tags
+
+      if !tagInstructionsDismissed && !_.isArray(tags)
+        persistence = new BH.Persistence.Tag(localStore: localStore)
+        exampleTags = new BH.Lib.ExampleTags
+          persistence: persistence
+          chrome: chrome
+        exampleTags.load()
+
 catch e
   errorTracker.report e

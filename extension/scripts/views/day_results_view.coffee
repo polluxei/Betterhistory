@@ -18,7 +18,35 @@ class BH.Views.DayResultsView extends Backbone.View
     properties = _.extend @getI18nValues(), @model.toTemplate()
     html = Mustache.to_html @template, properties
     @$el.html html
+
     @
+
+  insertTags: ->
+    persistence = new BH.Persistence.Tag localStore: localStore
+    persistence.cached (operations) ->
+      $('.site').each ->
+        $el = $(this)
+        tags = operations.siteTags $el.attr('href')
+        if tags.length > 0
+          activeTagsView = new BH.Views.ActiveTagsView
+            model: new BH.Models.Site(tags: tags)
+            editable: false
+          $el.find('.active_tags').html activeTagsView.render().el
+
+      $('.grouped_sites').each (i, siteEl) =>
+        $el = $(siteEl)
+        urls = []
+        $el.find('a.site').each -> urls.push($(this).attr('href'))
+        sharedTags = operations.sitesTags urls
+        activeTagsView = new BH.Views.ActiveTagsView
+          model: new BH.Models.Site(tags: sharedTags)
+          editable: false
+        $el.find('.active_tags').eq(0).html activeTagsView.render().el
+
+  attachDragging: ->
+    dragAndTagView = new BH.Views.DragAndTagView
+      model: @model
+    dragAndTagView.render()
 
   visitClicked: (ev) ->
     if $(ev.target).hasClass('search_domain')

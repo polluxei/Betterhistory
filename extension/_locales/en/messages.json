@@ -584,6 +584,10 @@
     "message": "Delete",
     "description": "Button to delete history"
   },
+  "prompt_done_button": {
+    "message": "Done",
+    "description": "Button to dismiss modal"
+  },
   "prompt_title": {
     "message": "Confirm",
     "description": "Title of prompt"
@@ -917,5 +921,174 @@
   "mailing_list_promise": {
     "message": "We respect your email privacy. No spam ever.",
     "description": "no spamming and privacy message"
+  },
+
+  "tags_link": {
+    "message": "Tags",
+    "description": "Tags link text in the main nav"
+  },
+  "tags_title": {
+    "message": "All Tags",
+    "description": "Tags title text in the tags view"
+  },
+  "tag_title": {
+    "message": "$name$ tag",
+    "description": "Individual tag title",
+    "placeholders": {
+      "name": {
+        "content": "$1",
+        "example": "recipes, news, technology, etc..."
+      }
+    }
+  },
+  "back_to_tags_link": {
+    "message": "$arrow$ Back to Tags",
+    "description": "back to tags link",
+    "placeholders": {
+      "arrow": {
+        "content": "$1",
+        "example": "an arrow"
+      }
+    }
+  },
+  "delete_all_tags": {
+    "message": "Delete...",
+    "description": "Text for delete all sites in a tags"
+  },
+  "confirm_delete_all_tags": {
+    "message": "Delete all tags?",
+    "description": "Text for delete all tags"
+  },
+  "delete_tag": {
+    "message": "Delete...",
+    "description": "Text for delete all sites in a tag"
+  },
+  "confirm_delete_tag": {
+    "message": "Delete $name$ tag and all sites in the tag?",
+    "description": "Text for delete all sites in a tag",
+    "placeholders": {
+      "name": {
+        "content": "$1",
+        "example": "recipes, news, technology, etc..."
+      }
+    }
+  },
+  "number_of_tags": {
+    "message": "$number$ tags",
+    "description": "Number of tags",
+    "placeholders": {
+      "number": {
+        "content": "$1",
+        "example": "1,2,3,..."
+      }
+    }
+  },
+  "no_tagged_sites_found": {
+    "message": "Sorry couldn't find any tagged sites",
+    "description": "message for a tag with no sites"
+  },
+  "no_tags_found": {
+    "message": "No tags found, you should tag some sites!",
+    "description": "message for no tags found"
+  },
+  "rename_tag_link": {
+    "message": "Rename",
+    "description": "rename link text from tags"
+  },
+  "rename_tag_title": {
+    "message": "Rename $name$ tag",
+    "description": "rename link text from tags",
+    "placeholders": {
+      "name": {
+        "content": "$1",
+        "example": "tech, cooking, news, etc..."
+      }
+    }
+  },
+  "rename_tag_button": {
+    "message": "Rename",
+    "description": "rename button text"
+  },
+  "new_tag_placeholder": {
+    "message": "New name",
+    "description": "placeholder text for tag rename input"
+  },
+  "how_to_tag": {
+    "message": "How to tag",
+    "description": "link text for how to tag link"
+  },
+  "about_tags_title": {
+    "message": "Tag your favorite sites and create your own library of topics and interests!",
+    "description": "about tags title shown on first visit to tags page"
+  },
+  "about_tags_instructions": {
+    "message": "Checkout the example tags below. Once you get the idea, delete the tags and start creating your own! Tag sites that you visit easily by watching $link_open$How to tag$link_close$.",
+    "description": "about tags description shown on the first visit to the tags page",
+    "placeholders": {
+      "link_open": {
+        "content": "$1",
+        "example": "open link tag"
+      },
+      "link_close": {
+        "content": "$2",
+        "example": "close link tag"
+      }
+    }
+  },
+  "how_to_tag_title": {
+    "message": "How to tag",
+    "description": "title for how to tag content"
+  },
+  "tag_visits_title": {
+    "message": "Tag sites",
+    "description": "title for tagging visited sites modal"
+  },
+  "sync_tags_link": {
+    "message": "Keep your tags safe, $link_open$Sync them!$link_close$",
+    "description": "link to sign up for syncing",
+    "placeholders": {
+      "link_open": {
+        "content": "$1",
+        "example": "open link tag"
+      },
+      "link_close": {
+        "content": "$2",
+        "example": "close link tag"
+      }
+    }
+  },
+  "add_a_tag_placeholder": {
+    "message": "Add a tag",
+    "description": "add a tag placeholder text"
+  },
+  "extra_tag_help": {
+    "message": "Check out $how_to_tag_open$how to tag$how_to_tag_close$ or load the $example_tags_open$example tags$example_tags_close$",
+    "description": "extra tag help",
+    "placeholders": {
+      "how_to_tag_open": {
+        "content": "$1",
+        "example": "open link tag"
+      },
+      "how_to_tag_close": {
+        "content": "$2",
+        "example": "close link tag"
+      },
+      "example_tags_open": {
+        "content": "$3",
+        "example": "open link tag"
+      },
+      "example_tags_close": {
+        "content": "$4",
+        "example": "close link tag"
+      }
+    }
+  },
+  "create_new_tag_title": {
+    "message": "Create new tag",
+    "description": "create new tag title"
+  },
+  "new_tag_button": {
+    "message": "Create",
+    "description": "create tag button"
   }
 }

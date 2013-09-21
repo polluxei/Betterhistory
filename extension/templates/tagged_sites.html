@@ -1,0 +1,26 @@
+<ul class='visits highlightable editable'>
+  {{#sites}}
+    <li class='visit tagged' draggable='true' data-id='{{url}}'>
+      <div class='drag_handle'>
+        <div class='line'></div>
+        <div class='line'></div>
+        <div class='line'></div>
+        <div class='line'></div>
+        <div class='line'></div>
+      </div>
+      <a href='{{url}}' class='site'>
+        <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
+          <dt>
+            <div class='active_tags'></div>
+            {{title}}
+          </dt>
+          <dd>{{url}}</dd>
+        </dl>
+      </a>
+      <a class='delete' href='{{url}}' title=''></a>
+    </li>
+  {{/sites}}
+</ul>
+{{^sites}}
+  <p class='no_results'>{{i18n_no_tagged_sites_found}}</p>
+{{/sites}}
