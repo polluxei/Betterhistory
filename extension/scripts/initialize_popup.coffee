@@ -1,7 +1,7 @@
 errorTracker = new BH.Trackers.ErrorTracker(Honeybadger)
 analyticsTracker = new BH.Trackers.AnalyticsTracker(_gaq)
 
-localStore = new BH.Lib.LocalStore
+window.localStore = new BH.Lib.LocalStore
   chrome: chrome
   tracker: analyticsTracker
 
