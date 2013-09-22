@@ -1022,7 +1022,7 @@
     "description": "about tags title shown on first visit to tags page"
   },
   "about_tags_instructions": {
-    "message": "Checkout the example tags below. Once you get the idea, delete the tags and start creating your own! Tag sites that you visit easily by watching $link_open$How to tag$link_close$.",
+    "message": "Checkout the example tags below. Once you get the idea, delete the tags and start creating your own! Tag sites that you visit easily by watching $link_open$How to tag$link_close$. For more tips, tricks, and general announcements, join the $mailing_open$mailing list!$mailing_close$",
     "description": "about tags description shown on the first visit to the tags page",
     "placeholders": {
       "link_open": {
@@ -1032,6 +1032,14 @@
       "link_close": {
         "content": "$2",
         "example": "close link tag"
+      },
+      "mailing_open": {
+        "content": "$3",
+        "example": "open mailing tag"
+      },
+      "mailing_close": {
+        "content": "$4",
+        "example": "close mailing tag"
       }
     }
   },
