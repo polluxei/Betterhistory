@@ -10,6 +10,8 @@ class BH.Views.TaggingView extends BH.Views.MainView
     'click #view_history': 'viewHistoryClicked'
     'click #explore_tags': 'exploreTagsClicked'
     'click #search_domain': 'searchDomainClicked'
+    'click #tag_details': 'tagDetailsClicked'
+    'click .dismiss_instructions': 'dismissInstructionsClicked'
     'click #add_tag': 'addTagClicked'
 
   initialize: ->
@@ -20,8 +22,10 @@ class BH.Views.TaggingView extends BH.Views.MainView
   render: ->
     @chromeAPI.commands.getAll (commands) =>
       presenter = new BH.Presenters.SitePresenter(@model)
-      properties = presenter.site()
+
+      properties = _.extend presenter.site(), @getI18nValues()
       properties.shortcut = _.where(commands, name: '_execute_browser_action')[0].shortcut
+      properties.i18n_search_domain_history_link = @t 'search_domain_history_link', [properties.domain]
 
       html = Mustache.to_html(@template, properties)
       @tracker.popupVisible()
@@ -59,6 +63,12 @@ class BH.Views.TaggingView extends BH.Views.MainView
     chrome.tabs.create
       url: $(ev.currentTarget).attr('href')
 
+  tagDetailsClicked: (ev) ->
+    ev.preventDefault()
+    @tracker.tagDetailsPopupClick()
+    chrome.tabs.create
+      url: $(ev.currentTarget).attr('href')
+
   addTagClicked: (ev) ->
     ev.preventDefault()
     $tagName = @$('#tag_name')
@@ -72,3 +82,16 @@ class BH.Views.TaggingView extends BH.Views.MainView
         setTimeout ->
           parent.removeClass('glow')
         , 1000
+
+  dismissInstructionsClicked: (ev) ->
+    ev.preventDefault()
+    syncStore.set tagInstructionsDismissed: true
+    $('.about_tags').hide()
+
+
+  getI18nValues: ->
+    properties = @t ['view_all_history_link', 'explore_tags_link']
+    properties.i18n_about_tags_for_popup = @t 'about_tags_for_popup', [
+      '<span class="new">', '</span>', '<a id="tag_details" href="chrome://history/#tags">', '</a>'
+    ]
+    properties

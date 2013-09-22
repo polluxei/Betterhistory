@@ -107,6 +107,11 @@ describe 'BH.Trackers.AnalyticsTracker', ->
       @analyticsTracker.searchByDomainPopupClick()
       expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Popup', 'Search by Domain Click'])
 
+  describe '#tagDetailsPopupClick', ->
+    it 'tracks a click on tag details', ->
+      @analyticsTracker.tagDetailsPopupClick()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Popup', 'Tag Details Click'])
+
   describe '#viewAllHistoryPopupClick', ->
     it 'tracks the view all history click in the popup', ->
       @analyticsTracker.viewAllHistoryPopupClick()

@@ -53,6 +53,7 @@
       "scripts/lib/local_store.js",
       "scripts/lib/example_tags.js",
       "scripts/persistence/tag.js",
+      "scripts/init/tag_feature.js",
       "scripts/initialize_background.js"
     ],
     "persistent": false

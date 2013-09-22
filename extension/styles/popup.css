@@ -5,6 +5,14 @@
   bottom: 5px;
   margin: 0;
 }
+.app .container .about_tags {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 7px;
+}
+.container .about_tags .new {
+  margin: 0 5px 0 0;
+}
 .autocomplete_shell {
   border: 1px solid #AAA;
   box-shadow: inset 0px 0px 2px 2px #EEE;

@@ -27,21 +27,14 @@ try
 
           Backbone.history.start()
 
-  syncStore.get ['mailingListPromptTimer', 'mailingListPromptSeen'], (data) ->
-    mailingListPromptTimer = data.mailingListPromptTimer || 3
-    mailingListPromptSeen = data.mailingListPromptSeen
-    unless mailingListPromptSeen?
-      if mailingListPromptTimer == 1
-        new BH.Views.MailingListView().open()
-        syncStore.remove 'mailingListPromptTimer'
-        syncStore.set mailingListPromptSeen: true
-        analyticsTracker.mailingListPrompt()
-      else
-        syncStore.set mailingListPromptTimer: (mailingListPromptTimer - 1)
+  mailingList = new BH.Init.MailingList(syncStore: syncStore)
+  mailingList.prompt ->
+    new BH.Views.MailingListView().open()
+    analyticsTracker.mailingListPrompt()
 
-  syncStore.get 'tagInstructionsDismissed', (data) ->
-    tagInstructionsDismissed = data.tagInstructionsDismissed || false
-    unless tagInstructionsDismissed
-      $('body').addClass('new_tags')
+  tagFeature = new BH.Init.TagFeature(syncStore: syncStore)
+  tagFeature.announce ->
+    $('body').addClass('new_tags')
+
 catch e
   errorTracker.report e

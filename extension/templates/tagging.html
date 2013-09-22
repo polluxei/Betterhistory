@@ -3,17 +3,27 @@
     <h1 class='scroll'>{{title}}</h1>
     <div class='url scroll'>{{url}}</div>
   </div>
+  <p class='about_tags'>
+    <a href='#' class='delete dismiss_instructions'></a>
+    {{{i18n_about_tags_for_popup}}}
+  </p>
   <div class='autocomplete'></div>
   <p class='shortcut'>{{shortcut}}</p>
 </div>
 <ul class='links'>
   <li>
-    <a id='explore_tags' href='chrome://history/#tags'>Explore tags</a>
+    <a id='explore_tags' href='chrome://history/#tags'>
+      {{i18n_explore_tags_link}}
+    </a>
   </li>
   <li>
-    <a id='search_domain' href='chrome://history/#search/{{domain}}'>Search {{domain}} visits</a>
+    <a id='search_domain' href='chrome://history/#search/{{domain}}'>
+      {{i18n_search_domain_history_link}}
+    </a>
   </li>
   <li>
-    <a id='view_history' href='chrome://history/#today'>View all history</a>
+    <a id='view_history' href='chrome://history/#today'>
+      {{i18n_view_all_history_link}}
+    </a>
   </li>
 </div>

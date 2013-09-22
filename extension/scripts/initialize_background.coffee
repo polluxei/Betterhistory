@@ -38,18 +38,17 @@ try
     if settings.searchByDomain != false
       pageContextMenu.create()
 
-  syncStore.get 'tagInstructionsDismissed', (data) ->
-    tagInstructionsDismissed = data.tagInstructionsDismissed || false
+  tagFeature = new BH.Init.TagFeature
+    syncStore: syncStore
+    localStore: localStore
 
-    localStore.get 'tags', (data) ->
-      tags = data.tags
-
-      if !tagInstructionsDismissed && !_.isArray(tags)
-        persistence = new BH.Persistence.Tag(localStore: localStore)
-        exampleTags = new BH.Lib.ExampleTags
-          persistence: persistence
-          chrome: chrome
-        exampleTags.load()
+  tagFeature.prepopulate =>
+    persistence = new BH.Persistence.Tag(localStore: localStore)
+    exampleTags = new BH.Lib.ExampleTags
+      persistence: persistence
+      chrome: chrome
+      localStore: localStore
+    exampleTags.load()
 
 catch e
   errorTracker.report e
