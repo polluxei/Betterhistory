@@ -85,6 +85,12 @@ class BH.Views.AvailableTagsView extends Backbone.View
 
   rerenderTags: (collection) ->
     for site in collection.toJSON()
+
+      # check if the tag to exclude in the ui has been remove, because
+      # the visit should also disappear then
+      if site.tags.indexOf(@excludedTag) == -1
+        $("[data-id='#{site.id}']").remove()
+
       site.tags = _.without(site.tags, @excludedTag) if @excludedTag?
       activeTagsView = new BH.Views.ActiveTagsView
         model: new BH.Models.Site(site)
