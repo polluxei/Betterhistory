@@ -10,6 +10,7 @@
   Trackers: {}
   Presenters: {}
   Persistence: {}
+  Init: {}
   Base: ->
 
 module.exports = @BH if onServer?

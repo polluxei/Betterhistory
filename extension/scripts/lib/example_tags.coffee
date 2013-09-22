@@ -1,14 +1,14 @@
 class BH.Lib.ExampleTags
   constructor: (options) ->
-    throw "Chrome API not set" unless options.chrome?
     throw "Persistence not set" unless options.persistence?
+    throw "LocalStore not set" unless options.localStore?
 
-    @chromeAPI = options.chrome
     @persistence = options.persistence
+    @localStore = options.localStore
 
-  load: (callback) ->
+  load: (callback = ->) ->
     @persistence.fetchTags (tags) =>
-      @chromeAPI.storage.local.set exampleTags, ->
+      @localStore.set exampleTags, ->
         callback()
 
 exampleTags =

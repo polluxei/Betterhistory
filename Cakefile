@@ -51,6 +51,7 @@ popupScripts = [
   'scripts/views/suggestions_view.js',
   'scripts/presenters/site_presenter.js',
   'scripts/presenters/tags_presenter.js',
+  'scripts/init/tag_feature.js',
   'scripts/initialize_popup.js'
 ]
 
@@ -134,6 +135,8 @@ scripts = [
   'scripts/presenters/tags_presenter.js',
   'scripts/presenters/sites_presenter.js',
   'scripts/router.js',
+  'scripts/init/tag_feature.js',
+  'scripts/init/mailing_list.js',
   'scripts/initialize_extension.js'
 ]
 

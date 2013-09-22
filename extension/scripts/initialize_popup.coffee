@@ -30,7 +30,6 @@ chrome.tabs.query active: true, (tabs) =>
 
   site.fetch()
 
-  syncStore.get 'tagInstructionsDismissed', (data) ->
-    tagInstructionsDismissed = data.tagInstructionsDismissed || false
-    unless tagInstructionsDismissed
-      $('body').addClass('new_tags')
+  tagFeature = new BH.Init.TagFeature(syncStore: syncStore)
+  tagFeature.announce ->
+    $('body').addClass('new_tags')
