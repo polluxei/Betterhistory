@@ -37,6 +37,7 @@ class BH.Views.TagsView extends BH.Views.MainView
     exampleTags = new BH.Lib.ExampleTags
       persistence: persistence
       chrome: chrome
+      localStore: localStore
     exampleTags.load =>
       @collection.fetch()
 
