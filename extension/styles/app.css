@@ -50,10 +50,12 @@ input.new_tag.error {
 }
 
 body.new_tags .menu .tags .new {
+  display: inline-block;
+}
+body.new_tags .new {
   color: #FFF;
   background: rgba(189, 64, 51, 0.7);
   border-radius: 2px;
-  display: inline-block;
   padding: 1px 4px;
   line-height: 15px;
   margin: 7px 0 0 20px;

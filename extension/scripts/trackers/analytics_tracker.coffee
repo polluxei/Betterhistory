@@ -66,6 +66,9 @@ class BH.Trackers.AnalyticsTracker
   searchByDomainPopupClick: ->
     @trackEvent(['Popup', 'Search by Domain Click'])
 
+  tagDetailsPopupClick: ->
+    @trackEvent(['Popup', 'Tag Details Click'])
+
   viewAllHistoryPopupClick: ->
     @trackEvent(['Popup', 'View all History Click'])
 

@@ -5,6 +5,10 @@ window.localStore = new BH.Lib.LocalStore
   chrome: chrome
   tracker: analyticsTracker
 
+window.syncStore = new BH.Lib.SyncStore
+  chrome: chrome
+  tracker: analyticsTracker
+
 chrome.tabs.query active: true, (tabs) =>
   tab = tabs[0] || {}
 
@@ -25,3 +29,8 @@ chrome.tabs.query active: true, (tabs) =>
   taggingView.render()
 
   site.fetch()
+
+  syncStore.get 'tagInstructionsDismissed', (data) ->
+    tagInstructionsDismissed = data.tagInstructionsDismissed || false
+    unless tagInstructionsDismissed
+      $('body').addClass('new_tags')

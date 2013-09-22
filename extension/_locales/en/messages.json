@@ -1090,5 +1090,45 @@
   "new_tag_button": {
     "message": "Create",
     "description": "create tag button"
+  },
+  "about_tags_for_popup": {
+    "message": "$new_open$New!$new_close$ Tag sites with Better History. $link_open$Details...$link_close$",
+    "description": "about tags for the popup triggered by the browser action",
+    "placeholders": {
+      "new_open": {
+        "content": "$1",
+        "example": "open new tag"
+      },
+      "new_close": {
+        "content": "$2",
+        "example": "close new tag"
+      },
+      "link_open": {
+        "content": "$3",
+        "example": "open link tag"
+      },
+      "link_close": {
+        "content": "$4",
+        "example": "close link tag"
+      }
+    }
+  },
+  "explore_tags_link": {
+    "message": "Explore tags",
+    "description": "explore tags link in popup"
+  },
+  "search_domain_history_link": {
+    "message": "Search $domain$ visits",
+    "description": "search domain link in popup",
+    "placeholders": {
+      "domain": {
+        "content": "$1",
+        "example": "google.com"
+      }
+    }
+  },
+  "view_all_history_link": {
+    "message": "View all history",
+    "description": "view all history link in popup"
   }
 }

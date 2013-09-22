@@ -37,6 +37,7 @@ popupScripts = [
   'scripts/trackers/error_tracker.js',
   'scripts/trackers/analytics_tracker.js',
   'scripts/lib/local_store.js',
+  'scripts/lib/sync_store.js',
   'scripts/persistence/tag.js',
   'scripts/modules/i18n.js',
   'scripts/modules/url.js',
