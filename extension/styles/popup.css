@@ -106,8 +106,9 @@ ul.tags li {
   display: block;
   color: #555;
 }
-.links a:hover {
-  background: #F0F6FE;
+.links a:hover,
+.links a:focus {
+  background: #DDD;
 }
 .no_tags {
   margin: 10px 0 0;

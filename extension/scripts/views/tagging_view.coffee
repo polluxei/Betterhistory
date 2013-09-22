@@ -30,6 +30,8 @@ class BH.Views.TaggingView extends BH.Views.MainView
       html = Mustache.to_html(@template, properties)
       @tracker.popupVisible()
       @$el.html html
+      @$('.links a').each (i) ->
+        $(@).attr 'tabindex', i
       setTimeout =>
         @$('#tag_name').focus()
       , 0
