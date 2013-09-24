@@ -191,3 +191,21 @@ task 'build:assets:prod', '', ->
   code = code.replace '<%= styles %>', buildStyleTag('styles.css')
 
   fs.writeFileSync 'build/index.html', code
+
+  code = fs.readFileSync('extension/popup.html').toString()
+
+  scriptContent = ''
+  styleContent = ''
+
+  for script in popupScripts
+    scriptContent += fs.readFileSync("build/#{script}") + "\n\n\n"
+  fs.writeFileSync('build/popupScripts.js', scriptContent)
+
+  for style in popupStyles
+    styleContent += fs.readFileSync("build/#{style}") + "\n\n\n"
+  fs.writeFileSync('build/popupStyles.css', styleContent)
+
+  code = code.replace '<%= scripts %>', buildScriptTag('popupScripts.js')
+  code = code.replace '<%= styles %>', buildStyleTag('popupStyles.css')
+
+  fs.writeFileSync 'build/popup.html', code
