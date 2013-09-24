@@ -1,15 +1,12 @@
 class BH.Lib.ExampleTags
   constructor: (options) ->
-    throw "Persistence not set" unless options.persistence?
     throw "LocalStore not set" unless options.localStore?
 
-    @persistence = options.persistence
     @localStore = options.localStore
 
   load: (callback = ->) ->
-    @persistence.fetchTags (tags) =>
-      @localStore.set exampleTags, ->
-        callback()
+    @localStore.set exampleTags, ->
+      callback()
 
 exampleTags =
   tags: ['games', 'places to travel', 'clothing', 'recipes', 'friends', 'funny videos', 'world news', 'productivity']
