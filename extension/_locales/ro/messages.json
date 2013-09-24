@@ -11,10 +11,6 @@
     "message": "Istoric",
     "description": "Manifest browser action title"
   },
-  "manifest_description": {
-    "message": "O perspectiva mai buna asupra istoricului tau web. Cel mai rapid mod de a cauta in istoricul tau, avand cele mai folositoare filtre si o interfata usor de folosit.",
-    "description": "Manifest description"
-  },
 
   "history_title": {
     "message": "Istoric",

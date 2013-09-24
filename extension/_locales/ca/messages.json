@@ -11,10 +11,6 @@
     "message": "Navegar per l'historial",
     "description": "Manifest browser action title"
   },
-  "manifest_description": {
-    "message": "Una millor visió del vostre historial de navegació. La millor recerca, la interfície més neta, i els filtres més útils - pel vostre historial.",
-    "description": "Manifest description"
-  },
 
   "history_title": {
     "message": "Historial",

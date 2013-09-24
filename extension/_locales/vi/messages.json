@@ -11,10 +11,6 @@
     "message": "Duyệt lược sử",
     "description": "Manifest browser action title"
   },
-  "manifest_description": {
-    "message": "Một giao diện tốt hơn cho lược sử duyệt web của bạn. Tìm kiếm tốt hơn, giao diện sắc xảo hơn, và các bộ lọc hữu hiệu hơn - cho phần lược sử.",
-    "description": "Manifest description"
-  },
 
   "history_title": {
     "message": "Lược Sử",

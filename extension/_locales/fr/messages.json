@@ -11,10 +11,6 @@
     "message": "Naviguer dans l'historique",
     "description": "Manifest browser action title"
   },
-  "manifest_description": {
-    "message": "Un meilleur affichage pour votre historique de navigation. Ayez la recherche amélioré , l'interface la plus claire, et les filtres les plus utiles pour votre historique.",
-    "description": "Manifest description"
-  },
 
   "history_title": {
     "message": "Historique",
