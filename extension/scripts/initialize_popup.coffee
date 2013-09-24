@@ -9,7 +9,7 @@ window.syncStore = new BH.Lib.SyncStore
   chrome: chrome
   tracker: analyticsTracker
 
-chrome.tabs.query active: true, (tabs) =>
+chrome.tabs.query currentWindow: true, active: true, (tabs) =>
   tab = tabs[0] || {}
 
   attrs =
