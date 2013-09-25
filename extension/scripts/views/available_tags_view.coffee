@@ -88,7 +88,7 @@ class BH.Views.AvailableTagsView extends Backbone.View
 
       # check if the tag to exclude in the ui has been remove, because
       # the visit should also disappear then
-      if site.tags.indexOf(@excludedTag) == -1
+      if @excludedTag? && site.tags.indexOf(@excludedTag) == -1
         $("[data-id='#{site.id}']").remove()
 
       site.tags = _.without(site.tags, @excludedTag) if @excludedTag?
