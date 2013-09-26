@@ -13,6 +13,6 @@ class BH.Init.TagFeature
       tagInstructionsDismissed = data.tagInstructionsDismissed || false
 
       @localStore.get 'tags', (data) ->
-        tags = data.tags
+        tags = data?.tags
 
         callback() if !tagInstructionsDismissed && !_.isArray(tags)
