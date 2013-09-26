@@ -10,11 +10,6 @@ try
     chrome: chrome
     tracker: analyticsTracker
 
-  browserActions = new BH.Lib.BrowserActions
-    chrome: chrome
-    tracker: analyticsTracker
-  browserActions.listen()
-
   omnibox = new BH.Lib.Omnibox
     chrome: chrome
     tracker: analyticsTracker

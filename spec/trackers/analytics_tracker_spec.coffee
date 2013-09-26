@@ -57,11 +57,6 @@ describe 'BH.Trackers.AnalyticsTracker', ->
       @analyticsTracker.omniboxSearch()
       expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Omnibox', 'Search'])
 
-  describe '#browserActionClick', ->
-    it 'tracks browser action click', ->
-      @analyticsTracker.browserActionClick()
-      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Browser action', 'Click'])
-
   describe '#contextMenuClick', ->
     it 'tracks context menu click', ->
       @analyticsTracker.contextMenuClick()
