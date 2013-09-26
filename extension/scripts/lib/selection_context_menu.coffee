@@ -11,13 +11,14 @@ class BH.Lib.SelectionContextMenu extends BH.Base
     @id = 'better_history_selection_context_menu'
 
   create: ->
-    @menu = @chromeAPI.contextMenus.create
-      title: @t('search_in_history')
-      contexts: ['selection']
-      id: @id
+    if @chromeAPI.contextMenus?.create?
+      @menu = @chromeAPI.contextMenus.create
+        title: @t('search_in_history')
+        contexts: ['selection']
+        id: @id
 
-    @chromeAPI.contextMenus.onClicked.addListener (data) =>
-      @onClick(data)
+      @chromeAPI.contextMenus.onClicked.addListener (data) =>
+        @onClick(data)
 
   onClick: (data) ->
     if data.menuItemId == @id

@@ -20,12 +20,13 @@ class BH.Views.TaggingView extends BH.Views.MainView
     @model.on('reset:tags', @renderTags, @)
 
   render: ->
-    @chromeAPI.commands.getAll (commands) =>
+    @getShortcut (commands) =>
       presenter = new BH.Presenters.SitePresenter(@model)
 
       properties = _.extend presenter.site(), @getI18nValues()
-      properties.shortcut = _.where(commands, name: '_execute_browser_action')[0].shortcut
       properties.i18n_search_domain_history_link = @t 'search_domain_history_link', [properties.domain]
+      if commands?
+        properties.shortcut = _.where(commands, name: '_execute_browser_action')[0].shortcut
 
       html = Mustache.to_html(@template, properties)
       @tracker.popupVisible()
@@ -36,6 +37,13 @@ class BH.Views.TaggingView extends BH.Views.MainView
         @$('#tag_name').focus()
       , 0
       @
+
+  getShortcut: (callback) ->
+    if @chromeAPI.commands?.getAll?
+      @chromeAPI.commands.getAll (commands) =>
+        callback(commands)
+    else
+      callback()
 
   renderTags: ->
     @autocompleteTagsView.remove() if @autocompleteTagsView
