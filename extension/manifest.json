@@ -47,7 +47,6 @@
       "scripts/trackers/analytics_tracker.js",
       "scripts/lib/page_context_menu.js",
       "scripts/lib/selection_context_menu.js",
-      "scripts/lib/browser_actions.js",
       "scripts/lib/omnibox.js",
       "scripts/lib/sync_store.js",
       "scripts/lib/local_store.js",

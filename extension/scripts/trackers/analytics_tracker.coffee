@@ -36,9 +36,6 @@ class BH.Trackers.AnalyticsTracker
   omniboxSearch: ->
     @trackEvent(['Omnibox', 'Search'])
 
-  browserActionClick: ->
-    @trackEvent(['Browser action', 'Click'])
-
   contextMenuClick: ->
     @trackEvent(['Context menu', 'Click'])
 
