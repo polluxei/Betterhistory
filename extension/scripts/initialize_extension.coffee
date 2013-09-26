@@ -2,6 +2,8 @@ window.errorTracker = new BH.Trackers.ErrorTracker(Honeybadger)
 window.analyticsTracker = new BH.Trackers.AnalyticsTracker(_gaq)
 
 try
+  analyticsTracker.historyOpen()
+
   window.syncStore = new BH.Lib.SyncStore
     chrome: chrome
     tracker: analyticsTracker

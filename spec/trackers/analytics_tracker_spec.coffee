@@ -3,6 +3,11 @@ describe 'BH.Trackers.AnalyticsTracker', ->
     @analytics = push: jasmine.createSpy('push')
     @analyticsTracker = new BH.Trackers.AnalyticsTracker(@analytics)
 
+  describe '#historyOpen', ->
+    it 'tracks the open of the history page', ->
+      @analyticsTracker.historyOpen()
+      expect(@analytics.push).toHaveBeenCalledWith ['_trackEvent', 'History', 'Open']
+
   describe '#pageView', ->
     it 'tracks the current url fragment', ->
       @analyticsTracker.pageView('page/url')

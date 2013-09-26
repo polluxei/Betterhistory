@@ -9,6 +9,9 @@ class BH.Trackers.AnalyticsTracker
     url = 'search' if url.match(/search/)
     @analytics.push(['_trackPageview', "/#{url}"])
 
+  historyOpen: ->
+    @trackEvent(['History', 'Open'])
+
   weekView: (date, distanceFromCurrentWeek) ->
     @trackEvent(['Weeks', 'Click', date, distanceFromCurrentWeek])
 
