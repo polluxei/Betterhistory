@@ -5,11 +5,11 @@ class BH.Trackers.ErrorTracker
 
   constructor: (tracker) ->
     @tracker = tracker
+    @tracker.setContext version: @version
     @tracker.configure
       api_key: @key
       environment: @environment
       onerror: true
 
   report: (e, data = {}) ->
-    data.version = @version
     @tracker.notify e, context: data

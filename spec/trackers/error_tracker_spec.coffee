@@ -3,6 +3,7 @@ describe 'BH.Trackers.ErrorTracker', ->
     tracker =
       configure: jasmine.createSpy('configure')
       notify: jasmine.createSpy('notify')
+      setContext: jasmine.createSpy('setContext')
     @errorTracker = new BH.Trackers.ErrorTracker(tracker)
 
   describe '#constructor', ->
@@ -12,7 +13,11 @@ describe 'BH.Trackers.ErrorTracker', ->
         environment: '$ENVIRONMENT$'
         onerror: true
 
+    it 'sets the version on the context', ->
+      expect(@errorTracker.tracker.setContext).toHaveBeenCalledWith
+        version: '$VERSION$'
+
   describe '#report', ->
     it 'calls to the tracker with the error', ->
-      @errorTracker.report('error')
-      expect(@errorTracker.tracker.notify).toHaveBeenCalledWith('error', context: {version: '$VERSION$'})
+      @errorTracker.report('error', {data: 'true'})
+      expect(@errorTracker.tracker.notify).toHaveBeenCalledWith('error', context: {data: 'true'})
