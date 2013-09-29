@@ -1,13 +1,18 @@
 class BH.Trackers.AnalyticsTracker
-  constructor: (analytics) ->
-    throw "Analytics not set" unless analytics?
+  constructor: ->
+    throw "Analytics not set" unless _gaq?
 
-    @analytics = analytics
+  trackEvent: (params) ->
+    params.unshift('_trackEvent')
+    @track(params)
 
   pageView: (url) ->
     # Don't track what people search for
     url = 'search' if url.match(/search/)
-    @analytics.push(['_trackPageview', "/#{url}"])
+    @track(['_trackPageview', "/#{url}"])
+
+  track: (params) ->
+    _gaq.push(params)
 
   historyOpen: ->
     @trackEvent(['History', 'Open'])
@@ -104,7 +109,3 @@ class BH.Trackers.AnalyticsTracker
 
   siteUntagged: ->
     @trackEvent(['Site', 'Untagged'])
-
-  trackEvent: (params) ->
-    params.unshift('_trackEvent')
-    @analytics.push(params)

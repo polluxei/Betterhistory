@@ -1,7 +1,11 @@
 describe 'BH.Trackers.AnalyticsTracker', ->
   beforeEach ->
     @analytics = push: jasmine.createSpy('push')
-    @analyticsTracker = new BH.Trackers.AnalyticsTracker(@analytics)
+    global._gaq = @analytics
+    @analyticsTracker = new BH.Trackers.AnalyticsTracker()
+
+  afterEach ->
+    delete global._gaq
 
   describe '#historyOpen', ->
     it 'tracks the open of the history page', ->

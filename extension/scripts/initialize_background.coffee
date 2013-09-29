@@ -1,5 +1,5 @@
 errorTracker = new BH.Trackers.ErrorTracker(Honeybadger)
-analyticsTracker = new BH.Trackers.AnalyticsTracker(_gaq)
+analyticsTracker = new BH.Trackers.AnalyticsTracker()
 
 try
   window.syncStore = new BH.Lib.SyncStore
