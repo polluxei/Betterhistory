@@ -9,6 +9,7 @@ class BH.Views.TagView extends BH.Views.MainView
   events:
     'click .delete_sites': 'onDeleteSitesClicked'
     'click .rename': 'onRenameClicked'
+    'click .share': 'onShareClicked'
     'keyup .search': 'onSearchTyped'
     'blur .search': 'onSearchBlurred'
 
@@ -57,6 +58,20 @@ class BH.Views.TagView extends BH.Views.MainView
     renameTagView.open()
     $('.new_tag').focus()
 
+  onShareClicked: (ev) ->
+    ev.preventDefault()
+
+    if @model.get('url')
+      url = @model.get('url')
+      @chromeAPI.tabs.create url: url
+    else
+      @model.share
+        success: (data) =>
+          url = data.url
+          @chromeAPI.tabs.create url: url
+        error: =>
+          alert('There was an error. Please try again later')
+
   promptToDeleteAllSites: ->
     promptMessage = @t('confirm_delete_tag', [@options.name])
     @promptView = BH.Views.CreatePrompt(promptMessage)
@@ -74,7 +89,7 @@ class BH.Views.TagView extends BH.Views.MainView
 
   getI18nValues: ->
     name = @options.name.charAt(0).toUpperCase() + @options.name.slice(1)
-    properties = @t ['delete_tag', 'search_input_placeholder_text', 'rename_tag_link']
+    properties = @t ['delete_tag', 'search_input_placeholder_text', 'rename_tag_link', 'share_tag_link']
     properties['i18n_tag_title'] = @t 'tag_title', [name]
     properties['i18n_back_to_tags_link'] = @t('back_to_tags_link', [
       @t('back_arrow')

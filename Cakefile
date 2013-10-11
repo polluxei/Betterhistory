@@ -81,6 +81,7 @@ scripts = [
   'scripts/lib/local_store.js',
   'scripts/lib/example_tags.js',
   'scripts/persistence/tag.js',
+  'scripts/persistence/share.js',
   'scripts/views/modal_view.js',
   'scripts/views/main_view.js',
   'scripts/views/app_view.js',

@@ -995,6 +995,10 @@
     "message": "Rename",
     "description": "rename link text from tags"
   },
+  "share_tag_link": {
+    "message": "Share",
+    "description": "share link text from tags"
+  },
   "rename_tag_title": {
     "message": "Rename $name$ tag",
     "description": "rename link text from tags",

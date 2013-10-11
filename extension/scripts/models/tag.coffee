@@ -13,8 +13,9 @@ class BH.Models.Tag extends Backbone.Model
   fetch: (callback = ->) ->
     @persistence ||= lazyPersistence()
     @persistence.fetchTagSites @get('name'), (sites) =>
-      @set sites: sites
-      callback()
+      @persistence.fetchSharedTag @get('name'), (url) =>
+        @set sites: sites, url: url
+        callback()
 
   destroy: (callback = ->) ->
     @persistence ||= lazyPersistence()
@@ -34,5 +35,16 @@ class BH.Models.Tag extends Backbone.Model
       @set name: name
       callback()
 
+  share: (callbacks) ->
+    lazyPersistenceShare().send @toJSON(),
+      success: (data) =>
+        @persistence.shareTag(@get('name'), data.url)
+        callbacks.success(data)
+      error: ->
+        callbacks.error()
+
 lazyPersistence = ->
   new BH.Persistence.Tag(localStore: localStore)
+
+lazyPersistenceShare = ->
+  new BH.Persistence.Share()

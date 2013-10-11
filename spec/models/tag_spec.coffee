@@ -5,6 +5,7 @@ describe 'BH.Models.Tag', ->
       removeTag: jasmine.createSpy('removeTag')
       removeSiteFromTag: jasmine.createSpy('removeSiteFromTag')
       renameTag: jasmine.createSpy('renameTag')
+      fetchSharedTag: jasmine.createSpy('fetchSharedTag')
 
     @tag = new BH.Models.Tag name: 'recipes',
       persistence: persistence

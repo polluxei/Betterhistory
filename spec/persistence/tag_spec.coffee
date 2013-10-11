@@ -166,6 +166,21 @@ describe 'BH.Persistence.Tag', ->
       @persistence.localStore.set.andCallFake (data, callback) ->
         callback()
 
+    describe 'expiring shared tags', ->
+      beforeEach ->
+        @persistence.localStore.get.andCallFake (key, callback) ->
+          callback
+            sharedTags:
+              recipes: 'http://www.recipes.com'
+              cooking: 'http://www.cooking.com'
+
+      it 'expires the shared tag', ->
+        @persistence.addSiteToTag(@site, 'recipes')
+        expect(@persistence.localStore.set).toHaveBeenCalledWith {
+          sharedTags:
+            cooking: 'http://www.cooking.com'
+        }, jasmine.any(Function)
+
     describe 'when the tag is brand new', ->
       beforeEach ->
         @persistence.localStore.get.andCallFake (key, callback) ->
@@ -258,6 +273,21 @@ describe 'BH.Persistence.Tag', ->
 
       @persistence.localStore.set.andCallFake (data, callback) ->
         callback()
+
+    describe 'expiring shared tags', ->
+      beforeEach ->
+        @persistence.localStore.get.andCallFake (key, callback) ->
+          callback
+            sharedTags:
+              recipes: 'http://www.recipes.com'
+              cooking: 'http://www.cooking.com'
+
+      it 'expires the shared tag', ->
+        @persistence.addSitesToTag(@sites, 'recipes')
+        expect(@persistence.localStore.set).toHaveBeenCalledWith {
+          sharedTags:
+            cooking: 'http://www.cooking.com'
+        }, jasmine.any(Function)
 
     describe 'when the tag does not exist', ->
       beforeEach ->
@@ -354,6 +384,21 @@ describe 'BH.Persistence.Tag', ->
       @persistence.localStore.remove.andCallFake (key, callback) =>
         callback()
 
+    describe 'expiring shared tags', ->
+      beforeEach ->
+        @persistence.localStore.get.andCallFake (key, callback) ->
+          callback
+            sharedTags:
+              recipes: 'http://www.recipes.com'
+              cooking: 'http://www.cooking.com'
+
+      it 'expires the shared tag', ->
+        @persistence.removeTag('recipes')
+        expect(@persistence.localStore.set).toHaveBeenCalledWith {
+          sharedTags:
+            cooking: 'http://www.cooking.com'
+        }, jasmine.any(Function)
+
     it 'removes the tag from the tags key', ->
       @persistence.removeTag('recipes')
       expect(@persistence.localStore.set).toHaveBeenCalledWith {tags: ['cooking']}, jasmine.any(Function)
@@ -370,6 +415,21 @@ describe 'BH.Persistence.Tag', ->
   describe '#removeSiteFromTag', ->
     beforeEach ->
       @url = 'http://www.recipes.com/pound_cake'
+
+    describe 'expiring shared tags', ->
+      beforeEach ->
+        @persistence.localStore.get.andCallFake (key, callback) ->
+          callback
+            sharedTags:
+              recipes: 'http://www.recipes.com'
+              cooking: 'http://www.cooking.com'
+
+      it 'expires the shared tag', ->
+        @persistence.removeSiteFromTag(@url, 'recipes')
+        expect(@persistence.localStore.set).toHaveBeenCalledWith {
+          sharedTags:
+            cooking: 'http://www.cooking.com'
+        }, jasmine.any(Function)
 
     describe 'when the site is present in the tag', ->
       beforeEach ->
@@ -452,6 +512,21 @@ describe 'BH.Persistence.Tag', ->
         'http://www.recipes.com/pound_cake',
         'http://www.recipes.com/fruit_cake'
       ]
+
+    describe 'expiring shared tags', ->
+      beforeEach ->
+        @persistence.localStore.get.andCallFake (key, callback) ->
+          callback
+            sharedTags:
+              recipes: 'http://www.recipes.com'
+              cooking: 'http://www.cooking.com'
+
+      it 'expires the shared tag', ->
+        @persistence.removeSitesFromTag(@url, 'recipes')
+        expect(@persistence.localStore.set).toHaveBeenCalledWith {
+          sharedTags:
+            cooking: 'http://www.cooking.com'
+        }, jasmine.any(Function)
 
     describe 'when the sites are present in the tag', ->
       beforeEach ->
@@ -556,6 +631,20 @@ describe 'BH.Persistence.Tag', ->
       @persistence.localStore.remove.andCallFake (keys, callback) ->
         callback()
 
+    describe 'expiring shared tags', ->
+      beforeEach ->
+        @persistence.localStore.get.andCallFake (key, callback) ->
+          callback
+            sharedTags:
+              recipes: 'http://www.recipes.com'
+              cooking: 'http://www.cooking.com'
+
+      it 'expires all the shared tag', ->
+        @persistence.removeAllTags()
+        expect(@persistence.localStore.set).toHaveBeenCalledWith {
+          sharedTags: {}
+        }, jasmine.any(Function)
+
     it 'removes all the tag data', ->
       @persistence.removeAllTags()
       expect(@persistence.localStore.remove).toHaveBeenCalledWith ['recipes', 'cooking'], jasmine.any(Function)
@@ -599,6 +688,21 @@ describe 'BH.Persistence.Tag', ->
         callback()
       @persistence.localStore.remove.andCallFake (keys, callback) =>
         callback()
+
+    describe 'expiring shared tags', ->
+      beforeEach ->
+        @persistence.localStore.get.andCallFake (key, callback) ->
+          callback
+            sharedTags:
+              recipes: 'http://www.recipes.com'
+              cooking: 'http://www.cooking.com'
+
+      it 'expires the shared tag', ->
+        @persistence.renameTag('cooking', 'baking')
+        expect(@persistence.localStore.set).toHaveBeenCalledWith {
+          sharedTags:
+            recipes: 'http://www.recipes.com'
+        }, jasmine.any(Function)
 
     it 'removes the old tag', ->
       @persistence.renameTag('cooking', 'baking')
