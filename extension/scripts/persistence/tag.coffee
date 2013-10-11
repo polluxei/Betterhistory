@@ -43,6 +43,10 @@ class BH.Persistence.Tag
         }
       callback(sites)
 
+  fetchSharedTag: (name, callback) ->
+    @localStore.get 'sharedTags', (data) ->
+      callback(data.sharedTags[name])
+
   fetchSiteTags: (url, callback = ->) ->
     @localStore.get 'tags', (data) =>
       tags = data.tags || []
@@ -54,6 +58,13 @@ class BH.Persistence.Tag
             foundTags.push tag if site.url == url
 
         callback(foundTags)
+
+  shareTag: (tag, url, callback = ->) ->
+    @localStore.get "sharedTags", (data) =>
+      data = sharedTags: {} unless data.sharedTags?
+      data.sharedTags[tag] = url
+      @localStore.set data, ->
+        callback()
 
   addSiteToTag: (site, tag, callback = ->) ->
     operations = tagCreated: false
@@ -70,6 +81,8 @@ class BH.Persistence.Tag
           data[tag].push site
           @localStore.set data, ->
             callback(operations)
+
+    @expireSharedTag(tag)
 
   addSitesToTag: (sites, tag, callback = ->) ->
     operations = tagCreated: false
@@ -88,6 +101,8 @@ class BH.Persistence.Tag
           @localStore.set data, ->
             callback(operations)
 
+    @expireSharedTag(tag)
+
   removeSiteFromTag: (url, tag, callback = ->) ->
     @localStore.get tag, (data) =>
       data[tag] ||= []
@@ -95,6 +110,8 @@ class BH.Persistence.Tag
         url == site.url
       @localStore.set data, =>
         callback(data[tag])
+
+    @expireSharedTag(tag)
 
   removeSitesFromTag: (urls, tag, callback = ->) ->
     @localStore.get tag, (data) =>
@@ -104,6 +121,8 @@ class BH.Persistence.Tag
       @localStore.set data, =>
         callback(data[tag])
 
+    @expireSharedTag(tag)
+
   removeTag: (tag, callback = ->) ->
     @localStore.get 'tags', (data) =>
       data.tags ||= []
@@ -112,6 +131,8 @@ class BH.Persistence.Tag
         @localStore.remove tag, ->
           callback()
 
+    @expireSharedTag(tag)
+
   removeAllTags: (callback = ->) ->
     @localStore.get 'tags', (data) =>
       tags = data.tags || []
@@ -119,6 +140,8 @@ class BH.Persistence.Tag
       @localStore.remove tags, =>
         @localStore.set tags: [], ->
           callback()
+
+    @expireSharedTag()
 
   renameTag: (oldTag, newTag, callback = ->) ->
     @localStore.get 'tags', (data) =>
@@ -147,3 +170,17 @@ class BH.Persistence.Tag
               data[newTag] = sites
               @localStore.set data, ->
                 callback()
+
+    @expireSharedTag(oldTag)
+
+  expireSharedTag: (tag = null, callback = ->) ->
+    @localStore.get 'sharedTags', (data) =>
+      data.sharedTags ||= {}
+
+      if tag?
+        delete data.sharedTags[tag]
+      else
+        data.sharedTags = {}
+
+      @localStore.set data, ->
+        callback()

@@ -4,7 +4,7 @@
   "version": "2.0.5",
   "author": "Roy Kolak <roy.kolak@gmail.com>",
   "scripts": {
-    "start": "make build",
+    "start": "node_modules/.bin/coffee scripts/dev.coffee",
     "test": "node_modules/jasmine-node/bin/jasmine-node --coffee spec/"
   },
   "repository": {
@@ -14,7 +14,9 @@
   "config": {
     "dev_analytics": "UA-43184519-1",
     "prod_analytics": "UA-43186716-1",
-    "error_tracking": "eb2245d5729a3c65d7e429f4e7690a62"
+    "error_tracking": "eb2245d5729a3c65d7e429f4e7690a62",
+    "dev_api_host": "127.0.0.1:3001",
+    "prod_api_host": "api.better-history.com"
   },
   "devDependencies": {
     "chrome-bootstrap": "git://github.com/roykolak/chrome-bootstrap.git#v1.1.4",
@@ -27,7 +29,8 @@
     "mustache": "0.7.2",
     "moment": "1.7.2",
     "timekeeper": "0.0.3",
-    "uglify-js": "2.3.6"
+    "uglify-js": "2.3.6",
+    "watch": "0.8.0"
   },
   "license": "GPLv3"
 }
