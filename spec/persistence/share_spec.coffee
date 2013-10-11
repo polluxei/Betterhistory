@@ -14,9 +14,11 @@ describe 'BH.Persistence.Share', ->
         }]
 
     it 'calls to remote with the request properties', ->
-      expect(@share.remote(@tag)).toHaveBeenCalledWith
-        url: "http://127.0.0.1:3000/share"
-        data: @tag
+      @share.send(@tag)
+      data = '{"name":"clothes","sites":[{"title":"nice clothes","url":"http://www.nice-clothes.com","datetime":1234234234342}]}'
+      expect(@share.remote).toHaveBeenCalledWith
+        url: "http://$HOST$/share"
+        data: data
         type: 'POST'
         dataType: 'json'
         contentType: 'application/json'
