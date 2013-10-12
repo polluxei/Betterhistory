@@ -45,6 +45,7 @@ class BH.Persistence.Tag
 
   fetchSharedTag: (name, callback) ->
     @localStore.get 'sharedTags', (data) ->
+      data.sharedTags ||= {}
       callback(data.sharedTags[name])
 
   fetchSiteTags: (url, callback = ->) ->
