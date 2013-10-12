@@ -71,6 +71,7 @@ class BH.Views.TagView extends BH.Views.MainView
         success: (data) =>
           url = encodeURIComponent(data.url)
           @chromeAPI.tabs.create url: "http://#{@host}/from_ext/#{url}"
+          @model.set(url: data.url)
         error: =>
           alert('There was an error. Please try again later')
 
