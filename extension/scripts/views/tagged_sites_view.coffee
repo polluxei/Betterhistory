@@ -41,6 +41,7 @@ class BH.Views.TaggedSitesView extends BH.Views.MainView
     ev.preventDefault()
     $el = $(ev.currentTarget)
     @model.removeSite $el.attr('href')
+    @model.unset('url')
     $el.parents('.visit').remove()
 
 

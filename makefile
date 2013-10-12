@@ -4,6 +4,10 @@ DEV_ANALYTICS=$(shell grep -E '"dev_analytics":.*?[^\\]",' package.json | sed 's
 PROD_ANALYTICS=$(shell grep -E '"prod_analytics":.*?[^\\]",' package.json | sed 's/.*:[^\s][^.*]//g' | sed s/\",//g)
 
 ERROR_TRACKING=$(shell grep -E '"error_tracking":.*?[^\\]",' package.json | sed 's/.*:[^\s][^.*]//g' | sed s/\",//g)
+
+DEV_SITE_HOST=$(shell grep -E '"dev_site_host":.*?[^\\]",' package.json | sed 's/.*: [^.*]//g' | sed s/\",//g)
+PROD_SITE_HOST=$(shell grep -E '"prod_site_host":.*?[^\\]"' package.json | sed 's/.*:[^\s][^.*]//g' | sed s/\",//g)
+
 DEV_API_HOST=$(shell grep -E '"dev_api_host":.*?[^\\]",' package.json | sed 's/.*: [^.*]//g' | sed s/\",//g)
 PROD_API_HOST=$(shell grep -E '"prod_api_host":.*?[^\\]"' package.json | sed 's/.*:[^\s][^.*]//g' | sed s/\"//g)
 
@@ -26,6 +30,7 @@ build:
 	sed -i '' 's/\$$VERSION\$$/${VERSION}/g' build/scripts/trackers/error_tracker.js
 	sed -i '' 's/\$$ENVIRONMENT\$$/development/g' build/scripts/trackers/error_tracker.js
 	sed -i '' 's/\$$HOST\$$/${DEV_API_HOST}/g' build/scripts/persistence/share.js
+	sed -i '' 's/\$$HOST\$$/${DEV_SITE_HOST}/g' build/scripts/views/tag_view.js
 
 release: build
 	coffee -c build/scripts/
@@ -38,6 +43,7 @@ release: build
 	sed -i '' 's/\$$VERSION\$$/${VERSION}/g' build/scripts/trackers/error_tracker.js
 	sed -i '' 's/\$$ENVIRONMENT\$$/production/g' build/scripts/trackers/error_tracker.js
 	sed -i '' 's/\$$HOST\$$/${PROD_API_HOST}/g' build/scripts/persistence/share.js
+	sed -i '' 's/\$$HOST\$$/${PROD_SITE_HOST}/g' build/scripts/views/tag_view.js
 	cake build:assets:prod
 	./node_modules/uglify-js/bin/uglifyjs build/scripts.js -o build/scripts.js
 	rm -f extension.zip

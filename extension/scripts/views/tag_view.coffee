@@ -2,6 +2,8 @@ class BH.Views.TagView extends BH.Views.MainView
   @include BH.Modules.I18n
   @include BH.Modules.Url
 
+  host: '$HOST$'
+
   className: 'tag_view with_controls'
 
   template: BH.Templates['tag']
@@ -62,13 +64,13 @@ class BH.Views.TagView extends BH.Views.MainView
     ev.preventDefault()
 
     if @model.get('url')
-      url = @model.get('url')
-      @chromeAPI.tabs.create url: url
+      url = encodeURIComponent(@model.get('url'))
+      @chromeAPI.tabs.create url: "http://#{@host}/from_ext/#{url}"
     else
       @model.share
         success: (data) =>
-          url = data.url
-          @chromeAPI.tabs.create url: url
+          url = encodeURIComponent(data.url)
+          @chromeAPI.tabs.create url: "http://#{@host}/from_ext/#{url}"
         error: =>
           alert('There was an error. Please try again later')
 
