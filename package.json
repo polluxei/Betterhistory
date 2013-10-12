@@ -22,7 +22,7 @@
     "prod_api_host": "api.better-history.com"
   },
   "devDependencies": {
-    "chrome-bootstrap": "git://github.com/roykolak/chrome-bootstrap.git#v1.1.4",
+    "chrome-bootstrap": "git://github.com/roykolak/chrome-bootstrap.git#v1.2.0",
     "coffee-script": "1.6.1",
     "jasmine-node": "1.10.1",
     "glob": "3.1.12",

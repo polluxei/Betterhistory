@@ -20,7 +20,7 @@ input.new_tag.error {
   opacity: 0;
 }
 .menu .tags .new,
-.about_tags {
+.chrome-bootstrap .alert {
   display: none;
 }
 .available_tags {
@@ -66,13 +66,8 @@ body.new_tags .new {
   line-height: 15px;
   margin: 7px 0 0 20px;
 }
-body.new_tags .about_tags {
-  border-radius: 3px;
-  background: rgba(147, 184, 252, 0.2);
+body.new_tags .alert {
   display: block;
-  position: relative;
-  padding: 10px 30px 10px 10px;
-  line-height: 17px;
 }
 body.new_tags .about_tags a {
   text-decoration: underline;
@@ -80,11 +75,6 @@ body.new_tags .about_tags a {
 body.new_tags .about_tags strong {
   display: block;
   margin-bottom: 10px;
-}
-.about_tags .dismiss_instructions {
-  position: absolute;
-  top: 5px;
-  opacity: 1;
 }
 .tag_visit_view .tags {
   margin: 0;
