@@ -61,22 +61,25 @@ class BH.Views.TagView extends BH.Views.MainView
     $('.new_tag').focus()
 
   onShareClicked: (ev) ->
-    unless @$('.small_spinner').hasClass('show')
-      ev.preventDefault()
-      @$('.small_spinner').addClass('show')
+    ev.preventDefault()
 
-      if @model.get('url')
-        url = encodeURIComponent(@model.get('url'))
-        @chromeAPI.tabs.create url: "http://#{@host}/from_ext/#{url}"
-      else
+    if @model.get('url')
+      url = encodeURIComponent(@model.get('url'))
+      @chromeAPI.tabs.create url: "http://#{@host}/from_ext/#{url}"
+    else
+      $smallSpinner = @$('.small_spinner')
+
+      unless $smallSpinner.hasClass('show')
+        $smallSpinner.addClass('show')
+
         @model.share
           success: (data) =>
-            @$('.small_spinner').removeClass('show')
+            $smallSpinner.removeClass('show')
             url = encodeURIComponent(data.url)
             @chromeAPI.tabs.create url: "http://#{@host}/from_ext/#{url}"
             @model.set(url: data.url)
           error: =>
-            @$('.small_spinner').removeClass('show')
+            $smallSpinner.removeClass('show')
             alert('There was an error. Please try again later')
 
   promptToDeleteAllSites: ->
