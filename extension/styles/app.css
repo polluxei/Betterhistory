@@ -201,6 +201,16 @@ body.new_tags .menu .tags.pulse .new {
   width: 33px;
   height: 32px;
 }
+.small_spinner {
+  background: url(/images/small_spinner.gif);
+  width: 16px;
+  height: 16px;
+  margin-top: 4px;
+  display: none;
+}
+.small_spinner.show {
+  display: block;
+}
 .interval header {
   position: relative;
   z-index: 1;
@@ -665,4 +675,7 @@ body {
 .available_tags ul.tags li {
   padding-__MSG_@@bidi_start_edge__: 24px;
   padding-__MSG_@@bidi_end_edge__: 0;
+}
+.small_spinner {
+  margin-__MSG_@@bidi_end_edge__: 5px;
 }
