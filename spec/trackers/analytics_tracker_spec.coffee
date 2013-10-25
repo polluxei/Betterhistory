@@ -175,3 +175,8 @@ describe 'BH.Trackers.AnalyticsTracker', ->
     it 'tracks a site untagged', ->
       @analyticsTracker.siteUntagged()
       expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Site', 'Untagged'])
+
+  describe '#shareClicked', ->
+    it 'tracks a tag share click', ->
+      @analyticsTracker.shareClicked()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Tag', 'Shared'])

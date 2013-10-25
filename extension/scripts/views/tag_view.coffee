@@ -62,6 +62,7 @@ class BH.Views.TagView extends BH.Views.MainView
 
   onShareClicked: (ev) ->
     ev.preventDefault()
+    @tracker.shareClicked()
 
     if @model.get('url')
       url = encodeURIComponent(@model.get('url'))

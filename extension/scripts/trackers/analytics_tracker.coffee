@@ -109,3 +109,6 @@ class BH.Trackers.AnalyticsTracker
 
   siteUntagged: ->
     @trackEvent(['Site', 'Untagged'])
+
+  shareClicked: ->
+    @trackEvent(['Tag', 'Shared'])
