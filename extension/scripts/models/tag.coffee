@@ -36,12 +36,22 @@ class BH.Models.Tag extends Backbone.Model
       callback()
 
   share: (callbacks) ->
-    lazyPersistenceShare().send @toJSON(),
-      success: (data) =>
-        @persistence.shareTag(@get('name'), data.url)
-        callbacks.success(data)
-      error: ->
-        callbacks.error()
+    index = 1
+    json = @toJSON()
+
+    _.each json.sites, (site, i) =>
+      BH.Lib.ImageData.base64 "chrome://favicon/#{site.url}", (data) =>
+        json.sites[i].image = data
+
+        if index != json.sites.length
+          index++
+        else
+          lazyPersistenceShare().send json,
+            success: (data) =>
+              @persistence.shareTag(@get('name'), data.url)
+              callbacks.success(data)
+            error: ->
+              callbacks.error()
 
 lazyPersistence = ->
   new BH.Persistence.Tag(localStore: localStore)

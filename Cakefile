@@ -80,6 +80,7 @@ scripts = [
   'scripts/lib/sync_store.js',
   'scripts/lib/local_store.js',
   'scripts/lib/example_tags.js',
+  'scripts/lib/image_data.js',
   'scripts/persistence/tag.js',
   'scripts/persistence/share.js',
   'scripts/views/modal_view.js',
