@@ -27,10 +27,7 @@
   },
   "content_scripts": [
     {
-      "matches": [
-        "*://*.better-history.com/*",
-        "*://*.better-history.local/*"
-      ],
+      "matches": ["*://*.better-history.com/*"],
       "js": ["scripts/installed.js"]
     }
   ],
