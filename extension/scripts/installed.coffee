@@ -1,3 +1,2 @@
-if window.location.pathname != '/'
-  body = document.getElementsByTagName('body')[0]
-  body.className = "#{body.className} installed"
+body = document.getElementsByTagName('body')[0]
+body.className = "#{body.className} installed"
