@@ -1056,16 +1056,24 @@
     "description": "title for tagging visited sites modal"
   },
   "sync_tags_link": {
-    "message": "Keep your tags safe, $link_open$Sync them!$link_close$",
+    "message": "Sign up for $signup_open$Tag Syncing$signup_close$ or $login_open$Login$login_close$",
     "description": "link to sign up for syncing",
     "placeholders": {
-      "link_open": {
+      "signup_open": {
         "content": "$1",
-        "example": "open link tag"
+        "example": "open signup tag"
       },
-      "link_close": {
+      "signup_close": {
         "content": "$2",
-        "example": "close link tag"
+        "example": "close signup tag"
+      },
+      "login_open": {
+        "content": "$3",
+        "example": "open login tag"
+      },
+      "login_close": {
+        "content": "$4",
+        "example": "close login tag"
       }
     }
   },
@@ -1142,5 +1150,27 @@
   "view_all_history_link": {
     "message": "View all history",
     "description": "view all history link in popup"
+  },
+  "auth_success_title": {
+    "message": "Success! You're logged in.",
+    "description": "authorization success title"
+  },
+  "auth_success_description": {
+    "message": "Updates to your tags will be synced and safely backed up. Get organized and get tagging!",
+    "description": "authorization success description"
+  },
+  "sync_enabled": {
+    "message": "Sync $highlight_open$ON$highlight_close$",
+    "description": "sync enabled message",
+    "placeholders": {
+      "highlight_open": {
+        "content": "$1",
+        "example": "highlight open tag"
+      },
+      "highlight_close": {
+        "content": "$2",
+        "example": "highlight close tag"
+      }
+    }
   }
 }

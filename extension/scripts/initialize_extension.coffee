@@ -12,6 +12,9 @@ try
     chrome: chrome
     tracker: analyticsTracker
 
+  syncStore.get 'authId', (data = {}) ->
+    $('body').addClass 'logged_in' if data.authId?
+
   new BH.Lib.DateI18n().configure()
 
   settings = new BH.Models.Settings({})

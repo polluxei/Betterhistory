@@ -10,6 +10,8 @@ class BH.Views.TagsView extends BH.Views.MainView
     'click .how_to_tag': 'onHowToTagClicked'
     'click .load_example_tags': 'onLoadExampleTagsClicked'
     'click .dismiss_instructions': 'onDismissInstructionsClicked'
+    'click #sign_up': 'onBuyTagSyncingClicked'
+    'click #sign_in': 'onSignInClicked'
     'keyup .search': 'onSearchTyped'
     'blur .search': 'onSearchBlurred'
 
@@ -25,6 +27,23 @@ class BH.Views.TagsView extends BH.Views.MainView
     html = Mustache.to_html @template, @getI18nValues()
     @$el.append html
     @
+
+  onBuyTagSyncingClicked: ->
+    google.payments.inapp.buy
+      parameters: {}
+      jwt: "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIwNjM4OTg2NDA5NjI5N" +
+           "Dc5OTE0OCIsImF1ZCI6Ikdvb2dsZSIsInR5cCI6Imdvb2dsZS9" +
+           "wYXltZW50cy9pbmFwcC9pdGVtL3YxIiwiaWF0IjoxMzgzMzIxN" +
+           "jQwLCJleHAiOjEzODM0MDgwNDAsInJlcXVlc3QiOnsiY3VycmV" +
+           "uY3lDb2RlIjoiVVNEIiwicHJpY2UiOiIxMC4wMCIsIm5hbWUiO" +
+           "iJCZXR0ZXIgSGlzdG9yeSIsInNlbGxlckRhdGEiOiJzb21lIG9" +
+           "wYXF1ZSBkYXRhIiwiZGVzY3JpcHRpb24iOiJVbmxpbWl0ZWQgd" +
+           "GFnIHN5bmNpbmcgKG9uZSB0aW1lIGZlZSkifX0.kOl1AII7iYX" +
+           "2R986M6qMxM5gig0EC4nyyB_grcYoyps",
+      success: ->
+        window.alert('success')
+      failure: ->
+        window.alert('failure')
 
   onTagsLoaded: ->
     tag_count = @t 'number_of_tags', [@collection.length]
@@ -52,6 +71,19 @@ class BH.Views.TagsView extends BH.Views.MainView
     syncStore.set tagInstructionsDismissed: true
     $('.about_tags').hide()
 
+  onSignInClicked: (ev) ->
+    ev.preventDefault()
+
+    googleUserInfo = new BH.Lib.GoogleUserInfo(OAuth2)
+    googleUserInfo.fetch
+      success: =>
+        authSuccessfulView = new BH.Views.AuthSuccessfulView()
+        authSuccessfulView.open()
+        @$('.sync_promo').hide()
+        @$('.sync_enabled').show()
+      error: ->
+        alert('error')
+
   onHowToTagClicked: (ev) ->
     @tracker.howToTagClick()
     ev.preventDefault()
@@ -78,5 +110,11 @@ class BH.Views.TagsView extends BH.Views.MainView
 
   getI18nValues: ->
     properties = @t ['tags_title', 'search_input_placeholder_text', 'delete_all_tags', 'how_to_tag']
-    properties.i18n_sync_tags_link = @t 'sync_tags_link', ['<a style="text-decoration: underline;" href="http://mad.ly/signups/89926/join">', '</a>']
+    properties.i18n_sync_tags_link = @t 'sync_tags_link', [
+      '<a style="text-decoration: underline;" href="#" id="sign_up">',
+      '</a>',
+      '<a style="text-decoration: underline;" href="#" id="sign_in">',
+      '</a>'
+    ]
+    properties.i18n_sync_enabled = @t 'sync_enabled', ['<span class="inline-tag">', '</span>']
     properties

@@ -1,3 +1,28 @@
+.auth_success_view .page {
+  width: 200px;
+  height: 210px;
+}
+.auth_success_view p {
+  width: 230px;
+}
+.logged_in .controls .sync_promo {
+  display: none;
+}
+.logged_in .tags_view .controls .sync_enabled {
+  display: inline-block;
+}
+.tags_view .controls .sync_enabled {
+  display: none;
+}
+.inline-tag {
+  background: #8AAAED;
+  color: #FFF;
+  border-radius: 3px;
+  position: relative;
+  display: inline-block;
+  padding: 2px 5px;
+}
+
 input.new_tag.error {
   color: #FF3D00;
 }
@@ -507,7 +532,8 @@ body.chrome-bootstrap .tag_visit_view ul li.site {
   -webkit-margin-end: 10px;
 }
 .mailing_list_view .logo,
-.credits_view .logo {
+.credits_view .logo,
+.auth_success_view .logo {
   position: absolute;
   opacity: 0.4;
   top: -50px;
@@ -580,7 +606,8 @@ body {
   padding-__MSG_@@bidi_start_edge__: 25px;
 }
 .mailing_list_view .logo,
-.credits_view .logo {
+.credits_view .logo,
+.auth_success_view .logo {
   __MSG_@@bidi_end_edge__: -50px;
 }
 .credits_view .translators .language {

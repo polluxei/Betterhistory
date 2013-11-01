@@ -29,6 +29,11 @@
     {
       "matches": ["*://*.better-history.com/*"],
       "js": ["scripts/installed.js"]
+    },
+    {
+      "matches": ["http://www.google.com/robots.txt*"],
+      "js": ["oauth2/oauth2_inject.js"],
+      "run_at": "document_start"
     }
   ],
   "browser_action": {
@@ -69,7 +74,8 @@
     "tabs",
     "contextMenus",
     "storage",
-    "unlimitedStorage"
+    "unlimitedStorage",
+    "https://accounts.google.com/o/oauth2/token"
   ],
-  "content_security_policy": "script-src 'self' 'unsafe-eval' https://ssl.google-analytics.com https://platform.twitter.com https://apis.google.com; object-src 'self'"
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://checkout.google.com https://ssl.google-analytics.com https://platform.twitter.com https://apis.google.com; object-src 'self'"
 }
