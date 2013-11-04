@@ -12,7 +12,6 @@ class BH.Lib.GoogleUserInfo
 
       $.getJSON url , (data = {}) ->
         if data.sub?
-          syncStore.set(authId: data.sub)
-          callbacks.success()
+          callbacks.success(data)
         else
           callback.error()

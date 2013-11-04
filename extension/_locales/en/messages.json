@@ -1056,7 +1056,7 @@
     "description": "title for tagging visited sites modal"
   },
   "sync_tags_link": {
-    "message": "Sign up for $signup_open$Tag Syncing$signup_close$ or $login_open$Login$login_close$",
+    "message": "Keep your tags safe, sync them! $signup_open$Sign up$signup_close$ or $login_open$Login$login_close$",
     "description": "link to sign up for syncing",
     "placeholders": {
       "signup_open": {

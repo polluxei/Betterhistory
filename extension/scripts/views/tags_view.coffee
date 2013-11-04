@@ -29,21 +29,18 @@ class BH.Views.TagsView extends BH.Views.MainView
     @
 
   onBuyTagSyncingClicked: ->
-    google.payments.inapp.buy
-      parameters: {}
-      jwt: "eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiIwNjM4OTg2NDA5NjI5N" +
-           "Dc5OTE0OCIsImF1ZCI6Ikdvb2dsZSIsInR5cCI6Imdvb2dsZS9" +
-           "wYXltZW50cy9pbmFwcC9pdGVtL3YxIiwiaWF0IjoxMzgzMzIxN" +
-           "jQwLCJleHAiOjEzODM0MDgwNDAsInJlcXVlc3QiOnsiY3VycmV" +
-           "uY3lDb2RlIjoiVVNEIiwicHJpY2UiOiIxMC4wMCIsIm5hbWUiO" +
-           "iJCZXR0ZXIgSGlzdG9yeSIsInNlbGxlckRhdGEiOiJzb21lIG9" +
-           "wYXF1ZSBkYXRhIiwiZGVzY3JpcHRpb24iOiJVbmxpbWl0ZWQgd" +
-           "GFnIHN5bmNpbmcgKG9uZSB0aW1lIGZlZSkifX0.kOl1AII7iYX" +
-           "2R986M6qMxM5gig0EC4nyyB_grcYoyps",
-      success: ->
-        window.alert('success')
-      failure: ->
-        window.alert('failure')
+    googleUserInfo = new BH.Lib.GoogleUserInfo(OAuth2)
+    googleUserInfo.fetch
+      success: (data) =>
+        $.post 'http://api.better-history.com/payment_token', {authId: data.sub}, (result) ->
+          google.payments.inapp.buy
+            parameters: {}
+            jwt: result.jwt
+            success: ->
+              syncStore.set(authId: data.sub)
+              window.alert('success')
+            failure: ->
+      error: ->
 
   onTagsLoaded: ->
     tag_count = @t 'number_of_tags', [@collection.length]

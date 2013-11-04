@@ -77,5 +77,5 @@
     "unlimitedStorage",
     "https://accounts.google.com/o/oauth2/token"
   ],
-  "content_security_policy": "script-src 'self' 'unsafe-eval' https://checkout.google.com https://ssl.google-analytics.com https://platform.twitter.com https://apis.google.com; object-src 'self'"
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://sandbox.google.com https://ssl.google-analytics.com https://platform.twitter.com https://apis.google.com; object-src 'self'"
 }
