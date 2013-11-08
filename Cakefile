@@ -24,6 +24,28 @@ styles = [
   'styles/app.css'
 ]
 
+backgroundScripts = [
+  "scripts/namespace.js",
+  "scripts/frameworks/honeybadger.js",
+  "scripts/frameworks/underscore.js",
+  "scripts/frameworks/mixin.js",
+  "scripts/frameworks/analytics.js",
+  "scripts/modules/worker.js",
+  "scripts/modules/i18n.js",
+  "scripts/modules/url.js",
+  "scripts/trackers/error_tracker.js",
+  "scripts/trackers/analytics_tracker.js",
+  "scripts/lib/page_context_menu.js",
+  "scripts/lib/selection_context_menu.js",
+  "scripts/lib/omnibox.js",
+  "scripts/lib/sync_store.js",
+  "scripts/lib/local_store.js",
+  "scripts/lib/example_tags.js",
+  "scripts/persistence/tag.js",
+  "scripts/init/tag_feature.js",
+  "scripts/initialize_background.js"
+]
+
 popupScripts = [
   'scripts/namespace.js',
   'scripts/frameworks/honeybadger.js',
@@ -158,6 +180,13 @@ task 'concat:templates', 'concat templates', ->
   fs.writeFileSync filepath, concatedTemplates
 
 task 'build:assets:dev', '', ->
+  manifest = fs.readFileSync('extension/manifest.json').toString()
+
+  backgroundScripts = ("\"#{script}\"" for script in backgroundScripts)
+  manifest = manifest.replace '<%= scripts %>', backgroundScripts.join(",\n      ")
+
+  fs.writeFileSync 'build/manifest.json', manifest
+
   code = fs.readFileSync('extension/index.html').toString()
 
   scriptTags = (buildScriptTag(script) for script in scripts)
@@ -179,6 +208,18 @@ task 'build:assets:dev', '', ->
   fs.writeFileSync 'build/popup.html', code
 
 task 'build:assets:prod', '', ->
+  manifest = fs.readFileSync('build/manifest.json').toString()
+
+  backgroundScriptContent = ''
+
+  for script in backgroundScripts
+    backgroundScriptContent += fs.readFileSync("build/#{script}") + "\n\n\n"
+  fs.writeFileSync('build/scripts/background_script.js', backgroundScriptContent)
+
+  manifest = manifest.replace '<%= scripts %>', '"scripts/background_script.js"'
+
+  fs.writeFileSync 'build/manifest.json', manifest
+
   code = fs.readFileSync('extension/index.html').toString()
 
   scriptContent = ''
