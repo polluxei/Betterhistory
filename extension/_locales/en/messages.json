@@ -1204,11 +1204,37 @@
     }
   },
   "sign_up_info_price": {
-    "message": "A one time fee of $$15",
+    "message": "$$15 (a one-time fee)",
     "description": "syncing price"
   },
   "continue_button": {
     "message": "Continue",
     "description": "continue button"
+  },
+  "syncing_settings_title": {
+    "message": "Tag syncing",
+    "description": "tag syncing title"
+  },
+  "syncing_settings_login": {
+    "message": "Sync your tags - $signup_open$Sign up$signup_close$ or $login_open$Login$login_close$",
+    "description": "link to sign up for syncing",
+    "placeholders": {
+      "signup_open": {
+        "content": "$1",
+        "example": "open signup tag"
+      },
+      "signup_close": {
+        "content": "$2",
+        "example": "close signup tag"
+      },
+      "login_open": {
+        "content": "$3",
+        "example": "open login tag"
+      },
+      "login_close": {
+        "content": "$4",
+        "example": "close login tag"
+      }
+    }
   }
 }

@@ -8,6 +8,8 @@ class BH.Views.SettingsView extends BH.Views.MainView
   events:
     'click .clear_history': 'clickedClearHistory'
     'click .credits': 'clickedCredits'
+    'click #sign_up': 'clickedSignUp'
+    'click #sign_in': 'clickedSignIn'
     'change #time_grouping': 'changedTimeGrouping'
     'change #time_format': 'changedTimeFormat'
     'change #open_location': 'changedOpenLocation'
@@ -63,6 +65,16 @@ class BH.Views.SettingsView extends BH.Views.MainView
     @$('#domain_grouping').prop 'checked', @model.get('domainGrouping')
     @$('#search_by_domain').prop 'checked', @model.get('searchByDomain')
     @$('#search_by_selection').prop 'checked', @model.get('searchBySelection')
+
+  clickedSignUp: (ev) ->
+    ev.preventDefault()
+    signUpInfoView = new BH.Views.SignUpInfoView()
+    signUpInfoView.open()
+
+  clickedSignIn: (ev) ->
+    ev.preventDefault()
+    userProcessor = new BH.Lib.UserProcessor()
+    userProcessor.start()
 
   changedTimeGrouping: (ev) ->
     @model.set timeGrouping: $(ev.currentTarget).val()
@@ -131,6 +143,13 @@ class BH.Views.SettingsView extends BH.Views.MainView
       'week_day_order',
       'general_section_title',
       'mailing_list_link'
+      'syncing_settings_title'
+    ])
+    properties['i18n_syncing_settings_login'] = @t('syncing_settings_login', [
+      '<a style="text-decoration: underline;" href="#" id="sign_up">',
+      '</a>',
+      '<a style="text-decoration: underline;" href="#" id="sign_in">',
+      '</a>'
     ])
     properties['i18n_credits_link'] = @t('credits_link', [
       '<strong>',

@@ -13,6 +13,8 @@
 }
 .sign_up_info_view p.price {
   font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 5px;
 }
 .sign_up_info_view li {
   list-style-type: disc;
