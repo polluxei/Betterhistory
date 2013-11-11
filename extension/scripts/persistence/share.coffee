@@ -1,11 +1,9 @@
 class BH.Persistence.Share
-  host: '$HOST$'
-
   constructor: (@remote = $.ajax) ->
 
   send: (sharedTag, callbacks) ->
     @remote
-      url: "http://#{@host}/share"
+      url: "http://#{window.apiHost}/share"
       data: JSON.stringify(sharedTag)
       type: 'POST'
       dataType: 'json'

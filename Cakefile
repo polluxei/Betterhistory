@@ -105,6 +105,7 @@ scripts = [
   'scripts/lib/example_tags.js',
   'scripts/lib/image_data.js',
   'scripts/lib/google_user_info.js',
+  'scripts/lib/user_processor.js',
   'scripts/persistence/tag.js',
   'scripts/persistence/share.js',
   'scripts/views/modal_view.js',
@@ -135,7 +136,7 @@ scripts = [
   'scripts/views/how_to_tag_view.js',
   'scripts/views/available_tags_view.js',
   'scripts/views/new_tag_view.js',
-  'scripts/views/auth_successful_view.js',
+  'scripts/views/sign_up_info_view.js',
   'scripts/models/history.js',
   'scripts/models/day.js',
   'scripts/models/day_history.js',
@@ -194,6 +195,7 @@ task 'build:assets:dev', '', ->
 
   code = code.replace '<%= scripts %>', scriptTags.join("\n    ")
   code = code.replace '<%= styles %>', styleTags.join("\n    ")
+  code = code.replace '<%= wallet.js %>', 'https://sandbox.google.com/checkout/inapp/lib/buy.js'
 
   fs.writeFileSync 'build/index.html', code
 
@@ -235,6 +237,7 @@ task 'build:assets:prod', '', ->
 
   code = code.replace '<%= scripts %>', buildScriptTag('scripts.js')
   code = code.replace '<%= styles %>', buildStyleTag('styles.css')
+  code = code.replace '<%= wallet.js %>', 'https://wallet.google.com/inapp/lib/buy.js'
 
   fs.writeFileSync 'build/index.html', code
 

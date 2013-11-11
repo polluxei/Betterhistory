@@ -28,19 +28,10 @@ class BH.Views.TagsView extends BH.Views.MainView
     @$el.append html
     @
 
-  onBuyTagSyncingClicked: ->
-    googleUserInfo = new BH.Lib.GoogleUserInfo(OAuth2)
-    googleUserInfo.fetch
-      success: (data) =>
-        $.post 'http://api.better-history.com/payment_token', {authId: data.sub}, (result) ->
-          google.payments.inapp.buy
-            parameters: {}
-            jwt: result.jwt
-            success: ->
-              syncStore.set(authId: data.sub)
-              window.alert('success')
-            failure: ->
-      error: ->
+  onBuyTagSyncingClicked: (ev) ->
+    ev.preventDefault()
+    signUpInfoView = new BH.Views.SignUpInfoView()
+    signUpInfoView.open()
 
   onTagsLoaded: ->
     tag_count = @t 'number_of_tags', [@collection.length]
@@ -70,16 +61,8 @@ class BH.Views.TagsView extends BH.Views.MainView
 
   onSignInClicked: (ev) ->
     ev.preventDefault()
-
-    googleUserInfo = new BH.Lib.GoogleUserInfo(OAuth2)
-    googleUserInfo.fetch
-      success: =>
-        authSuccessfulView = new BH.Views.AuthSuccessfulView()
-        authSuccessfulView.open()
-        @$('.sync_promo').hide()
-        @$('.sync_enabled').show()
-      error: ->
-        alert('error')
+    userProcessor = new BH.Lib.UserProcessor()
+    userProcessor.start()
 
   onHowToTagClicked: (ev) ->
     @tracker.howToTagClick()

@@ -5,6 +5,20 @@
 .auth_success_view p {
   width: 230px;
 }
+.sign_up_info_view .page {
+  width: 547px;
+}
+.sign_up_info_view p {
+  width: 360px;
+}
+.sign_up_info_view p.price {
+  font-weight: bold;
+}
+.sign_up_info_view li {
+  list-style-type: disc;
+  padding-bottom: 5px;
+}
+
 .logged_in .controls .sync_promo {
   display: none;
 }
@@ -533,6 +547,7 @@ body.chrome-bootstrap .tag_visit_view ul li.site {
 }
 .mailing_list_view .logo,
 .credits_view .logo,
+.sign_up_info_view .logo,
 .auth_success_view .logo {
   position: absolute;
   opacity: 0.4;
@@ -606,6 +621,7 @@ body {
   padding-__MSG_@@bidi_start_edge__: 25px;
 }
 .mailing_list_view .logo,
+.sign_up_info_view .logo,
 .credits_view .logo,
 .auth_success_view .logo {
   __MSG_@@bidi_end_edge__: -50px;

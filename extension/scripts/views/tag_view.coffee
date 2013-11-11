@@ -2,8 +2,6 @@ class BH.Views.TagView extends BH.Views.MainView
   @include BH.Modules.I18n
   @include BH.Modules.Url
 
-  host: '$HOST$'
-
   className: 'tag_view with_controls'
 
   template: BH.Templates['tag']
@@ -66,7 +64,7 @@ class BH.Views.TagView extends BH.Views.MainView
 
     if @model.get('url')
       url = encodeURIComponent(@model.get('url'))
-      @chromeAPI.tabs.create url: "http://#{@host}/from_ext/#{url}"
+      @chromeAPI.tabs.create url: "http://#{window.siteHost}/from_ext/#{url}"
     else
       $smallSpinner = @$('.small_spinner')
 
@@ -77,7 +75,7 @@ class BH.Views.TagView extends BH.Views.MainView
           success: (data) =>
             $smallSpinner.removeClass('show')
             url = encodeURIComponent(data.url)
-            @chromeAPI.tabs.create url: "http://#{@host}/from_ext/#{url}"
+            @chromeAPI.tabs.create url: "http://#{window.siteHost}/from_ext/#{url}"
             @model.set(url: data.url)
           error: =>
             $smallSpinner.removeClass('show')

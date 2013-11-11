@@ -1056,7 +1056,7 @@
     "description": "title for tagging visited sites modal"
   },
   "sync_tags_link": {
-    "message": "Keep your tags safe, sync them! $signup_open$Sign up$signup_close$ or $login_open$Login$login_close$",
+    "message": "Sync your tags - $signup_open$Sign up$signup_close$ or $login_open$Login$login_close$",
     "description": "link to sign up for syncing",
     "placeholders": {
       "signup_open": {
@@ -1172,5 +1172,43 @@
         "example": "highlight close tag"
       }
     }
+  },
+  "sign_up_info_title": {
+    "message": "Keep your tags safe, Sync them!",
+    "description": "sign up info modal title"
+  },
+  "sign_up_info_description": {
+    "message": "Tag with confidence knowing that every site that you tag is savely stored in the cloud. Access your tags from any browser running Better History!",
+    "description": "description"
+  },
+  "sign_up_info_bullets": {
+    "message": "$open$Linked to your Google account$close$$open$Store unlimited tags and sites$close$$open$Log into any Better History extension$close$$open$Safely stored in the cloud$close$$open$Access tagged sites from $betterHistoryOpen$better-history.com$betterHistoryClose$$close$",
+    "description": "sign up info",
+    "placeholders": {
+      "open": {
+        "content": "$1",
+        "example": "bullet open"
+      },
+      "close": {
+        "content": "$2",
+        "example": "bullet close"
+      },
+      "betterHistoryOpen": {
+        "content": "$3",
+        "example": "better history open link"
+      },
+      "betterHistoryClose": {
+        "content": "$4",
+        "example": "better history close link"
+      }
+    }
+  },
+  "sign_up_info_price": {
+    "message": "A one time fee of $$15",
+    "description": "syncing price"
+  },
+  "continue_button": {
+    "message": "Continue",
+    "description": "continue button"
   }
 }

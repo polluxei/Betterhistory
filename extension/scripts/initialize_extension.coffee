@@ -1,3 +1,6 @@
+window.apiHost = '$API_HOST$'
+window.siteHost = '$SITE_HOST$'
+
 window.errorTracker = new BH.Trackers.ErrorTracker(Honeybadger)
 window.analyticsTracker = new BH.Trackers.AnalyticsTracker(_gaq)
 
