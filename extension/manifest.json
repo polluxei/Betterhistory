@@ -25,15 +25,17 @@
       "description": "Show browser action popup"
     }
   },
+  "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCnSSCipBZBTHYMvfX3F4FJ4Z4RfXgZ5x0PzIVixVXBM2Tfu6PLjQKKSKiGz9xd4fj8z4IcaFuFNIixSgE7F6Prmu4YWJg+029DnUnSzRTIXqnB+XKTV/J0Ghh5Id2vrLZm6O/EpSmHmr6Lm58apu/JfUMSTNuW29e2WPShQYx9CQIDAQAB",
+  "oauth2": {
+    "client_id": "298917046046-5i2dvc5e32p6u3o7jv99v9p9fhltem3l.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  },
   "content_scripts": [
     {
       "matches": ["*://*.better-history.com/*"],
       "js": ["scripts/installed.js"]
-    },
-    {
-      "matches": ["http://www.google.com/robots.txt*"],
-      "js": ["oauth2/oauth2_inject.js"],
-      "run_at": "document_start"
     }
   ],
   "browser_action": {
@@ -57,7 +59,8 @@
     "contextMenus",
     "storage",
     "unlimitedStorage",
-    "https://accounts.google.com/o/oauth2/token"
+    "identity",
+    "https://www.googleapis.com/"
   ],
   "content_security_policy": "script-src 'self' 'unsafe-eval' https://sandbox.google.com https://ssl.google-analytics.com https://platform.twitter.com https://apis.google.com; object-src 'self'"
 }

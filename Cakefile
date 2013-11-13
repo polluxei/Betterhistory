@@ -90,7 +90,6 @@ scripts = [
   'scripts/frameworks/moment_hacks.js',
   'scripts/frameworks/mixin.js',
   'scripts/frameworks/analytics.js',
-  'oauth2/oauth2.js',
   'scripts/templates.js',
   'scripts/modules/i18n.js',
   'scripts/modules/url.js',

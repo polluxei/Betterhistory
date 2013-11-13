@@ -1,6 +1,6 @@
 class BH.Lib.UserProcessor
   start: ->
-    googleUserInfo = new BH.Lib.GoogleUserInfo(OAuth2)
+    googleUserInfo = new BH.Lib.GoogleUserInfo()
     googleUserInfo.fetch
       success: (userInfo) =>
         sub = userInfo.sub
@@ -15,6 +15,7 @@ class BH.Lib.UserProcessor
           type: 'POST'
           dataType: 'json'
           success: (data) =>
+            window.BH.user.set(data)
             if data.purchased
               @loggedIn(data)
             else

@@ -4,6 +4,8 @@ window.siteHost = '$SITE_HOST$'
 window.errorTracker = new BH.Trackers.ErrorTracker(Honeybadger)
 window.analyticsTracker = new BH.Trackers.AnalyticsTracker(_gaq)
 
+window.BH.user = new Backbone.Model()
+
 try
   analyticsTracker.historyOpen()
 
