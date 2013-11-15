@@ -3,7 +3,7 @@ class BH.Persistence.Share
 
   send: (sharedTag, callbacks) ->
     @remote
-      url: "http://#{window.apiHost}/share"
+      url: "http://#{apiHost}/share"
       data: JSON.stringify(sharedTag)
       type: 'POST'
       dataType: 'json'

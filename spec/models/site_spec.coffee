@@ -2,8 +2,12 @@ describe 'BH.Models.Site', ->
   beforeEach ->
     persistence =
       fetchSiteTags: jasmine.createSpy('fetchSiteTags')
-      addSiteToTag: jasmine.createSpy('addSiteToTag')
+      addSiteToTag: jasmine.createSpy('addSiteToTag').andCallFake (site, tag, cb) ->
+        cb()
       removeSiteFromTag: jasmine.createSpy('removeSiteFromTag')
+
+    sync =
+      updateSite: jasmine.createSpy('updateSite')
 
     attrs =
       url: 'http://www.recipes.com/pound_cake'
@@ -12,6 +16,7 @@ describe 'BH.Models.Site', ->
     @site = new BH.Models.Site attrs,
       chrome: chrome
       persistence: persistence
+      syncPersistence: sync
 
   describe '#fetch', ->
     beforeEach ->
@@ -78,6 +83,15 @@ describe 'BH.Models.Site', ->
           title: @site.get('title')
         expect(@site.persistence.addSiteToTag).toHaveBeenCalledWith(site, 'recipes', jasmine.any(Function))
 
+      it 'calls to the sync persistence layer to update the site', ->
+        @site.addTag('recipes')
+
+        expect(@site.syncPersistence.updateSite).toHaveBeenCalledWith
+          url: 'http://www.recipes.com/pound_cake'
+          title: 'Pound cake recipes'
+          datetime: undefined
+          tags: 'cooking recipes'
+
       it 'calls the passed callback with the result and operations performed during the persistence', ->
         callback = jasmine.createSpy('callback')
         @site.persistence.addSiteToTag.andCallFake (site, tag, callback) ->
@@ -100,6 +114,16 @@ describe 'BH.Models.Site', ->
         @site.on 'change:tags', =>
           expect(@site.get('tags')).toEqual ['cooking']
         @site.removeTag('recipes')
+
+      it 'calls to the sync persistence layer to update the site', ->
+        @site.removeTag('recipes')
+
+        expect(@site.syncPersistence.updateSite).toHaveBeenCalledWith
+          url: 'http://www.recipes.com/pound_cake'
+          title: 'Pound cake recipes'
+          datetime: undefined
+          tags: 'cooking'
+
 
       it 'calls to the persistence layer to remove the tag', ->
         @site.removeTag('recipes')

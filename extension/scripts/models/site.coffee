@@ -2,6 +2,7 @@ class BH.Models.Site extends Backbone.Model
   initialize: (attrs = {}, options = {}) ->
     @chromeAPI = options.chrome
     @persistence = options.persistence
+    @syncPersistence = options.syncPersistence
 
   fetch: (callback = ->) ->
     @persistence ||= lazyPersistence()
@@ -31,7 +32,9 @@ class BH.Models.Site extends Backbone.Model
       url: @get('url')
       title: @get('title')
 
-    @persistence.addSiteToTag site, tag, (operations) ->
+    @persistence.addSiteToTag site, tag, (operations) =>
+      @syncPersistence ||= lazySyncPersistence()
+      @syncPersistence.updateSite @toSync()
       callback(true, operations)
 
   removeTag: (tag) ->
@@ -45,5 +48,17 @@ class BH.Models.Site extends Backbone.Model
 
     @persistence.removeSiteFromTag @get('url'), tag
 
+    @syncPersistence ||= lazySyncPersistence()
+    @syncPersistence.updateSite @toSync()
+
+  toSync: ->
+    url: @get('url')
+    title: @get('title')
+    datetime: @get('datetime')
+    tags: @get('tags').join(' ')
+
 lazyPersistence = ->
   new BH.Persistence.Tag(localStore: localStore)
+
+lazySyncPersistence = ->
+  new BH.Persistence.Sync($.ajax)

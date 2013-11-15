@@ -1,3 +1,6 @@
+window.apiHost = '$API_HOST$'
+window.siteHost = '$SITE_HOST$'
+
 errorTracker = new BH.Trackers.ErrorTracker(Honeybadger)
 analyticsTracker = new BH.Trackers.AnalyticsTracker()
 
@@ -9,6 +12,11 @@ try
   window.syncStore = new BH.Lib.SyncStore
     chrome: chrome
     tracker: analyticsTracker
+
+  window.user = new BH.Models.User({})
+  window.user.fetch()
+  window.user.on 'change', ->
+    @trigger('login') if @get('authId')
 
   chrome.tabs.query currentWindow: true, active: true, (tabs) =>
     tab = tabs[0] || {}

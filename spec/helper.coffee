@@ -12,6 +12,8 @@ global.mockChromeAPI = require './chrome_api'
 global.chrome = mockChromeAPI()
 global.BH = require '../extension/scripts/namespace'
 
+global.apiHost = 'api.better-history.com'
+
 require '../extension/scripts/frameworks/backbone_hacks.js'
 require '../extension/scripts/frameworks/mixin.js'
 require '../extension/scripts/frameworks/moment_hacks.js'
@@ -31,6 +33,7 @@ require '../extension/scripts/lib/local_store.coffee'
 require '../extension/scripts/lib/example_tags.coffee'
 require '../extension/scripts/persistence/share.coffee'
 require '../extension/scripts/persistence/tag.coffee'
+require '../extension/scripts/persistence/sync.coffee'
 require '../extension/scripts/workers/day_grouper.coffee'
 require '../extension/scripts/workers/domain_grouper.coffee'
 require '../extension/scripts/workers/time_grouper.coffee'

@@ -17,7 +17,7 @@ describe 'BH.Persistence.Share', ->
       @share.send(@tag)
       data = '{"name":"clothes","sites":[{"title":"nice clothes","url":"http://www.nice-clothes.com","datetime":1234234234342}]}'
       expect(@share.remote).toHaveBeenCalledWith
-        url: "http://$HOST$/share"
+        url: "http://api.better-history.com/share"
         data: data
         type: 'POST'
         dataType: 'json'
