@@ -15,7 +15,6 @@ class BH.Lib.UserProcessor
           type: 'POST'
           dataType: 'json'
           success: (data) =>
-            window.BH.user.set(data)
             if data.purchased
               @loggedIn(data)
             else
@@ -26,13 +25,13 @@ class BH.Lib.UserProcessor
                   success: =>
                     @loggedIn(data)
                   failure: ->
-                    alert('We could not process your order at this time. Please contact hello@better-history.com')
+                    # purchase failure
           error: ->
             alert('There was a problem creating an account. Please contact hello@better-history.com')
       error: ->
         alert('There was a problem authorizing with Google. Please contact hello@better-history.com')
 
   loggedIn: (userData) ->
-    syncStore.set authId: data.authId
-    $('.sync_promo').hide()
-    $('.sync_enabled').show()
+    window.user.set(userData)
+    window.user.save()
+    window.user.trigger('login')

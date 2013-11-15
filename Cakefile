@@ -152,6 +152,7 @@ scripts = [
   'scripts/models/week_history.js',
   'scripts/models/tag.js',
   'scripts/models/site.js',
+  'scripts/models/user.js',
   'scripts/collections/grouped_visits.js',
   'scripts/collections/intervals.js',
   'scripts/collections/visits.js',

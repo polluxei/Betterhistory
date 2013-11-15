@@ -4,8 +4,6 @@ window.siteHost = '$SITE_HOST$'
 window.errorTracker = new BH.Trackers.ErrorTracker(Honeybadger)
 window.analyticsTracker = new BH.Trackers.AnalyticsTracker(_gaq)
 
-window.BH.user = new Backbone.Model()
-
 try
   analyticsTracker.historyOpen()
 
@@ -21,6 +19,11 @@ try
     $('body').addClass 'logged_in' if data.authId?
 
   new BH.Lib.DateI18n().configure()
+
+  window.user = new BH.Models.User({})
+  window.user.fetch()
+  window.user.on 'change', ->
+    @trigger('login') if @get('authId')
 
   settings = new BH.Models.Settings({})
   state = new BH.Models.State({}, settings: settings)

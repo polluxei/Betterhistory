@@ -18,6 +18,7 @@ class BH.Views.SettingsView extends BH.Views.MainView
     'click #domain_grouping': 'clickedDomainGrouping'
     'click #search_by_domain': 'clickedSearchByDomain'
     'click #search_by_selection': 'clickedSearchBySelection'
+    'click .logout': 'clickedLogout'
 
   initialize: ->
     @chromeAPI = chrome
@@ -25,10 +26,24 @@ class BH.Views.SettingsView extends BH.Views.MainView
     @model.on 'change', (() => @model.save()), @model
     @model.on 'change:openLocation', @options.state.updateRoute, @options.state
     @model.on 'change:startingWeekDay', @options.state.updateRoute, @options.state
+    window.user.on 'login', @onUserLogIn, @
     @on 'selected', @activateSocialLinks, @
 
   pageTitle: ->
     @t('settings_title')
+
+  onUserLogIn: ->
+    @$('.logged_out').hide()
+    @$('.avatar').attr('src', user.get('avatar'))
+    @$('.name').text("#{user.get('firstName')} #{user.get('lastName')}")
+    @$('.logged_in').show()
+
+  clickedLogout: (ev) ->
+    ev.preventDefault()
+    @$('.logged_out').show()
+    @$('.logged_in').hide()
+    user.clear(silent: true)
+    user.trigger('logout')
 
   activateSocialLinks: ->
     !((d,s,id) ->
@@ -54,6 +69,9 @@ class BH.Views.SettingsView extends BH.Views.MainView
     html = Mustache.to_html @template, properties
     @$el.append html
     @populateFields()
+    setTimeout =>
+      @onUserLogIn() if user.get('authId')
+    , 500
     @
 
   populateFields: ->

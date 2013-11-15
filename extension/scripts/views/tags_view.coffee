@@ -19,6 +19,7 @@ class BH.Views.TagsView extends BH.Views.MainView
     @chromeAPI = chrome
     @tracker = analyticsTracker
     @collection.on 'reset', @onTagsLoaded, @
+    user.on 'login', @onLoggedIn
 
   pageTitle: ->
     @t('tags_title')
@@ -38,6 +39,10 @@ class BH.Views.TagsView extends BH.Views.MainView
     @$('.tag_count').text tag_count
     @renderTags()
 
+  onLoggedIn: ->
+    @$('.sync_promo').hide()
+    @$('.sync_enabled').show()
+
   onLoadExampleTagsClicked: (ev) ->
     ev.preventDefault()
     persistence = new BH.Persistence.Tag(localStore: localStore)
@@ -53,6 +58,7 @@ class BH.Views.TagsView extends BH.Views.MainView
     @tagsListView = new BH.Views.TagsListView
       collection: @collection
     @$('.content').html @tagsListView.render().el
+    @onLoggedIn() if user.get('authId')
 
   onDismissInstructionsClicked: (ev) ->
     ev.preventDefault()

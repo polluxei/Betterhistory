@@ -1,3 +1,15 @@
+.settings_view .avatar {
+  width: 40px;
+  float: left;
+  margin-right: 10px;
+  border-radius: 4px;
+}
+.settings_view .logged_in {
+  display: none;
+}
+.settings_view .name {
+  margin-bottom: 5px;
+}
 .auth_success_view .page {
   width: 200px;
   height: 210px;
