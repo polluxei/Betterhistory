@@ -1,0 +1,35 @@
+class BH.Views.InitialSyncingView extends BH.Views.ModalView
+  @include BH.Modules.I18n
+
+  className: 'initial_syncing_view'
+  template: BH.Templates['initial_syncing']
+
+  events:
+    'click .continue': 'continueClicked'
+
+  initialize: ->
+    @chromeAPI = chrome
+    @tracker = @options.tracker
+    @attachGeneralEvents()
+
+  render: ->
+    @$el.html(@renderTemplate(@getI18nValues()))
+    return this
+
+  continueClicked: (ev) ->
+    ev.preventDefault()
+    @close()
+
+  doneSyncing: ->
+    @$('.continue').removeAttr('disabled')
+    @$('.syncing').hide()
+    @$('.done_syncing').show()
+    @$('.website_plug').show()
+
+  getI18nValues: ->
+    properties = @t ['initial_syncing_title', 'continue_button', 'initial_syncing_description']
+    properties.i18n_initial_syncing_done = @t 'initial_syncing_done', [
+      '<a href="http://www.better-history.com/me">',
+      '</a>'
+    ]
+    properties

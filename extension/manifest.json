@@ -63,5 +63,5 @@
     "https://www.googleapis.com/",
     "http://*.better-history.com/"
   ],
-  "content_security_policy": "script-src 'self' 'unsafe-eval' https://sandbox.google.com https://ssl.google-analytics.com https://platform.twitter.com https://apis.google.com; object-src 'self'"
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://wallet.google.com https://sandbox.google.com https://ssl.google-analytics.com https://platform.twitter.com https://apis.google.com; object-src 'self'"
 }

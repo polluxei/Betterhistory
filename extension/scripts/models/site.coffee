@@ -33,8 +33,9 @@ class BH.Models.Site extends Backbone.Model
       title: @get('title')
 
     @persistence.addSiteToTag site, tag, (operations) =>
-      @syncPersistence ||= lazySyncPersistence()
-      @syncPersistence.updateSite @toSync()
+      if user.get('authId')
+        @syncPersistence ||= lazySyncPersistence()
+        @syncPersistence.updateSite @toSync()
       callback(true, operations)
 
   removeTag: (tag) ->
@@ -48,8 +49,9 @@ class BH.Models.Site extends Backbone.Model
 
     @persistence.removeSiteFromTag @get('url'), tag
 
-    @syncPersistence ||= lazySyncPersistence()
-    @syncPersistence.updateSite @toSync()
+    if user.get('authId')
+      @syncPersistence ||= lazySyncPersistence()
+      @syncPersistence.updateSite @toSync()
 
   toSync: ->
     url: @get('url')
@@ -61,4 +63,4 @@ lazyPersistence = ->
   new BH.Persistence.Tag(localStore: localStore)
 
 lazySyncPersistence = ->
-  new BH.Persistence.Sync($.ajax)
+  new BH.Persistence.Sync(user.get('authId'), $.ajax)

@@ -1,5 +1,8 @@
 describe 'BH.Models.Site', ->
   beforeEach ->
+    global.user = new BH.Models.User
+      authId: 123412341234
+
     persistence =
       fetchSiteTags: jasmine.createSpy('fetchSiteTags')
       addSiteToTag: jasmine.createSpy('addSiteToTag').andCallFake (site, tag, cb) ->
@@ -92,6 +95,12 @@ describe 'BH.Models.Site', ->
           datetime: undefined
           tags: 'cooking recipes'
 
+      it 'does not call to the sync persistence layer when the user has no authId ', ->
+        global.user.unset('authId')
+        @site.addTag('recipes')
+
+        expect(@site.syncPersistence.updateSite).not.toHaveBeenCalled()
+
       it 'calls the passed callback with the result and operations performed during the persistence', ->
         callback = jasmine.createSpy('callback')
         @site.persistence.addSiteToTag.andCallFake (site, tag, callback) ->
@@ -124,7 +133,13 @@ describe 'BH.Models.Site', ->
           datetime: undefined
           tags: 'cooking'
 
+      it 'does not call to the sync persistence layer when the user has no authId ', ->
+        global.user.unset('authId')
+        @site.removeTag('recipes')
+        expect(@site.syncPersistence.updateSite).not.toHaveBeenCalled()
+
 
       it 'calls to the persistence layer to remove the tag', ->
         @site.removeTag('recipes')
         expect(@site.persistence.removeSiteFromTag).toHaveBeenCalledWith(@site.get('url'), 'recipes')
+

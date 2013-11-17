@@ -1236,5 +1236,27 @@
         "example": "close login tag"
       }
     }
+  },
+  "initial_syncing_title": {
+    "message": "Inital sync",
+    "description": "title for the syncing modal on initial log in"
+  },
+  "initial_syncing_description": {
+    "message": "Syncing all your tagged sites...",
+    "description": "initial syncing description"
+  },
+  "initial_syncing_done": {
+    "message": "<strong>Syncing complete!</strong><br /><br /> Go get tagging and your changes will be backed up. View your tagged sites at <br />$link_open$better-history.com/me$link_close$",
+    "description": "initial syncing done text",
+    "placeholders": {
+      "link_open": {
+        "content": "$1",
+        "example": "link open tag"
+      },
+      "link_close": {
+        "content": "$2",
+        "example": "link close tag"
+      }
+    }
   }
 }

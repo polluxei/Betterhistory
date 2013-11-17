@@ -1,3 +1,13 @@
+.initial_syncing_view .content-area {
+  text-align: center;
+}
+.initial_syncing_view .spinner {
+  display: inline-block;
+}
+.initial_syncing_view .done_syncing {
+  width: 300px;
+  display: inline-block;
+}
 .settings_view .avatar {
   width: 40px;
   float: left;

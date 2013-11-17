@@ -19,7 +19,8 @@ class BH.Views.TagsView extends BH.Views.MainView
     @chromeAPI = chrome
     @tracker = analyticsTracker
     @collection.on 'reset', @onTagsLoaded, @
-    user.on 'login', @onLoggedIn
+    user.on 'login', @onLoggedIn, @
+    user.on 'logout', @onLoggedOut, @
 
   pageTitle: ->
     @t('tags_title')
@@ -42,6 +43,10 @@ class BH.Views.TagsView extends BH.Views.MainView
   onLoggedIn: ->
     @$('.sync_promo').hide()
     @$('.sync_enabled').show()
+
+  onLoggedOut: ->
+    @$('.sync_promo').show()
+    @$('.sync_enabled').hide()
 
   onLoadExampleTagsClicked: (ev) ->
     ev.preventDefault()

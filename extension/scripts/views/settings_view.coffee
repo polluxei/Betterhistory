@@ -42,8 +42,7 @@ class BH.Views.SettingsView extends BH.Views.MainView
     ev.preventDefault()
     @$('.logged_out').show()
     @$('.logged_in').hide()
-    user.clear(silent: true)
-    user.trigger('logout')
+    user.logout()
 
   activateSocialLinks: ->
     !((d,s,id) ->

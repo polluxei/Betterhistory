@@ -32,6 +32,18 @@ class BH.Lib.UserProcessor
         alert('There was a problem authorizing with Google. Please contact hello@better-history.com')
 
   loggedIn: (userData) ->
-    window.user.set(userData)
-    window.user.save()
-    window.user.trigger('login')
+    window.user.login(userData)
+
+    if user.get('numberOfSites') == 0
+      @initialSync()
+
+  initialSync: ->
+    initialSyncingView = new BH.Views.InitialSyncingView()
+    initialSyncingView.open()
+
+    persistence = new BH.Persistence.Sync(user.get('authId'), $.ajax)
+
+    tagSyncingFormatter = new BH.Lib.TagSyncingFormatter()
+    tagSyncingFormatter.fetchAndFormat (sites) ->
+      persistence.sync sites, ->
+        initialSyncingView.doneSyncing()

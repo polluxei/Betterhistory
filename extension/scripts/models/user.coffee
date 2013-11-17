@@ -10,3 +10,13 @@ class BH.Models.User extends Backbone.Model
 
   save: ->
     @chromeAPI.storage.sync.set user: @toJSON()
+
+  login: (data)->
+    @set(data)
+    @save()
+    @trigger('login')
+
+  logout: ->
+    @clear(silent: true)
+    @save()
+    @trigger('logout')
