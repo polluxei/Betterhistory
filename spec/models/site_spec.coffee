@@ -1,7 +1,7 @@
 describe 'BH.Models.Site', ->
   beforeEach ->
     global.user = new BH.Models.User
-      authId: 123412341234
+    global.user.login(authId: 123412341234)
 
     persistence =
       fetchSiteTags: jasmine.createSpy('fetchSiteTags')
@@ -96,7 +96,7 @@ describe 'BH.Models.Site', ->
           tags: 'cooking recipes'
 
       it 'does not call to the sync persistence layer when the user has no authId ', ->
-        global.user.unset('authId')
+        global.user.logout()
         @site.addTag('recipes')
 
         expect(@site.syncPersistence.updateSite).not.toHaveBeenCalled()
@@ -134,7 +134,7 @@ describe 'BH.Models.Site', ->
           tags: 'cooking'
 
       it 'does not call to the sync persistence layer when the user has no authId ', ->
-        global.user.unset('authId')
+        global.user.logout()
         @site.removeTag('recipes')
         expect(@site.syncPersistence.updateSite).not.toHaveBeenCalled()
 

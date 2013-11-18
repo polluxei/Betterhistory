@@ -43,7 +43,7 @@ class BH.Lib.UserProcessor
 
     persistence = new BH.Persistence.Sync(user.get('authId'), $.ajax)
 
-    tagSyncingFormatter = new BH.Lib.TagSyncingFormatter()
+    tagSyncingFormatter = new BH.Lib.TagSyncingFormatter(localStore)
     tagSyncingFormatter.fetchAndFormat (sites) ->
       persistence.sync sites, ->
         initialSyncingView.doneSyncing()

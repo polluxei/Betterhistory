@@ -26,3 +26,27 @@ class BH.Persistence.Sync
         callback()
       error: (data, type) ->
         alert('There was a problem syncing your tags. Please try again later')
+
+  renameTag: (oldName, newName) ->
+    data = JSON.stringify(name: newName)
+    @ajax
+      url: "http://#{apiHost}/tags/#{oldName}/rename"
+      type: "PUT"
+      contentType: 'application/json'
+      dataType: 'text'
+      headers:
+        authorization: @authId
+      data: data
+      error: (data, type) ->
+        alert('There was a problem renaming the tag. Please try again later')
+
+  deleteTag: (name) ->
+    @ajax
+      url: "http://#{apiHost}/tags/#{name}"
+      type: "DELETE"
+      contentType: 'application/json'
+      dataType: 'text'
+      headers:
+        authorization: @authId
+      error: (data, type) ->
+        alert('There was a problem deleting the tag. Please try again later')

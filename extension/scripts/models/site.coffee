@@ -33,7 +33,7 @@ class BH.Models.Site extends Backbone.Model
       title: @get('title')
 
     @persistence.addSiteToTag site, tag, (operations) =>
-      if user.get('authId')
+      if user.isLoggedIn()
         @syncPersistence ||= lazySyncPersistence()
         @syncPersistence.updateSite @toSync()
       callback(true, operations)
@@ -49,7 +49,7 @@ class BH.Models.Site extends Backbone.Model
 
     @persistence.removeSiteFromTag @get('url'), tag
 
-    if user.get('authId')
+    if user.isLoggedIn()
       @syncPersistence ||= lazySyncPersistence()
       @syncPersistence.updateSite @toSync()
 

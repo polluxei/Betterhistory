@@ -1,5 +1,5 @@
 class BH.Lib.TagSyncingFormatter
-  constructor: (@localstore) ->
+  constructor: (@localStore) ->
 
   fetchAndFormat: (callback) ->
     sites = []

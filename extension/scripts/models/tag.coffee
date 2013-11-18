@@ -1,6 +1,7 @@
 class BH.Models.Tag extends Backbone.Model
   initialize: (attrs = {}, options = {}) ->
     @persistence = options.persistence
+    @syncPersistence = options.syncPersistence
 
   validate: (attrs, options) ->
     name = attrs.name.replace(/^\s\s*/, '').replace(/\s\s*$/, '')
@@ -20,6 +21,9 @@ class BH.Models.Tag extends Backbone.Model
   destroy: (callback = ->) ->
     @persistence ||= lazyPersistence()
     @persistence.removeTag @get('name'), =>
+      if user.isLoggedIn()
+        @syncPersistence ||= lazySyncPersistence()
+        @syncPersistence.deleteTag @get('name')
       @set sites: []
       callback()
 
@@ -32,6 +36,9 @@ class BH.Models.Tag extends Backbone.Model
   renameTag: (name, callback = ->) ->
     @persistence ||= lazyPersistence()
     @persistence.renameTag @get('name'), name, =>
+      if user.isLoggedIn()
+        @syncPersistence ||= lazySyncPersistence()
+        @syncPersistence.renameTag @get('name'), name
       @set name: name
       callback()
 
@@ -58,3 +65,6 @@ lazyPersistence = ->
 
 lazyPersistenceShare = ->
   new BH.Persistence.Share()
+
+lazySyncPersistence = ->
+  new BH.Persistence.Sync(user.get('authId'), $.ajax)
