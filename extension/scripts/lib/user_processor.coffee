@@ -67,12 +67,13 @@ class BH.Lib.UserProcessor
     initialSyncingView = new BH.Views.InitialSyncingView()
     initialSyncingView.open()
 
-    if direction == 'push'
-      @pushLocalTags userData, ->
-        initialSyncingView.doneSyncing()
-    else
-      @pullRemoteTags userData, ->
-        initialSyncingView.doneSyncing()
+    initialSyncingView.on 'open', =>
+      if direction == 'push'
+        @pushLocalTags userData, ->
+          initialSyncingView.doneSyncing()
+      else
+        @pullRemoteTags userData, ->
+          initialSyncingView.doneSyncing()
 
     initialSyncingView.on 'syncingComplete', ->
       window.user.login(userData)

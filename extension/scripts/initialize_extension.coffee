@@ -26,7 +26,7 @@ try
     @trigger('login') if @get('authId')
 
   settings = new BH.Models.Settings({})
-  state = new BH.Models.State({}, settings: settings)
+  window.state = new BH.Models.State({}, settings: settings)
   settings.fetch
     success: =>
       state.fetch

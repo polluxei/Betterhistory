@@ -9,10 +9,13 @@ class BH.Lib.ExampleTags
       callback()
 
     if user.isLoggedIn()
-      persistence = new BH.Persistence.Sync(user.get('authId'), $.ajax)
+      @syncPersistence ||= loadSyncPersistence()
       translator = new BH.Lib.SyncingTranslator()
-      translator.forServer exampleTags, (sites) ->
-        persistence.updateSites(sites)
+      translator.forServer exampleTags, (sites) =>
+        @syncPersistence.updateSites(sites)
+
+loadSyncPersistence = ->
+  new BH.Persistence.Sync(user.get('authId'), $.ajax, state)
 
 exampleTags =
   tags: ['games', 'places to travel', 'clothing', 'recipes', 'friends', 'funny videos', 'world news', 'productivity']

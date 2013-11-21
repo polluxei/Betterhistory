@@ -1,6 +1,26 @@
 describe 'BH.Persistence.Sync', ->
   beforeEach ->
-    @sync = new BH.Persistence.Sync '123123123', jasmine.createSpy('ajax')
+    @state =
+      set: jasmine.createSpy('set')
+    @ajax = jasmine.createSpy('ajax')
+    @sync = new BH.Persistence.Sync '123123123', @ajax, @state
+
+  describe '#performRequest', ->
+    beforeEach ->
+      @ajax.andCallFake (config) ->
+        config.complete()
+
+      spyOn(global, 'setTimeout').andCallFake (callback) ->
+        callback()
+
+    it 'sets the state as syncing', ->
+      @sync.performRequest()
+      expect(@state.set).toHaveBeenCalledWith(syncing: true)
+
+    it 'sets the state as not syncing when complete', ->
+      @sync.performRequest
+        syncDelay: 0
+      expect(@state.set).toHaveBeenCalledWith(syncing: false)
 
   describe '#updateSite', ->
     it 'calls to ajax with stringified site data', ->
@@ -10,7 +30,7 @@ describe 'BH.Persistence.Sync', ->
         datetime: 1231234
         tags: ['camping', 'outdoors']
 
-      expect(@sync.ajax).toHaveBeenCalledWith
+      expect(@ajax).toHaveBeenCalledWith
         url: 'http://api.better-history.com/user/site'
         type: 'POST'
         contentType: 'application/json'
@@ -19,6 +39,8 @@ describe 'BH.Persistence.Sync', ->
           authorization: '123123123'
         data: '{"url":"http://www.camping","title":"Camping the World","datetime":1231234,"tags":["camping","outdoors"]}'
         error: jasmine.any(Function)
+        success: jasmine.any(Function)
+        complete: jasmine.any(Function)
 
   describe '#updateSites', ->
     it 'calls to ajax with stringified tag rename data', ->
@@ -37,7 +59,7 @@ describe 'BH.Persistence.Sync', ->
       }]
 
       @sync.updateSites data
-      expect(@sync.ajax).toHaveBeenCalledWith
+      expect(@ajax).toHaveBeenCalledWith
         url: 'http://api.better-history.com/user/sites'
         type: 'POST'
         contentType: 'application/json'
@@ -47,11 +69,12 @@ describe 'BH.Persistence.Sync', ->
         data: '[{"title":"camping","url":"http://www.camping.com","datetime":123123123123,"image":"favicon base64","tags":"camping, outdoors"},{"title":"cars","url":"http://www.cars.com","datetime":123123123123,"image":"favicon base64","tags":"engines, cars, auto"}]'
         error: jasmine.any(Function)
         success: jasmine.any(Function)
+        complete: jasmine.any(Function)
 
   describe '#getSites', ->
     it 'calls to ajax to get all the sites', ->
       @sync.getSites()
-      expect(@sync.ajax).toHaveBeenCalledWith
+      expect(@ajax).toHaveBeenCalledWith
         url: 'http://api.better-history.com/user/sites'
         type: 'GET'
         contentType: 'application/json'
@@ -60,11 +83,12 @@ describe 'BH.Persistence.Sync', ->
           authorization: '123123123'
         error: jasmine.any(Function)
         success: jasmine.any(Function)
+        complete: jasmine.any(Function)
 
   describe '#renameTag', ->
     it 'calls to ajax with stringified tag rename data', ->
       @sync.renameTag('cooking', 'baking')
-      expect(@sync.ajax).toHaveBeenCalledWith
+      expect(@ajax).toHaveBeenCalledWith
         url: 'http://api.better-history.com/user/tags/cooking/rename'
         type: 'PUT'
         contentType: 'application/json'
@@ -73,11 +97,13 @@ describe 'BH.Persistence.Sync', ->
           authorization: '123123123'
         data: '{"name":"baking"}'
         error: jasmine.any(Function)
+        success: jasmine.any(Function)
+        complete: jasmine.any(Function)
 
   describe '#deleteTag', ->
     it 'calls to ajax to delete a tag', ->
       @sync.deleteTag('cooking')
-      expect(@sync.ajax).toHaveBeenCalledWith
+      expect(@ajax).toHaveBeenCalledWith
         url: 'http://api.better-history.com/user/tags/cooking'
         type: 'DELETE'
         contentType: 'application/json'
@@ -85,3 +111,5 @@ describe 'BH.Persistence.Sync', ->
         headers:
           authorization: '123123123'
         error: jasmine.any(Function)
+        success: jasmine.any(Function)
+        complete: jasmine.any(Function)

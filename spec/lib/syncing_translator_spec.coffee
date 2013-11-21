@@ -1,7 +1,5 @@
 describe 'BH.Lib.SyncingTranslator', ->
   beforeEach ->
-    spyOn(BH.Lib.ImageData, 'base64').andCallFake (url, callback) ->
-      callback('favicon image')
     @syncingTranslator = new BH.Lib.SyncingTranslator()
 
   describe '#forServer', ->

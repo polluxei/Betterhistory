@@ -65,3 +65,7 @@ require '../extension/scripts/init/tag_feature.coffee'
 require '../extension/scripts/init/mailing_list.coffee'
 
 new BH.Lib.DateI18n().configure()
+
+beforeEach ->
+  spyOn(BH.Lib.ImageData, 'base64').andCallFake (url, callback) ->
+    callback('favicon image')
