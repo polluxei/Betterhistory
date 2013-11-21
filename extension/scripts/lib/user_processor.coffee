@@ -32,18 +32,72 @@ class BH.Lib.UserProcessor
         alert('There was a problem authorizing with Google. Please contact hello@better-history.com')
 
   loggedIn: (userData) ->
-    window.user.login(userData)
+    persistence = new BH.Persistence.Tag(localStore: localStore)
+    persistence.fetchTags (tags) =>
+      if userData.numberOfSites == 0 && tags.length != 0
+        @initialSync('push', userData)
+      else if userData.numberOfSites != 0 && tags.length == 0
+        @initialSync('pull', userData)
+      else if userData.numberOfSites == 0 && tags.length == 0
+        @initialSync('push', userData) # doesn't really matter
+      else
+        @syncDecision(userData)
 
-    if user.get('numberOfSites') == 0
-      @initialSync()
+  syncDecision: (userData) ->
+    syncingDecisionView = new BH.Views.SyncingDecisionView
+      model: new Backbone.Model(userData)
+    syncingDecisionView.open()
+    syncingDecisionView.on 'decision', (decision) ->
 
-  initialSync: ->
+      if decision == 'push'
+        @pushLocalTags userData, ->
+          syncingDecisionView.doneSyncing()
+
+      else
+        @pullRemoteTags userData, ->
+          syncingDecisionView.doneSyncing()
+
+    syncingDecisionView.on 'syncingComplete', ->
+      window.user.login(userData)
+
+  initialSync: (direction, userData) ->
+    syncPersistence = new BH.Persistence.Sync(userData.authId, $.ajax)
+    persistence = new BH.Persistence.Tag(localStore: localStore)
+
     initialSyncingView = new BH.Views.InitialSyncingView()
     initialSyncingView.open()
 
-    persistence = new BH.Persistence.Sync(user.get('authId'), $.ajax)
-
-    tagSyncingFormatter = new BH.Lib.TagSyncingFormatter(localStore)
-    tagSyncingFormatter.fetchAndFormat (sites) ->
-      persistence.sync sites, ->
+    if direction == 'push'
+      @pushLocalTags userData, ->
         initialSyncingView.doneSyncing()
+    else
+      @pullRemoteTags userData, ->
+        initialSyncingView.doneSyncing()
+
+    initialSyncingView.on 'syncingComplete', ->
+      window.user.login(userData)
+
+  pushLocalTags: (userData, callback) ->
+    syncPersistence = new BH.Persistence.Sync(userData.authId, $.ajax)
+    persistence = new BH.Persistence.Tag(localStore: localStore)
+
+    syncPersistence.deleteSites ->
+      persistence.fetchTags (tags, compiledTags) ->
+        if tags.length == 0
+          callback()
+        else
+          tagSyncingFormatter = new BH.Lib.TagSyncingFormatter(localStore)
+          tagSyncingFormatter.forServer compiledTags, (sites) ->
+            syncPersistence.updateSites sites, ->
+              callback()
+
+  pullRemoteTags: (userData, callback) ->
+    syncPersistence = new BH.Persistence.Sync(userData.authId, $.ajax)
+    persistence = new BH.Persistence.Tag(localStore: localStore)
+
+    persistence.removeAllTags ->
+      syncPersistence.getSites (sites) ->
+        syncingTranslator = new BH.Lib.SyncingTranslator()
+        data = syncingTranslator.forLocal sites
+        persistence.import data, ->
+          callback()

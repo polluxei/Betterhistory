@@ -8,6 +8,12 @@ class BH.Lib.ExampleTags
     @localStore.set exampleTags, ->
       callback()
 
+    if user.isLoggedIn()
+      persistence = new BH.Persistence.Sync(user.get('authId'), $.ajax)
+      translator = new BH.Lib.SyncingTranslator()
+      translator.forServer exampleTags, (sites) ->
+        persistence.updateSites(sites)
+
 exampleTags =
   tags: ['games', 'places to travel', 'clothing', 'recipes', 'friends', 'funny videos', 'world news', 'productivity']
   friends: [

@@ -57,7 +57,7 @@ class BH.Models.Site extends Backbone.Model
     url: @get('url')
     title: @get('title')
     datetime: @get('datetime')
-    tags: @get('tags').join(' ')
+    tags: @get('tags')
 
 lazyPersistence = ->
   new BH.Persistence.Tag(localStore: localStore)

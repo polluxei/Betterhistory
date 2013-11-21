@@ -93,7 +93,7 @@ describe 'BH.Models.Site', ->
           url: 'http://www.recipes.com/pound_cake'
           title: 'Pound cake recipes'
           datetime: undefined
-          tags: 'cooking recipes'
+          tags: ['cooking', 'recipes']
 
       it 'does not call to the sync persistence layer when the user has no authId ', ->
         global.user.logout()
@@ -131,7 +131,7 @@ describe 'BH.Models.Site', ->
           url: 'http://www.recipes.com/pound_cake'
           title: 'Pound cake recipes'
           datetime: undefined
-          tags: 'cooking'
+          tags: ['cooking']
 
       it 'does not call to the sync persistence layer when the user has no authId ', ->
         global.user.logout()

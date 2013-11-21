@@ -14,6 +14,9 @@ class BH.Lib.LocalStore
     @chromeAPI.storage.local.remove key, (data) =>
       @wrappedCallback('Remove', data, callback)
 
+  clear: ->
+    @chromeAPI.storage.local.clear()
+
   get: (key, callback) ->
     @chromeAPI.storage.local.get key, (data) =>
       @wrappedCallback('Get', data, callback)

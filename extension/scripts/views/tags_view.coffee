@@ -95,6 +95,11 @@ class BH.Views.TagsView extends BH.Views.MainView
     if prompt.get('action')
       @collection.destroy =>
         @collection.fetch()
+
+        if user.isLoggedIn()
+          persistence = new BH.Persistence.Sync(user.get('authId'), $.ajax)
+          persistence.deleteSites()
+
       @promptView.close()
     else
       @promptView.close()

@@ -32,6 +32,7 @@
       "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
     ]
   },
+  "offline_enabled": true,
   "content_scripts": [
     {
       "matches": ["*://*.better-history.com/*"],

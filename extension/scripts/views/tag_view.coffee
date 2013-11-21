@@ -89,9 +89,15 @@ class BH.Views.TagView extends BH.Views.MainView
 
   promptAction: (prompt) ->
     if prompt.get('action')
+      tagName = @model.get('name')
       @model.destroy =>
       @promptView.close()
       @tracker.tagRemoved()
+
+      if user.isLoggedIn()
+        persistence = new BH.Persistence.Sync(user.get('authId'), $.ajax)
+        persistence.deleteTag(tagName)
+
       router.navigate '#tags', trigger: true
     else
       @promptView.close()

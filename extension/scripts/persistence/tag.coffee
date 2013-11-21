@@ -104,6 +104,12 @@ class BH.Persistence.Tag
 
     @expireSharedTag(tag)
 
+  import: (data, callback) ->
+    @localStore.set(data, callback)
+
+  clearAll: ->
+    @localStore.clear()
+
   removeSiteFromTag: (url, tag, callback = ->) ->
     @localStore.get tag, (data) =>
       data[tag] ||= []

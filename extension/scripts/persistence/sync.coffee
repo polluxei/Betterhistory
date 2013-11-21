@@ -1,21 +1,28 @@
+error = (data, type) ->
+  alert('There was a problem syncing your tags. Please try again later')
+
 class BH.Persistence.Sync
   constructor: (@authId, @ajax) ->
+
+  host: ->
+    "http://#{apiHost}"
 
   updateSite: (site) ->
     data = JSON.stringify(site)
     @ajax
-      url: "http://#{apiHost}/site"
+      url: "#{@host()}/user/site"
       type: "POST"
       contentType: 'application/json'
-      dataType: 'json'
+      dataType: 'text'
       headers:
         authorization: @authId
       data: data
+      error: error
 
-  sync: (sites, callback) ->
+  updateSites: (sites, callback = ->) ->
     data = JSON.stringify(sites)
     @ajax
-      url: "http://#{apiHost}/sync"
+      url: "#{@host()}/user/sites"
       type: "POST"
       contentType: 'application/json'
       dataType: 'text'
@@ -24,29 +31,50 @@ class BH.Persistence.Sync
       data: data
       success: ->
         callback()
-      error: (data, type) ->
-        alert('There was a problem syncing your tags. Please try again later')
+      error: error
+
+  getSites: (callback) ->
+    @ajax
+      url: "#{@host()}/user/sites"
+      type: "GET"
+      contentType: 'application/json'
+      dataType: 'json'
+      headers:
+        authorization: @authId
+      success: (data) ->
+        callback(data)
+      error: error
 
   renameTag: (oldName, newName) ->
     data = JSON.stringify(name: newName)
     @ajax
-      url: "http://#{apiHost}/tags/#{oldName}/rename"
+      url: "#{@host()}/user/tags/#{oldName}/rename"
       type: "PUT"
       contentType: 'application/json'
       dataType: 'text'
       headers:
         authorization: @authId
       data: data
-      error: (data, type) ->
-        alert('There was a problem renaming the tag. Please try again later')
+      error: error
 
   deleteTag: (name) ->
     @ajax
-      url: "http://#{apiHost}/tags/#{name}"
+      url: "#{@host()}/user/tags/#{name}"
       type: "DELETE"
       contentType: 'application/json'
       dataType: 'text'
       headers:
         authorization: @authId
-      error: (data, type) ->
-        alert('There was a problem deleting the tag. Please try again later')
+      error: error
+
+  deleteSites: (callback = ->) ->
+    @ajax
+      url: "#{@host()}/user/sites"
+      type: "DELETE"
+      contentType: 'application/json'
+      dataType: 'text'
+      headers:
+        authorization: @authId
+      error: error
+      success: ->
+        callback()

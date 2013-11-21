@@ -1056,7 +1056,7 @@
     "description": "title for tagging visited sites modal"
   },
   "sync_tags_link": {
-    "message": "Sync your tags - $signup_open$Sign up$signup_close$ or $login_open$Login$login_close$",
+    "message": "Sync your tags - $signup_open$Get started$signup_close$ or $login_open$Login$login_close$",
     "description": "link to sign up for syncing",
     "placeholders": {
       "signup_open": {
@@ -1258,5 +1258,35 @@
         "example": "link close tag"
       }
     }
+  },
+  "syncing_decision_title": {
+    "message": "You have previously synced sites",
+    "description": "title for syncing decision modal"
+  },
+  "syncing_decision_description": {
+    "message": "Looks like you have synced $strong_open$$amount$ tagged sites$strong_close$. You can choose to pull those sites replacing your local tags or sync your local tags.",
+    "description": "syncing decision description",
+    "placeholders": {
+      "amount": {
+        "content": "$1",
+        "example": "amount of synced sites"
+      },
+      "strong_open": {
+        "content": "$2",
+        "example": "strong open tag"
+      },
+      "strong_close": {
+        "content": "$3",
+        "example": "strong close tag"
+      }
+    }
+  },
+  "syncing_push_button": {
+    "message": "Use my local tags",
+    "description": "push button text"
+  },
+  "syncing_pull_button": {
+    "message": "Use my remote tags",
+    "description": "pull button text"
   }
 }

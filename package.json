@@ -18,7 +18,7 @@
     "error_tracking": "eb2245d5729a3c65d7e429f4e7690a62",
     "dev_site_host": "local.better-history.com:3000",
     "prod_site_host": "www.better-history.com",
-    "dev_api_host": "api.better-history.com",
+    "dev_api_host": "local.better-history.com:3001",
     "prod_api_host": "api.better-history.com"
   },
   "devDependencies": {

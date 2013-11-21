@@ -11,15 +11,16 @@ describe 'BH.Persistence.Sync', ->
         tags: ['camping', 'outdoors']
 
       expect(@sync.ajax).toHaveBeenCalledWith
-        url: 'http://api.better-history.com/site'
+        url: 'http://api.better-history.com/user/site'
         type: 'POST'
         contentType: 'application/json'
-        dataType: 'json'
+        dataType: 'text'
         headers:
           authorization: '123123123'
         data: '{"url":"http://www.camping","title":"Camping the World","datetime":1231234,"tags":["camping","outdoors"]}'
+        error: jasmine.any(Function)
 
-  describe '#sync', ->
+  describe '#updateSites', ->
     it 'calls to ajax with stringified tag rename data', ->
       data = [{
         title: 'camping'
@@ -35,9 +36,9 @@ describe 'BH.Persistence.Sync', ->
         tags: 'engines, cars, auto'
       }]
 
-      @sync.sync data
+      @sync.updateSites data
       expect(@sync.ajax).toHaveBeenCalledWith
-        url: 'http://api.better-history.com/sync'
+        url: 'http://api.better-history.com/user/sites'
         type: 'POST'
         contentType: 'application/json'
         dataType: 'text'
@@ -47,11 +48,24 @@ describe 'BH.Persistence.Sync', ->
         error: jasmine.any(Function)
         success: jasmine.any(Function)
 
+  describe '#getSites', ->
+    it 'calls to ajax to get all the sites', ->
+      @sync.getSites()
+      expect(@sync.ajax).toHaveBeenCalledWith
+        url: 'http://api.better-history.com/user/sites'
+        type: 'GET'
+        contentType: 'application/json'
+        dataType: 'json'
+        headers:
+          authorization: '123123123'
+        error: jasmine.any(Function)
+        success: jasmine.any(Function)
+
   describe '#renameTag', ->
     it 'calls to ajax with stringified tag rename data', ->
       @sync.renameTag('cooking', 'baking')
       expect(@sync.ajax).toHaveBeenCalledWith
-        url: 'http://api.better-history.com/tags/cooking/rename'
+        url: 'http://api.better-history.com/user/tags/cooking/rename'
         type: 'PUT'
         contentType: 'application/json'
         dataType: 'text'
@@ -64,7 +78,7 @@ describe 'BH.Persistence.Sync', ->
     it 'calls to ajax to delete a tag', ->
       @sync.deleteTag('cooking')
       expect(@sync.ajax).toHaveBeenCalledWith
-        url: 'http://api.better-history.com/tags/cooking'
+        url: 'http://api.better-history.com/user/tags/cooking'
         type: 'DELETE'
         contentType: 'application/json'
         dataType: 'text'

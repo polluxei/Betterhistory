@@ -50,5 +50,6 @@ module.exports = ->
       set: jasmine.createSpy("set")
       get: jasmine.createSpy("get")
       remove: jasmine.createSpy("remove")
+      clear: jasmine.createSpy('clear')
 
   runtime: {}

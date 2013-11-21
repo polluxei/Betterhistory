@@ -19,12 +19,15 @@ class BH.Views.InitialSyncingView extends BH.Views.ModalView
   continueClicked: (ev) ->
     ev.preventDefault()
     @close()
+    # refresh views for sync tags
+    window.location.reload()
 
   doneSyncing: ->
     @$('.continue').removeAttr('disabled')
     @$('.syncing').hide()
     @$('.done_syncing').show()
     @$('.website_plug').show()
+    @trigger('syncingComplete')
 
   getI18nValues: ->
     properties = @t ['initial_syncing_title', 'continue_button', 'initial_syncing_description']

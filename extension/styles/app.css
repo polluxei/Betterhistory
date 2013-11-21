@@ -1,12 +1,25 @@
-.initial_syncing_view .content-area {
+.initial_syncing_view .content-area,
+.syncing_decision_view .content-area {
   text-align: center;
 }
-.initial_syncing_view .spinner {
+.initial_syncing_view .spinner,
+.syncing_decision_view .spinner {
   display: inline-block;
 }
-.initial_syncing_view .done_syncing {
+.initial_syncing_view .done_syncing,
+.syncing_decision_view .done_syncing {
   width: 300px;
   display: inline-block;
+}
+.syncing_decision_view .page {
+  width: 430px;
+}
+.syncing_decision_view .decision {
+  text-align: left;
+}
+.syncing_decision_view .decision_options {
+  margin-top: 20px;
+  text-align: center;
 }
 .settings_view .avatar {
   width: 40px;
