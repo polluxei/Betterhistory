@@ -1,9 +1,6 @@
 class BH.Collections.Sites extends Backbone.Collection
   model: BH.Models.Site
 
-  initialize: (attrs = {}, options) ->
-    @persistence = options.persistence
-
   fetch: ->
     index = 1
     callback = =>
@@ -22,8 +19,6 @@ class BH.Collections.Sites extends Backbone.Collection
     @sharedTags()
 
   addTag: (tag, callback = ->) ->
-    @persistence ||= lazyPersistence()
-
     tag = tag.replace(/^\s\s*/, '').replace(/\s\s*$/, '')
 
     if tag.length == 0 || tag.match /[\"\'\~\,\.\|\(\)\{\}\[\]\;\:\<\>\^\*\%\^]/
@@ -42,13 +37,11 @@ class BH.Collections.Sites extends Backbone.Collection
           url: model.get('url')
           title: model.get('title')
 
-    @persistence.addSitesToTag sites, tag, (operations) =>
+    persistence.tag().addSitesToTag sites, tag, (operations) =>
       @trigger 'change:allTags'
       callback(true, operations)
 
   removeTag: (tag, callback = ->) ->
-    @persistence ||= lazyPersistence()
-
     tag = tag.replace(/^\s\s*/, '').replace(/\s\s*$/, '')
     return false if tag.length == 0
 
@@ -60,9 +53,6 @@ class BH.Collections.Sites extends Backbone.Collection
         model.set tags: _.without(newTags, tag)
         sites.push model.get('url')
 
-    @persistence.removeSitesFromTag sites, tag, =>
+    persistence.tag().removeSitesFromTag sites, tag, =>
       @trigger 'change:allTags'
       callback()
-
-lazyPersistence = ->
-  new BH.Persistence.Tag(localStore: localStore)

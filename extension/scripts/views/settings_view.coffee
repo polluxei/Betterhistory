@@ -43,8 +43,7 @@ class BH.Views.SettingsView extends BH.Views.MainView
     @$('.logged_out').show()
     @$('.logged_in').hide()
     user.logout()
-    persistence = new BH.Persistence.Tag(localStore: localStore)
-    persistence.clearAll()
+    persistence.tag().clearAll()
 
   activateSocialLinks: ->
     !((d,s,id) ->

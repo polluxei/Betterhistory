@@ -61,7 +61,7 @@ popupScripts = [
   'scripts/lib/local_store.js',
   'scripts/lib/sync_store.js',
   'scripts/persistence/tag.js',
-  'scripts/persistence/sync.js',
+  'scripts/persistence/remote.js',
   'scripts/modules/i18n.js',
   'scripts/modules/url.js',
   'scripts/models/site.js',
@@ -109,8 +109,7 @@ scripts = [
   'scripts/lib/user_processor.js',
   'scripts/lib/syncing_translator.js',
   'scripts/persistence/tag.js',
-  'scripts/persistence/share.js',
-  'scripts/persistence/sync.js',
+  'scripts/persistence/remote.js',
   'scripts/views/modal_view.js',
   'scripts/views/main_view.js',
   'scripts/views/app_view.js',
@@ -171,6 +170,7 @@ scripts = [
   'scripts/router.js',
   'scripts/init/tag_feature.js',
   'scripts/init/mailing_list.js',
+  'scripts/init/persistence.js',
   'scripts/initialize_extension.js'
 ]
 

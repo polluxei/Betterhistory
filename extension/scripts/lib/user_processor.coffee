@@ -32,8 +32,7 @@ class BH.Lib.UserProcessor
         alert('There was a problem authorizing with Google. Please contact hello@better-history.com')
 
   loggedIn: (userData) ->
-    persistence = new BH.Persistence.Tag(localStore: localStore)
-    persistence.fetchTags (tags) =>
+    persistence.tag().fetchTags (tags) =>
       if userData.numberOfSites == 0 && tags.length != 0
         @initialSync('push', userData)
       else if userData.numberOfSites != 0 && tags.length == 0
@@ -61,9 +60,6 @@ class BH.Lib.UserProcessor
       window.user.login(userData)
 
   initialSync: (direction, userData) ->
-    syncPersistence = new BH.Persistence.Sync(userData.authId, $.ajax, state)
-    persistence = new BH.Persistence.Tag(localStore: localStore)
-
     initialSyncingView = new BH.Views.InitialSyncingView()
     initialSyncingView.open()
 
@@ -79,26 +75,20 @@ class BH.Lib.UserProcessor
       window.user.login(userData)
 
   pushLocalTags: (userData, callback) ->
-    syncPersistence = new BH.Persistence.Sync(userData.authId, $.ajax, state)
-    persistence = new BH.Persistence.Tag(localStore: localStore)
-
-    syncPersistence.deleteSites ->
-      persistence.fetchTags (tags, compiledTags) ->
+    persistence.remote(userData.authId).deleteSites ->
+      persistence.tag().fetchTags (tags, compiledTags) ->
         if tags.length == 0
           callback()
         else
           syncingTranslator = new BH.Lib.SyncingTranslator()
           syncingTranslator.forServer compiledTags, (sites) ->
-            syncPersistence.updateSites sites, ->
+            persistence.remote(userData.authId).updateSites sites, ->
               setTimeout (-> callback()), 2000
 
   pullRemoteTags: (userData, callback) ->
-    syncPersistence = new BH.Persistence.Sync(userData.authId, $.ajax, state)
-    persistence = new BH.Persistence.Tag(localStore: localStore)
-
-    persistence.removeAllTags ->
-      syncPersistence.getSites (sites) ->
+    persistence.tag().removeAllTags ->
+      persistence.remote(userData.authId).getSites (sites) ->
         syncingTranslator = new BH.Lib.SyncingTranslator()
         data = syncingTranslator.forLocal sites
-        persistence.import data, ->
+        persistence.tag().import data, ->
           setTimeout (-> callback()), 2000

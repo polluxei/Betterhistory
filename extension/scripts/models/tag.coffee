@@ -1,8 +1,4 @@
 class BH.Models.Tag extends Backbone.Model
-  initialize: (attrs = {}, options = {}) ->
-    @persistence = options.persistence
-    @syncPersistence = options.syncPersistence
-
   validate: (attrs, options) ->
     name = attrs.name.replace(/^\s\s*/, '').replace(/\s\s*$/, '')
 
@@ -12,33 +8,27 @@ class BH.Models.Tag extends Backbone.Model
       return "tag contains special characters"
 
   fetch: (callback = ->) ->
-    @persistence ||= lazyPersistence()
-    @persistence.fetchTagSites @get('name'), (sites) =>
-      @persistence.fetchSharedTag @get('name'), (url) =>
+    persistence.tag().fetchTagSites @get('name'), (sites) =>
+      persistence.tag().fetchSharedTag @get('name'), (url) =>
         @set sites: sites, url: url
         callback()
 
   destroy: (callback = ->) ->
-    @persistence ||= lazyPersistence()
-    @persistence.removeTag @get('name'), =>
+    persistence.tag().removeTag @get('name'), =>
       if user.isLoggedIn()
-        @syncPersistence ||= lazySyncPersistence()
-        @syncPersistence.deleteTag @get('name')
+        persistence.remote().deleteTag @get('name')
       @set sites: []
       callback()
 
   removeSite: (url, callback = ->) ->
-    @persistence ||= lazyPersistence()
-    @persistence.removeSiteFromTag url, @get('name'), (sites) =>
+    persistence.tag().removeSiteFromTag url, @get('name'), (sites) =>
       @set sites: sites
       callback()
 
   renameTag: (name, callback = ->) ->
-    @persistence ||= lazyPersistence()
-    @persistence.renameTag @get('name'), name, =>
+    persistence.tag().renameTag @get('name'), name, =>
       if user.isLoggedIn()
-        @syncPersistence ||= lazySyncPersistence()
-        @syncPersistence.renameTag @get('name'), name
+        persistence.remote().renameTag @get('name'), name
       @set name: name
       callback()
 
@@ -53,18 +43,9 @@ class BH.Models.Tag extends Backbone.Model
         if index != json.sites.length
           index++
         else
-          lazyPersistenceShare().send json,
+          persistence.remote().share json,
             success: (data) =>
-              @persistence.shareTag(@get('name'), data.url)
+              persistence.tag().shareTag(@get('name'), data.url)
               callbacks.success(data)
             error: ->
               callbacks.error()
-
-lazyPersistence = ->
-  new BH.Persistence.Tag(localStore: localStore)
-
-lazyPersistenceShare = ->
-  new BH.Persistence.Share()
-
-lazySyncPersistence = ->
-  new BH.Persistence.Sync(user.get('authId'), $.ajax)

@@ -50,11 +50,7 @@ class BH.Views.TagsView extends BH.Views.MainView
 
   onLoadExampleTagsClicked: (ev) ->
     ev.preventDefault()
-    persistence = new BH.Persistence.Tag(localStore: localStore)
-    exampleTags = new BH.Lib.ExampleTags
-      persistence: persistence
-      chrome: chrome
-      localStore: localStore
+    exampleTags = new BH.Lib.ExampleTags()
     exampleTags.load =>
       @collection.fetch()
 
@@ -97,8 +93,7 @@ class BH.Views.TagsView extends BH.Views.MainView
         @collection.fetch()
 
         if user.isLoggedIn()
-          persistence = new BH.Persistence.Sync(user.get('authId'), $.ajax)
-          persistence.deleteSites()
+          persistence.remote().deleteSites()
 
       @promptView.close()
     else

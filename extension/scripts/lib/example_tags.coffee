@@ -1,22 +1,14 @@
 class BH.Lib.ExampleTags
   load: (callback = ->) ->
-    @persistence ||= lazyPersistence()
-    @persistence.import exampleTags, =>
+    persistence.tag().import exampleTags, =>
       if user.isLoggedIn()
-        @persistence.fetchTags (tags, compiledTags) =>
-          @syncPersistence ||= loadSyncPersistence()
+        persistence.tag().fetchTags (tags, compiledTags) =>
           translator = new BH.Lib.SyncingTranslator()
           translator.forServer compiledTags, (sites) =>
-            @syncPersistence.updateSites(sites)
+            persistence.remote().updateSites(sites)
             callback()
       else
         callback()
-
-loadSyncPersistence = ->
-  new BH.Persistence.Sync(user.get('authId'), $.ajax, state)
-
-lazyPersistence = ->
-  new BH.Persistence.Tag(localStore: localStore)
 
 exampleTags =
   tags: ['games', 'places to travel', 'clothing', 'recipes', 'friends', 'funny videos', 'world news', 'productivity']

@@ -3,20 +3,7 @@ describe 'BH.Models.Tag', ->
     global.user = new BH.Models.User
     global.user.login(authId: 123412341234)
 
-    persistence =
-      fetchTagSites: jasmine.createSpy('fetchTagSites')
-      removeTag: jasmine.createSpy('removeTag')
-      removeSiteFromTag: jasmine.createSpy('removeSiteFromTag')
-      renameTag: jasmine.createSpy('renameTag')
-      fetchSharedTag: jasmine.createSpy('fetchSharedTag')
-
-    sync =
-      renameTag: jasmine.createSpy('renameTag')
-      deleteTag: jasmine.createSpy('deleteTag')
-
-    @tag = new BH.Models.Tag name: 'recipes',
-      persistence: persistence
-      syncPersistence: sync
+    @tag = new BH.Models.Tag name: 'recipes'
 
   describe '#validate', ->
     it 'creates a validation error when the tag is empty', ->
@@ -29,7 +16,7 @@ describe 'BH.Models.Tag', ->
 
   describe '#fetch', ->
     beforeEach ->
-      @tag.persistence.fetchTagSites.andCallFake (tag, callback) ->
+      persistence.tag().fetchTagSites.andCallFake (tag, callback) ->
         callback [
           {
             title: 'Pound Cake'
@@ -58,7 +45,7 @@ describe 'BH.Models.Tag', ->
 
   describe '#destroy', ->
     beforeEach ->
-      @tag.persistence.removeTag.andCallFake (tag, callback) =>
+      persistence.tag().removeTag.andCallFake (tag, callback) =>
         callback()
 
     it 'calls to the persistence layer emptying the sites', ->
@@ -69,16 +56,16 @@ describe 'BH.Models.Tag', ->
 
     it 'calls to the sync persistence layer to delete the tag', ->
       @tag.destroy =>
-        expect(@tag.syncPersistence.deleteTag).toHaveBeenCalledWith('recipes')
+        expect(persistence.remote().deleteTag).toHaveBeenCalledWith('recipes')
 
     it 'does not call to the sync persistence layer when the user has no authId ', ->
       global.user.logout()
       @tag.destroy =>
-        expect(@tag.syncPersistence.deleteTag).not.toHaveBeenCalled()
+        expect(persistence.remote().deleteTag).not.toHaveBeenCalled()
 
   describe '#removeSite', ->
     beforeEach ->
-      @tag.persistence.removeSiteFromTag.andCallFake (url, tag, callback) ->
+      persistence.tag().removeSiteFromTag.andCallFake (url, tag, callback) ->
         callback [
           {
             title: 'Angel Food Cake'
@@ -101,12 +88,12 @@ describe 'BH.Models.Tag', ->
 
   describe '#renameTag', ->
     beforeEach ->
-      @tag.persistence.renameTag.andCallFake (oldTag, newTag, callback) ->
+      persistence.tag().renameTag.andCallFake (oldTag, newTag, callback) ->
         callback()
 
     it 'calls to the persistence to rename the tag', ->
       @tag.renameTag('baking')
-      expect(@tag.persistence.renameTag).toHaveBeenCalledWith 'recipes', 'baking', jasmine.any(Function)
+      expect(persistence.tag().renameTag).toHaveBeenCalledWith 'recipes', 'baking', jasmine.any(Function)
 
     it 'sets the name on the model', ->
       @tag.renameTag 'baking', =>
@@ -119,10 +106,9 @@ describe 'BH.Models.Tag', ->
 
     it 'calls to the sync persistence layer to delete the tag', ->
       @tag.renameTag 'baking', =>
-        expect(@tag.syncPersistence.renameTag).toHaveBeenCalledWith('recipes', 'baking')
+        expect(persistence.remote().renameTag).toHaveBeenCalledWith('recipes', 'baking')
 
     it 'does not call to the sync persistence layer when the user has no authId ', ->
       global.user.logout()
       @tag.renameTag 'baking', =>
-        expect(@tag.syncPersistence.renameTag).not.toHaveBeenCalled()
-
+        expect(persistence.remote().renameTag).not.toHaveBeenCalled()

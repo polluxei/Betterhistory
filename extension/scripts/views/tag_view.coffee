@@ -95,8 +95,7 @@ class BH.Views.TagView extends BH.Views.MainView
       @tracker.tagRemoved()
 
       if user.isLoggedIn()
-        persistence = new BH.Persistence.Sync(user.get('authId'), $.ajax)
-        persistence.deleteTag(tagName)
+        persistence.remote().deleteTag(tagName)
 
       router.navigate '#tags', trigger: true
     else

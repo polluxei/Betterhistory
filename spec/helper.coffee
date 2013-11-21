@@ -8,8 +8,12 @@ global._ = underscore
 global.Backbone = backbone
 global.moment = moment
 global.timekeeper = timekeeper
+
 global.mockChromeAPI = require './chrome_api'
 global.chrome = mockChromeAPI()
+
+mockPersistence = require './persistence'
+
 global.BH = require '../extension/scripts/namespace'
 
 global.apiHost = 'api.better-history.com'
@@ -33,9 +37,8 @@ require '../extension/scripts/lib/local_store.coffee'
 require '../extension/scripts/lib/example_tags.coffee'
 require '../extension/scripts/lib/image_data.coffee'
 require '../extension/scripts/lib/syncing_translator.coffee'
-require '../extension/scripts/persistence/share.coffee'
 require '../extension/scripts/persistence/tag.coffee'
-require '../extension/scripts/persistence/sync.coffee'
+require '../extension/scripts/persistence/remote.coffee'
 require '../extension/scripts/workers/day_grouper.coffee'
 require '../extension/scripts/workers/domain_grouper.coffee'
 require '../extension/scripts/workers/time_grouper.coffee'
@@ -69,3 +72,5 @@ new BH.Lib.DateI18n().configure()
 beforeEach ->
   spyOn(BH.Lib.ImageData, 'base64').andCallFake (url, callback) ->
     callback('favicon image')
+
+  global.persistence = mockPersistence().reset()

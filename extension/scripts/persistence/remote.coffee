@@ -1,7 +1,7 @@
 error = (data, type) ->
   alert('There was a problem syncing your tags. Please try again later')
 
-class BH.Persistence.Sync
+class BH.Persistence.Remote
   constructor: (@authId, @ajax, @state) ->
 
   host: ->
@@ -32,6 +32,15 @@ class BH.Persistence.Sync
     config.data = JSON.stringify(options.data) if options.data?
 
     @ajax config
+
+  share: (tagData, callbacks) ->
+    @performRequest
+      path: '/share'
+      data: tagData
+      type: 'POST'
+      dataType: 'json'
+      success: callbacks.success
+      error: callbacks.error
 
   updateSite: (site) ->
     @performRequest

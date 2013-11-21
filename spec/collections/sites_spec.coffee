@@ -1,12 +1,11 @@
 describe 'BH.Collections.Site', ->
   beforeEach ->
-    persistence =
-      addSitesToTag: jasmine.createSpy('addSitesToTag').andCallFake (sites, tag, callback) ->
+    persistence.tag().addSitesToTag.andCallFake (sites, tag, callback) ->
         callback()
-      removeSitesFromTag: jasmine.createSpy('removeSitesFromTag').andCallFake (sites, tag, callback) ->
+    persistence.tag().removeSitesFromTag.andCallFake (sites, tag, callback) ->
         callback()
-    @sites = new BH.Collections.Sites [],
-      persistence: persistence
+
+    @sites = new BH.Collections.Sites []
 
     attrs = [{
       title: 'Pies',
@@ -82,11 +81,11 @@ describe 'BH.Collections.Site', ->
           title: 'Sandwiches'
           url: 'http://www.atk.com/sandwiches'
         }]
-        expect(@sites.persistence.addSitesToTag).toHaveBeenCalledWith(sites, 'recipes', jasmine.any(Function))
+        expect(persistence.tag().addSitesToTag).toHaveBeenCalledWith(sites, 'recipes', jasmine.any(Function))
 
       it 'calls the passed callback with the result and operations performed during the persistence', ->
         callback = jasmine.createSpy('callback')
-        @sites.persistence.addSitesToTag.andCallFake (sites, tag, callback) ->
+        persistence.tag().addSitesToTag.andCallFake (sites, tag, callback) ->
           callback('operations')
         @sites.addTag('recipes', callback)
         expect(callback).toHaveBeenCalledWith(true, 'operations')
@@ -109,7 +108,7 @@ describe 'BH.Collections.Site', ->
           'http://www.atk.com/sandwiches',
           'http://www.atk.com/turkey'
         ]
-        expect(@sites.persistence.removeSitesFromTag).toHaveBeenCalledWith(sites, 'cooking', jasmine.any(Function))
+        expect(persistence.tag().removeSitesFromTag).toHaveBeenCalledWith(sites, 'cooking', jasmine.any(Function))
 
   describe '#tags', ->
     it 'returns all the shared tags', ->

@@ -1,10 +1,8 @@
 describe 'BH.Lib.ExampleTags', ->
   beforeEach ->
     @exampleTags = new BH.Lib.ExampleTags()
-    @exampleTags.persistence =
-      import: jasmine.createSpy('import').andCallFake (tags, callback) ->
+    persistence.tag().import.andCallFake (tags, callback) ->
         callback()
-      fetchTags: jasmine.createSpy('fetchTags')
 
   describe '#load', ->
     describe 'when user is not logged in', ->
@@ -19,7 +17,7 @@ describe 'BH.Lib.ExampleTags', ->
 
       it 'does not fetch the tags to sync the changes', ->
         @exampleTags.load()
-        expect(@exampleTags.persistence.fetchTags).not.toHaveBeenCalled()
+        expect(persistence.tag().fetchTags).not.toHaveBeenCalled()
 
     describe 'when user is logged in', ->
       beforeEach ->
@@ -27,5 +25,5 @@ describe 'BH.Lib.ExampleTags', ->
 
       it 'does fetch the tags to sync the changes', ->
         @exampleTags.load()
-        expect(@exampleTags.persistence.fetchTags).toHaveBeenCalled()
+        expect(persistence.tag().fetchTags).toHaveBeenCalled()
 
