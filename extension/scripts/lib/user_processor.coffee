@@ -47,7 +47,7 @@ class BH.Lib.UserProcessor
     syncingDecisionView = new BH.Views.SyncingDecisionView
       model: new Backbone.Model(userData)
     syncingDecisionView.open()
-    syncingDecisionView.on 'decision', (decision) ->
+    syncingDecisionView.on 'decision', (decision) =>
 
       if decision == 'push'
         @pushLocalTags userData, ->
@@ -61,7 +61,7 @@ class BH.Lib.UserProcessor
       window.user.login(userData)
 
   initialSync: (direction, userData) ->
-    syncPersistence = new BH.Persistence.Sync(userData.authId, $.ajax)
+    syncPersistence = new BH.Persistence.Sync(userData.authId, $.ajax, state)
     persistence = new BH.Persistence.Tag(localStore: localStore)
 
     initialSyncingView = new BH.Views.InitialSyncingView()
@@ -79,7 +79,7 @@ class BH.Lib.UserProcessor
       window.user.login(userData)
 
   pushLocalTags: (userData, callback) ->
-    syncPersistence = new BH.Persistence.Sync(userData.authId, $.ajax)
+    syncPersistence = new BH.Persistence.Sync(userData.authId, $.ajax, state)
     persistence = new BH.Persistence.Tag(localStore: localStore)
 
     syncPersistence.deleteSites ->
@@ -87,13 +87,13 @@ class BH.Lib.UserProcessor
         if tags.length == 0
           callback()
         else
-          tagSyncingFormatter = new BH.Lib.TagSyncingFormatter(localStore)
-          tagSyncingFormatter.forServer compiledTags, (sites) ->
+          syncingTranslator = new BH.Lib.SyncingTranslator()
+          syncingTranslator.forServer compiledTags, (sites) ->
             syncPersistence.updateSites sites, ->
-              callback()
+              setTimeout (-> callback()), 2000
 
   pullRemoteTags: (userData, callback) ->
-    syncPersistence = new BH.Persistence.Sync(userData.authId, $.ajax)
+    syncPersistence = new BH.Persistence.Sync(userData.authId, $.ajax, state)
     persistence = new BH.Persistence.Tag(localStore: localStore)
 
     persistence.removeAllTags ->
@@ -101,4 +101,4 @@ class BH.Lib.UserProcessor
         syncingTranslator = new BH.Lib.SyncingTranslator()
         data = syncingTranslator.forLocal sites
         persistence.import data, ->
-          callback()
+          setTimeout (-> callback()), 2000

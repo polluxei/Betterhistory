@@ -145,7 +145,7 @@ body.new_tags .new {
   line-height: 15px;
   margin: 7px 0 0 20px;
 }
-body.syncing .syncing {
+body.syncing .menu .syncing {
   background-image: url(/images/syncing.gif);
   width: 15px;
   height: 15px;

@@ -1,21 +1,22 @@
 class BH.Lib.ExampleTags
-  constructor: (options) ->
-    throw "LocalStore not set" unless options.localStore?
-
-    @localStore = options.localStore
-
   load: (callback = ->) ->
-    @localStore.set exampleTags, ->
-      callback()
-
-    if user.isLoggedIn()
-      @syncPersistence ||= loadSyncPersistence()
-      translator = new BH.Lib.SyncingTranslator()
-      translator.forServer exampleTags, (sites) =>
-        @syncPersistence.updateSites(sites)
+    @persistence ||= lazyPersistence()
+    @persistence.import exampleTags, =>
+      if user.isLoggedIn()
+        @persistence.fetchTags (tags, compiledTags) =>
+          @syncPersistence ||= loadSyncPersistence()
+          translator = new BH.Lib.SyncingTranslator()
+          translator.forServer compiledTags, (sites) =>
+            @syncPersistence.updateSites(sites)
+            callback()
+      else
+        callback()
 
 loadSyncPersistence = ->
   new BH.Persistence.Sync(user.get('authId'), $.ajax, state)
+
+lazyPersistence = ->
+  new BH.Persistence.Tag(localStore: localStore)
 
 exampleTags =
   tags: ['games', 'places to travel', 'clothing', 'recipes', 'friends', 'funny videos', 'world news', 'productivity']

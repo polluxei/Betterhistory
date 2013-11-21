@@ -1,34 +1,31 @@
 describe 'BH.Lib.ExampleTags', ->
   beforeEach ->
-    global.user =
-      isLoggedIn: jasmine.createSpy('isLoggedIn').andReturn false
-    localStore =
-      set: jasmine.createSpy('set').andCallFake (data, callback) ->
+    @exampleTags = new BH.Lib.ExampleTags()
+    @exampleTags.persistence =
+      import: jasmine.createSpy('import').andCallFake (tags, callback) ->
         callback()
-
-    @exampleTags = new BH.Lib.ExampleTags
-      localStore: localStore
-    @exampleTags.syncPersistence =
-      updateSites: jasmine.createSpy('updateSites')
+      fetchTags: jasmine.createSpy('fetchTags')
 
   describe '#load', ->
-    it 'calls set on localStore with the example tags', ->
-      @exampleTags.load()
-      expect(@exampleTags.localStore.set).toHaveBeenCalledWith jasmine.any(Object), jasmine.any(Function)
+    describe 'when user is not logged in', ->
+      beforeEach ->
+        global.user =
+          isLoggedIn: jasmine.createSpy('isLoggedIn').andReturn false
 
-    it 'calls the passed callback', ->
-      callback = jasmine.createSpy('callback')
-      @exampleTags.load(callback)
-      expect(callback).toHaveBeenCalled()
+      it 'calls the passed callback', ->
+        callback = jasmine.createSpy('callback')
+        @exampleTags.load(callback)
+        expect(callback).toHaveBeenCalled()
 
-    it 'does not sync the changes', ->
-      @exampleTags.load()
-      expect(@exampleTags.syncPersistence.updateSites).not.toHaveBeenCalled()
+      it 'does not fetch the tags to sync the changes', ->
+        @exampleTags.load()
+        expect(@exampleTags.persistence.fetchTags).not.toHaveBeenCalled()
 
     describe 'when user is logged in', ->
       beforeEach ->
         global.user.isLoggedIn.andReturn true
 
-      it 'persists the example tags', ->
+      it 'does fetch the tags to sync the changes', ->
         @exampleTags.load()
-        expect(@exampleTags.syncPersistence.updateSites.mostRecentCall.args[0].length).toEqual 61
+        expect(@exampleTags.persistence.fetchTags).toHaveBeenCalled()
+

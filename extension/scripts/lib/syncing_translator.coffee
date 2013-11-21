@@ -1,9 +1,8 @@
 class BH.Lib.SyncingTranslator
   forServer: (compiledTags, callback) ->
-    delete compiledTags.tags
     sites = []
-    for tag, compiledSites of compiledTags
-      for site in compiledSites
+    for tag in compiledTags
+      for site in tag.sites
         if site.url
           foundIndex = null
           for storedSite, index in sites
@@ -11,9 +10,9 @@ class BH.Lib.SyncingTranslator
               foundIndex = index
               break
           if foundIndex?
-            sites[foundIndex].tags.push tag
+            sites[foundIndex].tags.push tag.name
           else
-            site.tags = [tag]
+            site.tags = [tag.name]
             sites.push(site)
 
     index = 1

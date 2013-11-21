@@ -4,54 +4,67 @@ describe 'BH.Lib.SyncingTranslator', ->
 
   describe '#forServer', ->
     beforeEach ->
-      @compiledTags =
-        tags: ['baking', 'cooking', 'engines', 'camping', 'outdoors', 'travel']
-        baking: [
-          {
-            title: 'Baking'
-            url: 'http://www.baking.com'
-            datetime: 123412341234
-          }
-        ]
-        cooking: [
-          {
-            title: 'Baking'
-            url: 'http://www.baking.com'
-            datetime: 123412341234
-          }
-        ]
-        engines: [
-          {
-            title: 'Car repair'
-            url: 'http://www.cars.com/repair'
-            datetime: 123412341234
-          }
-        ]
-        camping: [
-          {
-            title: 'Camping stuff'
-            url: 'http://www.camping.com'
-            datetime: 123412341234
-          }, {
-            title: 'Backpacking'
-            url: 'http://www.backpacking.com'
-            datetime: 123412341234
-          }
-        ]
-        outdoors: [
-          {
-            title: 'Camping stuff'
-            url: 'http://www.camping.com'
-            datetime: 123412341234
-          }
-        ]
-        travel: [
-          {
-            title: 'Camping stuff'
-            url: 'http://www.camping.com'
-            datetime: 123412341234
-          }
-        ]
+      @compiledTags = [
+        {
+          name: 'baking'
+          sites: [
+            {
+              title: 'Baking'
+              url: 'http://www.baking.com'
+              datetime: 123412341234
+            }
+          ]
+        }, {
+          name: 'cooking'
+          sites: [
+            {
+              title: 'Baking'
+              url: 'http://www.baking.com'
+              datetime: 123412341234
+            }
+          ]
+        }, {
+          name: 'engines'
+          sites: [
+            {
+              title: 'Car repair'
+              url: 'http://www.cars.com/repair'
+              datetime: 123412341234
+            }
+          ]
+        }, {
+          name: 'camping'
+          sites: [
+            {
+              title: 'Camping stuff'
+              url: 'http://www.camping.com'
+              datetime: 123412341234
+            }, {
+              title: 'Backpacking'
+              url: 'http://www.backpacking.com'
+              datetime: 123412341234
+            }
+          ]
+        }, {
+          name: 'outdoors'
+          sites: [
+            {
+              title: 'Camping stuff'
+              url: 'http://www.camping.com'
+              datetime: 123412341234
+            }
+          ]
+        }, {
+          name: 'travel'
+          sites: [
+            {
+              title: 'Camping stuff'
+              url: 'http://www.camping.com'
+              datetime: 123412341234
+            }
+          ]
+        }
+      ]
 
     it 'returns formatted sites for syncing to the server', ->
       @syncingTranslator.forServer @compiledTags, (sites) ->
