@@ -38,6 +38,11 @@ class BH.Collections.Sites extends Backbone.Collection
           title: model.get('title')
 
     persistence.tag().addSitesToTag sites, tag, (operations) =>
+      if user.isLoggedIn()
+        translator = new BH.Lib.SyncingTranslator()
+        translator.addImageToSites @toJSON(), (compiledSites) ->
+          persistence.remote().updateSites compiledSites
+
       @trigger 'change:allTags'
       callback(true, operations)
 
@@ -54,5 +59,9 @@ class BH.Collections.Sites extends Backbone.Collection
         sites.push model.get('url')
 
     persistence.tag().removeSitesFromTag sites, tag, =>
+      if user.isLoggedIn()
+        translator = new BH.Lib.SyncingTranslator()
+        translator.addImageToSites @toJSON(), (compiledSites) ->
+          persistence.remote().updateSites compiledSites
       @trigger 'change:allTags'
       callback()

@@ -1,12 +1,9 @@
 class BH.Models.Site extends Backbone.Model
   initialize: (attrs = {}, options = {}) ->
     @chromeAPI = options.chrome
-    @persistence = options.persistence
-    @syncPersistence = options.syncPersistence
 
   fetch: (callback = ->) ->
-    @persistence ||= lazyPersistence()
-    @persistence.fetchSiteTags @get('url'), (tags) =>
+    persistence.tag().fetchSiteTags @get('url'), (tags) =>
       @set tags: tags
       @trigger 'reset:tags'
       callback()
@@ -15,8 +12,6 @@ class BH.Models.Site extends Backbone.Model
     @get('tags')
 
   addTag: (tag, callback = ->) ->
-    @persistence ||= lazyPersistence()
-
     tag = tag.replace(/^\s\s*/, '').replace(/\s\s*$/, '')
 
     if tag.length == 0 || tag.match(/[\"\'\~\,\.\|\(\)\{\}\[\]\;\:\<\>\^\*\%\^]/) || @get('tags').indexOf(tag) != -1
@@ -32,35 +27,25 @@ class BH.Models.Site extends Backbone.Model
       url: @get('url')
       title: @get('title')
 
-    @persistence.addSiteToTag site, tag, (operations) =>
+    persistence.tag().addSiteToTag site, tag, (operations) =>
       if user.isLoggedIn()
-        @syncPersistence ||= lazySyncPersistence()
-        @syncPersistence.updateSite @toSync()
+        persistence.remote().updateSite @toSync()
       callback(true, operations)
 
   removeTag: (tag) ->
-    @persistence ||= lazyPersistence()
-
     return false if @get('tags').indexOf(tag) == -1
 
     # generate a new array to ensure a change event fires
     newTags = _.clone(@get('tags'))
     @set tags: _.without(newTags, tag)
 
-    @persistence.removeSiteFromTag @get('url'), tag
+    persistence.tag().removeSiteFromTag @get('url'), tag
 
     if user.isLoggedIn()
-      @syncPersistence ||= lazySyncPersistence()
-      @syncPersistence.updateSite @toSync()
+      persistence.remote().updateSite @toSync()
 
   toSync: ->
     url: @get('url')
     title: @get('title')
     datetime: @get('datetime')
     tags: @get('tags')
-
-lazyPersistence = ->
-  new BH.Persistence.Tag(localStore: localStore)
-
-lazySyncPersistence = ->
-  new BH.Persistence.Sync(user.get('authId'), $.ajax)

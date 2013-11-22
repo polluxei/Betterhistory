@@ -20,8 +20,7 @@ class BH.Views.TaggedSitesView extends BH.Views.MainView
 
   insertTags: ->
     currentTag = @model.get('name')
-    persistence = new BH.Persistence.Tag localStore: localStore
-    persistence.cached (operations) ->
+    persistence.tag().cached (operations) ->
       $('.site').each ->
         $el = $(this)
         tags = operations.siteTags $el.attr('href')

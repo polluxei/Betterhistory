@@ -78,8 +78,6 @@ class BH.Views.AvailableTagsView extends Backbone.View
 
   inflateDraggedData: (data) ->
     sites = JSON.parse(data).sites
-    persistence = new BH.Persistence.Tag(localStore: localStore)
-
     new BH.Collections.Sites sites,
       chrome: chrome
 

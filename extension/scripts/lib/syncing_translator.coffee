@@ -27,6 +27,18 @@ class BH.Lib.SyncingTranslator
     for site in sites
       requestImage(site)
 
+  addImageToSites: (sites, callback) ->
+    index = 1
+    requestImage = (site) ->
+      BH.Lib.ImageData.base64 "chrome://favicon/#{site.url}", (data) ->
+        site.image = data
+        if index == sites.length
+          callback(sites)
+        else
+          index++
+
+    for site in sites
+      requestImage(site)
 
   forLocal: (sites) ->
     data = tags: []
