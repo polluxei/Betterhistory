@@ -1,10 +1,11 @@
 window.apiHost = '$API_HOST$'
 window.siteHost = '$SITE_HOST$'
+window.env = '$ENV$'
 
 errorTracker = new BH.Trackers.ErrorTracker(Honeybadger)
 analyticsTracker = new BH.Trackers.AnalyticsTracker()
 
-try
+load = ->
   window.syncStore = new BH.Lib.SyncStore
     chrome: chrome
     tracker: analyticsTracker
@@ -49,5 +50,11 @@ try
     tagFeature.announce ->
       $('body').addClass('new_tags')
 
-catch e
-  errorTracker.report e
+if env == 'prod'
+  try
+    load()
+  catch e
+    errorTracker.report e
+else
+  load()
+
