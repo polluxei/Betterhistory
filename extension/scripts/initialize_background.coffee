@@ -6,9 +6,13 @@ try
     chrome: chrome
     tracker: analyticsTracker
 
-  localStore = new BH.Lib.LocalStore
-    chrome: chrome
-    tracker: analyticsTracker
+  window.persistence = new BH.Init.Persistence
+    localStore: new BH.Lib.LocalStore
+      chrome: chrome
+      tracker: analyticsTracker
+    syncStore: new BH.Lib.SyncStore
+      chrome: chrome
+      tracker: analyticsTracker
 
   omnibox = new BH.Lib.Omnibox
     chrome: chrome
@@ -35,14 +39,9 @@ try
 
   tagFeature = new BH.Init.TagFeature
     syncStore: syncStore
-    localStore: localStore
 
   tagFeature.prepopulate =>
-    persistence = new BH.Persistence.Tag(localStore: localStore)
-    exampleTags = new BH.Lib.ExampleTags
-      persistence: persistence
-      chrome: chrome
-      localStore: localStore
+    exampleTags = new BH.Lib.ExampleTags()
     exampleTags.load()
 
 catch e

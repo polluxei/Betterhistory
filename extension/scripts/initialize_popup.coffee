@@ -5,13 +5,18 @@ errorTracker = new BH.Trackers.ErrorTracker(Honeybadger)
 analyticsTracker = new BH.Trackers.AnalyticsTracker()
 
 try
-  window.localStore = new BH.Lib.LocalStore
-    chrome: chrome
-    tracker: analyticsTracker
-
   window.syncStore = new BH.Lib.SyncStore
     chrome: chrome
     tracker: analyticsTracker
+
+  window.persistence = new BH.Init.Persistence
+    localStore: new BH.Lib.LocalStore
+      chrome: chrome
+      tracker: analyticsTracker
+    syncStore: new BH.Lib.SyncStore
+      chrome: chrome
+      tracker: analyticsTracker
+    ajax: $.ajax
 
   window.user = new BH.Models.User({})
   window.user.fetch()
@@ -39,7 +44,8 @@ try
 
     site.fetch()
 
-    tagFeature = new BH.Init.TagFeature(syncStore: syncStore)
+    tagFeature = new BH.Init.TagFeature
+      syncStore: syncStore
     tagFeature.announce ->
       $('body').addClass('new_tags')
 

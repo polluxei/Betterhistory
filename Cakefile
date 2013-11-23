@@ -41,8 +41,10 @@ backgroundScripts = [
   "scripts/lib/sync_store.js",
   "scripts/lib/local_store.js",
   "scripts/lib/example_tags.js",
-  "scripts/persistence/tag.js",
+  'scripts/persistence/tag.js',
+  'scripts/persistence/remote.js',
   "scripts/init/tag_feature.js",
+  "scripts/init/persistence.js",
   "scripts/initialize_background.js"
 ]
 

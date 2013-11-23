@@ -4,55 +4,55 @@ window.siteHost = '$SITE_HOST$'
 window.errorTracker = new BH.Trackers.ErrorTracker(Honeybadger)
 window.analyticsTracker = new BH.Trackers.AnalyticsTracker(_gaq)
 
-# try
-analyticsTracker.historyOpen()
+try
+  analyticsTracker.historyOpen()
 
-window.syncStore = new BH.Lib.SyncStore
-  chrome: chrome
-  tracker: analyticsTracker
-
-window.persistence = new BH.Init.Persistence
-  localStore: new BH.Lib.LocalStore
+  window.syncStore = new BH.Lib.SyncStore
     chrome: chrome
     tracker: analyticsTracker
-  syncStore: new BH.Lib.SyncStore
-    chrome: chrome
-    tracker: analyticsTracker
-  ajax: $.ajax
 
-syncStore.get 'authId', (data = {}) ->
-  $('body').addClass 'logged_in' if data.authId?
+  window.persistence = new BH.Init.Persistence
+    localStore: new BH.Lib.LocalStore
+      chrome: chrome
+      tracker: analyticsTracker
+    syncStore: new BH.Lib.SyncStore
+      chrome: chrome
+      tracker: analyticsTracker
+    ajax: $.ajax
 
-new BH.Lib.DateI18n().configure()
+  syncStore.get 'authId', (data = {}) ->
+    $('body').addClass 'logged_in' if data.authId?
 
-window.user = new BH.Models.User({})
-window.user.fetch()
-window.user.on 'change', ->
-  @trigger('login') if @get('authId')
+  new BH.Lib.DateI18n().configure()
 
-settings = new BH.Models.Settings({})
-window.state = new BH.Models.State({}, settings: settings)
-settings.fetch
-  success: =>
-    state.fetch
-      success: =>
-        state.updateRoute()
+  window.user = new BH.Models.User({})
+  window.user.fetch()
+  window.user.on 'change', ->
+    @trigger('login') if @get('authId')
 
-        window.router = new BH.Router
-          settings: settings
-          state: state
-          tracker: analyticsTracker
+  settings = new BH.Models.Settings({})
+  window.state = new BH.Models.State({}, settings: settings)
+  settings.fetch
+    success: =>
+      state.fetch
+        success: =>
+          state.updateRoute()
 
-        Backbone.history.start()
+          window.router = new BH.Router
+            settings: settings
+            state: state
+            tracker: analyticsTracker
 
-mailingList = new BH.Init.MailingList(syncStore: syncStore)
-mailingList.prompt ->
-  new BH.Views.MailingListView().open()
-  analyticsTracker.mailingListPrompt()
+          Backbone.history.start()
 
-tagFeature = new BH.Init.TagFeature(syncStore: syncStore)
-tagFeature.announce ->
-  $('body').addClass('new_tags')
+  mailingList = new BH.Init.MailingList(syncStore: syncStore)
+  mailingList.prompt ->
+    new BH.Views.MailingListView().open()
+    analyticsTracker.mailingListPrompt()
 
-    # catch e
-    #errorTracker.report e
+  tagFeature = new BH.Init.TagFeature(syncStore: syncStore)
+  tagFeature.announce ->
+    $('body').addClass('new_tags')
+
+catch e
+  errorTracker.report e
