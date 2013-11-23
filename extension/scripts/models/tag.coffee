@@ -21,7 +21,12 @@ class BH.Models.Tag extends Backbone.Model
       callback()
 
   removeSite: (url, callback = ->) ->
+    site = _.where(@get('sites'), url: url)[0]
     persistence.tag().removeSiteFromTag url, @get('name'), (sites) =>
+      if user.isLoggedIn()
+        persistence.tag().fetchSiteTags url, (tags) ->
+          site.tags = tags
+          persistence.remote().updateSite site
       @set sites: sites
       callback()
 
