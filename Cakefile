@@ -78,6 +78,7 @@ popupScripts = [
   'scripts/presenters/site_presenter.js',
   'scripts/presenters/tags_presenter.js',
   'scripts/init/tag_feature.js',
+  'scripts/init/persistence.js',
   'scripts/initialize_popup.js'
 ]
 
