@@ -69,6 +69,8 @@ popupScripts = [
   'scripts/models/site.js',
   'scripts/models/tag.js',
   'scripts/models/user.js',
+  'scripts/models/settings.js',
+  'scripts/models/state.js',
   'scripts/collections/tags.js',
   'scripts/views/main_view.js',
   'scripts/views/tagging_view.js',

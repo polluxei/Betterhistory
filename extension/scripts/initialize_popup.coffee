@@ -24,6 +24,10 @@ load = ->
   window.user.on 'change', ->
     @trigger('login') if @get('authId')
 
+
+  settings = new BH.Models.Settings({})
+  window.state = new BH.Models.State({}, settings: settings)
+
   chrome.tabs.query currentWindow: true, active: true, (tabs) =>
     tab = tabs[0] || {}
 

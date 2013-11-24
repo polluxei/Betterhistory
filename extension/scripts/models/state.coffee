@@ -8,8 +8,9 @@ class BH.Models.State extends Backbone.Model
     @chromeAPI = chrome
     @settings = options.settings
 
-    weekId = @startingWeekDate().id()
-    @set route: @urlFor('week', weekId)
+    if moment?
+      weekId = @startingWeekDate().id()
+      @set route: @urlFor('week', weekId)
 
   updateRoute: ->
     if @settings.get('openLocation') == 'current_day'

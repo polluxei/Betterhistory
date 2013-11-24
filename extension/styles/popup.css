@@ -41,6 +41,9 @@ ul.tags,
 ul.tags li {
   margin-bottom: 3px;
 }
+.autocomplete {
+  position: relative;
+}
 .autocomplete input.new_tag {
   border: 0;
   min-height: 19px;
@@ -51,6 +54,18 @@ ul.tags li {
 }
 .autocomplete input.new_tag.error {
   color: #FF3D00;
+}
+.autocomplete .syncing {
+  display: none;
+}
+body.syncing .autocomplete .syncing {
+  background-image: url(/images/syncing.gif);
+  width: 15px;
+  height: 15px;
+  top: 5px;
+  right: 5px;
+  position: absolute;
+  display: block
 }
 .suggestions {
   position: relative;
