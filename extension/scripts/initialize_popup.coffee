@@ -10,15 +10,6 @@ load = ->
     chrome: chrome
     tracker: analyticsTracker
 
-  window.persistence = new BH.Init.Persistence
-    localStore: new BH.Lib.LocalStore
-      chrome: chrome
-      tracker: analyticsTracker
-    syncStore: new BH.Lib.SyncStore
-      chrome: chrome
-      tracker: analyticsTracker
-    ajax: $.ajax
-
   window.user = new BH.Models.User({})
   window.user.fetch()
   window.user.on 'change', ->
@@ -27,6 +18,16 @@ load = ->
 
   settings = new BH.Models.Settings({})
   window.state = new BH.Models.State({}, settings: settings)
+
+  window.persistence = new BH.Init.Persistence
+    localStore: new BH.Lib.LocalStore
+      chrome: chrome
+      tracker: analyticsTracker
+    syncStore: new BH.Lib.SyncStore
+      chrome: chrome
+      tracker: analyticsTracker
+    ajax: $.ajax
+    state: state
 
   chrome.tabs.query currentWindow: true, active: true, (tabs) =>
     tab = tabs[0] || {}

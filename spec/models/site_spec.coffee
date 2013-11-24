@@ -3,14 +3,8 @@ describe 'BH.Models.Site', ->
     global.user = new BH.Models.User
     global.user.login(authId: 123412341234)
 
-    persistence =
-      fetchSiteTags: jasmine.createSpy('fetchSiteTags')
-      addSiteToTag: jasmine.createSpy('addSiteToTag').andCallFake (site, tag, cb) ->
-        cb()
-      removeSiteFromTag: jasmine.createSpy('removeSiteFromTag')
-
-    sync =
-      updateSite: jasmine.createSpy('updateSite')
+    persistence.tag().addSiteToTag.andCallFake (site, tag, cb) ->
+      cb()
 
     attrs =
       url: 'http://www.recipes.com/pound_cake'
@@ -18,12 +12,10 @@ describe 'BH.Models.Site', ->
 
     @site = new BH.Models.Site attrs,
       chrome: chrome
-      persistence: persistence
-      syncPersistence: sync
 
   describe '#fetch', ->
     beforeEach ->
-      @site.persistence.fetchSiteTags.andCallFake (url, callback) ->
+      persistence.tag().fetchSiteTags.andCallFake (url, callback) ->
         callback ['recipes', 'cooking']
 
     it 'sets the site attributes and collects it\'s tags', ->
@@ -84,12 +76,12 @@ describe 'BH.Models.Site', ->
         site =
           url: @site.get('url')
           title: @site.get('title')
-        expect(@site.persistence.addSiteToTag).toHaveBeenCalledWith(site, 'recipes', jasmine.any(Function))
+        expect(persistence.tag().addSiteToTag).toHaveBeenCalledWith(site, 'recipes', jasmine.any(Function))
 
       it 'calls to the sync persistence layer to update the site', ->
         @site.addTag('recipes')
 
-        expect(@site.syncPersistence.updateSite).toHaveBeenCalledWith
+        expect(persistence.remote().updateSite).toHaveBeenCalledWith
           url: 'http://www.recipes.com/pound_cake'
           title: 'Pound cake recipes'
           datetime: undefined
@@ -99,11 +91,11 @@ describe 'BH.Models.Site', ->
         global.user.logout()
         @site.addTag('recipes')
 
-        expect(@site.syncPersistence.updateSite).not.toHaveBeenCalled()
+        expect(persistence.remote().updateSite).not.toHaveBeenCalled()
 
       it 'calls the passed callback with the result and operations performed during the persistence', ->
         callback = jasmine.createSpy('callback')
-        @site.persistence.addSiteToTag.andCallFake (site, tag, callback) ->
+        persistence.tag().addSiteToTag.andCallFake (site, tag, callback) ->
           callback('operations')
         @site.addTag('recipes', callback)
         expect(callback).toHaveBeenCalledWith(true, 'operations')
@@ -127,7 +119,7 @@ describe 'BH.Models.Site', ->
       it 'calls to the sync persistence layer to update the site', ->
         @site.removeTag('recipes')
 
-        expect(@site.syncPersistence.updateSite).toHaveBeenCalledWith
+        expect(persistence.remote().updateSite).toHaveBeenCalledWith
           url: 'http://www.recipes.com/pound_cake'
           title: 'Pound cake recipes'
           datetime: undefined
@@ -136,10 +128,10 @@ describe 'BH.Models.Site', ->
       it 'does not call to the sync persistence layer when the user has no authId ', ->
         global.user.logout()
         @site.removeTag('recipes')
-        expect(@site.syncPersistence.updateSite).not.toHaveBeenCalled()
+        expect(persistence.remote().updateSite).not.toHaveBeenCalled()
 
 
       it 'calls to the persistence layer to remove the tag', ->
         @site.removeTag('recipes')
-        expect(@site.persistence.removeSiteFromTag).toHaveBeenCalledWith(@site.get('url'), 'recipes')
+        expect(persistence.tag().removeSiteFromTag).toHaveBeenCalledWith(@site.get('url'), 'recipes')
 

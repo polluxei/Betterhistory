@@ -1288,5 +1288,17 @@
   "syncing_pull_button": {
     "message": "Use my remote tags",
     "description": "pull button text"
+  },
+  "auth_error_title": {
+    "message": "Uh oh...",
+    "description": "auth error modal title"
+  },
+  "auth_error_description": {
+    "message": "There was a problem logging you in. To continue syncing your tags, please log in again.",
+    "description": "auth error modal description text"
+  },
+  "login_again_button": {
+    "message": "Log in again",
+    "description": "log in again button"
   }
 }

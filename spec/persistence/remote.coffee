@@ -1,9 +1,9 @@
-describe 'BH.Persistence.Sync', ->
+describe 'BH.Persistence.Remote', ->
   beforeEach ->
     @state =
       set: jasmine.createSpy('set')
     @ajax = jasmine.createSpy('ajax')
-    @sync = new BH.Persistence.Sync '123123123', @ajax, @state
+    @sync = new BH.Persistence.Remote '123123123', @ajax, @state
 
   describe '#performRequest', ->
     beforeEach ->

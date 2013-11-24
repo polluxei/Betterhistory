@@ -12,15 +12,6 @@ load = ->
     chrome: chrome
     tracker: analyticsTracker
 
-  window.persistence = new BH.Init.Persistence
-    localStore: new BH.Lib.LocalStore
-      chrome: chrome
-      tracker: analyticsTracker
-    syncStore: new BH.Lib.SyncStore
-      chrome: chrome
-      tracker: analyticsTracker
-    ajax: $.ajax
-
   syncStore.get 'authId', (data = {}) ->
     $('body').addClass 'logged_in' if data.authId?
 
@@ -33,6 +24,17 @@ load = ->
 
   settings = new BH.Models.Settings({})
   window.state = new BH.Models.State({}, settings: settings)
+
+  window.persistence = new BH.Init.Persistence
+    localStore: new BH.Lib.LocalStore
+      chrome: chrome
+      tracker: analyticsTracker
+    syncStore: new BH.Lib.SyncStore
+      chrome: chrome
+      tracker: analyticsTracker
+    ajax: $.ajax
+    state: state
+
   settings.fetch
     success: =>
       state.fetch

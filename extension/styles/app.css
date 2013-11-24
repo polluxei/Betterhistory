@@ -1,3 +1,6 @@
+.auth_error_view .page {
+  width: 400px;
+}
 .initial_syncing_view .content-area,
 .syncing_decision_view .content-area {
   text-align: center;

@@ -74,8 +74,21 @@ describe 'BH.Models.Tag', ->
           }
         ]
 
-    it 'calls to the persistence layer removing the site', ->
-      @tag.removeSite 'http://www.recipes.com/pound_cake', (sites) ->
+      persistence.tag().fetchSiteTags.andCallFake (url, callback) ->
+        callback(['freshly fetched tags'])
+
+      @tag.set sites: [{
+        title: 'Pound Cake'
+        url: 'http://www.recipes.com/pound_cake'
+        datetime: new Date('4/2/13').getTime()
+      }, {
+        title: 'Angel Food Cake'
+        url: 'http://www.recipes.com/food'
+        datetime: new Date('4/2/13').getTime()
+      }]
+
+    it 'updates the model with local store updates', ->
+      @tag.removeSite 'http://www.recipes.com/pound_cake'
       expect(@tag.toJSON()).toEqual
         name: 'recipes',
         sites: [
@@ -85,6 +98,19 @@ describe 'BH.Models.Tag', ->
             datetime: new Date('4/2/13').getTime()
           }
         ]
+
+    it 'calls to the remote persistence layer to update the site', ->
+      @tag.removeSite 'http://www.recipes.com/pound_cake'
+      expect(persistence.remote().updateSite).toHaveBeenCalledWith
+        title: 'Pound Cake'
+        url: 'http://www.recipes.com/pound_cake'
+        datetime: new Date('4/2/13').getTime()
+        tags: ['freshly fetched tags']
+
+    it 'does not call to the remote persistence layer when the user has no authId', ->
+      global.user.logout()
+      @tag.removeSite 'http://www.recipes.com/pound_cake'
+      expect(persistence.remote().updateSite).not.toHaveBeenCalled()
 
   describe '#renameTag', ->
     beforeEach ->

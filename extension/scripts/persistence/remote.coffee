@@ -7,6 +7,9 @@ class BH.Persistence.Remote
   host: ->
     "http://#{apiHost}"
 
+  updateAuthId: (authId) ->
+    @authId = authId
+
   performRequest: (options = {}) ->
     @state.set(syncing: true)
 
@@ -18,8 +21,15 @@ class BH.Persistence.Remote
       headers:
         authorization: @authId
       error: (data, type) ->
-        error(data, type)
-        options.error(data, type) if options.error?
+        if data.status == 403
+          user.logout()
+          chrome.identity.getAuthToken (token) ->
+            chrome.identity.removeCachedAuthToken token: token, ->
+              authErrorView = new BH.Views.AuthErrorView()
+              authErrorView.open()
+        else
+          error(data, type)
+          options.error(data, type) if options.error?
       success: (data) ->
         options.success(data) if options.success?
       complete: =>

@@ -33,6 +33,7 @@ class BH.Lib.UserProcessor
 
   loggedIn: (userData) ->
     persistence.tag().fetchTags (tags) =>
+      debugger
       if userData.numberOfSites == 0 && tags.length != 0
         @initialSync('push', userData)
       else if userData.numberOfSites != 0 && tags.length == 0
@@ -82,7 +83,7 @@ class BH.Lib.UserProcessor
         else
           syncingTranslator = new BH.Lib.SyncingTranslator()
           syncingTranslator.forServer compiledTags, (sites) ->
-            persistence.remote(userData.authId).updateSites sites, ->
+            persistence.remote().updateSites sites, ->
               setTimeout (-> callback()), 2000
 
   pullRemoteTags: (userData, callback) ->

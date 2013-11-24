@@ -27,6 +27,7 @@ class BH.Views.SettingsView extends BH.Views.MainView
     @model.on 'change:openLocation', @options.state.updateRoute, @options.state
     @model.on 'change:startingWeekDay', @options.state.updateRoute, @options.state
     window.user.on 'login', @onUserLogIn, @
+    window.user.on 'logout', @onUserLogout, @
     @on 'selected', @activateSocialLinks, @
 
   pageTitle: ->
@@ -38,12 +39,13 @@ class BH.Views.SettingsView extends BH.Views.MainView
     @$('.name').text("#{user.get('firstName')} #{user.get('lastName')}")
     @$('.logged_in').show()
 
-  clickedLogout: (ev) ->
-    ev.preventDefault()
+  onUserLogout: ->
     @$('.logged_out').show()
     @$('.logged_in').hide()
+
+  clickedLogout: (ev) ->
+    ev.preventDefault()
     user.logout()
-    persistence.tag().clearAll()
 
   activateSocialLinks: ->
     !((d,s,id) ->

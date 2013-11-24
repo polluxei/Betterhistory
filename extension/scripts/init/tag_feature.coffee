@@ -11,7 +11,5 @@ class BH.Init.TagFeature
     @syncStore.get 'tagInstructionsDismissed', (data) =>
       tagInstructionsDismissed = data.tagInstructionsDismissed || false
 
-      persistence.tag().fetchTags (data) ->
-        tags = data?.tags
-
-        callback() if !tagInstructionsDismissed && !_.isArray(tags)
+      persistence.tag().fetchTags (tags) ->
+        callback() if !tagInstructionsDismissed && tags.length == 0

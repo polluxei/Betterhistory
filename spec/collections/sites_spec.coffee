@@ -1,5 +1,8 @@
 describe 'BH.Collections.Site', ->
   beforeEach ->
+    global.user = new BH.Models.User
+    global.user.login(authId: 123412341234)
+
     persistence.tag().addSitesToTag.andCallFake (sites, tag, callback) ->
         callback()
     persistence.tag().removeSitesFromTag.andCallFake (sites, tag, callback) ->
