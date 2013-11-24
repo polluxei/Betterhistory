@@ -33,7 +33,6 @@ class BH.Lib.UserProcessor
 
   loggedIn: (userData) ->
     persistence.tag().fetchTags (tags) =>
-      debugger
       if userData.numberOfSites == 0 && tags.length != 0
         @initialSync('push', userData)
       else if userData.numberOfSites != 0 && tags.length == 0
