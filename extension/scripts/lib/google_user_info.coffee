@@ -10,6 +10,11 @@ class BH.Lib.GoogleUserInfo
           if data.sub?
             callbacks.success(data)
           else
-            callback.error()
+            callbacks.error()
         error: (data) ->
-          callback.error()
+          callbacks.error() if callbacks.errors
+
+  revoke: ->
+    chrome.identity.getAuthToken (token) ->
+      $.get "https://accounts.google.com/o/oauth2/revoke?token=#{token}"
+      chrome.identity.removeCachedAuthToken token: token, ->
