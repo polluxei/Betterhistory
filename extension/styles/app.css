@@ -260,7 +260,7 @@ body.new_tags .menu .tags.pulse .new {
   -webkit-transition: all .25s ease-in-out;
 }
 .visit.expanded .hide_visits {
-  display: block;
+  display: inline-block;
 }
 .visit.expanded .show_visits {
   display: none;
@@ -269,7 +269,23 @@ body.new_tags .menu .tags.pulse .new {
   display: none;
 }
 .visit .show_visits {
-  display: block;
+  display: inline-block;
+}
+.visit .show_visits,
+.visit .hide_visits {
+  padding: 1px 3px;
+}
+.visit .show_visits:hover,
+.visit .hide_visits:hover {
+  background: #DDD;
+  border-radius: 2px;
+  color: #777;
+}
+.chrome-bootstrap .show_visits:hover .arrow {
+  border-left-color: #777;
+}
+.chrome-bootstrap .hide_visits:hover .arrow {
+  border-top-color: #777;
 }
 .visits li.visit:hover > .drag_handle {
   display: block;
