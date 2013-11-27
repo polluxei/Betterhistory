@@ -180,3 +180,68 @@ describe 'BH.Trackers.AnalyticsTracker', ->
     it 'tracks a tag share click', ->
       @analyticsTracker.shareClicked()
       expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Tag', 'Shared'])
+
+  describe '#getStartedSyncingModalSeen', ->
+    it 'tracks visibility of Get Started modal', ->
+      @analyticsTracker.getStartedSyncingModalSeen()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Get Started Modal', 'Seen'])
+
+  describe '#getStartedSyncingContinueClicked', ->
+    it 'tracks clicks on Continue in Get Started modal', ->
+      @analyticsTracker.getStartedSyncingContinueClicked()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Get Started Modal', 'Continue Click'])
+
+  describe '#getStartedSyncingCancelClicked', ->
+    it 'tracks clicks on Cancel in Get Started modal', ->
+      @analyticsTracker.getStartedSyncingCancelClicked()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Get Started Modal', 'Cancel Click'])
+
+  describe '#syncPurchaseSuccess', ->
+    it 'tracks successful sync purchases', ->
+      @analyticsTracker.syncPurchaseSuccess()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Sync', 'Purchased', 'Success'])
+
+  describe '#syncPurchaseFailure', ->
+    it 'tracks successful sync purchases', ->
+      @analyticsTracker.syncPurchaseFailure()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Sync', 'Purchased', 'Failure'])
+
+  describe '#syncDecisionModalSeen', ->
+    it 'tracks the visibility of the sync decision modal', ->
+      @analyticsTracker.syncDecisionModalSeen()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Sync Decision Modal', 'Seen'])
+
+  describe '#syncAutomaticModalSeen', ->
+    it 'tracks the visibility of the sync automatic modal', ->
+      @analyticsTracker.syncAutomaticModalSeen()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'Sync Automatic Modal', 'Seen'])
+
+  describe '#userLoggedIn', ->
+    it 'tracks the logging in of a user', ->
+      @analyticsTracker.userLoggedIn()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'User', 'Log In'])
+
+  describe '#userLoggedOut', ->
+    it 'tracks the logging out of a user', ->
+      @analyticsTracker.userLoggedOut()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'User', 'Log Out'])
+
+  describe '#userCreationFailure', ->
+    it 'tracks the failure of a user creation', ->
+      @analyticsTracker.userCreationFailure()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'User', 'Creation', 'Failure'])
+
+  describe '#userCreationSuccess', ->
+    it 'tracks the success of a user creation', ->
+      @analyticsTracker.userCreationSuccess()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'User', 'Creation', 'Success'])
+
+  describe '#userOAuthFailure', ->
+    it 'tracks the failure of a user oauth', ->
+      @analyticsTracker.userOAuthFailure()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'User', 'OAuth', 'Failure'])
+
+  describe '#userOAuthSuccess', ->
+    it 'tracks the success of a user oauth', ->
+      @analyticsTracker.userOAuthSuccess()
+      expect(@analytics.push).toHaveBeenCalledWith(['_trackEvent', 'User', 'OAuth', 'Success'])

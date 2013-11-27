@@ -14,6 +14,7 @@ class BH.Views.InitialSyncingView extends BH.Views.ModalView
 
   render: ->
     @$el.html(@renderTemplate(@getI18nValues()))
+    @tracker.syncAutomaticModalSeen()
     return this
 
   continueClicked: (ev) ->

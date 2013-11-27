@@ -10,7 +10,7 @@ class BH.Views.SignUpInfoView extends BH.Views.ModalView
 
   initialize: ->
     @chromeAPI = chrome
-    @tracker = @options.tracker
+    @tracker = analyticsTracker
     @attachGeneralEvents()
 
   render: ->
@@ -28,6 +28,8 @@ class BH.Views.SignUpInfoView extends BH.Views.ModalView
       error: =>
           @closeRegistration()
 
+    @tracker.getStartedSyncingModalSeen()
+
     return this
 
   closeRegistration: ->
@@ -39,10 +41,12 @@ class BH.Views.SignUpInfoView extends BH.Views.ModalView
   cancelClicked: (ev) ->
     ev.preventDefault()
     @close()
+    @tracker.getStartedSyncingCancelClicked()
 
   continueClicked: (ev) ->
     ev.preventDefault()
     @close()
+    @tracker.getStartedSyncingContinueClicked()
 
     userProcessor = new BH.Lib.UserProcessor()
     userProcessor.start()

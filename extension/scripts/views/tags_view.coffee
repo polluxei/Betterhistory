@@ -72,7 +72,6 @@ class BH.Views.TagsView extends BH.Views.MainView
     userProcessor.start()
 
   onHowToTagClicked: (ev) ->
-    @tracker.howToTagClick()
     ev.preventDefault()
     howToTagView = new BH.Views.HowToTagView()
     howToTagView.open()

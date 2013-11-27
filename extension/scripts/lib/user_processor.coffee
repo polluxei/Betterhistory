@@ -1,8 +1,12 @@
 class BH.Lib.UserProcessor
+  constructor: ->
+    @tracker = analyticsTracker
+
   start: ->
     googleUserInfo = new BH.Lib.GoogleUserInfo()
     googleUserInfo.fetch
       success: (userInfo) =>
+        @tracker.userOAuthSuccess()
         sub = userInfo.sub
         $.ajax
           url: "http://#{window.apiHost}/user"
@@ -18,20 +22,26 @@ class BH.Lib.UserProcessor
             if data.purchased
               @loggedIn(data)
             else
+              @tracker.userCreationSuccess()
               $.post "http://#{window.apiHost}/purchase/payment_token", {authId: data.authId}, (result) =>
                 google.payments.inapp.buy
                   parameters: {}
                   jwt: result.jwt
                   success: =>
                     @loggedIn(data)
+                    @tracker.syncPurchaseSuccess()
                   failure: ->
                     # purchase failure
+                    @tracker.syncPurchaseFailure()
           error: ->
             alert('There was a problem creating an account. Please contact hello@better-history.com')
+            @tracker.userCreationFailure()
       error: ->
         alert('There was a problem authorizing with Google. Please contact hello@better-history.com')
+        @tracker.userOAuthFailure()
 
   loggedIn: (userData) ->
+    @tracker.userLoggedIn()
     persistence.tag().fetchTags (tags) =>
       if userData.numberOfSites == 0 && tags.length != 0
         @initialSync('push', userData)
@@ -46,6 +56,7 @@ class BH.Lib.UserProcessor
     syncingDecisionView = new BH.Views.SyncingDecisionView
       model: new Backbone.Model(userData)
     syncingDecisionView.open()
+
     syncingDecisionView.on 'decision', (decision) =>
 
       if decision == 'push'

@@ -16,6 +16,7 @@ class BH.Views.SyncingDecisionView extends BH.Views.ModalView
 
   render: ->
     @$el.html(@renderTemplate(@getI18nValues()))
+    @tracker.syncDecisionModalSeen()
     return this
 
   pushClicked: (ev) ->
