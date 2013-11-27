@@ -11,7 +11,7 @@ class BH.Views.SyncingDecisionView extends BH.Views.ModalView
 
   initialize: ->
     @chromeAPI = chrome
-    @tracker = @options.tracker
+    @tracker = analyticsTracker
     @attachGeneralEvents()
 
   render: ->
