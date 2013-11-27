@@ -21,6 +21,9 @@ load = ->
   window.user.fetch()
   window.user.on 'change', ->
     @trigger('login') if @get('authId')
+  window.user.on 'logout', ->
+    googleUserInfo = new BH.Lib.GoogleUserInfo()
+    googleUserInfo.revoke()
 
   settings = new BH.Models.Settings({})
   window.state = new BH.Models.State({}, settings: settings)

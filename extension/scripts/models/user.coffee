@@ -19,9 +19,6 @@ class BH.Models.User extends Backbone.Model
     @loggedIn = true
 
   logout: ->
-    googleUserInfo = new BH.Lib.GoogleUserInfo()
-    googleUserInfo.revoke()
-
     @clear(silent: true)
     @save()
     @trigger('logout')
