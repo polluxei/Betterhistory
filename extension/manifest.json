@@ -4,7 +4,7 @@
   "manifest_version": 2,
   "description": "__MSG_manifest_description__",
   "default_locale":"en",
-  "minimum_chrome_version": "22",
+  "minimum_chrome_version": "29",
   "omnibox": {
     "keyword" : "__MSG_history_title__"
   },
