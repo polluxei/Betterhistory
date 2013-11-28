@@ -45,6 +45,15 @@
 .settings_view .logged_in {
   display: none;
 }
+.settings_view .logged_out {
+  display: -webkit-box;
+}
+.settings_view .logged_out p {
+  margin: 0;
+}
+.settings_view .login_spinner {
+  margin-top: 0;
+}
 .settings_view .name {
   margin-bottom: 5px;
 }

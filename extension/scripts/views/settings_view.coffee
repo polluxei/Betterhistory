@@ -39,10 +39,12 @@ class BH.Views.SettingsView extends BH.Views.MainView
     @$('.avatar').attr('src', user.get('avatar'))
     @$('.name').text("#{user.get('firstName')} #{user.get('lastName')}")
     @$('.logged_in').show()
+    @$('.login_spinner').hide()
 
   onUserLogout: ->
     @$('.logged_out').show()
     @$('.logged_in').hide()
+    @$('.login_spinner').hide()
 
   clickedLogout: (ev) ->
     ev.preventDefault()
@@ -96,6 +98,7 @@ class BH.Views.SettingsView extends BH.Views.MainView
     ev.preventDefault()
     userProcessor = new BH.Lib.UserProcessor()
     userProcessor.start()
+    @$('.login_spinner').show()
 
   changedTimeGrouping: (ev) ->
     @model.set timeGrouping: $(ev.currentTarget).val()
