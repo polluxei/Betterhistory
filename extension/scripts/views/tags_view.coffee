@@ -43,6 +43,7 @@ class BH.Views.TagsView extends BH.Views.MainView
   onLoggedIn: ->
     @$('.sync_promo').hide()
     @$('.sync_enabled').show()
+    @$('.login_spinner').hide()
 
   onLoggedOut: ->
     @$('.sync_promo').show()
@@ -70,6 +71,7 @@ class BH.Views.TagsView extends BH.Views.MainView
     ev.preventDefault()
     userProcessor = new BH.Lib.UserProcessor()
     userProcessor.start()
+    @$('.login_spinner').show()
 
   onHowToTagClicked: (ev) ->
     ev.preventDefault()

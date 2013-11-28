@@ -33,24 +33,37 @@ class BH.Lib.UserProcessor
                   failure: ->
                     # purchase failure
                     @tracker.syncPurchaseFailure()
-          error: ->
+          error: =>
             alert('There was a problem creating an account. Please contact hello@better-history.com')
             @tracker.userCreationFailure()
-      error: ->
+            $('.login_spinner').hide()
+      error: =>
         alert('There was a problem authorizing with Google. Please contact hello@better-history.com')
         @tracker.userOAuthFailure()
+        $('.login_spinner').hide()
 
   loggedIn: (userData) ->
     @tracker.userLoggedIn()
-    persistence.tag().fetchTags (tags) =>
-      if userData.numberOfSites == 0 && tags.length != 0
-        @initialSync('push', userData)
-      else if userData.numberOfSites != 0 && tags.length == 0
-        @initialSync('pull', userData)
-      else if userData.numberOfSites == 0 && tags.length == 0
-        @initialSync('push', userData) # doesn't really matter
+    persistence.tag().fetchTags (tags, compiledTags) =>
+      if tags.length > 0
+        syncingTranslator = new BH.Lib.SyncingTranslator()
+        syncingTranslator.forServer compiledTags, (sites) =>
+
+          sitesHasher = new BH.Lib.SitesHasher(CryptoJS.SHA1)
+          sites = sitesHasher.generate(sites).toString()
+
+          if userData.sites?
+            if userData.sites == sites
+              @initialSync(null, userData)
+            else
+              @syncDecision(userData)
+          else
+            if tags.length != 0
+              @initialSync('push', userData)
+            else
+              @initialSync('push', userData) # doesn't really matter
       else
-        @syncDecision(userData)
+        @initialSync('pull', userData)
 
   syncDecision: (userData) ->
     syncingDecisionView = new BH.Views.SyncingDecisionView
@@ -78,9 +91,11 @@ class BH.Lib.UserProcessor
       if direction == 'push'
         @pushLocalTags userData, ->
           initialSyncingView.doneSyncing()
-      else
+      else if direction == 'pull'
         @pullRemoteTags userData, ->
           initialSyncingView.doneSyncing()
+      else if direction == null
+        initialSyncingView.doneSyncing()
 
     initialSyncingView.on 'syncingComplete', ->
       window.user.login(userData)

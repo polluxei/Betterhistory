@@ -28,6 +28,8 @@ class BH.Views.InitialSyncingView extends BH.Views.ModalView
     @$('.syncing').hide()
     @$('.done_syncing').show()
     @$('.website_plug').show()
+    @$('.title').remove()
+    @$('.content-area').css marginTop: 26
     @trigger('syncingComplete')
 
   getI18nValues: ->

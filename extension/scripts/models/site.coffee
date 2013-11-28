@@ -21,15 +21,24 @@ class BH.Models.Site extends Backbone.Model
     # generate a new array to ensure a change event fires
     newTags = _.clone(@get('tags'))
     newTags.push tag
-    @set tags: newTags
+    @set
+      tags: newTags
+      datetime: new Date().getTime()
 
     site =
       url: @get('url')
       title: @get('title')
+      datetime: @get('datetime')
 
     persistence.tag().addSiteToTag site, tag, (operations) =>
       if user.isLoggedIn()
-        persistence.remote().updateSite @toSync()
+        BH.Lib.ImageData.base64 "chrome://favicon/#{site.url}", (data) =>
+          persistence.remote().updateSite
+            url: @get('url')
+            title: @get('title')
+            datetime: @get('datetime')
+            tags: @get('tags')
+            image: data
       callback(true, operations)
 
   removeTag: (tag) ->
@@ -37,15 +46,17 @@ class BH.Models.Site extends Backbone.Model
 
     # generate a new array to ensure a change event fires
     newTags = _.clone(@get('tags'))
-    @set tags: _.without(newTags, tag)
+    @set
+      tags: _.without(newTags, tag)
+      datetime: new Date().getTime()
 
     persistence.tag().removeSiteFromTag @get('url'), tag
 
     if user.isLoggedIn()
-      persistence.remote().updateSite @toSync()
-
-  toSync: ->
-    url: @get('url')
-    title: @get('title')
-    datetime: @get('datetime')
-    tags: @get('tags')
+      BH.Lib.ImageData.base64 "chrome://favicon/#{site.url}", (data) =>
+        persistence.remote().updateSite
+          url: @get('url')
+          title: @get('title')
+          datetime: @get('datetime')
+          tags: @get('tags')
+          image: data

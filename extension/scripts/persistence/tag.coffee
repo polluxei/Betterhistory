@@ -78,7 +78,6 @@ class BH.Persistence.Tag
       @localStore.set data, =>
         @localStore.get tag, (data) =>
           data[tag] ||= []
-          site.datetime = new Date().getTime()
           data[tag].push site
           @localStore.set data, ->
             callback(operations)
@@ -97,7 +96,6 @@ class BH.Persistence.Tag
         @localStore.get tag, (data) =>
           for site in sites
             data[tag] ||= []
-            site.datetime = new Date().getTime()
             data[tag].push site
           @localStore.set data, ->
             callback(operations)

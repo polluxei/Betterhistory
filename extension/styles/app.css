@@ -1,3 +1,15 @@
+.successful_sync {
+  color: #999;
+  font-size: 40px;
+  display: inline-block;
+  background: #EEE;
+  border-radius: 40px;
+  width: 48px;
+}
+.login_spinner {
+  display: none;
+  margin-left:5px;
+}
 .auth_error_view .page {
   width: 400px;
 }

@@ -1268,7 +1268,7 @@
     "description": "title for syncing decision modal"
   },
   "syncing_decision_description": {
-    "message": "Looks like you have synced $strong_open$$amount$ tagged sites$strong_close$. You can choose to pull those sites replacing your local tags or sync your local tags.",
+    "message": "Looks like you have $strong_open$synced tagged sites$strong_close$. You can choose to pull those sites replacing your local tags or sync your local tags. You can view your synced sites by visiting <a href='http://www.better-history.com/me' target='_blank'>better-history.com/me</a>",
     "description": "syncing decision description",
     "placeholders": {
       "amount": {

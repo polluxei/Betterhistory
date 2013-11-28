@@ -50,6 +50,7 @@ class BH.Views.SignUpInfoView extends BH.Views.ModalView
 
     userProcessor = new BH.Lib.UserProcessor()
     userProcessor.start()
+    $('.login_spinner').show()
 
   getI18nValues: ->
     properties = @t ['prompt_cancel_button', 'continue_button', 'sign_up_info_title', 'sign_up_info_description', 'sign_up_info_price']
