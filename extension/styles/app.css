@@ -58,6 +58,10 @@
 .sign_up_info_view .page {
   width: 547px;
 }
+.sign_up_info_view .question {
+  color: #888;
+  width: 389px;
+}
 .sign_up_info_view p {
   width: 360px;
 }

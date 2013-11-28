@@ -53,6 +53,6 @@ class BH.Views.SignUpInfoView extends BH.Views.ModalView
     $('.login_spinner').show()
 
   getI18nValues: ->
-    properties = @t ['prompt_cancel_button', 'continue_button', 'sign_up_info_title', 'sign_up_info_description', 'sign_up_info_price']
+    properties = @t ['prompt_cancel_button', 'continue_button', 'sign_up_info_title', 'sign_up_info_description', 'sign_up_info_price', 'sign_up_info_question']
     properties.i18n_sign_up_info_bullets = @t 'sign_up_info_bullets', ['<li>','</li>', '<a href="http://better-history.com">', '</a>']
     properties

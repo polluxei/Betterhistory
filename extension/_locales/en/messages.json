@@ -1207,6 +1207,10 @@
     "message": "$$15 (a one-time fee)",
     "description": "syncing price"
   },
+  "sign_up_info_question": {
+    "message": "Questions? hello@better-history.com",
+    "description": "sign up questions"
+  },
   "sign_up_temporarily_closed": {
     "message": "Sorry, registration is temporarily closed",
     "description": "closed registration message"
