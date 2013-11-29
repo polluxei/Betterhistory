@@ -45,6 +45,8 @@ class BH.Views.SyncingDecisionView extends BH.Views.ModalView
     @$('.done_syncing').show()
     @$('.website_plug').show()
     @$('.continue').show()
+    @$('.title').remove()
+    @$('.content-area').css marginTop: 26
     @trigger('syncingComplete')
 
   getI18nValues: ->
