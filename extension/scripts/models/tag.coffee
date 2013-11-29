@@ -23,9 +23,8 @@ class BH.Models.Tag extends Backbone.Model
       callback()
 
   removeSite: (url, callback = ->) ->
-    site = _.where(@get('sites'), url: url)[0]
     persistence.tag().removeSiteFromTag url, @get('name'), (sites) =>
-      @trigger 'sync', operation: 'modify'
+      @trigger 'sync', {operation: 'modify', site: _.where(@get('sites'), url: url)[0]}
       @set sites: sites
       callback()
 
@@ -60,6 +59,7 @@ class BH.Models.Tag extends Backbone.Model
       when 'rename'
         persistence.remote().renameTag options.oldName, options.newName
       when 'modify'
-        persistence.tag().fetchSiteTags url, (tags) ->
+        site = options.site
+        persistence.tag().fetchSiteTags site.url, (tags) ->
           site.tags = tags
           persistence.remote().updateSite site
