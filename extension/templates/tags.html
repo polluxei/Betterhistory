@@ -4,9 +4,9 @@
     <input class='search' placeholder='{{i18n_search_input_placeholder_text}}' tabindex='1' type='text' />
   </div>
   <div class='controls'>
-    <span class='text sync_enabled'>{{{i18n_sync_enabled}}}</span>
+    <span class='text sync_enabled' {{#loggedIn}} style='display: block;'{{/loggedIn}}>{{{i18n_sync_enabled}}}</span>
     <span class='text tag_count' style='display: none'>{{i18n_number_of_tags}}</span>
-    <span class='text sync_promo'>{{{i18n_sync_tags_link}}}</span>
+    <span class='text sync_promo' {{#loggedIn}} style='display: none;'{{/loggedIn}}>{{{i18n_sync_tags_link}}}</span>
     <div class='login_spinner small_spinner'></div>
     <div class='spacer'></div>
     <a class='text how_to_tag'>

@@ -26,7 +26,8 @@ class BH.Views.TagsView extends BH.Views.MainView
     @t('tags_title')
 
   render: ->
-    html = Mustache.to_html @template, @getI18nValues()
+    properties = _.extend @getI18nValues(), loggedIn: user.isLoggedIn()
+    html = Mustache.to_html @template, properties
     @$el.append html
     @
 
