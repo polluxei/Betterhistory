@@ -1,6 +1,9 @@
 class BH.Collections.Tags extends Backbone.Collection
   model: BH.Models.Tag
 
+  initialize: ->
+    @on('sync', @sync) if user.isLoggedIn()
+
   fetch: (callback = ->) ->
     persistence.tag().fetchTags (tags, compiledTags) =>
       @tagOrder = tags
@@ -9,3 +12,9 @@ class BH.Collections.Tags extends Backbone.Collection
 
   destroy: (callback = ->)->
     persistence.tag().removeAllTags(callback)
+    @trigger 'sync', operation: 'destroy'
+
+  sync: (options) ->
+    switch options.operations
+      when 'destroy'
+        persistence.remote().deleteSites()

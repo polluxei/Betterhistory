@@ -1,4 +1,7 @@
 class BH.Models.Tag extends Backbone.Model
+  initialize: ->
+    @on('sync', @sync) if user.isLoggedIn()
+
   validate: (attrs, options) ->
     name = attrs.name.replace(/^\s\s*/, '').replace(/\s\s*$/, '')
 
@@ -15,25 +18,20 @@ class BH.Models.Tag extends Backbone.Model
 
   destroy: (callback = ->) ->
     persistence.tag().removeTag @get('name'), =>
-      if user.isLoggedIn()
-        persistence.remote().deleteTag @get('name')
+      @trigger 'sync', operation: 'destroy'
       @set sites: []
       callback()
 
   removeSite: (url, callback = ->) ->
     site = _.where(@get('sites'), url: url)[0]
     persistence.tag().removeSiteFromTag url, @get('name'), (sites) =>
-      if user.isLoggedIn()
-        persistence.tag().fetchSiteTags url, (tags) ->
-          site.tags = tags
-          persistence.remote().updateSite site
+      @trigger 'sync', operation: 'modify'
       @set sites: sites
       callback()
 
   renameTag: (name, callback = ->) ->
     persistence.tag().renameTag @get('name'), name, =>
-      if user.isLoggedIn()
-        persistence.remote().renameTag @get('name'), name
+      @trigger 'sync', {operation: 'rename', newName: name, oldName: @get('name')}
       @set name: name
       callback()
 
@@ -54,3 +52,14 @@ class BH.Models.Tag extends Backbone.Model
               callbacks.success(data)
             error: ->
               callbacks.error()
+
+  sync: (options) ->
+    switch options.operation
+      when 'destroy'
+        persistence.remote().deleteTag @get('name')
+      when 'rename'
+        persistence.remote().renameTag options.oldName, options.newName
+      when 'modify'
+        persistence.tag().fetchSiteTags url, (tags) ->
+          site.tags = tags
+          persistence.remote().updateSite site

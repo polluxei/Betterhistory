@@ -2,6 +2,8 @@ class BH.Models.Site extends Backbone.Model
   initialize: (attrs = {}, options = {}) ->
     @chromeAPI = options.chrome
 
+    @on('change', @sync) if user.isLoggedIn()
+
   fetch: (callback = ->) ->
     persistence.tag().fetchSiteTags @get('url'), (tags) =>
       @set tags: tags
@@ -31,15 +33,16 @@ class BH.Models.Site extends Backbone.Model
       datetime: @get('datetime')
 
     persistence.tag().addSiteToTag site, tag, (operations) =>
-      if user.isLoggedIn()
-        BH.Lib.ImageData.base64 "chrome://favicon/#{site.url}", (data) =>
-          persistence.remote().updateSite
-            url: @get('url')
-            title: @get('title')
-            datetime: @get('datetime')
-            tags: @get('tags')
-            image: data
       callback(true, operations)
+
+  sync: ->
+    BH.Lib.ImageData.base64 "chrome://favicon/#{@get('url')}", (data) =>
+      persistence.remote().updateSite
+        url: @get('url')
+        title: @get('title')
+        datetime: @get('datetime')
+        tags: @get('tags')
+        image: data
 
   removeTag: (tag) ->
     return false if @get('tags').indexOf(tag) == -1
@@ -51,12 +54,3 @@ class BH.Models.Site extends Backbone.Model
       datetime: new Date().getTime()
 
     persistence.tag().removeSiteFromTag @get('url'), tag
-
-    if user.isLoggedIn()
-      BH.Lib.ImageData.base64 "chrome://favicon/#{site.url}", (data) =>
-        persistence.remote().updateSite
-          url: @get('url')
-          title: @get('title')
-          datetime: @get('datetime')
-          tags: @get('tags')
-          image: data
