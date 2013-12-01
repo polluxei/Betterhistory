@@ -160,6 +160,7 @@ describe 'BH.Persistence.Tag', ->
       @site =
         url: 'http://www.recipes.com/pound_cake'
         title: 'Pound cake recipes'
+        datetime: 1351029600000
 
       @persistence.localStore.get.andCallFake (key, callback) ->
         callback {}
@@ -264,9 +265,11 @@ describe 'BH.Persistence.Tag', ->
       @sites = [{
         url: 'http://www.recipes.com/pound_cake'
         title: 'Pound cake recipes'
+        datetime: 1351029600000
       }, {
         url: 'http://www.recipes.com/fruit_cake'
         title: 'Fruit cake recipes'
+        datetime: 1351029600000
       }]
 
       @persistence.localStore.get.andCallFake (key, callback) ->

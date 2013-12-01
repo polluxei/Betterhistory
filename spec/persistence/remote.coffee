@@ -23,27 +23,47 @@ describe 'BH.Persistence.Remote', ->
       expect(@state.set).toHaveBeenCalledWith(syncing: false)
 
   describe '#share', ->
-    it 'calls to ajax with stringified tag data', ->
-      @sync.share
-        name: 'camping'
-        site: [
-          title: 'Camping the World'
-          url: 'http://www.camping.com'
-          datetime: 1231234
-        ]
+    describe 'when logged out', ->
+      it 'calls to the logged out share endpoint with stringified tag data', ->
+        @sync.share
+          name: 'camping'
+          site: [
+            title: 'Camping the World'
+            url: 'http://www.camping.com'
+            datetime: 1231234
+          ]
 
-      expect(@ajax).toHaveBeenCalledWith
-        url: 'http://api.better-history.com/share'
-        type: 'POST'
-        contentType: 'application/json'
-        dataType: 'json'
-        headers:
-          authorization: '123123123'
-        data: '{"url":"http://www.camping","title":"Camping the World","datetime":1231234,"tags":["camping","outdoors"]}'
-        error: jasmine.any(Function)
-        success: jasmine.any(Function)
-        complete: jasmine.any(Function)
+        expect(@ajax).toHaveBeenCalledWith
+          url: 'http://api.better-history.com/share'
+          type: 'POST'
+          contentType: 'application/json'
+          dataType: 'json'
+          data: '{"url":"http://www.camping","title":"Camping the World","datetime":1231234,"tags":["camping","outdoors"]}'
+          error: jasmine.any(Function)
+          success: jasmine.any(Function)
+          complete: jasmine.any(Function)
 
+    describe 'when logged in', ->
+      it 'calls to the logged in share endpoint with stringified tag data', ->
+        @sync.share
+          name: 'camping'
+          site: [
+            title: 'Camping the World'
+            url: 'http://www.camping.com'
+            datetime: 1231234
+          ]
+
+        expect(@ajax).toHaveBeenCalledWith
+          url: 'http://api.better-history.com/user/share'
+          type: 'POST'
+          contentType: 'application/json'
+          dataType: 'json'
+          headers:
+            authorization: '123123123'
+          data: '{"url":"http://www.camping","title":"Camping the World","datetime":1231234,"tags":["camping","outdoors"]}'
+          error: jasmine.any(Function)
+          success: jasmine.any(Function)
+          complete: jasmine.any(Function)
   describe '#updateSite', ->
     it 'calls to ajax with stringified site data', ->
       @sync.updateSite

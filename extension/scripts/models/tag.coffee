@@ -1,6 +1,6 @@
 class BH.Models.Tag extends Backbone.Model
   initialize: ->
-    @on('sync', @sync) if user.isLoggedIn()
+    @on('sync', @sync)
 
   validate: (attrs, options) ->
     name = attrs.name.replace(/^\s\s*/, '').replace(/\s\s*$/, '')
@@ -53,13 +53,14 @@ class BH.Models.Tag extends Backbone.Model
               callbacks.error()
 
   sync: (options) ->
-    switch options.operation
-      when 'destroy'
-        persistence.remote().deleteTag @get('name')
-      when 'rename'
-        persistence.remote().renameTag options.oldName, options.newName
-      when 'modify'
-        site = options.site
-        persistence.tag().fetchSiteTags site.url, (tags) ->
-          site.tags = tags
-          persistence.remote().updateSite site
+    if user.isLoggedIn()
+      switch options.operation
+        when 'destroy'
+          persistence.remote().deleteTag @get('name')
+        when 'rename'
+          persistence.remote().renameTag options.oldName, options.newName
+        when 'modify'
+          site = options.site
+          persistence.tag().fetchSiteTags site.url, (tags) ->
+            site.tags = tags
+            persistence.remote().updateSite site

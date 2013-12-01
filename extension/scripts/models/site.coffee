@@ -2,7 +2,7 @@ class BH.Models.Site extends Backbone.Model
   initialize: (attrs = {}, options = {}) ->
     @chromeAPI = options.chrome
 
-    @on('change', @sync) if user.isLoggedIn()
+    @on('change', @sync)
 
   fetch: (callback = ->) ->
     persistence.tag().fetchSiteTags @get('url'), (tags) =>
@@ -36,13 +36,14 @@ class BH.Models.Site extends Backbone.Model
       callback(true, operations)
 
   sync: ->
-    BH.Lib.ImageData.base64 "chrome://favicon/#{@get('url')}", (data) =>
-      persistence.remote().updateSite
-        url: @get('url')
-        title: @get('title')
-        datetime: @get('datetime')
-        tags: @get('tags')
-        image: data
+    if user.isLoggedIn()
+      BH.Lib.ImageData.base64 "chrome://favicon/#{@get('url')}", (data) =>
+        persistence.remote().updateSite
+          url: @get('url')
+          title: @get('title')
+          datetime: @get('datetime')
+          tags: @get('tags')
+          image: data
 
   removeTag: (tag) ->
     return false if @get('tags').indexOf(tag) == -1

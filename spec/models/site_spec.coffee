@@ -1,5 +1,7 @@
 describe 'BH.Models.Site', ->
   beforeEach ->
+    timekeeper.freeze(new Date(1351029600000))
+
     global.user = new BH.Models.User
     global.user.login(authId: 123412341234)
 
@@ -42,6 +44,7 @@ describe 'BH.Models.Site', ->
         url: 'http://www.recipes.com/pound_cake'
         title: 'Pound cake recipes'
         tags: ['cooking']
+      , silent: true
 
     it 'calls the callback with false if the tag is found in the tags', ->
       @site.addTag('cooking', @callback)
@@ -76,6 +79,7 @@ describe 'BH.Models.Site', ->
         site =
           url: @site.get('url')
           title: @site.get('title')
+          datetime: 1351029600000
         expect(persistence.tag().addSiteToTag).toHaveBeenCalledWith(site, 'recipes', jasmine.any(Function))
 
       it 'calls to the sync persistence layer to update the site', ->
@@ -84,7 +88,8 @@ describe 'BH.Models.Site', ->
         expect(persistence.remote().updateSite).toHaveBeenCalledWith
           url: 'http://www.recipes.com/pound_cake'
           title: 'Pound cake recipes'
-          datetime: undefined
+          datetime: 1351029600000
+          image : 'favicon image'
           tags: ['cooking', 'recipes']
 
       it 'does not call to the sync persistence layer when the user has no authId ', ->
@@ -106,6 +111,7 @@ describe 'BH.Models.Site', ->
         url: 'http://www.recipes.com/pound_cake'
         title: 'Pound cake recipes'
         tags: ['cooking', 'recipes']
+      , silent: true
 
     it 'returns false if the tag is not present in the tags', ->
       expect(@site.removeTag('auto')).toEqual false
@@ -122,7 +128,8 @@ describe 'BH.Models.Site', ->
         expect(persistence.remote().updateSite).toHaveBeenCalledWith
           url: 'http://www.recipes.com/pound_cake'
           title: 'Pound cake recipes'
-          datetime: undefined
+          datetime: 1351029600000
+          image : 'favicon image'
           tags: ['cooking']
 
       it 'does not call to the sync persistence layer when the user has no authId ', ->
