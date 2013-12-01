@@ -23,35 +23,40 @@ describe 'BH.Persistence.Remote', ->
       expect(@state.set).toHaveBeenCalledWith(syncing: false)
 
   describe '#share', ->
+    beforeEach ->
+      @tag =
+        name: 'camping'
+        site: [
+          title: 'Camping the World'
+          url: 'http://www.camping.com'
+          datetime: 1231234
+        ]
+
     describe 'when logged out', ->
       it 'calls to the logged out share endpoint with stringified tag data', ->
-        @sync.share
-          name: 'camping'
-          site: [
-            title: 'Camping the World'
-            url: 'http://www.camping.com'
-            datetime: 1231234
-          ]
+        @sync.share @tag,
+          success: ->
+          error: ->
 
         expect(@ajax).toHaveBeenCalledWith
           url: 'http://api.better-history.com/share'
           type: 'POST'
           contentType: 'application/json'
           dataType: 'json'
-          data: '{"url":"http://www.camping","title":"Camping the World","datetime":1231234,"tags":["camping","outdoors"]}'
+          data: '{"name":"camping","site":[{"title":"Camping the World","url":"http://www.camping.com","datetime":1231234}]}'
           error: jasmine.any(Function)
           success: jasmine.any(Function)
           complete: jasmine.any(Function)
 
     describe 'when logged in', ->
+      beforeEach ->
+        global.user = new BH.Models.User
+        global.user.login(authId: 123412341234)
+
       it 'calls to the logged in share endpoint with stringified tag data', ->
-        @sync.share
-          name: 'camping'
-          site: [
-            title: 'Camping the World'
-            url: 'http://www.camping.com'
-            datetime: 1231234
-          ]
+        @sync.share @tag,
+          success: ->
+          error: ->
 
         expect(@ajax).toHaveBeenCalledWith
           url: 'http://api.better-history.com/user/share'
@@ -60,10 +65,11 @@ describe 'BH.Persistence.Remote', ->
           dataType: 'json'
           headers:
             authorization: '123123123'
-          data: '{"url":"http://www.camping","title":"Camping the World","datetime":1231234,"tags":["camping","outdoors"]}'
+          data: '{"name":"camping","site":[{"title":"Camping the World","url":"http://www.camping.com","datetime":1231234}]}'
           error: jasmine.any(Function)
           success: jasmine.any(Function)
           complete: jasmine.any(Function)
+
   describe '#updateSite', ->
     it 'calls to ajax with stringified site data', ->
       @sync.updateSite

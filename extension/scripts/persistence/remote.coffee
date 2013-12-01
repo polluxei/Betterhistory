@@ -18,8 +18,6 @@ class BH.Persistence.Remote
       type: options.type
       contentType: 'application/json'
       dataType: options.dataType || 'text'
-      headers:
-        authorization: @authId
       error: (data, type) ->
         if data.status == 403
           user.logout()
@@ -39,24 +37,35 @@ class BH.Persistence.Remote
 
         options.complete() if options.complete?
 
+    if options.authorization
+      config.headers = authorization: @authId
+
     config.data = JSON.stringify(options.data) if options.data?
 
     @ajax config
 
   share: (tagData, callbacks) ->
-    @performRequest
+    params =
       path: '/share'
       data: tagData
       type: 'POST'
       dataType: 'json'
       success: callbacks.success
       error: callbacks.error
+      authorization: false
+
+    if user.isLoggedIn()
+      params.path = '/user/share'
+      params.authorization = true
+
+    @performRequest params
 
   updateSite: (site) ->
     @performRequest
       path: '/user/site'
       type: 'POST'
       data: site
+      authorization: true
 
   updateSites: (sites, callback = ->) ->
     @performRequest
@@ -64,6 +73,7 @@ class BH.Persistence.Remote
       type: 'POST'
       data: sites
       success: callback
+      authorization: true
 
   getSites: (callback) ->
     @performRequest
@@ -71,20 +81,24 @@ class BH.Persistence.Remote
       type: 'GET'
       dataType: 'json'
       success: callback
+      authorization: true
 
   renameTag: (oldName, newName) ->
     @performRequest
       path: "/user/tags/#{oldName}/rename"
       type: 'PUT'
       data: {name: newName}
+      authorization: true
 
   deleteTag: (name) ->
     @performRequest
       path: "/user/tags/#{name}"
       type: 'DELETE'
+      authorization: true
 
   deleteSites: (callback = ->) ->
     @performRequest
       path: '/user/sites'
       type: 'DELETE'
       success: callback
+      authorization: true
