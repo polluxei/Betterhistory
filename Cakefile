@@ -150,6 +150,8 @@ scripts = [
   'scripts/views/initial_syncing_view.js',
   'scripts/views/syncing_decision_view.js',
   'scripts/views/auth_error_view.js',
+  'scripts/views/server_error_view.js',
+  'scripts/views/connection_required_view.js',
   'scripts/models/history.js',
   'scripts/models/day.js',
   'scripts/models/day_history.js',

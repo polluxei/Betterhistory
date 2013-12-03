@@ -588,6 +588,10 @@
     "message": "Done",
     "description": "Button to dismiss modal"
   },
+  "prompt_okay_button": {
+    "message": "Okay",
+    "description": "Button to dismiss modal"
+  },
   "prompt_title": {
     "message": "Confirm",
     "description": "Title of prompt"
@@ -1308,5 +1312,21 @@
   "login_again_button": {
     "message": "Log in again",
     "description": "log in again button"
+  },
+  "server_error_title": {
+    "message": "Oh no! There was an error...",
+    "description": "server error title"
+  },
+  "server_error_description": {
+    "message": "Looks like we couldn't connect you to the server. We have been alerted of this problem and are on it!",
+    "description": "server error description"
+  },
+  "connection_required_title": {
+    "message": "Internet connection required...",
+    "description": "connection required title"
+  },
+  "connection_required_description": {
+    "message": "It appears you are not connected to the internet, and this requires a connection. Please connect and try again.",
+    "description": "connection required description"
   }
 }

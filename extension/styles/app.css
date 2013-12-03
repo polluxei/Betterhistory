@@ -1,3 +1,15 @@
+.server_error_view .warning,
+.connection_required_view .warning {
+  font-size: 47px;
+  color: #888;
+  float: left;
+  margin: -16px 10px 0 0;
+  height: 52px;
+}
+.server_error_view .page,
+.connection_required_view .page {
+  width: 400px;
+}
 .successful_sync {
   color: #999;
   font-size: 40px;

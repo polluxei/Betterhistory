@@ -96,9 +96,9 @@ class BH.Views.SettingsView extends BH.Views.MainView
 
   clickedSignIn: (ev) ->
     ev.preventDefault()
+    @$('.login_spinner').show()
     userProcessor = new BH.Lib.UserProcessor()
     userProcessor.start()
-    @$('.login_spinner').show()
 
   changedTimeGrouping: (ev) ->
     @model.set timeGrouping: $(ev.currentTarget).val()

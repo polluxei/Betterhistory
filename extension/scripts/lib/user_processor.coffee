@@ -1,46 +1,55 @@
+showServerErrorView = ->
+  serverErrorView = new BH.Views.ServerErrorView()
+  serverErrorView.open()
+
 class BH.Lib.UserProcessor
   constructor: ->
     @tracker = analyticsTracker
 
   start: ->
-    googleUserInfo = new BH.Lib.GoogleUserInfo()
-    googleUserInfo.fetch
-      success: (userInfo) =>
-        @tracker.userOAuthSuccess()
-        sub = userInfo.sub
-        $.ajax
-          url: "http://#{window.apiHost}/user"
-          data:
-            subId: userInfo.sub
-            email: userInfo.email
-            avatar: userInfo.picture
-            firstName: userInfo.given_name
-            lastName: userInfo.family_name
-          type: 'POST'
-          dataType: 'json'
-          success: (data) =>
-            if data.purchased
-              @loggedIn(data)
-            else
-              @tracker.userCreationSuccess()
-              $.post "http://#{window.apiHost}/purchase/payment_token", {authId: data.authId}, (result) =>
-                google.payments.inapp.buy
-                  parameters: {}
-                  jwt: result.jwt
-                  success: =>
-                    @loggedIn(data)
-                    @tracker.syncPurchaseSuccess()
-                  failure: ->
-                    # purchase failure
-                    @tracker.syncPurchaseFailure()
-          error: =>
-            alert('There was a problem creating an account. Please contact hello@better-history.com')
-            @tracker.userCreationFailure()
-            $('.login_spinner').hide()
-      error: =>
-        alert('There was a problem authorizing with Google. Please contact hello@better-history.com')
-        @tracker.userOAuthFailure()
-        $('.login_spinner').hide()
+    if !navigator.onLine
+      $('.login_spinner').hide()
+      connectionRequiredView = new BH.Views.ConnectionRequiredView()
+      connectionRequiredView.open()
+    else
+      googleUserInfo = new BH.Lib.GoogleUserInfo()
+      googleUserInfo.fetch
+        success: (userInfo) =>
+          @tracker.userOAuthSuccess()
+          sub = userInfo.sub
+          $.ajax
+            url: "http://#{window.apiHost}/user"
+            data:
+              subId: userInfo.sub
+              email: userInfo.email
+              avatar: userInfo.picture
+              firstName: userInfo.given_name
+              lastName: userInfo.family_name
+            type: 'POST'
+            dataType: 'json'
+            success: (data) =>
+              if data.purchased
+                @loggedIn(data)
+              else
+                @tracker.userCreationSuccess()
+                $.post "http://#{window.apiHost}/purchase/payment_token", {authId: data.authId}, (result) =>
+                  google.payments.inapp.buy
+                    parameters: {}
+                    jwt: result.jwt
+                    success: =>
+                      @loggedIn(data)
+                      @tracker.syncPurchaseSuccess()
+                    failure: ->
+                      # purchase failure
+                      @tracker.syncPurchaseFailure()
+            error: =>
+              showServerErrorView()
+              @tracker.userCreationFailure()
+              $('.login_spinner').hide()
+        error: =>
+          showServerErrorView()
+          @tracker.userOAuthFailure()
+          $('.login_spinner').hide()
 
   loggedIn: (userData) ->
     @tracker.userLoggedIn()
