@@ -586,6 +586,7 @@ body.chrome-bootstrap .tag_visit_view ul li.site {
 }
 .visit .description {
   background-repeat: no-repeat;
+  background-size: 17px;
   padding: 0;
 }
 .visit dl dt {
