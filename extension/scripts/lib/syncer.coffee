@@ -1,5 +1,5 @@
 class BH.Lib.Syncer
-  updateIfNeeded: ->
+  updateIfNeeded: (callback = ->) ->
     persistence.remote().userInfo (data) ->
       if data.sites?
         persistence.tag().fetchTags (tags, compiledTags) =>
@@ -16,3 +16,4 @@ class BH.Lib.Syncer
                   persistence.remote().getSites (sites) ->
                     data = syncingTranslator.forLocal sites
                     persistence.tag().import data, ->
+                      callback()

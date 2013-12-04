@@ -95,14 +95,14 @@ class BH.Persistence.Remote
 
   renameTag: (oldName, newName) ->
     @performRequest
-      path: "/user/tags/#{oldName}/rename"
+      path: "/user/tags/#{oldName.replace(/\s+/g, '-')}/rename"
       type: 'PUT'
       data: {name: newName}
       authorization: true
 
   deleteTag: (name) ->
     @performRequest
-      path: "/user/tags/#{name}"
+      path: "/user/tags/#{name.replace(/\s+/g, '-')}"
       type: 'DELETE'
       authorization: true
 

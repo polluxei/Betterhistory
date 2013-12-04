@@ -33,7 +33,8 @@ load = ->
 
   window.user.on 'login', ->
     syncer = new BH.Lib.Syncer()
-    syncer.updateIfNeeded()
+    syncer.updateIfNeeded ->
+      tagState.trigger('synced')
 
   settings = new BH.Models.Settings({})
   window.state = new BH.Models.State({}, settings: settings)

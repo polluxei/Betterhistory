@@ -23,6 +23,7 @@ class BH.Views.TagsView extends BH.Views.MainView
     user.on 'login', @onLoggedIn, @
     user.on 'logout', @onLoggedOut, @
     tagState.on 'change:readOnly', @onReadOnlyChange, @
+    tagState.on 'synced', @onSynced, @
 
   pageTitle: ->
     @t('tags_title')
@@ -34,6 +35,11 @@ class BH.Views.TagsView extends BH.Views.MainView
     @
 
   onReadOnlyChange: ->
+    @$el.html ''
+    @render()
+    @collection.fetch()
+
+  onSynced: ->
     @$el.html ''
     @render()
     @collection.fetch()
