@@ -27,6 +27,7 @@ class BH.Views.TaggingView extends BH.Views.MainView
       properties.i18n_search_domain_history_link = @t 'search_domain_history_link', [properties.domain]
       if commands?
         properties.shortcut = _.where(commands, name: '_execute_browser_action')[0].shortcut
+      _.extend properties, tagState.toJSON()
 
       html = Mustache.to_html(@template, properties)
       @tracker.popupVisible()

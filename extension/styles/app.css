@@ -7,8 +7,17 @@
   height: 52px;
 }
 .server_error_view .page,
-.connection_required_view .page {
+.connection_required_view .page,
+.read_only_explanation_view .page,
+.connection_restored_view .page {
   width: 400px;
+}
+.connection_restored_view .successful_sync {
+  float: left;
+  margin: -6px 10px 0 10px;
+  height: 47px;
+  padding-left: 6px;
+  width: 39px;
 }
 .successful_sync {
   color: #999;

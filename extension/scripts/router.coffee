@@ -14,12 +14,14 @@ class BH.Router extends Backbone.Router
     settings = options.settings
     tracker = options.tracker
     @state = options.state
+    tagState = options.tagState
 
     @app = new BH.Views.AppView
       el: $('.app')
       collection: new BH.Collections.Weeks(null, {settings: settings})
       settings: settings
       state: @state
+      tagState: tagState
     @app.render()
 
     @on 'route', (route) =>

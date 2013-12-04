@@ -11,13 +11,15 @@
         {{#visits}}
           {{#isGrouped}}
             <li class='visit grouped_sites' draggable='true' data-id='{{id}}'>
-              <div class='drag_handle'>
-                <div class='line'></div>
-                <div class='line'></div>
-                <div class='line'></div>
-                <div class='line'></div>
-                <div class='line'></div>
-              </div>
+              {{^readOnly}}
+                <div class='drag_handle'>
+                  <div class='line'></div>
+                  <div class='line'></div>
+                  <div class='line'></div>
+                  <div class='line'></div>
+                  <div class='line'></div>
+                </div>
+              {{/readOnly}}
               <a href='{{url}}' class='sites'>
                 <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
                   <dt>
@@ -42,13 +44,15 @@
               <ol class='visits highlightable'>
                 {{#groupedVisits}}
                   <li class='visit' draggable='true' data-id='{{id}}'>
-                    <div class='drag_handle'>
-                      <div class='line'></div>
-                      <div class='line'></div>
-                      <div class='line'></div>
-                      <div class='line'></div>
-                      <div class='line'></div>
-                    </div>
+                    {{^readOnly}}
+                      <div class='drag_handle'>
+                        <div class='line'></div>
+                        <div class='line'></div>
+                        <div class='line'></div>
+                        <div class='line'></div>
+                        <div class='line'></div>
+                      </div>
+                    {{/readOnly}}
                     <a href='{{url}}' class='site'>
                       <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
                         <dt>
@@ -68,13 +72,15 @@
           {{/isGrouped}}
           {{^isGrouped}}
             <li class='visit' draggable='true' data-id='{{id}}'>
-              <div class='drag_handle'>
-                <div class='line'></div>
-                <div class='line'></div>
-                <div class='line'></div>
-                <div class='line'></div>
-                <div class='line'></div>
-              </div>
+              {{^readOnly}}
+                <div class='drag_handle'>
+                  <div class='line'></div>
+                  <div class='line'></div>
+                  <div class='line'></div>
+                  <div class='line'></div>
+                  <div class='line'></div>
+                </div>
+              {{/readOnly}}
               <a href='{{url}}' class='site'>
                 <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
                   <dt>

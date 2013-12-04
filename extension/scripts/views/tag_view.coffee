@@ -10,6 +10,7 @@ class BH.Views.TagView extends BH.Views.MainView
     'click .delete_sites': 'onDeleteSitesClicked'
     'click .rename': 'onRenameClicked'
     'click .share': 'onShareClicked'
+    'click .read_only_explanation': 'onReadOnlyExplanationClicked'
     'keyup .search': 'onSearchTyped'
     'blur .search': 'onSearchBlurred'
 
@@ -24,7 +25,7 @@ class BH.Views.TagView extends BH.Views.MainView
     @t('tag_title', [@options.name])
 
   render: ->
-    properties = _.extend @getI18nValues(), tagsUrl: '#tags'
+    properties = _.extend @getI18nValues(), {tagsUrl: '#tags'}, tagState.toJSON()
     html = Mustache.to_html @template, properties
     @$el.append html
     @
@@ -43,6 +44,11 @@ class BH.Views.TagView extends BH.Views.MainView
     @$('.content').html @taggedSitesView.render().el
     @taggedSitesView.attachDragging()
     @taggedSitesView.insertTags()
+
+  onReadOnlyExplanationClicked: (ev) ->
+    ev.preventDefault()
+    readOnlyExplanationView = new BH.Views.ReadOnlyExplanationView()
+    readOnlyExplanationView.open()
 
   onDeleteSitesClicked: (ev) ->
     @tracker.deleteTagClick()
@@ -103,7 +109,7 @@ class BH.Views.TagView extends BH.Views.MainView
 
   getI18nValues: ->
     name = @options.name.charAt(0).toUpperCase() + @options.name.slice(1)
-    properties = @t ['delete_tag', 'search_input_placeholder_text', 'rename_tag_link', 'share_tag_link']
+    properties = @t ['delete_tag', 'search_input_placeholder_text', 'rename_tag_link', 'share_tag_link', 'read_only_explanation_link']
     properties['i18n_tag_title'] = @t 'tag_title', [name]
     properties['i18n_back_to_tags_link'] = @t('back_to_tags_link', [
       @t('back_arrow')

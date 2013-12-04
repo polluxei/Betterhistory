@@ -1,11 +1,8 @@
 error = (data, type) ->
-  # move into modal view
-  if $('.server_error_view').length == 0
-    serverErrorView = new BH.Views.ServerErrorView()
-    serverErrorView.open()
+  tagState.set(readOnly: true)
 
 class BH.Persistence.Remote
-  constructor: (@authId, @ajax, @state) ->
+  constructor: (@authId, @ajax) ->
 
   host: ->
     "http://#{apiHost}"
@@ -14,8 +11,8 @@ class BH.Persistence.Remote
     @authId = authId
 
   performRequest: (options = {}) ->
-    return unless navigator.onLine
-    @state.set(syncing: true)
+    return error() unless navigator.onLine
+    tagState.set(syncing: true)
 
     config =
       url: @host() + options.path
@@ -33,10 +30,11 @@ class BH.Persistence.Remote
           error(data, type)
           options.error(data, type) if options.error?
       success: (data) ->
+        tagState.set(readOnly: false)
         options.success(data) if options.success?
       complete: =>
         setTimeout =>
-          @state.set(syncing: false)
+          tagState.set(syncing: false)
         , 1000
 
         options.complete() if options.complete?

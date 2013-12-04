@@ -12,7 +12,7 @@ class BH.Views.AppView extends Backbone.View
     @collection.reload @settings.get('startingWeekDay')
 
     @options.state.on 'change', @onStateChanged, @
-    @options.state.on 'change:syncing', @onSyncingChanged, @
+    @options.tagState.on 'change:syncing', @onSyncingChanged, @
 
     @settings.on 'change:startingWeekDay', @onStartingWeekDayChanged, @
     @settings.on 'change:weekDayOrder', @onWeekDayOrderChanged, @
@@ -36,7 +36,7 @@ class BH.Views.AppView extends Backbone.View
     @options.state.save()
 
   onSyncingChanged: ->
-    if @options.state.get('syncing') == true
+    if @options.tagState.get('syncing') == true
       $('body').addClass('syncing')
     else
       $('body').removeClass('syncing')

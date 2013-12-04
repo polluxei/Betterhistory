@@ -1,7 +1,7 @@
 describe 'BH.Persistence.Remote', ->
   beforeEach ->
     global.navigator.onLine = true
-    @state =
+    global.tagState =
       set: jasmine.createSpy('set')
     @ajax = jasmine.createSpy('ajax')
     @sync = new BH.Persistence.Remote '123123123', @ajax, @state
@@ -16,12 +16,12 @@ describe 'BH.Persistence.Remote', ->
 
     it 'sets the state as syncing', ->
       @sync.performRequest()
-      expect(@state.set).toHaveBeenCalledWith(syncing: true)
+      expect(tagState.set).toHaveBeenCalledWith(syncing: true)
 
     it 'sets the state as not syncing when complete', ->
       @sync.performRequest
         syncDelay: 0
-      expect(@state.set).toHaveBeenCalledWith(syncing: false)
+      expect(tagState.set).toHaveBeenCalledWith(syncing: false)
 
     it 'does not call to ajax when no connection exists', ->
       global.navigator.onLine = false

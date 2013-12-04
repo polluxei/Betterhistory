@@ -17,6 +17,10 @@ load = ->
 
   new BH.Lib.DateI18n().configure()
 
+  window.tagState = new Backbone.Model
+    readOnly: false
+    syncing: false
+
   window.user = new BH.Models.User({})
   window.user.fetch()
 
@@ -28,21 +32,8 @@ load = ->
     googleUserInfo.revoke()
 
   window.user.on 'login', ->
-    persistence.remote().userInfo (data) ->
-      if data.sites?
-        persistence.tag().fetchTags (tags, compiledTags) =>
-
-          if tags.length > 0
-            syncingTranslator = new BH.Lib.SyncingTranslator()
-            syncingTranslator.forServer compiledTags, (sites) =>
-
-              sitesHasher = new BH.Lib.SitesHasher(CryptoJS.SHA1)
-              sites = sitesHasher.generate(sites).toString()
-
-              if sites != data.sites
-                persistence.remote().deleteSites ->
-                  syncingTranslator.forServer compiledTags, (sites) ->
-                    persistence.remote().updateSites sites, ->
+    syncer = new BH.Lib.Syncer()
+    syncer.updateIfNeeded()
 
   settings = new BH.Models.Settings({})
   window.state = new BH.Models.State({}, settings: settings)
@@ -66,6 +57,7 @@ load = ->
           window.router = new BH.Router
             settings: settings
             state: state
+            tagState: tagState
             tracker: analyticsTracker
 
           Backbone.history.start()

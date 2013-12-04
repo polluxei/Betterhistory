@@ -1,13 +1,15 @@
 <ul class='visits highlightable editable'>
   {{#sites}}
     <li class='visit tagged' draggable='true' data-id='{{url}}'>
-      <div class='drag_handle'>
-        <div class='line'></div>
-        <div class='line'></div>
-        <div class='line'></div>
-        <div class='line'></div>
-        <div class='line'></div>
-      </div>
+      {{^readOnly}}
+        <div class='drag_handle'>
+          <div class='line'></div>
+          <div class='line'></div>
+          <div class='line'></div>
+          <div class='line'></div>
+          <div class='line'></div>
+        </div>
+      {{/readOnly}}
       <a href='{{url}}' class='site'>
         <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
           <dt>
@@ -17,7 +19,9 @@
           <dd>{{url}}</dd>
         </dl>
       </a>
-      <a class='delete' href='{{url}}' title=''></a>
+      {{^readOnly}}
+        <a class='delete' href='{{url}}' title=''></a>
+      {{/readOnly}}
     </li>
   {{/sites}}
 </ul>

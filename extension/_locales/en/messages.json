@@ -1318,7 +1318,7 @@
     "description": "server error title"
   },
   "server_error_description": {
-    "message": "Looks like we couldn't connect you to the server. We have been alerted of this problem and are on it!",
+    "message": "We are having a bit of trouble, but we're on it. Your tags will temporarily be read only, sorry for the inconvenience!",
     "description": "server error description"
   },
   "connection_required_title": {
@@ -1326,7 +1326,27 @@
     "description": "connection required title"
   },
   "connection_required_description": {
-    "message": "It appears you are not connected to the internet, and this requires a connection. Please connect and try again.",
+    "message": "It appears you are not connected to the internet. Your tags will be read only until you are connected.",
     "description": "connection required description"
+  },
+  "connection_restored_title": {
+    "message": "We're back!",
+    "description": "connection restored title"
+  },
+  "connection_restored_description": {
+    "message": "Your tags have been safely synced! Sorry about the downtime, we feel embarrassed...",
+    "description": "connection restored description"
+  },
+  "read_only_explanation_link": {
+    "message": "Why can't I change my tags?",
+    "description": "read only explanation link"
+  },
+  "read_only_explanation_title": {
+    "message": "Why can't I change my tags?",
+    "description": "read only explanation title"
+  },
+  "read_only_explanation_description": {
+    "message": "When you are not connected to the internet or when we are having an issue syncing your tags, your local tags are read only - you cannot make changes to them. This is to avoid any potential conflicts when syncing tags.",
+    "description": "read only explanation description"
   }
 }

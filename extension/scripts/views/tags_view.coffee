@@ -12,6 +12,7 @@ class BH.Views.TagsView extends BH.Views.MainView
     'click .dismiss_instructions': 'onDismissInstructionsClicked'
     'click #sign_up': 'onBuyTagSyncingClicked'
     'click #sign_in': 'onSignInClicked'
+    'click .read_only_explanation': 'onReadOnlyExplanationClicked'
     'keyup .search': 'onSearchTyped'
     'blur .search': 'onSearchBlurred'
 
@@ -21,15 +22,26 @@ class BH.Views.TagsView extends BH.Views.MainView
     @collection.on 'reset', @onTagsLoaded, @
     user.on 'login', @onLoggedIn, @
     user.on 'logout', @onLoggedOut, @
+    tagState.on 'change:readOnly', @onReadOnlyChange, @
 
   pageTitle: ->
     @t('tags_title')
 
   render: ->
-    properties = _.extend @getI18nValues(), loggedIn: user.isLoggedIn()
+    properties = _.extend @getI18nValues(), {loggedIn: user.isLoggedIn()}, tagState.toJSON()
     html = Mustache.to_html @template, properties
     @$el.append html
     @
+
+  onReadOnlyChange: ->
+    @$el.html ''
+    @render()
+    @collection.fetch()
+
+  onReadOnlyExplanationClicked: (ev) ->
+    ev.preventDefault()
+    readOnlyExplanationView = new BH.Views.ReadOnlyExplanationView()
+    readOnlyExplanationView.open()
 
   onBuyTagSyncingClicked: (ev) ->
     ev.preventDefault()
@@ -102,7 +114,7 @@ class BH.Views.TagsView extends BH.Views.MainView
       @promptView.close()
 
   getI18nValues: ->
-    properties = @t ['tags_title', 'search_input_placeholder_text', 'delete_all_tags', 'how_to_tag']
+    properties = @t ['tags_title', 'search_input_placeholder_text', 'delete_all_tags', 'how_to_tag', 'read_only_explanation_link']
     properties.i18n_sync_tags_link = @t 'sync_tags_link', [
       '<a style="text-decoration: underline;" href="#" id="sign_up">',
       '</a>',

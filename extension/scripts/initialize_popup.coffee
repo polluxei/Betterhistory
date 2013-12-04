@@ -15,6 +15,13 @@ load = ->
   window.user.on 'change', ->
     @trigger('login') if @get('authId')
 
+  window.user.on 'login', ->
+    syncer = new BH.Lib.Syncer()
+    syncer.updateIfNeeded()
+
+  window.tagState = new Backbone.Model
+    readOnly: false
+    syncing: false
 
   settings = new BH.Models.Settings({})
   window.state = new BH.Models.State({}, settings: settings)
@@ -48,7 +55,7 @@ load = ->
       tracker: analyticsTracker
     taggingView.render()
 
-    site.fetch()
+    site.fetch() unless tagState.get('readOnly')
 
     tagFeature = new BH.Init.TagFeature
       syncStore: syncStore
