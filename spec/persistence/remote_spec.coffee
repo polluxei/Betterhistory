@@ -1,5 +1,6 @@
 describe 'BH.Persistence.Remote', ->
   beforeEach ->
+    global.navigator.onLine = true
     @state =
       set: jasmine.createSpy('set')
     @ajax = jasmine.createSpy('ajax')
@@ -21,6 +22,11 @@ describe 'BH.Persistence.Remote', ->
       @sync.performRequest
         syncDelay: 0
       expect(@state.set).toHaveBeenCalledWith(syncing: false)
+
+    it 'does not call to ajax when no connection exists', ->
+      global.navigator.onLine = false
+      @sync.performRequest()
+      expect(@ajax).not.toHaveBeenCalled()
 
   describe '#share', ->
     beforeEach ->
@@ -69,6 +75,21 @@ describe 'BH.Persistence.Remote', ->
           error: jasmine.any(Function)
           success: jasmine.any(Function)
           complete: jasmine.any(Function)
+
+  describe '#userInfo', ->
+    it 'calls to ajax with to get the user info', ->
+      @sync.userInfo ->
+
+      expect(@ajax).toHaveBeenCalledWith
+        url: 'http://api.better-history.com/user/info'
+        type: 'GET'
+        contentType: 'application/json'
+        dataType: 'json'
+        headers:
+          authorization: '123123123'
+        error: jasmine.any(Function)
+        success: jasmine.any(Function)
+        complete: jasmine.any(Function)
 
   describe '#updateSite', ->
     it 'calls to ajax with stringified site data', ->

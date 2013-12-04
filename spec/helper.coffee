@@ -18,6 +18,8 @@ global.BH = require '../extension/scripts/namespace'
 
 global.apiHost = 'api.better-history.com'
 
+global.navigator = {}
+
 require '../extension/scripts/frameworks/backbone_hacks.js'
 require '../extension/scripts/frameworks/mixin.js'
 require '../extension/scripts/frameworks/moment_hacks.js'

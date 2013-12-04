@@ -19,11 +19,30 @@ load = ->
 
   window.user = new BH.Models.User({})
   window.user.fetch()
+
   window.user.on 'change', ->
     @trigger('login') if @get('authId')
+
   window.user.on 'logout', ->
     googleUserInfo = new BH.Lib.GoogleUserInfo()
     googleUserInfo.revoke()
+
+  window.user.on 'login', ->
+    persistence.remote().userInfo (data) ->
+      if data.sites?
+        persistence.tag().fetchTags (tags, compiledTags) =>
+
+          if tags.length > 0
+            syncingTranslator = new BH.Lib.SyncingTranslator()
+            syncingTranslator.forServer compiledTags, (sites) =>
+
+              sitesHasher = new BH.Lib.SitesHasher(CryptoJS.SHA1)
+              sites = sitesHasher.generate(sites).toString()
+
+              if sites != data.sites
+                persistence.remote().deleteSites ->
+                  syncingTranslator.forServer compiledTags, (sites) ->
+                    persistence.remote().updateSites sites, ->
 
   settings = new BH.Models.Settings({})
   window.state = new BH.Models.State({}, settings: settings)

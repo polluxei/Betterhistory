@@ -1,5 +1,8 @@
 error = (data, type) ->
-  alert('There was a problem syncing your tags. Please try again later')
+  # move into modal view
+  if $('.server_error_view').length == 0
+    serverErrorView = new BH.Views.ServerErrorView()
+    serverErrorView.open()
 
 class BH.Persistence.Remote
   constructor: (@authId, @ajax, @state) ->
@@ -11,6 +14,7 @@ class BH.Persistence.Remote
     @authId = authId
 
   performRequest: (options = {}) ->
+    return unless navigator.onLine
     @state.set(syncing: true)
 
     config =
@@ -43,6 +47,14 @@ class BH.Persistence.Remote
     config.data = JSON.stringify(options.data) if options.data?
 
     @ajax config
+
+  userInfo: (callback) ->
+    @performRequest
+      path: '/user/info'
+      type: 'GET'
+      dataType: 'json'
+      authorization: true
+      success: callback
 
   share: (tagData, callbacks) ->
     params =
