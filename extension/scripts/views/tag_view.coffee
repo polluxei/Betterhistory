@@ -21,6 +21,9 @@ class BH.Views.TagView extends BH.Views.MainView
     @model.on 'change', @onSitesLoaded, @
     @model.on 'change:name', @onNameChange, @
 
+    tagState.on 'change:readOnly', @onReadOnlyChange, @
+    tagState.on 'synced', @onSynced, @
+
   pageTitle: ->
     @t('tag_title', [@options.name])
 
@@ -29,6 +32,16 @@ class BH.Views.TagView extends BH.Views.MainView
     html = Mustache.to_html @template, properties
     @$el.append html
     @
+
+  onReadOnlyChange: ->
+    @$el.html ''
+    @render()
+    @collection.fetch()
+
+  onSynced: ->
+    @$el.html ''
+    @render()
+    @collection.fetch()
 
   onSitesLoaded: ->
     @renderTaggedSites()
