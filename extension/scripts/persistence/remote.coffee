@@ -46,9 +46,9 @@ class BH.Persistence.Remote
 
     @ajax config
 
-  userInfo: (callback) ->
+  sitesHash: (callback) ->
     @performRequest
-      path: '/user/info'
+      path: '/user/sites/hash'
       type: 'GET'
       dataType: 'json'
       authorization: true

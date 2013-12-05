@@ -1348,5 +1348,13 @@
   "read_only_explanation_description": {
     "message": "When you are not connected to the internet or when we are having an issue syncing your tags, your local tags are read only - you cannot make changes to them. This is to avoid any potential conflicts when syncing tags.",
     "description": "read only explanation description"
+  },
+  "login_error_title": {
+    "message": "There was a problem logging in...",
+    "description": "login error title"
+  },
+  "login_error_description": {
+    "message": "There was a problem logging you in. We are having some issues at the moment, please try again later.",
+    "description": "login error description"
   }
 }

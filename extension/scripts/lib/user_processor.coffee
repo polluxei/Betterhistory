@@ -2,6 +2,10 @@ showServerErrorView = ->
   serverErrorView = new BH.Views.ServerErrorView()
   serverErrorView.open()
 
+showLoginErrorView = ->
+  loginErrorView = new BH.Views.LoginErrorView()
+  loginErrorView.open()
+
 class BH.Lib.UserProcessor
   constructor: ->
     @tracker = analyticsTracker
@@ -43,11 +47,11 @@ class BH.Lib.UserProcessor
                       # purchase failure
                       @tracker.syncPurchaseFailure()
             error: =>
-              showServerErrorView()
+              showLoginErrorView()
               @tracker.userCreationFailure()
               $('.login_spinner').hide()
         error: =>
-          showServerErrorView()
+          showLoginErrorView()
           @tracker.userOAuthFailure()
           $('.login_spinner').hide()
 

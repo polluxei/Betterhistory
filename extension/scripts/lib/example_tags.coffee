@@ -6,6 +6,7 @@ class BH.Lib.ExampleTags
           translator = new BH.Lib.SyncingTranslator()
           translator.forServer compiledTags, (sites) =>
             persistence.remote().updateSites(sites)
+            chrome.runtime.sendMessage({action: 'calculate hash'})
             callback()
       else
         callback()

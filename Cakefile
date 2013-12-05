@@ -160,6 +160,7 @@ scripts = [
   'scripts/views/connection_required_view.js',
   'scripts/views/connection_restored_view.js',
   'scripts/views/read_only_explanation_view.js',
+  'scripts/views/login_error_view.js',
   'scripts/models/history.js',
   'scripts/models/day.js',
   'scripts/models/day_history.js',
