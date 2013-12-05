@@ -4,7 +4,7 @@ class BH.Init.MailingList
 
   prompt: (callback) ->
     @syncStore.get ['mailingListPromptTimer', 'mailingListPromptSeen'], (data) =>
-      mailingListPromptTimer = data.mailingListPromptTimer || 3
+      mailingListPromptTimer = data.mailingListPromptTimer || 5
       mailingListPromptSeen = data.mailingListPromptSeen
       unless mailingListPromptSeen?
         if mailingListPromptTimer == 1
