@@ -11,15 +11,15 @@
     <div class='autocomplete'></div>
   {{/readOnly}}
   <p class='shortcut'>{{shortcut}}</p>
-  {{#loggedIn}}
-    <div class='syncing_badge'>sync <span class='inline-tag'>ON</span></div>
-  {{/loggedIn}}
 </div>
 <ul class='links'>
-  <li>
+  <li style='position: relative'>
     <a id='explore_tags' href='chrome://history/#tags'>
       {{i18n_explore_tags_link}}
     </a>
+    {{#loggedIn}}
+      <div class='syncing_badge'>sync <span class='inline-tag'>ON</span></div>
+    {{/loggedIn}}
   </li>
   <li>
     <a id='search_domain' href='chrome://history/#search/{{domain}}'>

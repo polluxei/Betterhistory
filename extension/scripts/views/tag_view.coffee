@@ -36,12 +36,12 @@ class BH.Views.TagView extends BH.Views.MainView
   onReadOnlyChange: ->
     @$el.html ''
     @render()
-    @collection.fetch()
+    @model.fetch()
 
   onSynced: ->
     @$el.html ''
     @render()
-    @collection.fetch()
+    @model.fetch()
 
   onSitesLoaded: ->
     @renderTaggedSites()
