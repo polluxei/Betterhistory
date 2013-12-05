@@ -76,12 +76,12 @@ describe 'BH.Persistence.Remote', ->
           success: jasmine.any(Function)
           complete: jasmine.any(Function)
 
-  describe '#userInfo', ->
-    it 'calls to ajax with to get the user info', ->
-      @sync.userInfo ->
+  describe '#sitesHash', ->
+    it 'calls to ajax with to get the sites hash', ->
+      @sync.sitesHash ->
 
       expect(@ajax).toHaveBeenCalledWith
-        url: 'http://api.better-history.com/user/info'
+        url: 'http://api.better-history.com/user/sites/hash'
         type: 'GET'
         contentType: 'application/json'
         dataType: 'json'

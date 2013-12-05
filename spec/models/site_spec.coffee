@@ -113,6 +113,9 @@ describe 'BH.Models.Site', ->
         tags: ['cooking', 'recipes']
       , silent: true
 
+      persistence.tag().removeSiteFromTag.andCallFake (url, tag, callback) ->
+        callback()
+
     it 'returns false if the tag is not present in the tags', ->
       expect(@site.removeTag('auto')).toEqual false
 
@@ -140,5 +143,5 @@ describe 'BH.Models.Site', ->
 
       it 'calls to the persistence layer to remove the tag', ->
         @site.removeTag('recipes')
-        expect(persistence.tag().removeSiteFromTag).toHaveBeenCalledWith(@site.get('url'), 'recipes')
+        expect(persistence.tag().removeSiteFromTag).toHaveBeenCalledWith(@site.get('url'), 'recipes', jasmine.any(Function))
 

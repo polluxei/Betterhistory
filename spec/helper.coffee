@@ -9,10 +9,9 @@ global.Backbone = backbone
 global.moment = moment
 global.timekeeper = timekeeper
 
-global.mockChromeAPI = require './chrome_api'
-global.chrome = mockChromeAPI()
-
+mockChromeAPI = require './chrome_api'
 mockPersistence = require './persistence'
+global.chrome = mockChromeAPI()
 
 global.BH = require '../extension/scripts/namespace'
 
@@ -76,4 +75,5 @@ beforeEach ->
   spyOn(BH.Lib.ImageData, 'base64').andCallFake (url, callback) ->
     callback('favicon image')
 
+  global.chrome = mockChromeAPI()
   global.persistence = mockPersistence().reset()
