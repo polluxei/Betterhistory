@@ -66,6 +66,7 @@ popupScripts = [
   'scripts/lib/local_store.js',
   'scripts/lib/sync_store.js',
   'scripts/lib/image_data.js',
+  'scripts/lib/syncing_translator.js',
   'scripts/lib/syncer.js',
   'scripts/persistence/tag.js',
   'scripts/persistence/remote.js',

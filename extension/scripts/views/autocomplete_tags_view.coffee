@@ -13,7 +13,7 @@ class BH.Views.AutocompleteTagsView extends Backbone.View
     @tracker = @options.tracker
     @collection.on 'reset', @render, @
     @model.on 'change:tags', @renderActiveTags, @
-    state.on 'change:syncing', @onSyncingChanged, @
+    tagState.on 'change:syncing', @onSyncingChanged, @
 
   render: ->
     properties = _.extend @getI18nValues(), {tags: @model.tags()}
@@ -87,7 +87,7 @@ class BH.Views.AutocompleteTagsView extends Backbone.View
           @$('.new_tag').removeClass 'error'
 
   onSyncingChanged: ->
-    if state.get('syncing') == true
+    if tagState.get('syncing') == true
       $('body').addClass('syncing')
     else
       $('body').removeClass('syncing')

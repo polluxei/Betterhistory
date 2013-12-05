@@ -5,6 +5,14 @@
   bottom: 5px;
   margin: 0;
 }
+.syncing_badge {
+  position: absolute;
+  font-size: 10px;
+  opacity: 0.6;
+  top: 122px;
+  right: 4px;
+}
+
 .app .container .about_tags {
   padding-top: 5px;
   padding-bottom: 5px;
