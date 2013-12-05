@@ -7,4 +7,5 @@ class BH.Lib.Syncer
             syncingTranslator = new BH.Lib.SyncingTranslator()
             data = syncingTranslator.forLocal sites
             persistence.tag().import data, ->
+              chrome.runtime.sendMessage({action: 'calculate hash'})
               callback()
