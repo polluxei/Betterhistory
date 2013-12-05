@@ -65,8 +65,8 @@ class BH.Lib.UserProcessor
           sitesHasher = new BH.Lib.SitesHasher(CryptoJS.SHA1)
           sites = sitesHasher.generate(sites).toString()
 
-          if userData.sites?
-            if userData.sites == sites
+          if userData.sitesHash?
+            if userData.sitesHash == sites
               @initialSync(null, userData)
             else
               @syncDecision(userData)
