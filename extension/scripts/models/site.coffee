@@ -2,8 +2,6 @@ class BH.Models.Site extends Backbone.Model
   initialize: (attrs = {}, options = {}) ->
     @chromeAPI = options.chrome
 
-    @on('change', @sync)
-
   fetch: (callback = ->) ->
     persistence.tag().fetchSiteTags @get('url'), (tags) =>
       @set tags: tags
@@ -34,6 +32,7 @@ class BH.Models.Site extends Backbone.Model
 
     persistence.tag().addSiteToTag site, tag, (operations) =>
       chrome.runtime.sendMessage({action: 'calculate hash'})
+      @sync()
       callback(true, operations)
 
   sync: ->
@@ -57,3 +56,4 @@ class BH.Models.Site extends Backbone.Model
 
     persistence.tag().removeSiteFromTag @get('url'), tag, ->
       chrome.runtime.sendMessage({action: 'calculate hash'})
+      @sync()
