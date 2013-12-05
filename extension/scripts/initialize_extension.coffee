@@ -21,6 +21,13 @@ load = ->
     readOnly: false
     syncing: false
 
+  # crazy fast feedback
+  tagState.on 'change:syncing', ->
+    if tagState.get('syncing') == true
+      $('body').addClass('syncing')
+    else
+      $('body').removeClass('syncing')
+
   window.user = new BH.Models.User({})
   window.user.fetch()
 
@@ -58,7 +65,6 @@ load = ->
           window.router = new BH.Router
             settings: settings
             state: state
-            tagState: tagState
             tracker: analyticsTracker
 
           Backbone.history.start()

@@ -12,7 +12,7 @@ class BH.Persistence.Remote
 
   performRequest: (options = {}) ->
     return error() unless navigator.onLine
-    tagState.set(syncing: true)
+    tagState.set(syncing: true) unless options.disableSyncingFeedback
 
     config =
       url: @host() + options.path
@@ -52,6 +52,7 @@ class BH.Persistence.Remote
       type: 'GET'
       dataType: 'json'
       authorization: true
+      disableSyncingFeedback: true
       success: callback
 
   share: (tagData, callbacks) ->
@@ -62,6 +63,7 @@ class BH.Persistence.Remote
       dataType: 'json'
       success: callbacks.success
       error: callbacks.error
+      disableSyncingFeedback: true
       authorization: false
 
     if user.isLoggedIn()
