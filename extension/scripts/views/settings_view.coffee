@@ -179,6 +179,10 @@ class BH.Views.SettingsView extends BH.Views.MainView
       '<strong>',
       '</strong>'
     ])
+    properties['i18n_permissions_details'] = @t('permissions_details', [
+      '<a href="http://www.better-history.com/permissions">',
+      '</a>'
+    ])
     properties['i18n_suggestions_bugs_comments'] = @t('suggestions_bugs_comments', [
       '<a href="http://twitter.com/Better_History">',
       '</a>'

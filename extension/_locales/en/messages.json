@@ -1356,5 +1356,19 @@
   "login_error_description": {
     "message": "There was a problem logging you in. We are having some issues at the moment, please try again later.",
     "description": "login error description"
+  },
+  "permissions_details": {
+    "message": "Explanation of asked $link_open$permissions$link_close$",
+    "description": "permission details link",
+    "placeholders": {
+      "link_open": {
+        "content": "$1",
+        "example": "link open tag"
+      },
+      "link_close": {
+        "content": "$2",
+        "example": "link close tag"
+      }
+    }
   }
 }
