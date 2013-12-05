@@ -42,7 +42,7 @@ class BH.Collections.Sites extends Backbone.Collection
         translator = new BH.Lib.SyncingTranslator()
         translator.addImageToSites @toJSON(), (compiledSites) ->
           persistence.remote().updateSites compiledSites
-
+      chrome.runtime.sendMessage({action: 'calculate hash'})
       @trigger 'change:allTags'
       callback(true, operations)
 
@@ -63,5 +63,6 @@ class BH.Collections.Sites extends Backbone.Collection
         translator = new BH.Lib.SyncingTranslator()
         translator.addImageToSites @toJSON(), (compiledSites) ->
           persistence.remote().updateSites compiledSites
+      chrome.runtime.sendMessage({action: 'calculate hash'})
       @trigger 'change:allTags'
       callback()

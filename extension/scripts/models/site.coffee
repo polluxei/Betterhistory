@@ -33,6 +33,7 @@ class BH.Models.Site extends Backbone.Model
       datetime: @get('datetime')
 
     persistence.tag().addSiteToTag site, tag, (operations) =>
+      chrome.runtime.sendMessage({action: 'calculate hash'})
       callback(true, operations)
 
   sync: ->
@@ -54,4 +55,5 @@ class BH.Models.Site extends Backbone.Model
       tags: _.without(newTags, tag)
       datetime: new Date().getTime()
 
-    persistence.tag().removeSiteFromTag @get('url'), tag
+    persistence.tag().removeSiteFromTag @get('url'), tag, ->
+      chrome.runtime.sendMessage({action: 'calculate hash'})

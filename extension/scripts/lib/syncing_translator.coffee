@@ -1,5 +1,5 @@
 class BH.Lib.SyncingTranslator
-  forServer: (compiledTags, callback) ->
+  forServer: (compiledTags, callback, options = {}) ->
     sites = []
     for tag in compiledTags
       for site in tag.sites
@@ -15,17 +15,20 @@ class BH.Lib.SyncingTranslator
             site.tags = [tag.name]
             sites.push(site)
 
-    index = 1
-    requestImage = (site) ->
-      BH.Lib.ImageData.base64 "chrome://favicon/#{site.url}", (data) ->
-        site.image = data
-        if index == sites.length
-          callback(sites)
-        else
-          index++
+    unless options.skipImages
+      index = 1
+      requestImage = (site) ->
+        BH.Lib.ImageData.base64 "chrome://favicon/#{site.url}", (data) ->
+          site.image = data
+          if index == sites.length
+            callback(sites)
+          else
+            index++
 
-    for site in sites
-      requestImage(site)
+      for site in sites
+        requestImage(site)
+    else
+      callback(sites)
 
   addImageToSites: (sites, callback) ->
     index = 1

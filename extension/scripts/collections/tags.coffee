@@ -11,8 +11,10 @@ class BH.Collections.Tags extends Backbone.Collection
       callback()
 
   destroy: (callback = ->)->
-    persistence.tag().removeAllTags(callback)
-    @trigger 'sync', operation: 'destroy'
+    persistence.tag().removeAllTags =>
+      chrome.runtime.sendMessage({action: 'calculate hash'})
+      callback()
+      @trigger 'sync', operation: 'destroy'
 
   sync: (options) ->
     switch options.operations

@@ -27,6 +27,7 @@ try
     chrome: chrome
     tracker: analyticsTracker
   pageContextMenu.listenToTabs()
+  debugger
 
   syncStore.get 'settings', (data) ->
     settings = data.settings || {}
@@ -43,6 +44,19 @@ try
   tagFeature.prepopulate =>
     exampleTags = new BH.Lib.ExampleTags()
     exampleTags.load()
+
+  chrome.runtime.onMessage.addListener (message) ->
+    if message.action == 'calculate hash'
+      persistence.tag().fetchTags (tags, compiledTags) =>
+        if tags.length > 0
+          syncingTranslator = new BH.Lib.SyncingTranslator()
+          syncingTranslator.forServer compiledTags, (sites) =>
+            sitesHasher = new BH.Lib.SitesHasher(CryptoJS.SHA1)
+            sitesHash = sitesHasher.generate(sites).toString()
+            persistence.tag().setSitesHash sitesHash
+          , skipImages: true
+        else
+          persistence.tag().setSitesHash ''
 
 catch e
   errorTracker.report e

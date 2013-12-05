@@ -20,18 +20,21 @@ class BH.Models.Tag extends Backbone.Model
     persistence.tag().removeTag @get('name'), =>
       @trigger 'sync', operation: 'destroy'
       @set sites: []
+      chrome.runtime.sendMessage({action: 'calculate hash'})
       callback()
 
   removeSite: (url, callback = ->) ->
     persistence.tag().removeSiteFromTag url, @get('name'), (sites) =>
       @trigger 'sync', {operation: 'modify', site: _.where(@get('sites'), url: url)[0]}
       @set sites: sites
+      chrome.runtime.sendMessage({action: 'calculate hash'})
       callback()
 
   renameTag: (name, callback = ->) ->
     persistence.tag().renameTag @get('name'), name, =>
       @trigger 'sync', {operation: 'rename', newName: name, oldName: @get('name')}
       @set name: name
+      chrome.runtime.sendMessage({action: 'calculate hash'})
       callback()
 
   share: (callbacks) ->

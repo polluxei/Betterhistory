@@ -3,6 +3,13 @@ class BH.Persistence.Tag
     throw "Localstore is not set" unless options.localStore?
     @localStore = options.localStore
 
+  setSitesHash: (sitesHash) ->
+    @localStore.set sitesHash: sitesHash, () ->
+
+  getSitesHash: (callback) ->
+    @localStore.get 'sitesHash', (data) ->
+      callback(data)
+
   cached: (callback) ->
     @localStore.get null, (data) ->
       callback
