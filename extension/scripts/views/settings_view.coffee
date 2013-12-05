@@ -8,6 +8,8 @@ class BH.Views.SettingsView extends BH.Views.MainView
   events:
     'click .clear_history': 'clickedClearHistory'
     'click .credits': 'clickedCredits'
+    'click #sign_up': 'clickedSignUp'
+    'click #sign_in': 'clickedSignIn'
     'change #time_grouping': 'changedTimeGrouping'
     'change #time_format': 'changedTimeFormat'
     'change #open_location': 'changedOpenLocation'
@@ -16,17 +18,37 @@ class BH.Views.SettingsView extends BH.Views.MainView
     'click #domain_grouping': 'clickedDomainGrouping'
     'click #search_by_domain': 'clickedSearchByDomain'
     'click #search_by_selection': 'clickedSearchBySelection'
+    'click .logout': 'clickedLogout'
 
   initialize: ->
     @chromeAPI = chrome
+    @tracker = analyticsTracker
     @model.off 'change'
     @model.on 'change', (() => @model.save()), @model
     @model.on 'change:openLocation', @options.state.updateRoute, @options.state
     @model.on 'change:startingWeekDay', @options.state.updateRoute, @options.state
+    window.user.on 'login', @onUserLogIn, @
+    window.user.on 'logout', @onUserLogout, @
     @on 'selected', @activateSocialLinks, @
 
   pageTitle: ->
     @t('settings_title')
+
+  onUserLogIn: ->
+    @$('.logged_out').hide()
+    @$('.avatar').attr('src', user.get('avatar'))
+    @$('.name').text("#{user.get('firstName')} #{user.get('lastName')}")
+    @$('.logged_in').show()
+    @$('.login_spinner').hide()
+
+  onUserLogout: ->
+    @$('.logged_out').show()
+    @$('.logged_in').hide()
+    @$('.login_spinner').hide()
+
+  clickedLogout: (ev) ->
+    ev.preventDefault()
+    user.logout()
 
   activateSocialLinks: ->
     !((d,s,id) ->
@@ -52,6 +74,9 @@ class BH.Views.SettingsView extends BH.Views.MainView
     html = Mustache.to_html @template, properties
     @$el.append html
     @populateFields()
+    setTimeout =>
+      @onUserLogIn() if user.get('authId')
+    , 500
     @
 
   populateFields: ->
@@ -63,6 +88,17 @@ class BH.Views.SettingsView extends BH.Views.MainView
     @$('#domain_grouping').prop 'checked', @model.get('domainGrouping')
     @$('#search_by_domain').prop 'checked', @model.get('searchByDomain')
     @$('#search_by_selection').prop 'checked', @model.get('searchBySelection')
+
+  clickedSignUp: (ev) ->
+    ev.preventDefault()
+    signUpInfoView = new BH.Views.SignUpInfoView()
+    signUpInfoView.open()
+
+  clickedSignIn: (ev) ->
+    ev.preventDefault()
+    @$('.login_spinner').show()
+    userProcessor = new BH.Lib.UserProcessor()
+    userProcessor.start()
 
   changedTimeGrouping: (ev) ->
     @model.set timeGrouping: $(ev.currentTarget).val()
@@ -131,10 +167,21 @@ class BH.Views.SettingsView extends BH.Views.MainView
       'week_day_order',
       'general_section_title',
       'mailing_list_link'
+      'syncing_settings_title'
+    ])
+    properties['i18n_syncing_settings_login'] = @t('syncing_settings_login', [
+      '<a style="text-decoration: underline;" href="#" id="sign_up">',
+      '</a>',
+      '<a style="text-decoration: underline;" href="#" id="sign_in">',
+      '</a>'
     ])
     properties['i18n_credits_link'] = @t('credits_link', [
       '<strong>',
       '</strong>'
+    ])
+    properties['i18n_permissions_details'] = @t('permissions_details', [
+      '<a href="http://www.better-history.com/permissions">',
+      '</a>'
     ])
     properties['i18n_suggestions_bugs_comments'] = @t('suggestions_bugs_comments', [
       '<a href="http://twitter.com/Better_History">',

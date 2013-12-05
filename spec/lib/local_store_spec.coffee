@@ -29,6 +29,11 @@ describe 'BH.Lib.LocalStore', ->
       @localStore.remove('key', jasmine.any(Function))
       expect(chrome.storage.local.remove).toHaveBeenCalledWith('key', jasmine.any(Function))
 
+  describe '#clear', ->
+    it 'calls to the storage api to clear everything', ->
+      @localStore.clear()
+      expect(chrome.storage.local.clear).toHaveBeenCalled()
+
   describe '#get', ->
     it 'calls to the storage api to get the object', ->
       @localStore.get('key', jasmine.any(Function))

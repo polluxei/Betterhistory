@@ -18,6 +18,7 @@ build:
 	cp -r extension/* build
 	cake concat:templates
 	cp node_modules/chrome-bootstrap/chrome-bootstrap.css build/styles/
+	cp node_modules/better-history-sites-hasher/index.js build/scripts/lib/sites_hasher.js
 	cp node_modules/backbone/backbone.js build/scripts/frameworks/
 	cp node_modules/underscore/underscore.js build/scripts/frameworks/
 	cp node_modules/mustache/mustache.js build/scripts/frameworks/
@@ -29,8 +30,12 @@ build:
 	sed -i '' 's/\$$ERROR_TRACKER_ID\$$/${ERROR_TRACKING}/g' build/scripts/trackers/error_tracker.js
 	sed -i '' 's/\$$VERSION\$$/${VERSION}/g' build/scripts/trackers/error_tracker.js
 	sed -i '' 's/\$$ENVIRONMENT\$$/development/g' build/scripts/trackers/error_tracker.js
-	sed -i '' 's/\$$HOST\$$/${DEV_API_HOST}/g' build/scripts/persistence/share.js
-	sed -i '' 's/\$$HOST\$$/${DEV_SITE_HOST}/g' build/scripts/views/tag_view.js
+	sed -i '' 's/\$$API_HOST\$$/${DEV_API_HOST}/g' build/scripts/initialize_extension.js
+	sed -i '' 's/\$$SITE_HOST\$$/${DEV_SITE_HOST}/g' build/scripts/initialize_extension.js
+	sed -i '' 's/\$$ENV\$$/dev/g' build/scripts/initialize_extension.js
+	sed -i '' 's/\$$API_HOST\$$/${DEV_API_HOST}/g' build/scripts/initialize_popup.js
+	sed -i '' 's/\$$SITE_HOST\$$/${DEV_SITE_HOST}/g' build/scripts/initialize_popup.js
+	sed -i '' 's/\$$ENV\$$/dev/g' build/scripts/initialize_popup.js
 
 release: build
 	coffee -c build/scripts/
@@ -42,8 +47,12 @@ release: build
 	sed -i '' 's/\$$ERROR_TRACKER_ID\$$/${ERROR_TRACKING}/g' build/scripts/trackers/error_tracker.js
 	sed -i '' 's/\$$VERSION\$$/${VERSION}/g' build/scripts/trackers/error_tracker.js
 	sed -i '' 's/\$$ENVIRONMENT\$$/production/g' build/scripts/trackers/error_tracker.js
-	sed -i '' 's/\$$HOST\$$/${PROD_API_HOST}/g' build/scripts/persistence/share.js
-	sed -i '' 's/\$$HOST\$$/${PROD_SITE_HOST}/g' build/scripts/views/tag_view.js
+	sed -i '' 's/\$$API_HOST\$$/${PROD_API_HOST}/g' build/scripts/initialize_extension.js
+	sed -i '' 's/\$$SITE_HOST\$$/${PROD_SITE_HOST}/g' build/scripts/initialize_extension.js
+	sed -i '' 's/\$$ENV\$$/prod/g' build/scripts/initialize_extension.js
+	sed -i '' 's/\$$API_HOST\$$/${PROD_API_HOST}/g' build/scripts/initialize_popup.js
+	sed -i '' 's/\$$SITE_HOST\$$/${PROD_SITE_HOST}/g' build/scripts/initialize_popup.js
+	sed -i '' 's/\$$ENV\$$/prod/g' build/scripts/initialize_popup.js
 	cake build:assets:prod
 	./node_modules/uglify-js/bin/uglifyjs build/scripts.js -o build/scripts.js
 	rm -f extension.zip

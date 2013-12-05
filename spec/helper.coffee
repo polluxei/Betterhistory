@@ -8,9 +8,16 @@ global._ = underscore
 global.Backbone = backbone
 global.moment = moment
 global.timekeeper = timekeeper
-global.mockChromeAPI = require './chrome_api'
+
+mockChromeAPI = require './chrome_api'
+mockPersistence = require './persistence'
 global.chrome = mockChromeAPI()
+
 global.BH = require '../extension/scripts/namespace'
+
+global.apiHost = 'api.better-history.com'
+
+global.navigator = {}
 
 require '../extension/scripts/frameworks/backbone_hacks.js'
 require '../extension/scripts/frameworks/mixin.js'
@@ -29,8 +36,10 @@ require '../extension/scripts/lib/omnibox.coffee'
 require '../extension/scripts/lib/sync_store.coffee'
 require '../extension/scripts/lib/local_store.coffee'
 require '../extension/scripts/lib/example_tags.coffee'
-require '../extension/scripts/persistence/share.coffee'
+require '../extension/scripts/lib/image_data.coffee'
+require '../extension/scripts/lib/syncing_translator.coffee'
 require '../extension/scripts/persistence/tag.coffee'
+require '../extension/scripts/persistence/remote.coffee'
 require '../extension/scripts/workers/day_grouper.coffee'
 require '../extension/scripts/workers/domain_grouper.coffee'
 require '../extension/scripts/workers/time_grouper.coffee'
@@ -48,6 +57,7 @@ require '../extension/scripts/models/search_history.coffee'
 require '../extension/scripts/models/settings.coffee'
 require '../extension/scripts/models/site.coffee'
 require '../extension/scripts/models/tag.coffee'
+require '../extension/scripts/models/user.coffee'
 require '../extension/scripts/collections/weeks.coffee'
 require '../extension/scripts/collections/visits.coffee'
 require '../extension/scripts/collections/tags.coffee'
@@ -57,5 +67,13 @@ require '../extension/scripts/presenters/tags_presenter.coffee'
 require '../extension/scripts/presenters/site_presenter.coffee'
 require '../extension/scripts/init/tag_feature.coffee'
 require '../extension/scripts/init/mailing_list.coffee'
+require '../extension/scripts/init/persistence.coffee'
 
 new BH.Lib.DateI18n().configure()
+
+beforeEach ->
+  spyOn(BH.Lib.ImageData, 'base64').andCallFake (url, callback) ->
+    callback('favicon image')
+
+  global.chrome = mockChromeAPI()
+  global.persistence = mockPersistence().reset()

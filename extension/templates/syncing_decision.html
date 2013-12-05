@@ -1,0 +1,26 @@
+<h1 class='title'>{{i18n_syncing_decision_title}}</h1>
+<div class='content-area'>
+  <div class='decision'>
+    <p>{{{i18n_syncing_decision_description}}}</p>
+    <div class='decision_options'>
+      <button class='pull'>{{i18n_syncing_pull_button}}</button>
+      - or -
+      <button class='push'>{{i18n_syncing_push_button}}</button>
+    </div>
+  </div>
+  <div class='syncing' style='display: none;'>
+    <div class='spinner'></div>
+    <p>{{i18n_initial_syncing_description}}</p>
+  </div>
+  <div class='done_syncing' style='display: none;'>
+    <span class='successful_sync'>&#x2713;</span>
+    <p>{{{i18n_initial_syncing_done}}}</p>
+  </div>
+</div>
+<div class='action-area'>
+  <div class='action-area-right'>
+    <div class='button-strip'>
+      <button style='display: none' class='continue'>{{i18n_continue_button}}</button>
+    </div>
+  </div>
+</div>

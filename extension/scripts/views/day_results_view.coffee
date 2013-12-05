@@ -15,15 +15,14 @@ class BH.Views.DayResultsView extends Backbone.View
     @chromeAPI = chrome
 
   render: ->
-    properties = _.extend @getI18nValues(), @model.toTemplate()
+    properties = _.extend @getI18nValues(), @model.toTemplate(), readOnly: state.get('readOnly')
     html = Mustache.to_html @template, properties
     @$el.html html
 
     @
 
   insertTags: ->
-    persistence = new BH.Persistence.Tag localStore: localStore
-    persistence.cached (operations) ->
+    persistence.tag().cached (operations) ->
       $('.site').each ->
         $el = $(this)
         tags = operations.siteTags $el.attr('href')

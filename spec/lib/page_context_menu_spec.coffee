@@ -1,6 +1,5 @@
 describe "BH.Lib.PageContextMenu", ->
   beforeEach ->
-    global.chrome = mockChromeAPI()
     @pageContextMenu = new BH.Lib.PageContextMenu
       chrome: chrome
       tracker: contextMenuClick: jasmine.createSpy()

@@ -4,7 +4,7 @@
   "manifest_version": 2,
   "description": "__MSG_manifest_description__",
   "default_locale":"en",
-  "minimum_chrome_version": "22",
+  "minimum_chrome_version": "29",
   "omnibox": {
     "keyword" : "__MSG_history_title__"
   },
@@ -25,6 +25,14 @@
       "description": "Show browser action popup"
     }
   },
+  "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCnSSCipBZBTHYMvfX3F4FJ4Z4RfXgZ5x0PzIVixVXBM2Tfu6PLjQKKSKiGz9xd4fj8z4IcaFuFNIixSgE7F6Prmu4YWJg+029DnUnSzRTIXqnB+XKTV/J0Ghh5Id2vrLZm6O/EpSmHmr6Lm58apu/JfUMSTNuW29e2WPShQYx9CQIDAQAB",
+  "oauth2": {
+    "client_id": "298917046046-5i2dvc5e32p6u3o7jv99v9p9fhltem3l.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  },
+  "offline_enabled": true,
   "content_scripts": [
     {
       "matches": ["*://*.better-history.com/*"],
@@ -51,7 +59,11 @@
     "tabs",
     "contextMenus",
     "storage",
-    "unlimitedStorage"
+    "unlimitedStorage",
+    "identity",
+    "https://www.googleapis.com/",
+    "https://accounts.google.com/",
+    "http://*.better-history.com/"
   ],
-  "content_security_policy": "script-src 'self' 'unsafe-eval' https://ssl.google-analytics.com https://platform.twitter.com https://apis.google.com; object-src 'self'"
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://wallet.google.com https://sandbox.google.com https://ssl.google-analytics.com https://platform.twitter.com https://apis.google.com; object-src 'self';"
 }

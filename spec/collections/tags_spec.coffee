@@ -1,15 +1,10 @@
 describe 'BH.Collections.Tags', ->
   beforeEach ->
-    persistence =
-      fetchTags: jasmine.createSpy('fetchTags')
-      removeAllTags: jasmine.createSpy('removeAllTags')
-
-    @tags = new BH.Collections.Tags [],
-      persistence: persistence
+    @tags = new BH.Collections.Tags []
 
   describe '#fetch', ->
     beforeEach ->
-      @tags.persistence.fetchTags.andCallFake (callback) ->
+      persistence.tag().fetchTags.andCallFake (callback) ->
         callback ['recipes', 'cooking'], [
           {
             name: 'recipes'
@@ -38,7 +33,7 @@ describe 'BH.Collections.Tags', ->
 
     it 'fetchs the tags from the persistence layer', ->
       @tags.fetch()
-      expect(@tags.persistence.fetchTags).toHaveBeenCalledWith jasmine.any(Function)
+      expect(persistence.tag().fetchTags).toHaveBeenCalledWith jasmine.any(Function)
 
     it 'calls the passed callback', ->
       callback = jasmine.createSpy('callback')
@@ -56,4 +51,4 @@ describe 'BH.Collections.Tags', ->
   describe '#destroy', ->
     it 'removes all the tag data and the keys key', ->
       @tags.destroy()
-      expect(@tags.persistence.removeAllTags).toHaveBeenCalledWith jasmine.any(Function)
+      expect(persistence.tag().removeAllTags).toHaveBeenCalledWith jasmine.any(Function)

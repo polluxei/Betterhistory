@@ -16,13 +16,14 @@
     "dev_analytics": "UA-43184519-1",
     "prod_analytics": "UA-43186716-1",
     "error_tracking": "eb2245d5729a3c65d7e429f4e7690a62",
-    "dev_site_host": "better-history.local:3000",
+    "dev_site_host": "local.better-history.com:3000",
     "prod_site_host": "www.better-history.com",
-    "dev_api_host": "better-history.local:3001",
+    "dev_api_host": "local.better-history.com:3001",
     "prod_api_host": "api.better-history.com"
   },
   "devDependencies": {
     "chrome-bootstrap": "git://github.com/roykolak/chrome-bootstrap.git#v1.2.0",
+    "better-history-sites-hasher": "git://github.com/roykolak/better-history-sites-hasher.git#v1.0.3",
     "coffee-script": "1.6.1",
     "jasmine-node": "1.10.1",
     "glob": "3.1.12",

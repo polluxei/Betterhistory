@@ -5,6 +5,7 @@ describe 'BH.Persistence.Tag', ->
       get: jasmine.createSpy('get')
       set: jasmine.createSpy('set')
       remove: jasmine.createSpy('remove')
+      clear: jasmine.createSpy('clear')
 
     @persistence = new BH.Persistence.Tag
       localStore: localStore
@@ -159,6 +160,7 @@ describe 'BH.Persistence.Tag', ->
       @site =
         url: 'http://www.recipes.com/pound_cake'
         title: 'Pound cake recipes'
+        datetime: 1351029600000
 
       @persistence.localStore.get.andCallFake (key, callback) ->
         callback {}
@@ -263,9 +265,11 @@ describe 'BH.Persistence.Tag', ->
       @sites = [{
         url: 'http://www.recipes.com/pound_cake'
         title: 'Pound cake recipes'
+        datetime: 1351029600000
       }, {
         url: 'http://www.recipes.com/fruit_cake'
         title: 'Fruit cake recipes'
+        datetime: 1351029600000
       }]
 
       @persistence.localStore.get.andCallFake (key, callback) ->
@@ -373,6 +377,11 @@ describe 'BH.Persistence.Tag', ->
         @persistence.addSitesToTag(@sites, 'recipes', callback)
         expect(callback).toHaveBeenCalledWith
           tagCreated: false
+
+  describe '#clearAll', ->
+    it 'calls to localStore to clear everything', ->
+      @persistence.clearAll()
+      expect(@persistence.localStore.clear).toHaveBeenCalled()
 
   describe '#removeTag', ->
     beforeEach ->

@@ -3,6 +3,13 @@ class BH.Persistence.Tag
     throw "Localstore is not set" unless options.localStore?
     @localStore = options.localStore
 
+  setSitesHash: (sitesHash) ->
+    @localStore.set sitesHash: sitesHash, () ->
+
+  getSitesHash: (callback) ->
+    @localStore.get 'sitesHash', (data) ->
+      callback(data)
+
   cached: (callback) ->
     @localStore.get null, (data) ->
       callback
@@ -78,7 +85,6 @@ class BH.Persistence.Tag
       @localStore.set data, =>
         @localStore.get tag, (data) =>
           data[tag] ||= []
-          site.datetime = new Date().getTime()
           data[tag].push site
           @localStore.set data, ->
             callback(operations)
@@ -97,12 +103,17 @@ class BH.Persistence.Tag
         @localStore.get tag, (data) =>
           for site in sites
             data[tag] ||= []
-            site.datetime = new Date().getTime()
             data[tag].push site
           @localStore.set data, ->
             callback(operations)
 
     @expireSharedTag(tag)
+
+  import: (data, callback) ->
+    @localStore.set(data, callback)
+
+  clearAll: ->
+    @localStore.clear()
 
   removeSiteFromTag: (url, tag, callback = ->) ->
     @localStore.get tag, (data) =>

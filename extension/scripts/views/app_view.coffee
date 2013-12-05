@@ -10,7 +10,9 @@ class BH.Views.AppView extends Backbone.View
     @settings = @options.settings
 
     @collection.reload @settings.get('startingWeekDay')
+
     @options.state.on 'change', @onStateChanged, @
+
     @settings.on 'change:startingWeekDay', @onStartingWeekDayChanged, @
     @settings.on 'change:weekDayOrder', @onWeekDayOrderChanged, @
     @collection.on 'reloaded', @onWeeksReloaded, @

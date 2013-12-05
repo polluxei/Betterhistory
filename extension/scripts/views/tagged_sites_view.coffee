@@ -13,15 +13,14 @@ class BH.Views.TaggedSitesView extends BH.Views.MainView
 
   render: ->
     presenter = new BH.Presenters.TagPresenter(@model)
-    properties = _.extend presenter.sites(), @getI18nValues()
+    properties = _.extend presenter.sites(), @getI18nValues(), tagState.toJSON()
     html = Mustache.to_html @template, properties
     @$el.html html
     @
 
   insertTags: ->
     currentTag = @model.get('name')
-    persistence = new BH.Persistence.Tag localStore: localStore
-    persistence.cached (operations) ->
+    persistence.tag().cached (operations) ->
       $('.site').each ->
         $el = $(this)
         tags = operations.siteTags $el.attr('href')

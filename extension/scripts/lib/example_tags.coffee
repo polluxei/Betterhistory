@@ -1,12 +1,15 @@
 class BH.Lib.ExampleTags
-  constructor: (options) ->
-    throw "LocalStore not set" unless options.localStore?
-
-    @localStore = options.localStore
-
   load: (callback = ->) ->
-    @localStore.set exampleTags, ->
-      callback()
+    persistence.tag().import exampleTags, =>
+      if user.isLoggedIn()
+        persistence.tag().fetchTags (tags, compiledTags) =>
+          translator = new BH.Lib.SyncingTranslator()
+          translator.forServer compiledTags, (sites) =>
+            persistence.remote().updateSites(sites)
+            chrome.runtime.sendMessage({action: 'calculate hash'})
+            callback()
+      else
+        callback()
 
 exampleTags =
   tags: ['games', 'places to travel', 'clothing', 'recipes', 'friends', 'funny videos', 'world news', 'productivity']

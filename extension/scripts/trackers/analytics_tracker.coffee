@@ -112,3 +112,42 @@ class BH.Trackers.AnalyticsTracker
 
   shareClicked: ->
     @trackEvent(['Tag', 'Shared'])
+
+  getStartedSyncingModalSeen: ->
+    @trackEvent(['Get Started Modal', 'Seen'])
+
+  getStartedSyncingContinueClicked: ->
+    @trackEvent(['Get Started Modal', 'Continue Click'])
+
+  getStartedSyncingCancelClicked: ->
+    @trackEvent(['Get Started Modal', 'Cancel Click'])
+
+  syncPurchaseSuccess: ->
+    @trackEvent(['Sync', 'Purchased', 'Success'])
+
+  syncPurchaseFailure: ->
+    @trackEvent(['Sync', 'Purchased', 'Failure'])
+
+  syncDecisionModalSeen: ->
+    @trackEvent(['Sync Decision Modal', 'Seen'])
+
+  syncAutomaticModalSeen: ->
+    @trackEvent(['Sync Automatic Modal', 'Seen'])
+
+  userLoggedIn: ->
+    @trackEvent(['User', 'Log In'])
+
+  userLoggedOut: ->
+    @trackEvent(['User', 'Log Out'])
+
+  userCreationFailure: ->
+    @trackEvent(['User', 'Creation', 'Failure'])
+
+  userCreationSuccess: ->
+    @trackEvent(['User', 'Creation', 'Success'])
+
+  userOAuthFailure: ->
+    @trackEvent(['User', 'OAuth', 'Failure'])
+
+  userOAuthSuccess: ->
+    @trackEvent(['User', 'OAuth', 'Success'])

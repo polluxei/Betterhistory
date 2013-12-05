@@ -2,8 +2,6 @@ class BH.Views.TagView extends BH.Views.MainView
   @include BH.Modules.I18n
   @include BH.Modules.Url
 
-  host: '$HOST$'
-
   className: 'tag_view with_controls'
 
   template: BH.Templates['tag']
@@ -12,6 +10,7 @@ class BH.Views.TagView extends BH.Views.MainView
     'click .delete_sites': 'onDeleteSitesClicked'
     'click .rename': 'onRenameClicked'
     'click .share': 'onShareClicked'
+    'click .read_only_explanation': 'onReadOnlyExplanationClicked'
     'keyup .search': 'onSearchTyped'
     'blur .search': 'onSearchBlurred'
 
@@ -22,14 +21,27 @@ class BH.Views.TagView extends BH.Views.MainView
     @model.on 'change', @onSitesLoaded, @
     @model.on 'change:name', @onNameChange, @
 
+    tagState.on 'change:readOnly', @onReadOnlyChange, @
+    tagState.on 'synced', @onSynced, @
+
   pageTitle: ->
     @t('tag_title', [@options.name])
 
   render: ->
-    properties = _.extend @getI18nValues(), tagsUrl: '#tags'
+    properties = _.extend @getI18nValues(), {tagsUrl: '#tags'}, tagState.toJSON()
     html = Mustache.to_html @template, properties
     @$el.append html
     @
+
+  onReadOnlyChange: ->
+    @$el.html ''
+    @render()
+    @model.fetch()
+
+  onSynced: ->
+    @$el.html ''
+    @render()
+    @model.fetch()
 
   onSitesLoaded: ->
     @renderTaggedSites()
@@ -45,6 +57,11 @@ class BH.Views.TagView extends BH.Views.MainView
     @$('.content').html @taggedSitesView.render().el
     @taggedSitesView.attachDragging()
     @taggedSitesView.insertTags()
+
+  onReadOnlyExplanationClicked: (ev) ->
+    ev.preventDefault()
+    readOnlyExplanationView = new BH.Views.ReadOnlyExplanationView()
+    readOnlyExplanationView.open()
 
   onDeleteSitesClicked: (ev) ->
     @tracker.deleteTagClick()
@@ -66,7 +83,7 @@ class BH.Views.TagView extends BH.Views.MainView
 
     if @model.get('url')
       url = encodeURIComponent(@model.get('url'))
-      @chromeAPI.tabs.create url: "http://#{@host}/from_ext/#{url}"
+      @chromeAPI.tabs.create url: "http://#{window.siteHost}/from_ext/#{url}"
     else
       $smallSpinner = @$('.small_spinner')
 
@@ -77,7 +94,7 @@ class BH.Views.TagView extends BH.Views.MainView
           success: (data) =>
             $smallSpinner.removeClass('show')
             url = encodeURIComponent(data.url)
-            @chromeAPI.tabs.create url: "http://#{@host}/from_ext/#{url}"
+            @chromeAPI.tabs.create url: "http://#{window.siteHost}/from_ext/#{url}"
             @model.set(url: data.url)
           error: =>
             $smallSpinner.removeClass('show')
@@ -91,16 +108,21 @@ class BH.Views.TagView extends BH.Views.MainView
 
   promptAction: (prompt) ->
     if prompt.get('action')
+      tagName = @model.get('name')
       @model.destroy =>
       @promptView.close()
       @tracker.tagRemoved()
+
+      if user.isLoggedIn()
+        persistence.remote().deleteTag(tagName)
+
       router.navigate '#tags', trigger: true
     else
       @promptView.close()
 
   getI18nValues: ->
     name = @options.name.charAt(0).toUpperCase() + @options.name.slice(1)
-    properties = @t ['delete_tag', 'search_input_placeholder_text', 'rename_tag_link', 'share_tag_link']
+    properties = @t ['delete_tag', 'search_input_placeholder_text', 'rename_tag_link', 'share_tag_link', 'read_only_explanation_link']
     properties['i18n_tag_title'] = @t 'tag_title', [name]
     properties['i18n_back_to_tags_link'] = @t('back_to_tags_link', [
       @t('back_arrow')

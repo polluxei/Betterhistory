@@ -588,6 +588,10 @@
     "message": "Done",
     "description": "Button to dismiss modal"
   },
+  "prompt_okay_button": {
+    "message": "Okay",
+    "description": "Button to dismiss modal"
+  },
   "prompt_title": {
     "message": "Confirm",
     "description": "Title of prompt"
@@ -1056,16 +1060,24 @@
     "description": "title for tagging visited sites modal"
   },
   "sync_tags_link": {
-    "message": "Keep your tags safe, $link_open$Sync them!$link_close$",
+    "message": "Sync your tags - $signup_open$Get started$signup_close$ or $login_open$Login$login_close$",
     "description": "link to sign up for syncing",
     "placeholders": {
-      "link_open": {
+      "signup_open": {
         "content": "$1",
-        "example": "open link tag"
+        "example": "open signup tag"
       },
-      "link_close": {
+      "signup_close": {
         "content": "$2",
-        "example": "close link tag"
+        "example": "close signup tag"
+      },
+      "login_open": {
+        "content": "$3",
+        "example": "open login tag"
+      },
+      "login_close": {
+        "content": "$4",
+        "example": "close login tag"
       }
     }
   },
@@ -1142,5 +1154,221 @@
   "view_all_history_link": {
     "message": "View all history",
     "description": "view all history link in popup"
+  },
+  "auth_success_title": {
+    "message": "Success! You're logged in.",
+    "description": "authorization success title"
+  },
+  "auth_success_description": {
+    "message": "Updates to your tags will be synced and safely backed up. Get organized and get tagging!",
+    "description": "authorization success description"
+  },
+  "sync_enabled": {
+    "message": "Sync $highlight_open$ON$highlight_close$",
+    "description": "sync enabled message",
+    "placeholders": {
+      "highlight_open": {
+        "content": "$1",
+        "example": "highlight open tag"
+      },
+      "highlight_close": {
+        "content": "$2",
+        "example": "highlight close tag"
+      }
+    }
+  },
+  "sign_up_info_title": {
+    "message": "Keep your tags safe, Sync them!",
+    "description": "sign up info modal title"
+  },
+  "sign_up_info_description": {
+    "message": "Tag with confidence knowing that every site that you tag is safely stored in the cloud. Access your tags from any Chrome browser running Better History!",
+    "description": "description"
+  },
+  "sign_up_info_bullets": {
+    "message": "$open$Linked to your Google account$close$$open$Store unlimited tags and sites$close$$open$Log into any Better History extension$close$$open$Safely stored in the cloud$close$$open$Access tagged sites from $betterHistoryOpen$better-history.com$betterHistoryClose$$close$",
+    "description": "sign up info",
+    "placeholders": {
+      "open": {
+        "content": "$1",
+        "example": "bullet open"
+      },
+      "close": {
+        "content": "$2",
+        "example": "bullet close"
+      },
+      "betterHistoryOpen": {
+        "content": "$3",
+        "example": "better history open link"
+      },
+      "betterHistoryClose": {
+        "content": "$4",
+        "example": "better history close link"
+      }
+    }
+  },
+  "sign_up_info_price": {
+    "message": "$$15 (a one-time fee)",
+    "description": "syncing price"
+  },
+  "sign_up_info_question": {
+    "message": "Questions? hello@better-history.com",
+    "description": "sign up questions"
+  },
+  "sign_up_temporarily_closed": {
+    "message": "Sorry, registration is temporarily closed",
+    "description": "closed registration message"
+  },
+  "continue_button": {
+    "message": "Continue",
+    "description": "continue button"
+  },
+  "syncing_settings_title": {
+    "message": "Tag syncing",
+    "description": "tag syncing title"
+  },
+  "syncing_settings_login": {
+    "message": "Sync your tags - $signup_open$Sign up$signup_close$ or $login_open$Login$login_close$",
+    "description": "link to sign up for syncing",
+    "placeholders": {
+      "signup_open": {
+        "content": "$1",
+        "example": "open signup tag"
+      },
+      "signup_close": {
+        "content": "$2",
+        "example": "close signup tag"
+      },
+      "login_open": {
+        "content": "$3",
+        "example": "open login tag"
+      },
+      "login_close": {
+        "content": "$4",
+        "example": "close login tag"
+      }
+    }
+  },
+  "initial_syncing_title": {
+    "message": "Inital sync",
+    "description": "title for the syncing modal on initial log in"
+  },
+  "initial_syncing_description": {
+    "message": "Syncing all your tagged sites...",
+    "description": "initial syncing description"
+  },
+  "initial_syncing_done": {
+    "message": "<strong>Syncing complete!</strong><br /><br /> Go get tagging and your changes will be backed up. View your tagged sites at <br />$link_open$better-history.com/me$link_close$",
+    "description": "initial syncing done text",
+    "placeholders": {
+      "link_open": {
+        "content": "$1",
+        "example": "link open tag"
+      },
+      "link_close": {
+        "content": "$2",
+        "example": "link close tag"
+      }
+    }
+  },
+  "syncing_decision_title": {
+    "message": "You have previously synced sites",
+    "description": "title for syncing decision modal"
+  },
+  "syncing_decision_description": {
+    "message": "Looks like you have $strong_open$synced tagged sites$strong_close$. You can choose to pull those sites replacing your local tags or sync your local tags. You can view your synced sites by visiting <a href='http://www.better-history.com/me' target='_blank'>better-history.com/me</a>",
+    "description": "syncing decision description",
+    "placeholders": {
+      "amount": {
+        "content": "$1",
+        "example": "amount of synced sites"
+      },
+      "strong_open": {
+        "content": "$2",
+        "example": "strong open tag"
+      },
+      "strong_close": {
+        "content": "$3",
+        "example": "strong close tag"
+      }
+    }
+  },
+  "syncing_push_button": {
+    "message": "Use my local tags",
+    "description": "push button text"
+  },
+  "syncing_pull_button": {
+    "message": "Use my remote tags",
+    "description": "pull button text"
+  },
+  "auth_error_title": {
+    "message": "Uh oh...",
+    "description": "auth error modal title"
+  },
+  "auth_error_description": {
+    "message": "There was a problem logging you in. To continue syncing your tags, please log in again.",
+    "description": "auth error modal description text"
+  },
+  "login_again_button": {
+    "message": "Log in again",
+    "description": "log in again button"
+  },
+  "server_error_title": {
+    "message": "Oh no! There was an error...",
+    "description": "server error title"
+  },
+  "server_error_description": {
+    "message": "We are having a bit of trouble, but we're on it. Your tags will temporarily be read only, sorry for the inconvenience!",
+    "description": "server error description"
+  },
+  "connection_required_title": {
+    "message": "Internet connection required...",
+    "description": "connection required title"
+  },
+  "connection_required_description": {
+    "message": "It appears you are not connected to the internet. Your tags will be read only until you are connected.",
+    "description": "connection required description"
+  },
+  "connection_restored_title": {
+    "message": "We're back!",
+    "description": "connection restored title"
+  },
+  "connection_restored_description": {
+    "message": "Your tags have been safely synced! Sorry about the downtime, we feel embarrassed...",
+    "description": "connection restored description"
+  },
+  "read_only_explanation_link": {
+    "message": "Why can't I change my tags?",
+    "description": "read only explanation link"
+  },
+  "read_only_explanation_title": {
+    "message": "Why can't I change my tags?",
+    "description": "read only explanation title"
+  },
+  "read_only_explanation_description": {
+    "message": "When you are not connected to the internet or when we are having an issue syncing your tags, your local tags are read only - you cannot make changes to them. This is to avoid any potential conflicts when syncing tags.",
+    "description": "read only explanation description"
+  },
+  "login_error_title": {
+    "message": "There was a problem logging in...",
+    "description": "login error title"
+  },
+  "login_error_description": {
+    "message": "There was a problem logging you in. We are having some issues at the moment, please try again later.",
+    "description": "login error description"
+  },
+  "permissions_details": {
+    "message": "Explanation of asked $link_open$permissions$link_close$",
+    "description": "permission details link",
+    "placeholders": {
+      "link_open": {
+        "content": "$1",
+        "example": "link open tag"
+      },
+      "link_close": {
+        "content": "$2",
+        "example": "link close tag"
+      }
+    }
   }
 }

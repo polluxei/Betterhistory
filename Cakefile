@@ -30,6 +30,7 @@ backgroundScripts = [
   "scripts/frameworks/underscore.js",
   "scripts/frameworks/mixin.js",
   "scripts/frameworks/analytics.js",
+  'scripts/frameworks/sha1.js',
   "scripts/modules/worker.js",
   "scripts/modules/i18n.js",
   "scripts/modules/url.js",
@@ -41,8 +42,12 @@ backgroundScripts = [
   "scripts/lib/sync_store.js",
   "scripts/lib/local_store.js",
   "scripts/lib/example_tags.js",
-  "scripts/persistence/tag.js",
+  'scripts/lib/syncing_translator.js',
+  'scripts/lib/sites_hasher.js',
+  'scripts/persistence/tag.js',
+  'scripts/persistence/remote.js',
   "scripts/init/tag_feature.js",
+  "scripts/init/persistence.js",
   "scripts/initialize_background.js"
 ]
 
@@ -60,11 +65,18 @@ popupScripts = [
   'scripts/trackers/analytics_tracker.js',
   'scripts/lib/local_store.js',
   'scripts/lib/sync_store.js',
+  'scripts/lib/image_data.js',
+  'scripts/lib/syncing_translator.js',
+  'scripts/lib/syncer.js',
   'scripts/persistence/tag.js',
+  'scripts/persistence/remote.js',
   'scripts/modules/i18n.js',
   'scripts/modules/url.js',
   'scripts/models/site.js',
   'scripts/models/tag.js',
+  'scripts/models/user.js',
+  'scripts/models/settings.js',
+  'scripts/models/state.js',
   'scripts/collections/tags.js',
   'scripts/views/main_view.js',
   'scripts/views/tagging_view.js',
@@ -74,6 +86,7 @@ popupScripts = [
   'scripts/presenters/site_presenter.js',
   'scripts/presenters/tags_presenter.js',
   'scripts/init/tag_feature.js',
+  'scripts/init/persistence.js',
   'scripts/initialize_popup.js'
 ]
 
@@ -90,6 +103,7 @@ scripts = [
   'scripts/frameworks/moment_hacks.js',
   'scripts/frameworks/mixin.js',
   'scripts/frameworks/analytics.js',
+  'scripts/frameworks/sha1.js',
   'scripts/templates.js',
   'scripts/modules/i18n.js',
   'scripts/modules/url.js',
@@ -103,8 +117,13 @@ scripts = [
   'scripts/lib/local_store.js',
   'scripts/lib/example_tags.js',
   'scripts/lib/image_data.js',
+  'scripts/lib/google_user_info.js',
+  'scripts/lib/user_processor.js',
+  'scripts/lib/syncing_translator.js',
+  'scripts/lib/sites_hasher.js',
+  'scripts/lib/syncer.js',
   'scripts/persistence/tag.js',
-  'scripts/persistence/share.js',
+  'scripts/persistence/remote.js',
   'scripts/views/modal_view.js',
   'scripts/views/main_view.js',
   'scripts/views/app_view.js',
@@ -133,6 +152,15 @@ scripts = [
   'scripts/views/how_to_tag_view.js',
   'scripts/views/available_tags_view.js',
   'scripts/views/new_tag_view.js',
+  'scripts/views/sign_up_info_view.js',
+  'scripts/views/initial_syncing_view.js',
+  'scripts/views/syncing_decision_view.js',
+  'scripts/views/auth_error_view.js',
+  'scripts/views/server_error_view.js',
+  'scripts/views/connection_required_view.js',
+  'scripts/views/connection_restored_view.js',
+  'scripts/views/read_only_explanation_view.js',
+  'scripts/views/login_error_view.js',
   'scripts/models/history.js',
   'scripts/models/day.js',
   'scripts/models/day_history.js',
@@ -149,6 +177,7 @@ scripts = [
   'scripts/models/week_history.js',
   'scripts/models/tag.js',
   'scripts/models/site.js',
+  'scripts/models/user.js',
   'scripts/collections/grouped_visits.js',
   'scripts/collections/intervals.js',
   'scripts/collections/visits.js',
@@ -161,6 +190,7 @@ scripts = [
   'scripts/router.js',
   'scripts/init/tag_feature.js',
   'scripts/init/mailing_list.js',
+  'scripts/init/persistence.js',
   'scripts/initialize_extension.js'
 ]
 
@@ -191,6 +221,7 @@ task 'build:assets:dev', '', ->
 
   code = code.replace '<%= scripts %>', scriptTags.join("\n    ")
   code = code.replace '<%= styles %>', styleTags.join("\n    ")
+  code = code.replace '<%= wallet.js %>', 'https://sandbox.google.com/checkout/inapp/lib/buy.js'
 
   fs.writeFileSync 'build/index.html', code
 
@@ -232,6 +263,7 @@ task 'build:assets:prod', '', ->
 
   code = code.replace '<%= scripts %>', buildScriptTag('scripts.js')
   code = code.replace '<%= styles %>', buildStyleTag('styles.css')
+  code = code.replace '<%= wallet.js %>', 'https://wallet.google.com/inapp/lib/buy.js'
 
   fs.writeFileSync 'build/index.html', code
 

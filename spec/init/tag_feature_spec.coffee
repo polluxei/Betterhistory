@@ -3,11 +3,9 @@ describe 'BH.Init.TagFeature', ->
     @callback = jasmine.createSpy('callback')
 
     syncStore = get: jasmine.createSpy('get')
-    localStore = get: jasmine.createSpy('get')
 
     @tagFeature = new BH.Init.TagFeature
       syncStore: syncStore
-      localStore: localStore
 
   describe '#announce', ->
     it 'calls callback when tag instructions have not been dismissed', ->
@@ -21,41 +19,46 @@ describe 'BH.Init.TagFeature', ->
       expect(@callback).not.toHaveBeenCalled()
 
   describe '#prepopulate', ->
-    describe 'when tag instructions have not been dismissed and the tags key does not exist in the localStore', ->
+    describe 'when tag instructions have not been dismissed and no tags have been created', ->
       beforeEach ->
-        @tagFeature.syncStore.get.andCallFake (key, callback) -> callback({})
-        @tagFeature.localStore.get.andCallFake (key, callback) -> callback({})
+        @tagFeature.syncStore.get.andCallFake (key, callback) ->
+          callback({})
+        persistence.tag().fetchTags.andCallFake (callback) ->
+          callback([])
 
       it 'calls the callback', ->
         @tagFeature.prepopulate(@callback)
         expect(@callback).toHaveBeenCalled()
 
-    describe 'when tag instructions have been dismissed and the tags key does not exist in the localStore', ->
+    describe 'when tag instructions have been dismissed and no tags have been created', ->
       beforeEach ->
         @tagFeature.syncStore.get.andCallFake (key, callback) ->
           callback(tagInstructionsDismissed: true)
-        @tagFeature.localStore.get.andCallFake (key, callback) -> callback({})
+        persistence.tag().fetchTags.andCallFake (callback) ->
+          callback([])
 
       it 'does not call the callback', ->
         @tagFeature.prepopulate(@callback)
         expect(@callback).not.toHaveBeenCalled()
 
-    describe 'when tag instructions have not been dismissed and the tags key does exist in the localStore', ->
+    describe 'when tag instructions have not been dismissed and tags have been created', ->
       beforeEach ->
-        @tagFeature.syncStore.get.andCallFake (key, callback) -> callback({})
-        @tagFeature.localStore.get.andCallFake (key, callback) -> callback(tags: [])
+        @tagFeature.syncStore.get.andCallFake (key, callback) ->
+          callback({})
+        persistence.tag().fetchTags.andCallFake (callback) ->
+          callback(['cars'])
 
       it 'does not call the callback', ->
         @tagFeature.prepopulate(@callback)
         expect(@callback).not. toHaveBeenCalled()
 
-    describe 'when tag instructions have been dismissed and the tags key does exist in the localStore', ->
+    describe 'when tag instructions have been dismissed and tags have been created', ->
       beforeEach ->
         @tagFeature.syncStore.get.andCallFake (key, callback) ->
           callback(tagInstructionsDismissed: true)
-        @tagFeature.localStore.get.andCallFake (key, callback) ->
-          callback(tags: [])
+        persistence.tag().fetchTags.andCallFake (callback) ->
+          callback(['cars'])
 
       it 'does not call the callback', ->
         @tagFeature.prepopulate(@callback)
-        expect(@callback).not. toHaveBeenCalled()
+        expect(@callback).not.toHaveBeenCalled()

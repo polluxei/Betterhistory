@@ -1,6 +1,6 @@
 class BH.Models.Tag extends Backbone.Model
-  initialize: (attrs = {}, options = {}) ->
-    @persistence = options.persistence
+  initialize: ->
+    @on('sync', @sync)
 
   validate: (attrs, options) ->
     name = attrs.name.replace(/^\s\s*/, '').replace(/\s\s*$/, '')
@@ -11,28 +11,30 @@ class BH.Models.Tag extends Backbone.Model
       return "tag contains special characters"
 
   fetch: (callback = ->) ->
-    @persistence ||= lazyPersistence()
-    @persistence.fetchTagSites @get('name'), (sites) =>
-      @persistence.fetchSharedTag @get('name'), (url) =>
+    persistence.tag().fetchTagSites @get('name'), (sites) =>
+      persistence.tag().fetchSharedTag @get('name'), (url) =>
         @set sites: sites, url: url
         callback()
 
   destroy: (callback = ->) ->
-    @persistence ||= lazyPersistence()
-    @persistence.removeTag @get('name'), =>
+    persistence.tag().removeTag @get('name'), =>
+      @trigger 'sync', operation: 'destroy'
       @set sites: []
+      chrome.runtime.sendMessage({action: 'calculate hash'})
       callback()
 
   removeSite: (url, callback = ->) ->
-    @persistence ||= lazyPersistence()
-    @persistence.removeSiteFromTag url, @get('name'), (sites) =>
+    persistence.tag().removeSiteFromTag url, @get('name'), (sites) =>
+      @trigger 'sync', {operation: 'modify', site: _.where(@get('sites'), url: url)[0]}
       @set sites: sites
+      chrome.runtime.sendMessage({action: 'calculate hash'})
       callback()
 
   renameTag: (name, callback = ->) ->
-    @persistence ||= lazyPersistence()
-    @persistence.renameTag @get('name'), name, =>
+    persistence.tag().renameTag @get('name'), name, =>
+      @trigger 'sync', {operation: 'rename', newName: name, oldName: @get('name')}
       @set name: name
+      chrome.runtime.sendMessage({action: 'calculate hash'})
       callback()
 
   share: (callbacks) ->
@@ -46,15 +48,22 @@ class BH.Models.Tag extends Backbone.Model
         if index != json.sites.length
           index++
         else
-          lazyPersistenceShare().send json,
+          persistence.remote().share json,
             success: (data) =>
-              @persistence.shareTag(@get('name'), data.url)
+              persistence.tag().shareTag(@get('name'), data.url)
               callbacks.success(data)
             error: ->
               callbacks.error()
 
-lazyPersistence = ->
-  new BH.Persistence.Tag(localStore: localStore)
-
-lazyPersistenceShare = ->
-  new BH.Persistence.Share()
+  sync: (options) ->
+    if user.isLoggedIn()
+      switch options.operation
+        when 'destroy'
+          persistence.remote().deleteTag @get('name')
+        when 'rename'
+          persistence.remote().renameTag options.oldName, options.newName
+        when 'modify'
+          site = options.site
+          persistence.tag().fetchSiteTags site.url, (tags) ->
+            site.tags = tags
+            persistence.remote().updateSite site

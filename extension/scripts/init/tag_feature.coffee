@@ -1,7 +1,6 @@
 class BH.Init.TagFeature
   constructor: (options) ->
     @syncStore = options.syncStore
-    @localStore = options.localStore
 
   announce: (callback = ->) ->
     @syncStore.get 'tagInstructionsDismissed', (data) ->
@@ -12,7 +11,5 @@ class BH.Init.TagFeature
     @syncStore.get 'tagInstructionsDismissed', (data) =>
       tagInstructionsDismissed = data.tagInstructionsDismissed || false
 
-      @localStore.get 'tags', (data) ->
-        tags = data?.tags
-
-        callback() if !tagInstructionsDismissed && !_.isArray(tags)
+      persistence.tag().fetchTags (tags) ->
+        callback() if !tagInstructionsDismissed && tags.length == 0

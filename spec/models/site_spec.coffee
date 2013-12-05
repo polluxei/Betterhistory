@@ -1,9 +1,12 @@
 describe 'BH.Models.Site', ->
   beforeEach ->
-    persistence =
-      fetchSiteTags: jasmine.createSpy('fetchSiteTags')
-      addSiteToTag: jasmine.createSpy('addSiteToTag')
-      removeSiteFromTag: jasmine.createSpy('removeSiteFromTag')
+    timekeeper.freeze(new Date(1351029600000))
+
+    global.user = new BH.Models.User
+    global.user.login(authId: 123412341234)
+
+    persistence.tag().addSiteToTag.andCallFake (site, tag, cb) ->
+      cb()
 
     attrs =
       url: 'http://www.recipes.com/pound_cake'
@@ -11,11 +14,10 @@ describe 'BH.Models.Site', ->
 
     @site = new BH.Models.Site attrs,
       chrome: chrome
-      persistence: persistence
 
   describe '#fetch', ->
     beforeEach ->
-      @site.persistence.fetchSiteTags.andCallFake (url, callback) ->
+      persistence.tag().fetchSiteTags.andCallFake (url, callback) ->
         callback ['recipes', 'cooking']
 
     it 'sets the site attributes and collects it\'s tags', ->
@@ -42,6 +44,7 @@ describe 'BH.Models.Site', ->
         url: 'http://www.recipes.com/pound_cake'
         title: 'Pound cake recipes'
         tags: ['cooking']
+      , silent: true
 
     it 'calls the callback with false if the tag is found in the tags', ->
       @site.addTag('cooking', @callback)
@@ -76,11 +79,28 @@ describe 'BH.Models.Site', ->
         site =
           url: @site.get('url')
           title: @site.get('title')
-        expect(@site.persistence.addSiteToTag).toHaveBeenCalledWith(site, 'recipes', jasmine.any(Function))
+          datetime: 1351029600000
+        expect(persistence.tag().addSiteToTag).toHaveBeenCalledWith(site, 'recipes', jasmine.any(Function))
+
+      it 'calls to the sync persistence layer to update the site', ->
+        @site.addTag('recipes')
+
+        expect(persistence.remote().updateSite).toHaveBeenCalledWith
+          url: 'http://www.recipes.com/pound_cake'
+          title: 'Pound cake recipes'
+          datetime: 1351029600000
+          image : 'favicon image'
+          tags: ['cooking', 'recipes']
+
+      it 'does not call to the sync persistence layer when the user has no authId ', ->
+        global.user.logout()
+        @site.addTag('recipes')
+
+        expect(persistence.remote().updateSite).not.toHaveBeenCalled()
 
       it 'calls the passed callback with the result and operations performed during the persistence', ->
         callback = jasmine.createSpy('callback')
-        @site.persistence.addSiteToTag.andCallFake (site, tag, callback) ->
+        persistence.tag().addSiteToTag.andCallFake (site, tag, callback) ->
           callback('operations')
         @site.addTag('recipes', callback)
         expect(callback).toHaveBeenCalledWith(true, 'operations')
@@ -91,6 +111,10 @@ describe 'BH.Models.Site', ->
         url: 'http://www.recipes.com/pound_cake'
         title: 'Pound cake recipes'
         tags: ['cooking', 'recipes']
+      , silent: true
+
+      persistence.tag().removeSiteFromTag.andCallFake (url, tag, callback) ->
+        callback()
 
     it 'returns false if the tag is not present in the tags', ->
       expect(@site.removeTag('auto')).toEqual false
@@ -101,6 +125,23 @@ describe 'BH.Models.Site', ->
           expect(@site.get('tags')).toEqual ['cooking']
         @site.removeTag('recipes')
 
+      it 'calls to the sync persistence layer to update the site', ->
+        @site.removeTag('recipes')
+
+        expect(persistence.remote().updateSite).toHaveBeenCalledWith
+          url: 'http://www.recipes.com/pound_cake'
+          title: 'Pound cake recipes'
+          datetime: 1351029600000
+          image : 'favicon image'
+          tags: ['cooking']
+
+      it 'does not call to the sync persistence layer when the user has no authId ', ->
+        global.user.logout()
+        @site.removeTag('recipes')
+        expect(persistence.remote().updateSite).not.toHaveBeenCalled()
+
+
       it 'calls to the persistence layer to remove the tag', ->
         @site.removeTag('recipes')
-        expect(@site.persistence.removeSiteFromTag).toHaveBeenCalledWith(@site.get('url'), 'recipes')
+        expect(persistence.tag().removeSiteFromTag).toHaveBeenCalledWith(@site.get('url'), 'recipes', jasmine.any(Function))
+

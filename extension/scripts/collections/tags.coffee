@@ -1,19 +1,22 @@
 class BH.Collections.Tags extends Backbone.Collection
   model: BH.Models.Tag
 
-  initialize: (models = {}, options = {}) ->
-    @persistence = options.persistence
+  initialize: ->
+    @on('sync', @sync) if user.isLoggedIn()
 
   fetch: (callback = ->) ->
-    @persistence ||= lazyPersistence()
-    @persistence.fetchTags (tags, compiledTags) =>
+    persistence.tag().fetchTags (tags, compiledTags) =>
       @tagOrder = tags
-      @reset compiledTags, persistence: @persistence
+      @reset compiledTags
       callback()
 
   destroy: (callback = ->)->
-    @persistence ||= lazyPersistence()
-    @persistence.removeAllTags(callback)
+    persistence.tag().removeAllTags =>
+      chrome.runtime.sendMessage({action: 'calculate hash'})
+      callback()
+      @trigger 'sync', operation: 'destroy'
 
-lazyPersistence = ->
-  new BH.Persistence.Tag(localStore: localStore)
+  sync: (options) ->
+    switch options.operations
+      when 'destroy'
+        persistence.remote().deleteSites()
