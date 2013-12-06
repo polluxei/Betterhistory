@@ -1186,7 +1186,7 @@
     "description": "description"
   },
   "sign_up_info_bullets": {
-    "message": "$open$Linked to your Google account$close$$open$Store unlimited tags and sites$close$$open$Log into any Better History extension$close$$open$Safely stored in the cloud$close$$open$Access tagged sites from $betterHistoryOpen$better-history.com$betterHistoryClose$$close$",
+    "message": "$open$Linked to your Google account$close$$open$Store unlimited tags and sites$close$$open$Log into Better History when signed into Chrome$close$$open$Sync tags across Chrome browsers (when signed in)$close$$open$Safely stored in the cloud$close$$open$Access tagged sites on the go at $betterHistoryOpen$better-history.com$betterHistoryClose$$close$",
     "description": "sign up info",
     "placeholders": {
       "open": {
@@ -1208,7 +1208,7 @@
     }
   },
   "sign_up_info_price": {
-    "message": "$$15 (a one-time fee)",
+    "message": "$$8 (a one-time fee)",
     "description": "syncing price"
   },
   "sign_up_info_question": {
