@@ -22,6 +22,7 @@ class BH.Views.DragAndTagView extends Backbone.View
           url: visit.get('url')
           title: visit.get('title')
           id: visit.get('id')
+          datetime: new Date().getTime()
       else if $el.hasClass('tagged')
         count = 1
         sites = @model.get('sites')
@@ -30,6 +31,7 @@ class BH.Views.DragAndTagView extends Backbone.View
           url: visit[0].url
           title: visit[0].title
           id: visit[0].url
+          datetime: new Date().getTime()
       else
         intervalId = $el.parents('.interval').data('id')
         interval = @model.get('history').get(intervalId)
@@ -42,6 +44,7 @@ class BH.Views.DragAndTagView extends Backbone.View
               url: visit.get('url')
               title: visit.get('title')
               id: visit.get('id')
+              datetime: new Date().getTime()
         else
           visit = interval.findVisitById($el.data('id'))
           count = 1
@@ -49,6 +52,7 @@ class BH.Views.DragAndTagView extends Backbone.View
             url: visit.get('url')
             title: visit.get('title')
             id: visit.get('id')
+            datetime: new Date().getTime()
 
 
       @tracker.siteTagDrag()
