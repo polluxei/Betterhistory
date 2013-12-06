@@ -12,6 +12,9 @@ getPersistence = ->
     addSitesToTag: jasmine.createSpy('addSitesToTag')
     addSiteToTag: jasmine.createSpy('addSiteToTag')
     removeSitesFromTag: jasmine.createSpy('removeSitesFromTag')
+    getCompletedMigrations: jasmine.createSpy('getCompletedMigrations')
+    markMigrationAsComplete: jasmine.createSpy('markMigrationAsComplete')
+
   remote:
     renameTag: jasmine.createSpy('renameTag')
     deleteTag: jasmine.createSpy('deleteTag')

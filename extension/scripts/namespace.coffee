@@ -10,6 +10,7 @@
   Trackers: {}
   Presenters: {}
   Persistence: {}
+  Migrations: {}
   Init: {}
   Base: ->
 

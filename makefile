@@ -36,6 +36,9 @@ build:
 	sed -i '' 's/\$$API_HOST\$$/${DEV_API_HOST}/g' build/scripts/initialize_popup.js
 	sed -i '' 's/\$$SITE_HOST\$$/${DEV_SITE_HOST}/g' build/scripts/initialize_popup.js
 	sed -i '' 's/\$$ENV\$$/dev/g' build/scripts/initialize_popup.js
+	sed -i '' 's/\$$API_HOST\$$/${DEV_API_HOST}/g' build/scripts/initialize_background.js
+	sed -i '' 's/\$$SITE_HOST\$$/${DEV_SITE_HOST}/g' build/scripts/initialize_background.js
+	sed -i '' 's/\$$ENV\$$/dev/g' build/scripts/initialize_background.js
 
 release: build
 	coffee -c build/scripts/
@@ -53,6 +56,9 @@ release: build
 	sed -i '' 's/\$$API_HOST\$$/${PROD_API_HOST}/g' build/scripts/initialize_popup.js
 	sed -i '' 's/\$$SITE_HOST\$$/${PROD_SITE_HOST}/g' build/scripts/initialize_popup.js
 	sed -i '' 's/\$$ENV\$$/prod/g' build/scripts/initialize_popup.js
+	sed -i '' 's/\$$API_HOST\$$/${PROD_API_HOST}/g' build/scripts/initialize_background.js
+	sed -i '' 's/\$$SITE_HOST\$$/${PROD_SITE_HOST}/g' build/scripts/initialize_background.js
+	sed -i '' 's/\$$ENV\$$/prod/g' build/scripts/initialize_background.js
 	cake build:assets:prod
 	./node_modules/uglify-js/bin/uglifyjs build/scripts.js -o build/scripts.js
 	rm -f extension.zip

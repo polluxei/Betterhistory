@@ -10,6 +10,16 @@ class BH.Persistence.Tag
     @localStore.get 'sitesHash', (data) ->
       callback(data)
 
+  getCompletedMigrations: (callback) ->
+    @localStore.get 'completedMigrations', (data) ->
+      callback(data.completedMigrations || [])
+
+  markMigrationAsComplete: (name) ->
+    @localStore.get 'completedMigrations', (data) =>
+      data.completedMigrations ||= []
+      data.completedMigrations.push name
+      @localStore.set(data)
+
   cached: (callback) ->
     @localStore.get null, (data) ->
       callback

@@ -1,7 +1,11 @@
+window.apiHost = '$API_HOST$'
+window.siteHost = '$SITE_HOST$'
+window.env = '$ENV$'
+
 errorTracker = new BH.Trackers.ErrorTracker(Honeybadger)
 analyticsTracker = new BH.Trackers.AnalyticsTracker()
 
-try
+load = ->
   window.syncStore = new BH.Lib.SyncStore
     chrome: chrome
     tracker: analyticsTracker
@@ -13,6 +17,10 @@ try
     syncStore: new BH.Lib.SyncStore
       chrome: chrome
       tracker: analyticsTracker
+
+  chrome.runtime.onInstalled.addListener ->
+    ensureDatetimeOnTaggedSites = new BH.Migrations.EnsureDatetimeOnTaggedSites
+    ensureDatetimeOnTaggedSites.run()
 
   omnibox = new BH.Lib.Omnibox
     chrome: chrome
@@ -27,7 +35,6 @@ try
     chrome: chrome
     tracker: analyticsTracker
   pageContextMenu.listenToTabs()
-  debugger
 
   syncStore.get 'settings', (data) ->
     settings = data.settings || {}
@@ -58,5 +65,10 @@ try
         else
           persistence.tag().setSitesHash ''
 
-catch e
-  errorTracker.report e
+if env == 'prod'
+  try
+    load()
+  catch e
+    errorTracker.report e
+else
+  load()
