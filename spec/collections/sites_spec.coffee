@@ -1,5 +1,7 @@
 describe 'BH.Collections.Site', ->
   beforeEach ->
+    timekeeper.freeze(new Date(1351029600000))
+
     global.user = new BH.Models.User
     global.user.login(authId: 123412341234)
 
@@ -80,9 +82,11 @@ describe 'BH.Collections.Site', ->
         sites = [{
           title: 'Pies'
           url: 'http://www.atk.com/pies'
+          datetime: 1351029600000
         }, {
           title: 'Sandwiches'
           url: 'http://www.atk.com/sandwiches'
+          datetime: 1351029600000
         }]
         expect(persistence.tag().addSitesToTag).toHaveBeenCalledWith(sites, 'recipes', jasmine.any(Function))
 
