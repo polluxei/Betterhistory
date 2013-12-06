@@ -59,7 +59,7 @@ describe 'BH.Migrations.EnsureDatetimeOnTaggedSites', ->
 
       it 'marks the migration as complete', ->
         @migration.run()
-        expect(persistence.tag().markMigrationAsComplete).toHaveBeenCalledWith 'ensure_datetime_on_tagged_sites'
+        expect(persistence.tag().markMigrationAsComplete).toHaveBeenCalledWith 'ensure_datetime_on_tagged_sites', jasmine.any(Function)
 
     describe 'when the migration has been run', ->
       beforeEach ->

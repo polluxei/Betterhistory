@@ -14,11 +14,12 @@ class BH.Persistence.Tag
     @localStore.get 'completedMigrations', (data) ->
       callback(data.completedMigrations || [])
 
-  markMigrationAsComplete: (name) ->
+  markMigrationAsComplete: (name, callback) ->
     @localStore.get 'completedMigrations', (data) =>
       data.completedMigrations ||= []
       data.completedMigrations.push name
-      @localStore.set(data)
+      @localStore.set data, ->
+        callback()
 
   cached: (callback) ->
     @localStore.get null, (data) ->

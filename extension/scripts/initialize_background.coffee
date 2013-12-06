@@ -20,7 +20,9 @@ load = ->
 
   chrome.runtime.onInstalled.addListener ->
     ensureDatetimeOnTaggedSites = new BH.Migrations.EnsureDatetimeOnTaggedSites
+      analyticsTracker: analyticsTracker
     ensureDatetimeOnTaggedSites.run()
+
 
   omnibox = new BH.Lib.Omnibox
     chrome: chrome

@@ -151,3 +151,6 @@ class BH.Trackers.AnalyticsTracker
 
   userOAuthSuccess: ->
     @trackEvent(['User', 'OAuth', 'Success'])
+
+  ensureDatetimeOnTaggedSitesMigration: ->
+    @trackEvent(['Migration', 'ensure_datetime_on_tagged_sites'])

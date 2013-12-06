@@ -1,6 +1,8 @@
 class BH.Migrations.EnsureDatetimeOnTaggedSites
   name: 'ensure_datetime_on_tagged_sites'
 
+  constructor: (@options) ->
+
   run: ->
     updateTag = (sites, name) ->
       persistence.tag().removeTag name, ->
@@ -22,4 +24,5 @@ class BH.Migrations.EnsureDatetimeOnTaggedSites
 
             updateTag(modifiedSites, compiledTag.name) if modified
 
-        persistence.tag().markMigrationAsComplete @name
+        persistence.tag().markMigrationAsComplete @name, =>
+          @options.analyticsTracker.ensureDatetimeOnTaggedSitesMigration()

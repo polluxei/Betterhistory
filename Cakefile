@@ -44,7 +44,7 @@ backgroundScripts = [
   "scripts/lib/example_tags.js",
   'scripts/lib/syncing_translator.js',
   'scripts/lib/sites_hasher.js',
-  'scripts/migrations/ensure_datetimes_on_tagged_sites.js',
+  'scripts/migrations/ensure_datetime_on_tagged_sites.js',
   'scripts/persistence/tag.js',
   'scripts/persistence/remote.js',
   "scripts/init/tag_feature.js",
