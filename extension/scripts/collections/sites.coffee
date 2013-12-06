@@ -36,6 +36,7 @@ class BH.Collections.Sites extends Backbone.Collection
         sites.push
           url: model.get('url')
           title: model.get('title')
+          datetime: model.get('datetime') || new Date().getTime()
 
     persistence.tag().addSitesToTag sites, tag, (operations) =>
       if user.isLoggedIn()
