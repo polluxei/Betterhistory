@@ -1370,5 +1370,8 @@
         "example": "link close tag"
       }
     }
+  },
+  "manually_sync_local_link": {
+    "message": "Manually sync local tags"
   }
 }

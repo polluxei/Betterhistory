@@ -18,6 +18,7 @@ class BH.Views.SettingsView extends BH.Views.MainView
     'click #domain_grouping': 'clickedDomainGrouping'
     'click #search_by_domain': 'clickedSearchByDomain'
     'click #search_by_selection': 'clickedSearchBySelection'
+    'click .manually_sync_local': 'clickedManuallySyncLocal'
     'click .logout': 'clickedLogout'
 
   initialize: ->
@@ -49,6 +50,25 @@ class BH.Views.SettingsView extends BH.Views.MainView
   clickedLogout: (ev) ->
     ev.preventDefault()
     user.logout()
+
+  clickedManuallySyncLocal: (ev) ->
+    ev.preventDefault()
+
+    initialSyncingView = new BH.Views.InitialSyncingView()
+    initialSyncingView.open()
+
+    initialSyncingView.on 'open', =>
+      persistence.remote().deleteSites ->
+        persistence.tag().fetchTags (tags, compiledTags) ->
+          if tags.length == 0
+            initialSyncingView.doneSyncing()
+          else
+            syncingTranslator = new BH.Lib.SyncingTranslator()
+            syncingTranslator.forServer compiledTags, (sites) ->
+              persistence.remote().updateSites sites, ->
+                setTimeout ->
+                  initialSyncingView.doneSyncing()
+                , 2000
 
   activateSocialLinks: ->
     !((d,s,id) ->
@@ -166,8 +186,9 @@ class BH.Views.SettingsView extends BH.Views.MainView
       'starting_week_day',
       'week_day_order',
       'general_section_title',
-      'mailing_list_link'
-      'syncing_settings_title'
+      'mailing_list_link',
+      'syncing_settings_title',
+      'manually_sync_local_link'
     ])
     properties['i18n_syncing_settings_login'] = @t('syncing_settings_login', [
       '<a style="text-decoration: underline;" href="#" id="sign_up">',
