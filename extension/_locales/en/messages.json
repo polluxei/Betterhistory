@@ -1373,5 +1373,13 @@
   },
   "manually_sync_local_link": {
     "message": "Manually sync local tags"
+  },
+  "devices_link": {
+    "message": "Devices",
+    "description": "devices menu link"
+  },
+  "devices_title": {
+    "message": "Devices",
+    "description": "title for devices sessions page"
   }
 }

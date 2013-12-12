@@ -3,6 +3,7 @@ class BH.Router extends Backbone.Router
     '': 'reset'
     'tags': 'tags'
     'tags/:id': 'tag'
+    'devices': 'devices'
     'weeks/:id': 'week'
     'days/:id': 'day'
     'settings': 'settings'
@@ -36,17 +37,22 @@ class BH.Router extends Backbone.Router
   tags: ->
     view = @app.loadTags()
     view.select()
-    @_delay -> view.collection.fetch()
+    delay -> view.collection.fetch()
+
+  devices: ->
+    view = @app.loadDevices()
+    view.select()
+    delay -> view.collection.fetch()
 
   tag: (id) ->
     view = @app.loadTag(id)
     view.select()
-    @_delay -> view.model.fetch()
+    delay -> view.model.fetch()
 
   week: (id) ->
     view = @app.loadWeek(id)
     view.select()
-    @_delay -> view.history.fetch()
+    delay -> view.history.fetch()
 
   day: (id) ->
     view = @app.loadDay id
@@ -70,8 +76,8 @@ class BH.Router extends Backbone.Router
     view.page.set(page: parseInt(page, 10), {silent: true}) if page?
     view.model.set query: decodeURIComponent(query)
     view.select()
-    @_delay ->
+    delay ->
       view.history.fetch() if view.model.validQuery()
 
-  _delay: (callback) ->
-    setTimeout (-> callback()), 250
+delay = (callback) ->
+  setTimeout (-> callback()), 250

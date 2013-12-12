@@ -53,6 +53,11 @@ class BH.Views.AppView extends Backbone.View
     @$('.menu .tags').parent().addClass 'selected'
     @cache.tagsView()
 
+  loadDevices: ->
+    @updateMenuSelection()
+    @$('.menu .devices').parent().addClass 'selected'
+    @cache.devicesView()
+
   loadTag: (id) ->
     @updateMenuSelection()
     @$('.menu .tags').parent().addClass 'selected'
@@ -82,4 +87,4 @@ class BH.Views.AppView extends Backbone.View
     @$("[data-week-id='#{id}']").addClass('selected') if id?
 
   getI18nValues: ->
-    @t ['history_title', 'settings_link', 'tags_link']
+    @t ['history_title', 'settings_link', 'tags_link', 'devices_link']
