@@ -5,7 +5,8 @@ class BH.Views.MenuView extends Backbone.View
     'click .menu > *': 'weekClicked'
 
   render: ->
-    html = Mustache.to_html @template, @collection.toTemplate()
+    presenter = new BH.Presenters.WeeksPresenter(@collection)
+    html = Mustache.to_html @template, presenter.weeks()
     @$el.html html
 
   weekClicked: (ev) ->

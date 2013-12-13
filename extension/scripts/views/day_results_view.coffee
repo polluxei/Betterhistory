@@ -15,7 +15,8 @@ class BH.Views.DayResultsView extends Backbone.View
     @chromeAPI = chrome
 
   render: ->
-    properties = _.extend @getI18nValues(), @model.toTemplate(), readOnly: state.get('readOnly')
+    presenter = new BH.Presenters.DayHistoryPresenter(@model)
+    properties = _.extend @getI18nValues(), presenter.history(), readOnly: state.get('readOnly')
     html = Mustache.to_html @template, properties
     @$el.html html
 

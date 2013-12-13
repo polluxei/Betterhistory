@@ -8,6 +8,3 @@ class BH.Models.GroupedVisit extends Backbone.Model
       time: @visits.at(0).get('time')
       isGrouped: true
       visits: @visits
-
-  toTemplate: ->
-    _.extend @toJSON(), groupedVisits: @visits.toTemplate()

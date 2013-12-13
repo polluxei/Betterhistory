@@ -14,15 +14,6 @@ describe 'BH.Models.Search', ->
       expect(@search.toHistory()).toEqual
         query: 'search term'
 
-  describe '#toTemplate', ->
-    beforeEach ->
-      @search.set query: 'search term'
-
-    it 'returns the properties needed for a view template', ->
-      expect(@search.toTemplate()).toEqual
-        title: '[translated searching_title] "search" [translated and] "term"'
-        query: 'search term'
-
   describe '#validQuery', ->
     it 'returns true when the query property is a non empty string', ->
       @search.set 'query', 'value'

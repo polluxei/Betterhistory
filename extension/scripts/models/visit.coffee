@@ -1,6 +1,4 @@
 class BH.Models.Visit extends Backbone.Model
-  @include BH.Modules.I18n
-
   defaults:
     title: '(No Title)'
 
@@ -14,13 +12,6 @@ class BH.Models.Visit extends Backbone.Model
     if method == 'delete'
       @chromeAPI.history.deleteUrl({url: @get('url')})
       options.success(@)
-
-  toTemplate: ->
-    _.extend
-      isGrouped: false
-      host: @domain()
-      path: @path()
-    , @toJSON()
 
   domain: ->
     match = @_getDomain @get('url')

@@ -43,7 +43,7 @@ load = ->
     syncer.updateIfNeeded ->
       tagState.trigger('synced')
 
-  settings = new BH.Models.Settings({})
+  window.settings = new BH.Models.Settings({})
   window.state = new BH.Models.State({}, settings: settings)
 
   window.persistence = new BH.Init.Persistence
