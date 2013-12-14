@@ -4,7 +4,7 @@
   "version": "2.3.2",
   "author": "Roy Kolak <roy.kolak@gmail.com>",
   "scripts": {
-    "start": "make build",
+    "start": "node_modules/.bin/coffee dev.coffee",
     "test": "node_modules/jasmine-node/bin/jasmine-node --coffee spec/",
     "serve": "node_modules/.bin/nf start"
   },
