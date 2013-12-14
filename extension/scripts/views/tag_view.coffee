@@ -70,7 +70,7 @@ class BH.Views.TagView extends BH.Views.MainView
   onRenameClicked: (ev) ->
     ev.preventDefault()
     @tracker.renameTagClick()
-    renameTagModal = new BH.Modal.RenameTagModal
+    renameTagModal = new BH.Modals.RenameTagModal
       model: @model
       tracker: @tracker
     $('body').append(renameTagModal.render().el)
