@@ -43,7 +43,7 @@ load = ->
     syncer.updateIfNeeded ->
       tagState.trigger('synced')
 
-  settings = new BH.Models.Settings({})
+  window.settings = new BH.Models.Settings({})
   window.state = new BH.Models.State({}, settings: settings)
 
   window.persistence = new BH.Init.Persistence
@@ -71,7 +71,7 @@ load = ->
 
   mailingList = new BH.Init.MailingList(syncStore: syncStore)
   mailingList.prompt ->
-    new BH.Views.MailingListView().open()
+    new BH.Modals.MailingListModal().open()
     analyticsTracker.mailingListPrompt()
 
   tagFeature = new BH.Init.TagFeature(syncStore: syncStore)

@@ -3,21 +3,6 @@ describe 'BH.Collections.Weeks', ->
     @weeks = new BH.Collections.Weeks null,
       settings: new BH.Models.Settings()
 
-  describe '#toTemplate', ->
-    it 'returns the properties needed for a view template', ->
-      week1 = new BH.Models.Week date: moment('Oct 12, 2010'),
-        settings: new BH.Models.Settings()
-      spyOn(week1, 'toTemplate').andReturn('templated')
-
-      week2 = new BH.Models.Week date: moment('Oct 19, 2010'),
-        settings: new BH.Models.Settings()
-      spyOn(week2, 'toTemplate').andReturn('templated again')
-
-      @weeks.add([week1, week2])
-
-      expect(@weeks.toTemplate()).toEqual
-        weeks: ['templated', 'templated again']
-
   describe '#reload', ->
     beforeEach ->
       timekeeper.freeze(new Date('10-23-12'))

@@ -21,33 +21,11 @@ class BH.Models.WeekHistory extends BH.Models.History
     properties.text = '' if reading
     properties
 
-  toTemplate: ->
-    total: @totalVisits()
-    days:
-      for day, visits of @get('history')
-        count: visits.length
-        day: day
-        percentage: "#{@dayVisitPercentage day}%"
-
   sod: ->
     new Date(@get('startDate').sod()).getTime()
 
   eod: ->
     new Date(@get('endDate').eod()).getTime()
-
-  dayVisits: ->
-    for day, visits of @get('history')
-      visits.length if visits?
-
-  totalVisits: ->
-    return 0 if @dayVisits().length == 0
-    @dayVisits().reduce (sum, num) ->
-      sum + num
-
-  dayVisitPercentage: (day) ->
-    largest = Math.max.apply(Math, @dayVisits()) || 0
-    return 0 if largest == 0
-    @get('history')[day].length / largest * 100
 
   preparse: (results, callback) ->
     @worker 'dayGrouper', visits: results, (history) ->

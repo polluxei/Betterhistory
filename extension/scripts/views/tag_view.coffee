@@ -60,8 +60,8 @@ class BH.Views.TagView extends BH.Views.MainView
 
   onReadOnlyExplanationClicked: (ev) ->
     ev.preventDefault()
-    readOnlyExplanationView = new BH.Views.ReadOnlyExplanationView()
-    readOnlyExplanationView.open()
+    readOnlyExplanationModal = new BH.Modals.ReadOnlyExplanationModal()
+    readOnlyExplanationModal.open()
 
   onDeleteSitesClicked: (ev) ->
     @tracker.deleteTagClick()
@@ -70,11 +70,11 @@ class BH.Views.TagView extends BH.Views.MainView
   onRenameClicked: (ev) ->
     ev.preventDefault()
     @tracker.renameTagClick()
-    renameTagView = new BH.Views.RenameTagView
+    renameTagModal = new BH.Modals.RenameTagModal
       model: @model
       tracker: @tracker
-    $('body').append(renameTagView.render().el)
-    renameTagView.open()
+    $('body').append(renameTagModal.render().el)
+    renameTagModal.open()
     $('.new_tag').focus()
 
   onShareClicked: (ev) ->

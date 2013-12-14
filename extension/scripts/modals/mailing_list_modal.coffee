@@ -1,4 +1,4 @@
-class BH.Views.MailingListView extends BH.Views.ModalView
+class BH.Modals.MailingListModal extends BH.Modals.Base
   @include BH.Modules.I18n
 
   className: 'mailing_list_view'

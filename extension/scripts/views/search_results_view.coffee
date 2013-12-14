@@ -11,7 +11,9 @@ class BH.Views.SearchResultsView extends Backbone.View
 
   render: ->
     [start, end] = BH.Lib.Pagination.calculateBounds(@options.page)
-    collectionToTemplate = @model.toTemplate(start, end)
+
+    presenter = new BH.Presenters.SearchHistoryPresenter(@model)
+    collectionToTemplate = presenter.history(start, end)
 
     highlightedVisits = for visit in collectionToTemplate.visits
       @markMatches(visit)

@@ -14,7 +14,7 @@ class BH.Views.PromptView extends BH.Views.ModalView
     @attachGeneralEvents()
 
   render: ->
-    @$el.html(@renderTemplate(_.extend(@getI18nValues(), @model.toTemplate())))
+    @$el.html(@renderTemplate(_.extend(@getI18nValues(), @model.toJSON())))
     @
 
   clickedNo: (ev) ->

@@ -1,4 +1,4 @@
-class BH.Views.SyncingDecisionView extends BH.Views.ModalView
+class BH.Modals.SyncingDecisionModal extends BH.Modals.Base
   @include BH.Modules.I18n
 
   className: 'syncing_decision_view'

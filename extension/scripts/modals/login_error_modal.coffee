@@ -1,8 +1,8 @@
-class BH.Views.ServerErrorView extends BH.Views.ModalView
+class BH.Modals.LoginErrorModal extends BH.Modals.Base
   @include BH.Modules.I18n
 
-  className: 'server_error_view'
-  template: BH.Templates['server_error']
+  className: 'login_error_view'
+  template: BH.Templates['login_error']
 
   events:
     'click .okay': 'okayClicked'
@@ -21,4 +21,4 @@ class BH.Views.ServerErrorView extends BH.Views.ModalView
     @close()
 
   getI18nValues: ->
-    @t ['prompt_okay_button', 'server_error_title', 'server_error_description']
+    @t ['prompt_okay_button', 'login_error_title', 'login_error_description']

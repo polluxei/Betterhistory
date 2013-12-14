@@ -46,13 +46,13 @@ class BH.Views.TagsView extends BH.Views.MainView
 
   onReadOnlyExplanationClicked: (ev) ->
     ev.preventDefault()
-    readOnlyExplanationView = new BH.Views.ReadOnlyExplanationView()
-    readOnlyExplanationView.open()
+    readOnlyExplanationModal = new BH.Modals.ReadOnlyExplanationModal()
+    readOnlyExplanationModal.open()
 
   onBuyTagSyncingClicked: (ev) ->
     ev.preventDefault()
-    signUpInfoView = new BH.Views.SignUpInfoView()
-    signUpInfoView.open()
+    signUpInfoModal = new BH.Modals.SignUpInfoModal()
+    signUpInfoModal.open()
 
   onTagsLoaded: ->
     tag_count = @t 'number_of_tags', [@collection.length]
@@ -94,8 +94,8 @@ class BH.Views.TagsView extends BH.Views.MainView
 
   onHowToTagClicked: (ev) ->
     ev.preventDefault()
-    howToTagView = new BH.Views.HowToTagView()
-    howToTagView.open()
+    howToTagModal = new BH.Modals.HowToTagModal()
+    howToTagModal.open()
 
   onDeleteTagsClicked: (ev) ->
     @tracker.deleteAllTagsClick()

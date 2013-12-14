@@ -1,3 +1,6 @@
+.chrome-bootstrap header .controls a {
+  text-decoration: none;
+}
 .server_error_view .warning,
 .login_error_view .warning,
 .connection_required_view .warning {
@@ -302,6 +305,9 @@ body.new_tags .menu .tags.pulse .new {
   border-radius: 3px;
   display: block;
   height: 37px;
+}
+.chrome-bootstrap .tag_list a {
+  text-decoration: none;
 }
 .tag_list li:hover > a {
   background: #DDD;

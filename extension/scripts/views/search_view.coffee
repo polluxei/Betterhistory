@@ -21,7 +21,8 @@ class BH.Views.SearchView extends BH.Views.MainView
     @page.on('change:page', @renderSearchResults, @)
 
   render: ->
-    properties = _.extend(@getI18nValues(), @model.toTemplate())
+    presenter = new BH.Presenters.SearchPresenter(@model)
+    properties = _.extend(@getI18nValues(), presenter.search())
     html = Mustache.to_html @template, properties
     @$el.append html
     if !@model.validQuery()
@@ -58,7 +59,8 @@ class BH.Views.SearchView extends BH.Views.MainView
     @renderSearchResults()
 
   updateQueryReferences: ->
-    properties = @model.toTemplate()
+    presenter = new BH.Presenters.SearchPresenter(@model)
+    properties = presenter.search()
     @$el.removeClass('loaded')
     @$('.title').text properties.title
     @$('.content').html('')
