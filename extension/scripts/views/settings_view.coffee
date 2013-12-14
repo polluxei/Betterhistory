@@ -54,20 +54,20 @@ class BH.Views.SettingsView extends BH.Views.MainView
   clickedManuallySyncLocal: (ev) ->
     ev.preventDefault()
 
-    initialSyncingView = new BH.Views.InitialSyncingView()
-    initialSyncingView.open()
+    initialSyncingModal = new BH.Modals.InitialSyncingModal()
+    initialSyncingModal.open()
 
-    initialSyncingView.on 'open', =>
+    initialSyncingModal.on 'open', =>
       persistence.remote().deleteSites ->
         persistence.tag().fetchTags (tags, compiledTags) ->
           if tags.length == 0
-            initialSyncingView.doneSyncing()
+            initialSyncingModal.doneSyncing()
           else
             syncingTranslator = new BH.Lib.SyncingTranslator()
             syncingTranslator.forServer compiledTags, (sites) ->
               persistence.remote().updateSites sites, ->
                 setTimeout ->
-                  initialSyncingView.doneSyncing()
+                  initialSyncingModal.doneSyncing()
                 , 2000
 
   activateSocialLinks: ->
@@ -110,8 +110,8 @@ class BH.Views.SettingsView extends BH.Views.MainView
 
   clickedSignUp: (ev) ->
     ev.preventDefault()
-    signUpInfoView = new BH.Views.SignUpInfoView()
-    signUpInfoView.open()
+    signUpInfoModal = new BH.Modals.SignUpInfoModal()
+    signUpInfoModal.open()
 
   clickedSignIn: (ev) ->
     ev.preventDefault()
@@ -159,9 +159,9 @@ class BH.Views.SettingsView extends BH.Views.MainView
 
   clickedCredits: (ev) ->
     ev.preventDefault()
-    creditsView = new BH.Views.CreditsView()
-    $('body').append(creditsView.render().el)
-    creditsView.open()
+    creditsModal = new BH.Modals.CreditsModal()
+    $('body').append(creditsModal.render().el)
+    creditsModal.open()
 
   getI18nValues: ->
     properties = @t([

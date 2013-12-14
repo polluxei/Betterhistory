@@ -1,4 +1,4 @@
-class BH.Views.AuthErrorView extends BH.Views.ModalView
+class BH.Modals.AuthErrorModal extends BH.Modals.Base
   @include BH.Modules.I18n
 
   className: 'auth_error_view'

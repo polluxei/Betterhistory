@@ -71,7 +71,7 @@ load = ->
 
   mailingList = new BH.Init.MailingList(syncStore: syncStore)
   mailingList.prompt ->
-    new BH.Views.MailingListView().open()
+    new BH.Modals.MailingListModal().open()
     analyticsTracker.mailingListPrompt()
 
   tagFeature = new BH.Init.TagFeature(syncStore: syncStore)

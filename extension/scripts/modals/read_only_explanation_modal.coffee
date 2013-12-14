@@ -1,8 +1,8 @@
-class BH.Views.LoginErrorView extends BH.Views.ModalView
+class BH.Modals.ReadOnlyExplanationModal extends BH.Modals.Base
   @include BH.Modules.I18n
 
-  className: 'login_error_view'
-  template: BH.Templates['login_error']
+  className: 'read_only_explanation_view'
+  template: BH.Templates['read_only_explanation']
 
   events:
     'click .okay': 'okayClicked'
@@ -21,4 +21,4 @@ class BH.Views.LoginErrorView extends BH.Views.ModalView
     @close()
 
   getI18nValues: ->
-    @t ['prompt_okay_button', 'login_error_title', 'login_error_description']
+    @t ['prompt_okay_button', 'read_only_explanation_title', 'read_only_explanation_description']

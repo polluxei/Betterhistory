@@ -1,4 +1,4 @@
-class BH.Views.RenameTagView extends BH.Views.ModalView
+class BH.Modals.RenameTagModal extends BH.Modals.Base
   @include BH.Modules.I18n
 
   className: 'rename_tag_view'

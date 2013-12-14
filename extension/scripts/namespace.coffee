@@ -1,5 +1,6 @@
 @BH =
   Views: {}
+  Modals: {}
   Models: {}
   Collections: {}
   Lib: {

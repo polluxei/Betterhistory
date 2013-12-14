@@ -1,4 +1,4 @@
-class BH.Views.HowToTagView extends BH.Views.ModalView
+class BH.Modals.HowToTagModal extends BH.Modals.Base
   @include BH.Modules.I18n
 
   className: 'how_to_tag_view'

@@ -24,8 +24,8 @@ class BH.Persistence.Remote
           user.logout()
           chrome.identity.getAuthToken (token) ->
             chrome.identity.removeCachedAuthToken token: token, ->
-              authErrorView = new BH.Views.AuthErrorView()
-              authErrorView.open()
+              authErrorModal = new BH.Modals.AuthErrorModal()
+              authErrorModal.open()
         else
           error(data, type)
           options.error(data, type) if options.error?

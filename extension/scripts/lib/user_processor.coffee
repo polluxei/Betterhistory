@@ -1,10 +1,10 @@
 showServerErrorView = ->
-  serverErrorView = new BH.Views.ServerErrorView()
-  serverErrorView.open()
+  serverErrorModal = new BH.Modals.ServerErrorModal()
+  serverErrorModal.open()
 
 showLoginErrorView = ->
-  loginErrorView = new BH.Views.LoginErrorView()
-  loginErrorView.open()
+  loginErrorModal = new BH.Modals.LoginErrorModal()
+  loginErrorModal.open()
 
 class BH.Lib.UserProcessor
   constructor: ->
@@ -79,38 +79,38 @@ class BH.Lib.UserProcessor
         @initialSync('pull', userData)
 
   syncDecision: (userData) ->
-    syncingDecisionView = new BH.Views.SyncingDecisionView
+    syncingDecisionModal = new BH.Modals.SyncingDecisionModal
       model: new Backbone.Model(userData)
-    syncingDecisionView.open()
+    syncingDecisionModal.open()
 
-    syncingDecisionView.on 'decision', (decision) =>
+    syncingDecisionModal.on 'decision', (decision) =>
 
       if decision == 'push'
         @pushLocalTags userData, ->
-          syncingDecisionView.doneSyncing()
+          syncingDecisionModal.doneSyncing()
 
       else
         @pullRemoteTags userData, ->
-          syncingDecisionView.doneSyncing()
+          syncingDecisionModal.doneSyncing()
 
-    syncingDecisionView.on 'syncingComplete', ->
+    syncingDecisionModal.on 'syncingComplete', ->
       window.user.login(userData)
 
   initialSync: (direction, userData) ->
-    initialSyncingView = new BH.Views.InitialSyncingView()
-    initialSyncingView.open()
+    initialSyncingModal = new BH.Modals.InitialSyncingModal()
+    initialSyncingModal.open()
 
-    initialSyncingView.on 'open', =>
+    initialSyncingModal.on 'open', =>
       if direction == 'push'
         @pushLocalTags userData, ->
-          initialSyncingView.doneSyncing()
+          initialSyncingModal.doneSyncing()
       else if direction == 'pull'
         @pullRemoteTags userData, ->
-          initialSyncingView.doneSyncing()
+          initialSyncingModal.doneSyncing()
       else if direction == null
-        initialSyncingView.doneSyncing()
+        initialSyncingModal.doneSyncing()
 
-    initialSyncingView.on 'syncingComplete', ->
+    initialSyncingModal.on 'syncingComplete', ->
       window.user.login(userData)
 
   pushLocalTags: (userData, callback) ->
