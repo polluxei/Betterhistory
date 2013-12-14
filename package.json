@@ -34,8 +34,7 @@
     "moment": "1.7.2",
     "timekeeper": "0.0.3",
     "uglify-js": "2.3.6",
-    "watch": "0.8.0",
-    "foreman": "0.0.25"
+    "watch": "0.8.0"
   },
   "license": "GPLv3"
 }
