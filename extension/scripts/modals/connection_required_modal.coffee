@@ -1,8 +1,8 @@
-class BH.Views.ConnectionRestoredView extends BH.Views.ModalView
+class BH.Modals.ConnectionRequiredModal extends BH.Modals.Base
   @include BH.Modules.I18n
 
-  className: 'connection_restored_view'
-  template: BH.Templates['connection_restored']
+  className: 'connection_required_view'
+  template: BH.Templates['connection_required']
 
   events:
     'click .okay': 'okayClicked'
@@ -21,4 +21,4 @@ class BH.Views.ConnectionRestoredView extends BH.Views.ModalView
     @close()
 
   getI18nValues: ->
-    @t ['prompt_okay_button', 'connection_restored_title', 'connection_restored_description']
+    @t ['prompt_okay_button', 'connection_required_title', 'connection_required_description']

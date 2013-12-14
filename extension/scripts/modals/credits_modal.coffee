@@ -1,4 +1,4 @@
-class BH.Views.CreditsView extends BH.Views.ModalView
+class BH.Modals.CreditsModal extends BH.Modals.Base
   @include BH.Modules.I18n
 
   className: 'credits_view'

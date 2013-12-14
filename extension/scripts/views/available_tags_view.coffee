@@ -54,14 +54,14 @@ class BH.Views.AvailableTagsView extends Backbone.View
     @
 
   renderNewTagView: (collection) ->
-    newTagView = new BH.Views.NewTagView
+    newTagModal = new BH.Modals.NewTagModal
       model: new BH.Models.Tag()
       tracker: @tracker
-    $('body').append(newTagView.render().el)
-    newTagView.open()
+    $('body').append(newTagModal.render().el)
+    newTagModal.open()
     $('.new_tag').focus()
-    newTagView.model.on 'change:name', =>
-      @tagSites newTagView.model.get('name'), collection
+    newTagModal.model.on 'change:name', =>
+      @tagSites newTagModal.model.get('name'), collection
 
   untagSites: (tag, collection) ->
     collection.removeTag tag, =>

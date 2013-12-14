@@ -1,4 +1,4 @@
-class BH.Views.InitialSyncingView extends BH.Views.ModalView
+class BH.Modals.InitialSyncingModal extends BH.Modals.Base
   @include BH.Modules.I18n
 
   className: 'initial_syncing_view'

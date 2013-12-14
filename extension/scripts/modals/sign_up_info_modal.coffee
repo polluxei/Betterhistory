@@ -1,4 +1,4 @@
-class BH.Views.SignUpInfoView extends BH.Views.ModalView
+class BH.Modals.SignUpInfoModal extends BH.Modals.Base
   @include BH.Modules.I18n
 
   className: 'sign_up_info_view'

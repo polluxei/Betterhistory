@@ -1,8 +1,8 @@
-class BH.Views.ConnectionRequiredView extends BH.Views.ModalView
+class BH.Modals.ServerErrorModal extends BH.Modals.Base
   @include BH.Modules.I18n
 
-  className: 'connection_required_view'
-  template: BH.Templates['connection_required']
+  className: 'server_error_view'
+  template: BH.Templates['server_error']
 
   events:
     'click .okay': 'okayClicked'
@@ -21,4 +21,4 @@ class BH.Views.ConnectionRequiredView extends BH.Views.ModalView
     @close()
 
   getI18nValues: ->
-    @t ['prompt_okay_button', 'connection_required_title', 'connection_required_description']
+    @t ['prompt_okay_button', 'server_error_title', 'server_error_description']

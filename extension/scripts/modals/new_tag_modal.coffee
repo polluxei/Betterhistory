@@ -1,4 +1,4 @@
-class BH.Views.NewTagView extends BH.Views.ModalView
+class BH.Modals.NewTagModal extends BH.Modals.Base
   @include BH.Modules.I18n
 
   className: 'new_tag_view'
