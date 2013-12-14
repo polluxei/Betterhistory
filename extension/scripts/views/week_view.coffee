@@ -16,7 +16,8 @@ class BH.Views.WeekView extends BH.Views.MainView
     @history.bind('change', @onHistoryLoaded, @)
 
   render: ->
-    properties = _.extend @getI18nValues(), @model.toTemplate()
+    presenter = new BH.Presenters.WeekPresenter(@model)
+    properties = _.extend @getI18nValues(), presenter.week()
     html = Mustache.to_html @template, properties
     @$el.html html
     @
@@ -28,10 +29,12 @@ class BH.Views.WeekView extends BH.Views.MainView
     @promptToDeleteAllVisits()
 
   pageTitle: ->
-    @model.toTemplate().title
+    presenter = new BH.Presenters.WeekPresenter(@model)
+    presenter.week().title
 
   renderHistory: ->
-    history = @history.toTemplate()
+    presenter = new BH.Presenters.WeekHistoryPresenter(@history)
+    history = presenter.history()
     for day in history.days
       container = @$("[data-day=#{day.day}]")
       container.find(".label .count").html @t('number_of_visits', [day.count])
@@ -42,7 +45,8 @@ class BH.Views.WeekView extends BH.Views.MainView
     @$el.addClass('loaded')
 
   promptToDeleteAllVisits: ->
-    promptMessage = @t('confirm_delete_all_visits', [@model.toTemplate().title])
+    presenter = new BH.Presenters.WeekHistoryPresenter(@history)
+    promptMessage = @t('confirm_delete_all_visits', [presenter.history().title])
     @promptView = BH.Views.CreatePrompt(promptMessage)
     @promptView.open()
     @promptView.model.on('change', @promptAction, @)

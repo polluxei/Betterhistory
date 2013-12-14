@@ -17,7 +17,8 @@ class BH.Views.DayView extends BH.Views.MainView
     @history.bind('change', @onDayHistoryLoaded, @)
 
   render: ->
-    properties = _.extend @getI18nValues(), @model.toTemplate()
+    presenter = new BH.Presenters.DayPresenter(@model)
+    properties = _.extend @getI18nValues(), presenter.day()
     html = Mustache.to_html(@template, properties)
     @$el.html html
     @
@@ -34,7 +35,8 @@ class BH.Views.DayView extends BH.Views.MainView
     @$('.content').html('')
 
   pageTitle: ->
-    @model.toTemplate().formalDate
+    presenter = new BH.Presenters.DayPresenter(@model)
+    presenter.day().formalDate
 
   renderHistory: ->
     @dayResultsView = new BH.Views.DayResultsView
@@ -54,7 +56,9 @@ class BH.Views.DayView extends BH.Views.MainView
     router.navigate(BH.Lib.Url.week(@options.weekModel.id))
 
   promptToDeleteAllVisits: ->
-    promptMessage = @t('confirm_delete_all_visits', [@model.toTemplate().formalDate])
+    presenter = new BH.Presenters.DayPresenter(@model)
+
+    promptMessage = @t('confirm_delete_all_visits', [presenter.day().formalDate])
     @promptView = BH.Views.CreatePrompt(promptMessage)
     @promptView.open()
     @promptView.model.on('change', @promptAction, @)

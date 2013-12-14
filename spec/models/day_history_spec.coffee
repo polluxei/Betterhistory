@@ -16,19 +16,6 @@ describe 'BH.Models.DayHistory', ->
         startTime: new Date(@date.sod()).getTime()
         endTime: new Date(@date.eod()).getTime()
 
-  describe '#toTemplate', ->
-    beforeEach ->
-      templatedDataSpy = jasmine.createSpy('toTemplate').andReturn('templated data')
-      @dayHistory.set
-        history: [
-          {toTemplate: -> templatedDataSpy()},
-          {toTemplate: -> templatedDataSpy()}
-        ]
-
-    it 'returns the properties for the view template', ->
-      expect(@dayHistory.toTemplate()).toEqual
-        history: ['templated data', 'templated data']
-
   describe 'deleting history', ->
     beforeEach ->
       @deleteRange = @dayHistory.chromeAPI.history.deleteRange

@@ -4,7 +4,6 @@ class BH.Models.DayHistory extends BH.Models.History
 
   initialize: (attrs, options) ->
     @chromeAPI = chrome
-    @settings = options.settings
     @historyQuery = new BH.Lib.HistoryQuery(@chromeAPI)
 
   sync: (method, model, options) ->
@@ -23,10 +22,6 @@ class BH.Models.DayHistory extends BH.Models.History
     properties.text = '' if reading
     properties
 
-  toTemplate: ->
-    history: @get('history').map (interval) ->
-      interval.toTemplate()
-
   sod: ->
     new Date(@get('date').sod()).getTime()
 
@@ -36,10 +31,10 @@ class BH.Models.DayHistory extends BH.Models.History
   preparse: (results, callback) ->
     options =
       visits: results
-      interval: @settings.get 'timeGrouping'
+      interval: settings.get 'timeGrouping'
 
     @worker 'timeGrouper', options, (history) =>
-      if @settings.get('domainGrouping')
+      if settings.get('domainGrouping')
         options = intervals: history
         @worker 'domainGrouper', options, (history) ->
           callback(history)
@@ -62,6 +57,6 @@ class BH.Models.DayHistory extends BH.Models.History
         id: interval.id
         datetime: interval.datetime
         visits: visits
-      }, settings: @settings
+      }
 
     history: intervals

@@ -88,9 +88,8 @@ class BH.Views.SettingsView extends BH.Views.MainView
     )()
 
   render: ->
-    properties = _.extend {},
-      @getI18nValues(),
-      @model.toTemplate()
+    presenter = new BH.Presenters.SettingsPresenter(@model)
+    properties = _.extend {}, @getI18nValues(), presenter.settings()
     html = Mustache.to_html @template, properties
     @$el.append html
     @populateFields()
