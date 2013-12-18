@@ -34,6 +34,19 @@ class BH.Views.Cache
 
     @cache.tags[id]
 
+  weeksView: () ->
+    if !@cache.allWeeks
+      weeks = new BH.Collections.Weeks()
+      history = new BH.Models.WeeksHistory()
+
+      @cache.allWeeks = new BH.Views.WeeksView
+        collection: weeks
+        history: history
+
+      @insert @cache.allWeeks.render().el
+
+    @cache.allWeeks
+
   weekView: (id) ->
     if !@cache.weeks[id]
       week = new BH.Models.Week(

@@ -1373,5 +1373,20 @@
   },
   "manually_sync_local_link": {
     "message": "Manually sync local tags"
+  },
+  "all_weeks_link": {
+    "message": "All weeks..",
+    "description": "link to view all weeks in main nav"
+  },
+  "all_weeks_title": {
+    "message": "All weeks"
+  },
+  "delete_all_weeks_button": {
+    "message": "Delete all...",
+    "description": "delete all weeks button"
+  },
+  "confirm_delete_all_weeks": {
+    "message": "Delete all visits?",
+    "description": "confirmation message to delete all weeks"
   }
 }
