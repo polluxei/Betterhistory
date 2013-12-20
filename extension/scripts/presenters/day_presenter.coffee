@@ -3,7 +3,7 @@ class BH.Presenters.DayPresenter
     @model = model
 
   day: ->
-    date = @model.get('date')
+    date = moment(@model.get('date'))
     weekId = startingWeekDate(date).id()
 
     properties =

@@ -18,7 +18,7 @@ class BH.Router extends Backbone.Router
 
     @app = new BH.Views.AppView
       el: $('.app')
-      collection: new BH.Collections.Weeks(null, {settings: settings})
+      collection: new BH.Collections.Weeks()
       settings: settings
       state: @state
     @app.render()
@@ -37,12 +37,14 @@ class BH.Router extends Backbone.Router
   tags: ->
     view = @app.loadTags()
     view.select()
-    @_delay -> view.collection.fetch()
+    delay ->
+      view.collection.fetch()
 
   tag: (id) ->
     view = @app.loadTag(id)
     view.select()
-    @_delay -> view.model.fetch()
+    delay ->
+      view.model.fetch()
 
   weeks: ->
     view = @app.loadWeeks()
@@ -56,17 +58,29 @@ class BH.Router extends Backbone.Router
   week: (id) ->
     view = @app.loadWeek(id)
     view.select()
-    @_delay -> view.history.fetch()
+    delay ->
+      history = new BH.Chrome.WeekHistory new Date(id)
+      history.fetch()
+      history.on 'query:complete', (history) ->
+        view.model.set(history: history)
 
   day: (id) ->
     view = @app.loadDay id
-    view.history.fetch()
     view.select()
+    delay ->
+      history = new BH.Chrome.DayHistory new Date(id)
+      history.fetch()
+      history.on 'query:complete', (history) ->
+        view.model.parseAndSet history
 
   today: ->
     view = @app.loadDay moment(new Date()).id()
-    view.history.fetch()
     view.select()
+    delay ->
+      history = new BH.Chrome.DayHistory new Date(id)
+      history.fetch()
+      history.on 'query:complete', (history) ->
+        view.model.parseAndSet history
 
   settings: ->
     view = @app.loadSettings()
@@ -80,11 +94,12 @@ class BH.Router extends Backbone.Router
     view.page.set(page: parseInt(page, 10), {silent: true}) if page?
     view.model.set query: decodeURIComponent(query)
     view.select()
-    @_delay ->
-      view.history.fetch() if view.model.validQuery()
-
-  _delay: (callback) ->
-    setTimeout (-> callback()), 250
+    delay ->
+      if view.model.validQuery()
+        history = new BH.Chrome.SearchHistory query
+        history.fetch()
+        history.on 'query:complete', (history) ->
+          view.model.parseAndSet history
 
 delay = (callback) ->
   setTimeout (-> callback()), 250

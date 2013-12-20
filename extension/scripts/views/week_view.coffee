@@ -13,7 +13,7 @@ class BH.Views.WeekView extends BH.Views.MainView
   initialize: ->
     @chromeAPI = chrome
     @history = @options.history
-    @history.bind('change', @onHistoryLoaded, @)
+    @model.bind('change:history', @onHistoryLoaded, @)
 
   render: ->
     presenter = new BH.Presenters.WeekPresenter(@model)
@@ -33,7 +33,7 @@ class BH.Views.WeekView extends BH.Views.MainView
     presenter.week().title
 
   renderHistory: ->
-    presenter = new BH.Presenters.WeekHistoryPresenter(@history)
+    presenter = new BH.Presenters.WeekHistoryPresenter(@model)
     history = presenter.history()
     for day in history.days
       container = @$("[data-day=#{day.day}]")

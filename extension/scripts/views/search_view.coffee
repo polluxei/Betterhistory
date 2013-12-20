@@ -13,10 +13,9 @@ class BH.Views.SearchView extends BH.Views.MainView
 
   initialize: ->
     @chromeAPI = chrome
-    @history = @options.history
     @page = new Backbone.Model(page: 1)
 
-    @history.on('change:history', @onSearchHistoryChanged, @)
+    @model.on('change:history', @onSearchHistoryChanged, @)
     @model.on('change:query', @onQueryChanged, @)
     @page.on('change:page', @renderSearchResults, @)
 
@@ -47,7 +46,10 @@ class BH.Views.SearchView extends BH.Views.MainView
     @updateQueryReferences()
     $('.pagination').html('')
     if @model.validQuery()
-      @history.set {query: @model.get('query')}, silent: true
+      history = new BH.Chrome.SearchHistory @model.get('query')
+      history.fetch()
+      history.on 'query:complete', (history) =>
+        @model.parseAndSet history
       @$('.corner').addClass('cancelable')
 
   onPageClicked: (ev) ->
@@ -75,7 +77,7 @@ class BH.Views.SearchView extends BH.Views.MainView
     @$('.search').focus()
 
     searchPaginationView = new BH.Views.SearchPaginationView
-      results: @history.get('history').length
+      results: @model.get('history').length
       query: @model.get('query')
       el: $('.pagination')
       model: @page
@@ -86,7 +88,7 @@ class BH.Views.SearchView extends BH.Views.MainView
   renderSearchResults: ->
     @searchResultsView.undelegateEvents() if @searchResultsView
     @searchResultsView = new BH.Views.SearchResultsView
-      model: @history
+      model: @model
       el: @$el.children('.content')
       page: @page.get('page') - 1
     @searchResultsView.render()
@@ -95,7 +97,7 @@ class BH.Views.SearchView extends BH.Views.MainView
 
   updateDeleteButton: ->
     deleteButton = @$('.delete_all')
-    if @history.isEmpty() || !@model.validQuery()
+    if @model.get('history')?.length == 0 || !@model.validQuery()
       deleteButton.attr('disabled', 'disabled')
     else
       deleteButton.removeAttr('disabled')

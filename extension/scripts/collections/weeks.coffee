@@ -1,9 +1,6 @@
 class BH.Collections.Weeks extends Backbone.Collection
   model: BH.Models.Week
 
-  initialize: (attrs, options) ->
-    @chromeAPI = chrome
-
   reload: (startingDay) ->
     @reset()
     for i in _.range(8)

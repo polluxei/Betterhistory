@@ -13,8 +13,7 @@ class BH.Views.DayView extends BH.Views.MainView
 
   initialize: ->
     @chromeAPI = chrome
-    @history = @options.history
-    @history.bind('change', @onDayHistoryLoaded, @)
+    @model.on 'change:history', @onDayHistoryLoaded, @
 
   render: ->
     presenter = new BH.Presenters.DayPresenter(@model)
@@ -40,14 +39,14 @@ class BH.Views.DayView extends BH.Views.MainView
 
   renderHistory: ->
     @dayResultsView = new BH.Views.DayResultsView
-      model: @history
+      model: @model
     @$('.content').html @dayResultsView.render().el
     @dayResultsView.insertTags()
     @dayResultsView.attachDragging()
 
   updateDeleteButton: ->
     deleteButton = @$('button')
-    if @history.isEmpty()
+    if @model.get('history').length == 0
       deleteButton.attr('disabled', 'disabled')
     else
       deleteButton.removeAttr('disabled')
