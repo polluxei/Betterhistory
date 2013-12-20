@@ -10,6 +10,8 @@ BH.Modules.Worker =
         "#{basePath}/time_grouper.js"
       when 'dayGrouper'
         "#{basePath}/day_grouper.js"
+      when 'weekGrouper'
+        "#{basePath}/week_grouper.js"
 
     worker = new Worker(path)
 

@@ -15,7 +15,7 @@ class BH.Lib.HistoryQuery extends BH.Base
     if @options.searching?
       _.extend(options, @searchOptions)
     else
-      options.maxResults = 5000
+      options.maxResults = 5000 unless options.maxResults?
     delete options.searching
 
     @chromeAPI.history.search options, (results) =>

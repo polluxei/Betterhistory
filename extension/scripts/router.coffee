@@ -47,7 +47,11 @@ class BH.Router extends Backbone.Router
   weeks: ->
     view = @app.loadWeeks()
     view.select()
-    @_delay -> #view.history.fetch()
+    delay ->
+      history = new BH.Chrome.WeeksHistory()
+      history.fetch()
+      history.on 'query:complete', (history) ->
+        view.collection.add(history)
 
   week: (id) ->
     view = @app.loadWeek(id)
@@ -81,3 +85,6 @@ class BH.Router extends Backbone.Router
 
   _delay: (callback) ->
     setTimeout (-> callback()), 250
+
+delay = (callback) ->
+  setTimeout (-> callback()), 250

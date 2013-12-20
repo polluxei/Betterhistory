@@ -1,5 +1,32 @@
-.chrome-bootstrap header .controls a {
+.all_weeks li {
+  position: relative;
+  padding-top: 8px;
+}
+.all_weeks li > a {
+  background: #EEE;
+  border-radius: 3px;
+  display: block;
+  height: 37px;
+}
+.chrome-bootstrap .all_weeks a {
   text-decoration: none;
+}
+.all_weeks li:hover > a {
+  background: #DDD;
+}
+.all_weeks h3 {
+  width: 50%;
+  padding: 10px;
+  margin: 0;
+  line-height: 16px;
+}
+.all_weeks .details {
+  position: absolute;
+  top: 18px;
+  right: 10px;
+  width: 250px;
+  text-align: right;
+  color: #888;
 }
 .server_error_view .warning,
 .login_error_view .warning,

@@ -6,6 +6,6 @@ class BH.Collections.Weeks extends Backbone.Collection
 
   reload: (startingDay) ->
     @reset()
-    for i in _.range(10)
+    for i in _.range(8)
       @add date: moment(new Date()).past(startingDay, i)
     @trigger 'reloaded'

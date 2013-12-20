@@ -1,5 +1,6 @@
 class BH.Views.WeeksView extends BH.Views.MainView
   @include BH.Modules.I18n
+  @include BH.Modules.Worker
 
   template: BH.Templates['weeks']
 
@@ -12,8 +13,8 @@ class BH.Views.WeeksView extends BH.Views.MainView
 
   initialize: ->
     @chromeAPI = chrome
-    @history = @options.history
-    @history.bind('change', @onHistoryLoaded, @)
+    @collection = new Backbone.Collection
+    @collection.on 'add', @renderHistory, @
 
   render: ->
     properties = _.extend @getI18nValues()
@@ -23,6 +24,17 @@ class BH.Views.WeeksView extends BH.Views.MainView
 
   onHistoryLoaded: ->
     @renderHistory()
+
+  renderHistory: ->
+    weeksResultsView = new BH.Views.WeeksResultsView
+      collection: @collection
+    @$('.content', @$el).html weeksResultsView.render().el
+
+    presenter = new BH.Presenters.AllWeeksPresenter(@collection)
+
+    @$('.spinner').hide()
+    @$('.text.count').text("#{presenter.totalVisits()} visits")
+    @$('.text.count').css opacity: 1
 
   onDeleteAllClicked: ->
     @promptToDeleteAllVisits()

@@ -37,11 +37,9 @@ class BH.Views.Cache
   weeksView: () ->
     if !@cache.allWeeks
       weeks = new BH.Collections.Weeks()
-      history = new BH.Models.WeeksHistory()
 
       @cache.allWeeks = new BH.Views.WeeksView
         collection: weeks
-        history: history
 
       @insert @cache.allWeeks.render().el
 
