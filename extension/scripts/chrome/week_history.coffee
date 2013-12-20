@@ -26,4 +26,4 @@ class BH.Chrome.WeekHistory extends EventEmitter
       endTime: @endTime
 
     chrome.history.deleteRange options, =>
-      @trigger 'destroy:complete', [history]
+      @trigger 'destroy:complete'

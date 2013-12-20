@@ -53,7 +53,7 @@ class BH.Router extends Backbone.Router
       history = new BH.Chrome.WeeksHistory()
       history.fetch()
       history.on 'query:complete', (history) ->
-        view.collection.add(history)
+        view.collection.reset(history)
 
   week: (id) ->
     view = @app.loadWeek(id)
@@ -62,7 +62,7 @@ class BH.Router extends Backbone.Router
       history = new BH.Chrome.WeekHistory new Date(id)
       history.fetch()
       history.on 'query:complete', (history) ->
-        view.model.set(history: history)
+        view.collection.reset(history)
 
   day: (id) ->
     view = @app.loadDay id

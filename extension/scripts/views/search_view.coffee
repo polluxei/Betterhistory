@@ -116,11 +116,11 @@ class BH.Views.SearchView extends BH.Views.MainView
   deleteAction: (prompt) ->
     if prompt.get('action')
       analyticsTracker.searchResultsDeletion()
-      @history.get('history').destroyAll()
-      @history.fetch
-        success: (model) =>
-          model.trigger('change:history') # make sure
-          @promptView.close()
+      history = new BH.Chrome.SearchHistory @model.get('query')
+      history.destroy()
+      history.on 'destroy:complete', =>
+        @model.set history: []
+        @promptView.close()
     else
       @promptView.close()
 

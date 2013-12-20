@@ -12,8 +12,7 @@ class BH.Views.WeekView extends BH.Views.MainView
 
   initialize: ->
     @chromeAPI = chrome
-    @history = @options.history
-    @model.bind('change:history', @onHistoryLoaded, @)
+    @collection.bind('reset', @onHistoryLoaded, @)
 
   render: ->
     presenter = new BH.Presenters.WeekPresenter(@model)
@@ -33,7 +32,7 @@ class BH.Views.WeekView extends BH.Views.MainView
     presenter.week().title
 
   renderHistory: ->
-    presenter = new BH.Presenters.WeekHistoryPresenter(@model)
+    presenter = new BH.Presenters.WeekHistoryPresenter(@collection)
     history = presenter.history()
     for day in history.days
       container = @$("[data-day=#{day.day}]")
@@ -45,7 +44,7 @@ class BH.Views.WeekView extends BH.Views.MainView
     @$el.addClass('loaded')
 
   promptToDeleteAllVisits: ->
-    presenter = new BH.Presenters.WeekHistoryPresenter(@history)
+    presenter = new BH.Presenters.WeekHistoryPresenter(@model)
     promptMessage = @t('confirm_delete_all_visits', [presenter.history().title])
     @promptView = BH.Views.CreatePrompt(promptMessage)
     @promptView.open()
@@ -54,9 +53,11 @@ class BH.Views.WeekView extends BH.Views.MainView
   promptAction: (prompt) ->
     if prompt.get('action')
       analyticsTracker.weekVisitsDeletion()
-      @history.destroy()
-      @promptView.close()
-      @history.fetch()
+      history = new BH.Chrome.WeekHistory @model.get('date')
+      history.destroy()
+      history.on 'destroy:complete', =>
+        @promptView.close()
+        window.location.reload()
     else
       @promptView.close()
 

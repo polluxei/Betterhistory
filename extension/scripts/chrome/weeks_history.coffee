@@ -12,3 +12,7 @@ class BH.Chrome.WeeksHistory extends EventEmitter
         config: startingWeekDay: settings.get('startingWeekDay')
       BH.Modules.Worker.worker 'weekGrouper', options, (history) =>
         @trigger 'query:complete', [history]
+
+  destroy: ->
+    chrome.history.deleteAll =>
+      @trigger 'destroy:complete'

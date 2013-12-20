@@ -1,25 +1,25 @@
 class BH.Presenters.WeekHistoryPresenter extends BH.Presenters.Base
-  constructor: (@model) ->
+  constructor: (@collection) ->
 
   history: ->
-    dayVisitPercentage = (day) =>
-      largest = Math.max.apply(Math, dayVisits()) || 0
+    dayVisitPercentage = (model) =>
+      largest = Math.max.apply(Math, @dayVisits()) || 0
       return 0 if largest == 0
-      @model.get('history')[day].length / largest * 100
+      model.get('visits').length / largest * 100
 
-    totalVisits = =>
-      return 0 if dayVisits().length == 0
-      dayVisits().reduce (sum, num) ->
-        sum + num
-
-    dayVisits = =>
-      for day, visits of @model.get('history')
-        visits.length if visits?
-
-    total: totalVisits()
+    total: @totalVisits()
     days:
-      for day, visits of @model.get('history')
+      for model in @collection.models
         out =
-          count: visits.length
-          day: day
-          percentage: "#{dayVisitPercentage day}%"
+          count: model.get('visits').length
+          day: model.get('name')
+          percentage: "#{dayVisitPercentage(model)}%"
+
+  dayVisits: ->
+    for model in @collection.models
+      model.get('visits').length
+
+  totalVisits: ->
+    return 0 if @dayVisits().length == 0
+    @dayVisits().reduce (sum, num) ->
+      sum + num

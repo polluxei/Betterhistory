@@ -44,6 +44,9 @@ class BH.Views.DayView extends BH.Views.MainView
     @dayResultsView.insertTags()
     @dayResultsView.attachDragging()
 
+    @$('.spinner').hide()
+    @$('.back_to_week').css opacity: 1
+
   updateDeleteButton: ->
     deleteButton = @$('button')
     if @model.get('history').length == 0
@@ -65,10 +68,10 @@ class BH.Views.DayView extends BH.Views.MainView
   promptAction: (prompt) ->
     if prompt.get('action')
       analyticsTracker.dayVisitsDeletion()
-      @history.destroy()
-      @history.fetch
-        success: =>
-          @promptView.close()
+      history = new BH.Chrome.DayHistory @model.get('date')
+      history.destroy()
+      history.on 'destroy:complete', =>
+        window.location.reload()
     else
       @promptView.close()
 

@@ -569,6 +569,10 @@ body.new_tags .menu .tags.pulse .new {
   top: 10px;
   z-index: 1;
 }
+.chrome-bootstrap .day_view .back_to_week {
+  text-decoration: none;
+  opacity: 0;
+}
 .day_view .time {
   -webkit-transition: 150ms opacity;
   position: absolute;

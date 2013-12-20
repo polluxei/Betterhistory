@@ -13,8 +13,7 @@ class BH.Views.WeeksView extends BH.Views.MainView
 
   initialize: ->
     @chromeAPI = chrome
-    @collection = new Backbone.Collection
-    @collection.on 'add', @renderHistory, @
+    @collection.on 'reset', @renderHistory, @
 
   render: ->
     properties = _.extend @getI18nValues()
@@ -51,9 +50,11 @@ class BH.Views.WeeksView extends BH.Views.MainView
   promptAction: (prompt) ->
     if prompt.get('action')
       analyticsTracker.weekVisitsDeletion()
-      @history.destroy()
-      @promptView.close()
-      @history.fetch()
+      history = new BH.Chrome.WeeksHistory()
+      history.destroy()
+      history.on 'destroy:complete', =>
+        @promptView.close()
+        @collection.reset()
     else
       @promptView.close()
 

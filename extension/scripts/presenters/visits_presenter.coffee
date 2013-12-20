@@ -6,7 +6,7 @@ class BH.Presenters.VisitsPresenter extends BH.Presenters.Base
 
     if start? && end?
       for i in [start...end]
-        if @collection.models[i]?
+        if @collection.models?[i]?
           presenter = new BH.Presenters.VisitPresenter(@collection.models[i])
           visits.push presenter.visit()
     else

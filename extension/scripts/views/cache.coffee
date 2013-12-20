@@ -38,7 +38,7 @@ class BH.Views.Cache
     return @cache.allWeeks if @cache.allWeeks
 
     @cache.allWeeks = new BH.Views.WeeksView
-      collection: new BH.Collections.Weeks()
+      collection: new Backbone.Collection()
 
     @insert @cache.allWeeks.render().el
     @cache.allWeeks
@@ -48,6 +48,7 @@ class BH.Views.Cache
 
     @cache.weeks[id] = new BH.Views.WeekView
       model: new BH.Models.Week(date: new Date(id))
+      collection: new Backbone.Collection()
 
     @insert @cache.weeks[id].render().el
     @cache.weeks[id]

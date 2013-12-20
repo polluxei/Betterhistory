@@ -3,25 +3,51 @@ BH.Workers = BH.Workers ? {}
 
 class BH.Workers.DayGrouper
   constructor: ->
-    @weekDays =
-      Sunday: []
-      Monday: []
-      Tuesday: []
-      Wednesday: []
-      Thursday: []
-      Friday: []
-      Saturday: []
+    @days = [
+      {
+        name: 'Sunday'
+        visits: []
+      }, {
+        name: 'Monday'
+        visits: []
+      }, {
+        name: 'Tuesday'
+        visits: []
+      }, {
+        name: 'Wednesday'
+        visits: []
+      }, {
+        name: 'Thursday'
+        visits: []
+      }, {
+        name: 'Friday'
+        visits: []
+      }, {
+        name: 'Saturday'
+        visits: []
+      }
+    ]
 
   run: (visits) ->
     for visit in visits
-      day = new Date(visit.lastVisitTime).getDay()
-      @weekDays[@indexToDay(day)].push visit
-    @weekDays
+      dayName = indexToDay(new Date(visit.lastVisitTime).getDay())
+      for day, index in @days
+        if day.name == dayName
+          @days[index].visits.push visit
+          break
+    @days
 
-  indexToDay: (index) ->
-    days = for own day of @weekDays
-      day
-    days[index]
+indexToDay = (index) ->
+  days = [
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday'
+  ]
+  days[index]
 
 unless onServer?
   self.addEventListener 'message', (e) ->
