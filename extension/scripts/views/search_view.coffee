@@ -12,11 +12,10 @@ class BH.Views.SearchView extends BH.Views.MainView
     'blur .search': 'onSearchBlurred'
 
   initialize: ->
-    @chromeAPI = chrome
-    @page = new Backbone.Model(page: 1)
-
     @model.on('change:history', @onSearchHistoryChanged, @)
     @model.on('change:query', @onQueryChanged, @)
+
+    @page = new Backbone.Model(page: 1)
     @page.on('change:page', @renderSearchResults, @)
 
   render: ->

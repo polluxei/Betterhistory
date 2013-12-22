@@ -12,7 +12,6 @@ class BH.Views.DayView extends BH.Views.MainView
     'blur .search': 'onSearchBlurred'
 
   initialize: ->
-    @chromeAPI = chrome
     @model.on 'change:history', @onDayHistoryLoaded, @
 
   render: ->

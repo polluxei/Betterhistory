@@ -11,7 +11,6 @@ class BH.Views.WeekView extends BH.Views.MainView
     'blur .search': 'onSearchBlurred'
 
   initialize: ->
-    @chromeAPI = chrome
     @collection.bind('reset', @onHistoryLoaded, @)
 
   render: ->
