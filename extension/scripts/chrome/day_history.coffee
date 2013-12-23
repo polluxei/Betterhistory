@@ -14,19 +14,22 @@ class BH.Chrome.DayHistory extends EventEmitter
       startTime: @startTime
       endTime: @endTime
       text: ''
+      maxResults: 5000
 
-    @historyQuery.run options, (history) =>
+    chrome.history.search options, (results) =>
       options =
-        visits: history
-        interval: settings.get 'timeGrouping'
+        options: options
+        results: results
 
-      @worker 'timeGrouper', options, (history) =>
-        if settings.get('domainGrouping')
-          options = intervals: history
-          @worker 'domainGrouper', options, (history) =>
+      @worker 'rangeSanitizer', options, (sanitizedResults) =>
+        options.results = sanitizedResults
+        @worker 'timeGrouper', options, (history) =>
+          if settings.get('domainGrouping')
+            options = intervals: history
+            @worker 'domainGrouper', options, (history) =>
+              @trigger 'query:complete', [history]
+          else
             @trigger 'query:complete', [history]
-        else
-          @trigger 'query:complete', [history]
 
   destroy: ->
     options =

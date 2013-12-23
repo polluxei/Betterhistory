@@ -7,7 +7,7 @@ class BH.Chrome.WeekHistory extends EventEmitter
     date.setHours(23,59,59,999)
     @endTime = date.getTime()
 
-    @historyQuery = new BH.Lib.HistoryQuery(@chromeAPI)
+    @chromeAPI = chrome
     @worker = BH.Modules.Worker.worker
 
   fetch: ->
@@ -15,15 +15,21 @@ class BH.Chrome.WeekHistory extends EventEmitter
       startTime: @startTime
       endTime: @endTime
       text: ''
+      maxResults: 5000
 
-    @historyQuery.run options, (results) =>
-      @worker 'dayGrouper', visits: results, (history) =>
-        @trigger 'query:complete', [history]
+    @chromeAPI.history.search options, (results) =>
+      options =
+        options: options
+        results: results
+
+      @worker 'rangeSanitizer', options, (sanitizedResults) =>
+        @worker 'dayGrouper', visits: sanitizedResults, (history) =>
+          @trigger 'query:complete', [history]
 
   destroy: ->
     options =
       startTime: @startTime
       endTime: @endTime
 
-    chrome.history.deleteRange options, =>
+    @chromeAPI.history.deleteRange options, =>
       @trigger 'destroy:complete'
