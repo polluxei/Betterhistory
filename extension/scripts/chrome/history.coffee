@@ -1,7 +1,7 @@
 class BH.Chrome.History
   constructor: (@chromeAPI = chrome) ->
 
-  query: (options, callback) ->
+  query: (options, callback = ->) ->
     @chromeAPI.history.search options, (visits) =>
       for visit in visits
         visit.date = new Date(visit.lastVisitTime)
@@ -10,7 +10,7 @@ class BH.Chrome.History
 
       callback(visits)
 
-  deleteAll: (callback) ->
+  deleteAll: (callback = ->) ->
     @chromeAPI.history.deleteAll ->
       callback()
 
@@ -19,7 +19,7 @@ class BH.Chrome.History
 
     @chromeAPI.history.deleteUrl url: url
 
-  deleteRange: (range, callback) ->
+  deleteRange: (range, callback = ->) ->
     throw "Start time needed" unless range.startTime?
     throw "End time needed" unless range.endTime?
 
