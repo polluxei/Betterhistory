@@ -1,10 +1,10 @@
-describe 'BH.Lib.LocalStore', ->
+describe 'BH.Chrome.LocalStore', ->
   beforeEach ->
     @callback = jasmine.createSpy("callback")
     @tracker =
       localStorageError: jasmine.createSpy("localStorageError")
 
-    @localStore = new BH.Lib.LocalStore
+    @localStore = new BH.Chrome.LocalStore
       chrome: chrome
       tracker: @tracker
 

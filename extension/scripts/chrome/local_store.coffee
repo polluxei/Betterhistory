@@ -1,4 +1,4 @@
-class BH.Lib.SyncStore
+class BH.Chrome.LocalStore
   constructor: (options = {}) ->
     throw "Chrome API not set" unless options.chrome?
     throw "Tracker not set" unless options.tracker?
@@ -7,22 +7,22 @@ class BH.Lib.SyncStore
     @tracker = options.tracker
 
   set: (object, callback = ->) ->
-    @chromeAPI.storage.sync.set object, (data) =>
+    @chromeAPI.storage.local.set object, (data) =>
       @wrappedCallback('Set', data, callback)
 
   remove: (key, callback = ->) ->
-    @chromeAPI.storage.sync.remove key, (data) =>
+    @chromeAPI.storage.local.remove key, (data) =>
       @wrappedCallback('Remove', data, callback)
 
+  clear: ->
+    @chromeAPI.storage.local.clear()
+
   get: (key, callback) ->
-    @chromeAPI.storage.sync.get key, (data) =>
+    @chromeAPI.storage.local.get key, (data) =>
       @wrappedCallback('Get', data, callback)
 
-  wrappedCallback: (operation, data = {}, callback) ->
+  wrappedCallback: (operation, data, callback) ->
     if @chromeAPI.runtime.lastError?
       message = @chromeAPI.runtime.lastError?.message
-      @tracker.syncStorageError(operation, message)
-    else
-      # Don't track Get access because it happens a lot
-      @tracker.syncStorageAccess(operation) if operation != 'Get'
+      @tracker.localStorageError(operation, message)
     callback(data)

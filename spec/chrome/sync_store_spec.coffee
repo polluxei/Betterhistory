@@ -1,11 +1,11 @@
-describe 'BH.Lib.SyncStore', ->
+describe 'BH.Chrome.SyncStore', ->
   beforeEach ->
     @callback = jasmine.createSpy("callback")
     @tracker =
       syncStorageError: jasmine.createSpy("syncStorageError")
       syncStorageAccess: jasmine.createSpy("syncStorageAccess")
 
-    @syncStore = new BH.Lib.SyncStore
+    @syncStore = new BH.Chrome.SyncStore
       chrome: chrome
       tracker: @tracker
 

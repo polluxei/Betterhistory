@@ -1,13 +1,12 @@
-class BH.Chrome.WeekHistory extends EventEmitter
+class BH.Lib.DayHistory extends EventEmitter
   constructor: (date) ->
     date.setHours(0,0,0,0)
     @startTime = date.getTime()
 
-    date = new Date(date.getTime() + (6 * 86400000))
     date.setHours(23,59,59,999)
     @endTime = date.getTime()
 
-    @chromeAPI = chrome
+    @history = new BH.Chrome.History()
     @worker = BH.Modules.Worker.worker
 
   fetch: ->
@@ -17,19 +16,25 @@ class BH.Chrome.WeekHistory extends EventEmitter
       text: ''
       maxResults: 5000
 
-    @chromeAPI.history.search options, (results) =>
+    @history.query options, (results) =>
       options =
         options: options
         results: results
 
       @worker 'rangeSanitizer', options, (sanitizedResults) =>
-        @worker 'dayGrouper', visits: sanitizedResults, (history) =>
-          @trigger 'query:complete', [history]
+        options.results = sanitizedResults
+        @worker 'timeGrouper', options, (history) =>
+          if settings.get('domainGrouping')
+            options = intervals: history
+            @worker 'domainGrouper', options, (history) =>
+              @trigger 'query:complete', [history]
+          else
+            @trigger 'query:complete', [history]
 
   destroy: ->
     options =
       startTime: @startTime
       endTime: @endTime
 
-    @chromeAPI.history.deleteRange options, =>
+    @history.deleteRange options, =>
       @trigger 'destroy:complete'

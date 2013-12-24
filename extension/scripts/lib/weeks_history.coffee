@@ -1,12 +1,15 @@
-class BH.Chrome.WeeksHistory extends EventEmitter
+class BH.Lib.WeeksHistory extends EventEmitter
+  constructor: ->
+    @history = new BH.Chrome.History()
+
   fetch: ->
-    historyQuery = new BH.Lib.HistoryQuery()
-    historyQuery.run {
+    options =
       startTime: 0
       maxResults: 0
       endTime: new Date().getTime()
       text: ''
-    }, (history) =>
+
+    @history.run options, (history) =>
       options =
         visits: history
         config: startingWeekDay: settings.get('startingWeekDay')
@@ -14,5 +17,5 @@ class BH.Chrome.WeeksHistory extends EventEmitter
         @trigger 'query:complete', [history]
 
   destroy: ->
-    chrome.history.deleteAll =>
+    @history.deleteAll =>
       @trigger 'destroy:complete'

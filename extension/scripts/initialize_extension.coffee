@@ -8,7 +8,7 @@ window.analyticsTracker = new BH.Trackers.AnalyticsTracker(_gaq)
 load = ->
   analyticsTracker.historyOpen()
 
-  window.syncStore = new BH.Lib.SyncStore
+  window.syncStore = new BH.Chrome.SyncStore
     chrome: chrome
     tracker: analyticsTracker
 
@@ -47,10 +47,10 @@ load = ->
   window.state = new BH.Models.State({}, settings: settings)
 
   window.persistence = new BH.Init.Persistence
-    localStore: new BH.Lib.LocalStore
+    localStore: new BH.Chrome.LocalStore
       chrome: chrome
       tracker: analyticsTracker
-    syncStore: new BH.Lib.SyncStore
+    syncStore: new BH.Chrome.SyncStore
       chrome: chrome
       tracker: analyticsTracker
     ajax: $.ajax
