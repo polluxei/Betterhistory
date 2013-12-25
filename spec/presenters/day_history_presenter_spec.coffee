@@ -2,7 +2,7 @@ describe 'BH.Presenters.DayHistoryPresenter', ->
   beforeEach ->
     global.settings = new BH.Models.Settings()
     @date = moment(new Date('October 11, 2012'))
-    model = new BH.Models.DayHistory
+    model = new BH.Models.Day
       history: new BH.Collections.Intervals [
         {
           id: 'id'
@@ -19,7 +19,9 @@ describe 'BH.Presenters.DayHistoryPresenter', ->
 
   describe '#history', ->
     it 'returns the properties for the view template', ->
-      expect(@presenter.history()).toEqual history: [
+      results = @presenter.history()
+      delete results.history[0].visits[0].id
+      expect(results).toEqual history: [
         {
           amount: '[translated number_of_visits]'
           time: 'translated local_time'
@@ -31,7 +33,6 @@ describe 'BH.Presenters.DayHistoryPresenter', ->
               path: undefined
               title: 'site'
               url: 'http://google.com'
-              id: 'c167'
             }
           ]
         }

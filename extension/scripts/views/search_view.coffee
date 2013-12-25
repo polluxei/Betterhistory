@@ -45,7 +45,7 @@ class BH.Views.SearchView extends BH.Views.MainView
     @updateQueryReferences()
     $('.pagination').html('')
     if @model.validQuery()
-      history = new BH.Chrome.SearchHistory @model.get('query')
+      history = new BH.Lib.SearchHistory @model.get('query')
       history.fetch()
       history.on 'query:complete', (history) =>
         @model.parseAndSet history

@@ -2,7 +2,7 @@ describe 'BH.Presenters.WeekPresenter', ->
   beforeEach ->
     global.settings = new BH.Models.Settings()
     @date = moment(new Date('October 8, 2012'))
-    model = new BH.Models.Week date: @date
+    model = new Backbone.Model(id: '10-8-12', date: @date)
     @presenter = new BH.Presenters.WeekPresenter(model)
 
   describe '#week', ->

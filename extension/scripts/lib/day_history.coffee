@@ -22,7 +22,10 @@ class BH.Lib.DayHistory extends EventEmitter
         results: results
 
       @worker 'rangeSanitizer', options, (sanitizedResults) =>
-        options.results = sanitizedResults
+        options =
+          visits: sanitizedResults
+          interval: settings.get('timeGrouping')
+
         @worker 'timeGrouper', options, (history) =>
           if settings.get('domainGrouping')
             options = intervals: history

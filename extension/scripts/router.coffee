@@ -50,7 +50,7 @@ class BH.Router extends Backbone.Router
     view = @app.loadWeeks()
     view.select()
     delay ->
-      history = new BH.Chrome.WeeksHistory()
+      history = new BH.Lib.WeeksHistory()
       history.on 'query:complete', (history) ->
         view.collection.reset(history)
       history.fetch()
@@ -59,7 +59,7 @@ class BH.Router extends Backbone.Router
     view = @app.loadWeek(id)
     view.select()
     delay ->
-      history = new BH.Chrome.WeekHistory(new Date(id))
+      history = new BH.Lib.WeekHistory(new Date(id))
       history.on 'query:complete', (history) ->
         view.collection.reset(history)
       history.fetch()
@@ -68,7 +68,7 @@ class BH.Router extends Backbone.Router
     view = @app.loadDay id
     view.select()
     delay ->
-      history = new BH.Chrome.DayHistory(new Date(id))
+      history = new BH.Lib.DayHistory(new Date(id))
       history.on 'query:complete', (history) ->
         view.model.parseAndSet history
       history.fetch()
@@ -77,7 +77,7 @@ class BH.Router extends Backbone.Router
     view = @app.loadDay moment(new Date()).id()
     view.select()
     delay ->
-      history = new BH.Chrome.DayHistory new Date(id)
+      history = new BH.Lib.DayHistory new Date(id)
       history.on 'query:complete', (history) ->
         view.model.parseAndSet history
       history.fetch()

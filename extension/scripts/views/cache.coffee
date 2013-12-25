@@ -47,7 +47,7 @@ class BH.Views.Cache
     return @cache.weeks[id] if @cache.weeks[id]
 
     @cache.weeks[id] = new BH.Views.WeekView
-      model: new BH.Models.Week(date: new Date(id))
+      model: new Backbone.Model(id: id, date: new Date(id))
       collection: new Backbone.Collection()
 
     @insert @cache.weeks[id].render().el

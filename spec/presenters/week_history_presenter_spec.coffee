@@ -2,18 +2,31 @@ describe 'BH.Presenters.WeekHistoryPresenter', ->
   beforeEach ->
     @startDate = moment(new Date('October 11, 2012'))
     @endDate = moment(new Date('October 17, 2012'))
-    model = new BH.Models.WeekHistory
-      startDate: @startDate
-      endDate: @endDate
-      history:
-        Monday: [1]
-        Tuesday: [1, 2, 3]
-        Wednesday: [1, 2, 3, 4]
-        Thursday: [1]
-        Friday: [1, 2]
-        Saturday: []
-        Sunday: [1]
-    @presenter = new BH.Presenters.WeekHistoryPresenter(model)
+    collection = new Backbone.Collection [
+      {
+        name: 'Monday'
+        visits: [1]
+      }, {
+        name: 'Tuesday'
+        visits: [1, 2, 3]
+      }, {
+        name: 'Wednesday'
+        visits: [1, 2, 3, 4]
+      }, {
+        name: 'Thursday'
+        visits: [1]
+      }, {
+        name: 'Friday'
+        visits: [1, 2]
+      }, {
+        name: 'Saturday'
+        visits: []
+      }, {
+        name: 'Sunday'
+        visits: [1]
+      }
+    ]
+    @presenter = new BH.Presenters.WeekHistoryPresenter(collection)
 
   describe '#history', ->
     it 'returns the properties for the view template', ->

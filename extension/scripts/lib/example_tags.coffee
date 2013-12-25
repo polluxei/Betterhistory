@@ -1,7 +1,7 @@
 class BH.Lib.ExampleTags
   load: (callback = ->) ->
     persistence.tag().import exampleTags, =>
-      if user.isLoggedIn()
+      if user?.isLoggedIn()
         persistence.tag().fetchTags (tags, compiledTags) =>
           translator = new BH.Lib.SyncingTranslator()
           translator.forServer compiledTags, (sites) =>

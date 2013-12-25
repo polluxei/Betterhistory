@@ -6,15 +6,15 @@ errorTracker = new BH.Trackers.ErrorTracker(Honeybadger)
 analyticsTracker = new BH.Trackers.AnalyticsTracker()
 
 load = ->
-  window.syncStore = new BH.Lib.SyncStore
+  window.syncStore = new BH.Chrome.SyncStore
     chrome: chrome
     tracker: analyticsTracker
 
   window.persistence = new BH.Init.Persistence
-    localStore: new BH.Lib.LocalStore
+    localStore: new BH.Chrome.LocalStore
       chrome: chrome
       tracker: analyticsTracker
-    syncStore: new BH.Lib.SyncStore
+    syncStore: new BH.Chrome.SyncStore
       chrome: chrome
       tracker: analyticsTracker
 
@@ -24,16 +24,16 @@ load = ->
     ensureDatetimeOnTaggedSites.run()
 
 
-  omnibox = new BH.Lib.Omnibox
+  omnibox = new BH.Chrome.Omnibox
     chrome: chrome
     tracker: analyticsTracker
   omnibox.listen()
 
-  window.selectionContextMenu = new BH.Lib.SelectionContextMenu
+  window.selectionContextMenu = new BH.Chrome.SelectionContextMenu
     chrome: chrome
     tracker: analyticsTracker
 
-  window.pageContextMenu = new BH.Lib.PageContextMenu
+  window.pageContextMenu = new BH.Chrome.PageContextMenu
     chrome: chrome
     tracker: analyticsTracker
   pageContextMenu.listenToTabs()

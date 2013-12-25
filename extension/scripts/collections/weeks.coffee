@@ -1,8 +1,9 @@
 class BH.Collections.Weeks extends Backbone.Collection
-  model: BH.Models.Week
-
   reload: (startingDay) ->
     @reset()
     for i in _.range(8)
-      @add date: moment(new Date()).past(startingDay, i)
+      date = moment(new Date()).past(startingDay, i)
+      @add
+        id: date.format("M-D-YY")
+        date: date
     @trigger 'reloaded'
