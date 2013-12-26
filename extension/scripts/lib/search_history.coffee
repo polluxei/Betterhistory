@@ -1,18 +1,18 @@
-class BH.Lib.SearchHistory extends EventEmitter
+class BH.Lib.SearchHistory
   constructor: (@query) ->
     @history = new BH.Chrome.History()
 
-  fetch: ->
+  fetch: (callback = ->) ->
     options =
       text: @query
       searching: true
 
     @history.query options, (history) =>
-      @trigger 'query:complete', [history]
+      callback history
 
-  destroy: ->
+  destroy: (callback = ->) ->
     @fetch()
     @on 'query:complete', (history) =>
       for visit in history
         @history.deleteUrl visit.url
-      @trigger 'destroy:complete'
+      callback()

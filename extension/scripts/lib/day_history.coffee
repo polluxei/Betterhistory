@@ -1,4 +1,4 @@
-class BH.Lib.DayHistory extends EventEmitter
+class BH.Lib.DayHistory
   constructor: (date) ->
     date.setHours(0,0,0,0)
     @startTime = date.getTime()
@@ -9,7 +9,7 @@ class BH.Lib.DayHistory extends EventEmitter
     @history = new BH.Chrome.History()
     @worker = BH.Modules.Worker.worker
 
-  fetch: ->
+  fetch: (callback = ->) ->
     options =
       startTime: @startTime
       endTime: @endTime
@@ -30,14 +30,14 @@ class BH.Lib.DayHistory extends EventEmitter
           if settings.get('domainGrouping')
             options = intervals: history
             @worker 'domainGrouper', options, (history) =>
-              @trigger 'query:complete', [history]
+              callback history
           else
-            @trigger 'query:complete', [history]
+            callback history
 
-  destroy: ->
+  destroy: (callback = ->) ->
     options =
       startTime: @startTime
       endTime: @endTime
 
     @history.deleteRange options, =>
-      @trigger 'destroy:complete'
+      callback()

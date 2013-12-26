@@ -1,4 +1,4 @@
-class BH.Lib.WeekHistory extends EventEmitter
+class BH.Lib.WeekHistory
   constructor: (date) ->
     date.setHours(0,0,0,0)
     @startTime = date.getTime()
@@ -10,7 +10,7 @@ class BH.Lib.WeekHistory extends EventEmitter
     @worker = BH.Modules.Worker.worker
     @history = new BH.Chrome.History()
 
-  fetch: ->
+  fetch: (callback = ->) ->
     options =
       startTime: @startTime
       endTime: @endTime
@@ -24,12 +24,12 @@ class BH.Lib.WeekHistory extends EventEmitter
 
       @worker 'rangeSanitizer', options, (sanitizedResults) =>
         @worker 'dayGrouper', visits: sanitizedResults, (history) =>
-          @trigger 'query:complete', [history]
+          callback history
 
-  destroy: ->
+  destroy: (callback = ->) ->
     options =
       startTime: @startTime
       endTime: @endTime
 
     @history.deleteRange options, =>
-      @trigger 'destroy:complete'
+      callback()

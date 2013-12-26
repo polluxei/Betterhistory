@@ -50,37 +50,29 @@ class BH.Router extends Backbone.Router
     view = @app.loadWeeks()
     view.select()
     delay ->
-      history = new BH.Lib.WeeksHistory()
-      history.on 'query:complete', (history) ->
+      new BH.Lib.WeeksHistory().fetch (history) ->
         view.collection.reset(history)
-      history.fetch()
 
   week: (id) ->
     view = @app.loadWeek(id)
     view.select()
     delay ->
-      history = new BH.Lib.WeekHistory(new Date(id))
-      history.on 'query:complete', (history) ->
+      new BH.Lib.WeekHistory(new Date(id)).fetch (history) ->
         view.collection.reset(history)
-      history.fetch()
 
   day: (id) ->
     view = @app.loadDay id
     view.select()
     delay ->
-      history = new BH.Lib.DayHistory(new Date(id))
-      history.on 'query:complete', (history) ->
+      new BH.Lib.DayHistory(new Date(id)).fetch (history) ->
         view.model.parseAndSet history
-      history.fetch()
 
   today: ->
     view = @app.loadDay moment(new Date()).id()
     view.select()
     delay ->
-      history = new BH.Lib.DayHistory new Date(id)
-      history.on 'query:complete', (history) ->
+      new BH.Lib.DayHistory new Date(id).fetch (history) ->
         view.model.parseAndSet history
-      history.fetch()
 
   settings: ->
     view = @app.loadSettings()
@@ -96,10 +88,8 @@ class BH.Router extends Backbone.Router
     view.select()
     delay ->
       if view.model.validQuery()
-        history = new BH.Chrome.SearchHistory query
-        history.on 'query:complete', (history) ->
+        new BH.Chrome.SearchHistory(query).fetch (history) ->
           view.model.parseAndSet history
-        history.fetch()
 
 delay = (callback) ->
   setTimeout (-> callback()), 250

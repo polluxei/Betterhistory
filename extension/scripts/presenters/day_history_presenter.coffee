@@ -16,10 +16,10 @@ class BH.Presenters.DayHistoryPresenter extends BH.Presenters.Base
 
       for visit in model.get('visits').models
         if visit.get('isGrouped')
-          groupedVisits = for groupedVisit in visit.visits
+          groupedVisits = for groupedVisit in visit.get('visits').models
             visitData(groupedVisit)
 
-          interval.visits.push groupedVisits
+          interval.visits.push _.extend(visit.toJSON(), groupedVisits: groupedVisits)
         else
           interval.visits.push visitData(visit)
 

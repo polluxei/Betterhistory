@@ -1,8 +1,8 @@
-class BH.Lib.WeeksHistory extends EventEmitter
+class BH.Lib.WeeksHistory
   constructor: ->
     @history = new BH.Chrome.History()
 
-  fetch: ->
+  fetch: (callback = ->) ->
     options =
       startTime: 0
       maxResults: 0
@@ -14,8 +14,8 @@ class BH.Lib.WeeksHistory extends EventEmitter
         visits: history
         config: startingWeekDay: settings.get('startingWeekDay')
       BH.Modules.Worker.worker 'weekGrouper', options, (history) =>
-        @trigger 'query:complete', [history]
+        callback history
 
-  destroy: ->
+  destroy: (callback = ->) ->
     @history.deleteAll =>
-      @trigger 'destroy:complete'
+      callback()
