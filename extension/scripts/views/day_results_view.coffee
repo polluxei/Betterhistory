@@ -15,7 +15,7 @@ class BH.Views.DayResultsView extends Backbone.View
     @chromeAPI = chrome
 
   render: ->
-    presenter = new BH.Presenters.DayHistoryPresenter(@model)
+    presenter = new BH.Presenters.DayHistoryPresenter(@collection)
     properties = _.extend @getI18nValues(), presenter.history(), readOnly: state.get('readOnly')
     html = Mustache.to_html @template, properties
     @$el.html html
@@ -45,7 +45,7 @@ class BH.Views.DayResultsView extends Backbone.View
 
   attachDragging: ->
     dragAndTagView = new BH.Views.DragAndTagView
-      model: @model
+      collection: @collection
     dragAndTagView.render()
 
   visitClicked: (ev) ->
@@ -57,7 +57,7 @@ class BH.Views.DayResultsView extends Backbone.View
     ev.preventDefault()
     element = $(ev.currentTarget).parents('[data-id]').first()
     intervalId = $(ev.currentTarget).parents('.interval').data('id')
-    interval = @model.get('history').get(intervalId)
+    interval = @collection.get(intervalId)
     interval.findVisitById($(element).data('id')).destroy
       success: => element.remove()
 

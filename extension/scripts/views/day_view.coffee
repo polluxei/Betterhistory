@@ -38,7 +38,7 @@ class BH.Views.DayView extends BH.Views.MainView
 
   renderHistory: ->
     @dayResultsView = new BH.Views.DayResultsView
-      model: @model
+      collection: new Backbone.Collection(@model.get('history').toJSON())
     @$('.content').html @dayResultsView.render().el
     @dayResultsView.insertTags()
     @dayResultsView.attachDragging()
