@@ -52,9 +52,7 @@ class BH.Views.WeekView extends BH.Views.MainView
   promptAction: (prompt) ->
     if prompt.get('action')
       analyticsTracker.weekVisitsDeletion()
-      history = new BH.Chrome.WeekHistory @model.get('date')
-      history.destroy()
-      history.on 'destroy:complete', =>
+      new BH.Chrome.WeekHistory(@model.get('date')).destroy =>
         @promptView.close()
         window.location.reload()
     else

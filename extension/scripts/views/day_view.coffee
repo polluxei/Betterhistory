@@ -67,9 +67,7 @@ class BH.Views.DayView extends BH.Views.MainView
   promptAction: (prompt) ->
     if prompt.get('action')
       analyticsTracker.dayVisitsDeletion()
-      history = new BH.Chrome.DayHistory @model.get('date')
-      history.destroy()
-      history.on 'destroy:complete', =>
+      new BH.Chrome.DayHistory(@model.get('date')).destroy ->
         window.location.reload()
     else
       @promptView.close()

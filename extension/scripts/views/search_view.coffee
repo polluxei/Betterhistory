@@ -45,9 +45,7 @@ class BH.Views.SearchView extends BH.Views.MainView
     @updateQueryReferences()
     $('.pagination').html('')
     if @model.validQuery()
-      history = new BH.Lib.SearchHistory @model.get('query')
-      history.fetch()
-      history.on 'query:complete', (history) =>
+      new BH.Lib.SearchHistory(@model.get('query')).fetch (history) =>
         @model.parseAndSet history
       @$('.corner').addClass('cancelable')
 

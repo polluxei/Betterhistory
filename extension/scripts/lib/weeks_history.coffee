@@ -9,7 +9,7 @@ class BH.Lib.WeeksHistory
       endTime: new Date().getTime()
       text: ''
 
-    @history.run options, (history) =>
+    @history.query options, (history) =>
       options =
         visits: history
         config: startingWeekDay: settings.get('startingWeekDay')
