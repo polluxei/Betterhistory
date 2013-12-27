@@ -57,7 +57,8 @@ class BH.Views.Cache
     return @cache.days[id] if @cache.days[id]
 
     @cache.days[id] = new BH.Views.DayView
-      model: new BH.Models.Day(date: new Date(id))
+      model: new Backbone.Model(id: id, date: new Date(id))
+      collection: new Backbone.Collection()
 
     @insert @cache.days[id].render().el
     @cache.days[id]

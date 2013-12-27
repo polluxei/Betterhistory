@@ -12,7 +12,7 @@ class BH.Views.DayView extends BH.Views.MainView
     'blur .search': 'onSearchBlurred'
 
   initialize: ->
-    @model.on 'change:history', @onDayHistoryLoaded, @
+    @collection.bind('reset', @onHistoryLoaded, @)
 
   render: ->
     presenter = new BH.Presenters.DayPresenter(@model.toJSON())
@@ -21,7 +21,7 @@ class BH.Views.DayView extends BH.Views.MainView
     @$el.html html
     @
 
-  onDayHistoryLoaded: ->
+  onHistoryLoaded: ->
     @renderHistory()
     @assignTabIndices('.interval > .visits > .visit > a:first-child')
     @updateDeleteButton()
@@ -38,7 +38,7 @@ class BH.Views.DayView extends BH.Views.MainView
 
   renderHistory: ->
     @dayResultsView = new BH.Views.DayResultsView
-      collection: new Backbone.Collection(@model.get('history').toJSON())
+      collection: @collection
     @$('.content').html @dayResultsView.render().el
     @dayResultsView.insertTags()
     @dayResultsView.attachDragging()
@@ -48,7 +48,7 @@ class BH.Views.DayView extends BH.Views.MainView
 
   updateDeleteButton: ->
     deleteButton = @$('button')
-    if @model.get('history').length == 0
+    if @collection.length == 0
       deleteButton.attr('disabled', 'disabled')
     else
       deleteButton.removeAttr('disabled')

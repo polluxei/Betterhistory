@@ -1,34 +1,32 @@
 class BH.Presenters.DayHistoryPresenter extends BH.Presenters.Base
-  constructor: (@collection) ->
+  constructor: (@intervals) ->
 
   history: ->
     out = []
-    for model in @collection.models
-      interval =
+    for interval in @intervals
+      preppedInterval =
         amount: @t('number_of_visits', [
-          model.get('visits').length.toString(),
+          interval.visits.length.toString(),
           '<span class="amount">',
           '</span>'
         ])
-        time: moment(model.get('datetime')).format('LT')
-        id: model.id
+        time: moment(interval.datetime).format('LT')
+        id: interval.id
         visits: []
 
-      for visit in model.get('visits').models
-        if visit.get('isGrouped')
-          groupedVisits = for groupedVisit in visit.get('visits').models
+      for visit in interval.visits
+        if visit.isGrouped
+          groupedVisits = for groupedVisit in visit.visits
             visitData(groupedVisit)
 
-          interval.visits.push _.extend(visit.toJSON(), groupedVisits: groupedVisits)
+          preppedInterval.visits.push _.extend(visit, groupedVisits: groupedVisits)
         else
-          interval.visits.push visitData(visit)
+          preppedInterval.visits.push visitData(visit)
 
-      out.push interval
+      out.push preppedInterval
 
     history: out
 
 visitData = (visit) ->
-  _.extend visit.toJSON(),
+  _.extend visit,
     isGrouped: false
-    host: visit.domain()
-    path: visit.path()
