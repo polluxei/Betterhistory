@@ -43,8 +43,8 @@ class BH.Views.WeekView extends BH.Views.MainView
     @$el.addClass('loaded')
 
   promptToDeleteAllVisits: ->
-    presenter = new BH.Presenters.WeekHistoryPresenter(@model)
-    promptMessage = @t('confirm_delete_all_visits', [presenter.history().title])
+    presenter = new BH.Presenters.WeekPresenter(@model.toJSON())
+    promptMessage = @t('confirm_delete_all_visits', [presenter.inflatedWeek().title])
     @promptView = BH.Views.CreatePrompt(promptMessage)
     @promptView.open()
     @promptView.model.on('change', @promptAction, @)
@@ -52,7 +52,7 @@ class BH.Views.WeekView extends BH.Views.MainView
   promptAction: (prompt) ->
     if prompt.get('action')
       analyticsTracker.weekVisitsDeletion()
-      new BH.Chrome.WeekHistory(@model.get('date')).destroy =>
+      new BH.Lib.WeekHistory(@model.get('date')).destroy =>
         @promptView.close()
         window.location.reload()
     else
