@@ -1,8 +1,6 @@
 describe 'BH.Presenters.WeekHistoryPresenter', ->
   beforeEach ->
-    @startDate = moment(new Date('October 11, 2012'))
-    @endDate = moment(new Date('October 17, 2012'))
-    collection = new Backbone.Collection [
+    days = [
       {
         name: 'Monday'
         visits: [1]
@@ -26,7 +24,7 @@ describe 'BH.Presenters.WeekHistoryPresenter', ->
         visits: [1]
       }
     ]
-    @presenter = new BH.Presenters.WeekHistoryPresenter(collection)
+    @presenter = new BH.Presenters.WeekHistoryPresenter(days)
 
   describe '#history', ->
     it 'returns the properties for the view template', ->

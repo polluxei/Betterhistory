@@ -31,7 +31,7 @@ class BH.Views.WeekView extends BH.Views.MainView
     presenter.week().title
 
   renderHistory: ->
-    presenter = new BH.Presenters.WeekHistoryPresenter(@collection)
+    presenter = new BH.Presenters.WeekHistoryPresenter(@collection.toJSON())
     history = presenter.history()
     for day in history.days
       container = @$("[data-day=#{day.day}]")
