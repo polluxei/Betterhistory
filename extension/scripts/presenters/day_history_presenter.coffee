@@ -25,7 +25,7 @@ class BH.Presenters.DayHistoryPresenter extends BH.Presenters.Base
 
       out.push preppedInterval
 
-    history: out
+    out
 
 visitData = (visit) ->
   _.extend visit,

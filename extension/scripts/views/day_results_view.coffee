@@ -16,7 +16,7 @@ class BH.Views.DayResultsView extends Backbone.View
 
   render: ->
     presenter = new BH.Presenters.DayHistoryPresenter(@collection.toJSON())
-    properties = _.extend @getI18nValues(), presenter.history(), readOnly: state.get('readOnly')
+    properties = _.extend @getI18nValues(), history: presenter.history(), readOnly: state.get('readOnly')
     html = Mustache.to_html @template, properties
     @$el.html html
 

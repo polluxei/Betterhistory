@@ -1,10 +1,9 @@
 describe 'BH.Presenters.SearchPresenter', ->
   beforeEach ->
-    model = new BH.Models.Search query: 'search term'
-    @presenter = new BH.Presenters.SearchPresenter(model)
+    @presenter = new BH.Presenters.SearchPresenter(query: 'search term')
 
-  describe '#search', ->
+  describe '#searchInfo', ->
     it 'returns the properties needed for a view template', ->
-      expect(@presenter.search()).toEqual
+      expect(@presenter.searchInfo()).toEqual
         title: '[translated searching_title] "search" [translated and] "term"'
         query: 'search term'
