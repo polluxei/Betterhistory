@@ -15,8 +15,8 @@ class BH.Views.DayView extends BH.Views.MainView
     @model.on 'change:history', @onDayHistoryLoaded, @
 
   render: ->
-    presenter = new BH.Presenters.DayPresenter(@model)
-    properties = _.extend @getI18nValues(), presenter.day()
+    presenter = new BH.Presenters.DayPresenter(@model.toJSON())
+    properties = _.extend @getI18nValues(), presenter.dayInfo()
     html = Mustache.to_html(@template, properties)
     @$el.html html
     @
@@ -33,8 +33,8 @@ class BH.Views.DayView extends BH.Views.MainView
     @$('.content').html('')
 
   pageTitle: ->
-    presenter = new BH.Presenters.DayPresenter(@model)
-    presenter.day().formalDate
+    presenter = new BH.Presenters.DayPresenter(@model.toJSON())
+    presenter.dayInfo().formalDate
 
   renderHistory: ->
     @dayResultsView = new BH.Views.DayResultsView
