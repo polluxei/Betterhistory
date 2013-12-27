@@ -5,14 +5,26 @@ class BH.Lib.SearchHistory
   fetch: (callback = ->) ->
     options =
       text: @query
-      searching: true
 
     @history.query options, (history) =>
-      callback history
+      callback parse(history)
 
   destroy: (callback = ->) ->
-    @fetch()
-    @on 'query:complete', (history) =>
+    @fetch (history) =>
       for visit in history
         @history.deleteUrl visit.url
       callback()
+
+parse = (visits) ->
+  for visit in visits
+    fillInVisit(visit)
+
+fillInVisit = (visit) ->
+  visit.domain = getDomain(visit.url)
+  visit.host = getDomain(visit.url)
+  visit.path = visit.url.replace(visit.domain, '')
+  visit
+
+getDomain = (url) ->
+  match = url.match(/\w+:\/\/(.*?)\//)
+  if match == null then null else match[0]

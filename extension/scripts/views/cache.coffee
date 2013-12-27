@@ -67,7 +67,8 @@ class BH.Views.Cache
     return @cache.search if @cache.search || options.expired == true
 
     @cache.search = new BH.Views.SearchView
-      model: new BH.Models.Search()
+      model: new Backbone.Model()
+      collection: new Backbone.Collection()
 
     @insert @cache.search.render().el
     @cache.search

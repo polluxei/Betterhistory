@@ -87,9 +87,9 @@ class BH.Router extends Backbone.Router
     view.model.set query: decodeURIComponent(query)
     view.select()
     delay ->
-      if view.model.validQuery()
-        new BH.Chrome.SearchHistory(query).fetch (history) ->
-          view.model.parseAndSet history
+      if query != ''
+        new BH.Lib.SearchHistory(query).fetch (history) ->
+          view.collection.reset history
 
 delay = (callback) ->
   setTimeout (-> callback()), 250

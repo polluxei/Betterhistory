@@ -3,23 +3,13 @@ class BH.Views.SearchResultsView extends Backbone.View
 
   template: BH.Templates['search_results']
 
-  initialize: ->
-    @chromeAPI = chrome
-
   events:
     'click .delete_visit': 'deleteClicked'
 
   render: ->
     [start, end] = BH.Lib.Pagination.calculateBounds(@options.page)
-
-    presenter = new BH.Presenters.SearchHistoryPresenter(@model)
-    collectionToTemplate = presenter.history(start, end)
-
-    highlightedVisits = for visit in collectionToTemplate.visits
-      @markMatches(visit)
-
-    collectionToTemplate.visits = highlightedVisits
-    properties = _.extend @getI18nValues(), collectionToTemplate
+    presenter = new BH.Presenters.SearchHistoryPresenter(@collection.toJSON(), @options.query)
+    properties = _.extend @getI18nValues(), visits: presenter.history(start, end)
     html = Mustache.to_html @template, properties
     @$el.html html
     @
@@ -38,24 +28,6 @@ class BH.Views.SearchResultsView extends Backbone.View
     dragAndTagView = new BH.Views.DragAndTagView
       model: @model
     dragAndTagView.render()
-
-  markMatches: (visit) ->
-    regExp = titleMatch = locationMatch = timeMatch = null
-
-    if visit?
-      for term in @model.get('query').split(' ')
-        regExp = new RegExp(term, "i")
-        visit.title = @_wrapMatchInProperty(regExp, visit.title)
-        visit.location = @_wrapMatchInProperty(regExp, visit.location)
-        visit.time = @_wrapMatchInProperty(regExp, visit.time)
-        visit.extendedDate = @_wrapMatchInProperty(regExp, visit.extendedDate)
-    visit
-
-  _wrapMatchInProperty: (regExp, property, match) ->
-    return unless property
-    match = property.match(regExp)
-    if match then property.replace(regExp, '<span class="match">' + match + '</span>') else property
-
 
   deleteClicked: (ev) ->
     ev.preventDefault()
