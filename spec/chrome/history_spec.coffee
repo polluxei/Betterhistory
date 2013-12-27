@@ -32,8 +32,7 @@ describe "BH.Chrome.History", ->
   describe "#deleteUrl", ->
     it "calls the chrome history delete url method with the passed url", ->
       @history.deleteUrl('http://www.google.com')
-      expect(chrome.history.deleteUrl).toHaveBeenCalledWith
-        url: 'http://www.google.com'
+      expect(chrome.history.deleteUrl).toHaveBeenCalledWith {url: 'http://www.google.com'}, jasmine.any(Function)
 
   describe "#deleteRange", ->
     beforeEach ->

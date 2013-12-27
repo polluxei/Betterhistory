@@ -55,11 +55,10 @@ class BH.Views.DayResultsView extends Backbone.View
 
   deleteVisitClicked: (ev) ->
     ev.preventDefault()
-    element = $(ev.currentTarget).parents('[data-id]').first()
-    intervalId = $(ev.currentTarget).parents('.interval').data('id')
-    interval = @collection.get(intervalId)
-    interval.findVisitById($(element).data('id')).destroy
-      success: => element.remove()
+    $el = $(ev.currentTarget)
+    analyticsTracker.visitDeletion()
+    new BH.Chrome.History().deleteUrl $el.data('url'), ->
+      $el.parent('.visit').remove()
 
   deleteGroupedVisitClicked: (ev) ->
     ev.preventDefault()
@@ -78,8 +77,6 @@ class BH.Views.DayResultsView extends Backbone.View
       setTimeout ->
         $(visit).children('.delete').trigger('click')
       , i * 10
-
-      #$(ev.currentTarget).parents('.interval').remove()
 
   toggleGroupedVisitsClicked: (ev) ->
     ev.preventDefault()

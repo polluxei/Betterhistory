@@ -57,9 +57,9 @@ class BH.Views.DayView extends BH.Views.MainView
     router.navigate(BH.Lib.Url.week(@options.weekModel.id))
 
   promptToDeleteAllVisits: ->
-    presenter = new BH.Presenters.DayPresenter(@model)
+    presenter = new BH.Presenters.DayPresenter(@model.toJSON())
 
-    promptMessage = @t('confirm_delete_all_visits', [presenter.day().formalDate])
+    promptMessage = @t('confirm_delete_all_visits', [presenter.dayInfo().formalDate])
     @promptView = BH.Views.CreatePrompt(promptMessage)
     @promptView.open()
     @promptView.model.on('change', @promptAction, @)
@@ -67,7 +67,7 @@ class BH.Views.DayView extends BH.Views.MainView
   promptAction: (prompt) ->
     if prompt.get('action')
       analyticsTracker.dayVisitsDeletion()
-      new BH.Chrome.DayHistory(@model.get('date')).destroy ->
+      new BH.Lib.DayHistory(@model.get('date')).destroy ->
         window.location.reload()
     else
       @promptView.close()

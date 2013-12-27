@@ -64,7 +64,7 @@
                       </dl>
                     </a>
                     <a class='search_domain action' href='#search/{{host}}'>{{i18n_search_by_domain}}</a>
-                    <a class='delete_visit delete' href='#' title='{{i18n_prompt_delete_button}}'>{{i18n_prompt_delete_button}}</a>
+                    <a class='delete_visit delete' href='#' data-url='{{url}}' title='{{i18n_prompt_delete_button}}'>{{i18n_prompt_delete_button}}</a>
                   </li>
                 {{/groupedVisits}}
               </ol>
@@ -92,7 +92,7 @@
                 </dl>
               </a>
               <a class='search_domain action' href='#search/{{host}}'>{{i18n_search_by_domain}}</a>
-              <a class='delete_visit delete' href='#' title='{{i18n_prompt_delete_button}}'>{{i18n_prompt_delete_button}}</a>
+              <a class='delete_visit delete' href='#' data-url='{{url}}' title='{{i18n_prompt_delete_button}}'>{{i18n_prompt_delete_button}}</a>
             </li>
           {{/isGrouped}}
         {{/visits}}

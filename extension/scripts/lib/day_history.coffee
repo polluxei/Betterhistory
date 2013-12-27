@@ -69,6 +69,7 @@ fillInVisit = (visit) ->
   visit.domain = getDomain(visit.url)
   visit.host = getDomain(visit.url)
   visit.path = visit.url.replace(visit.domain, '')
+  visit.title = '(No Title)' if visit.title == ''
   visit
 
 fillInGroupedVisit = (visits) ->
