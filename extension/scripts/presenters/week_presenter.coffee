@@ -1,22 +1,22 @@
 class BH.Presenters.WeekPresenter extends BH.Presenters.Base
-  constructor: (@model) ->
+  constructor: (@week) ->
 
-  week: ->
+  inflatedWeek: ->
     copy =
-      shortTitle: moment(@model.get('date')).format('L')
-      url: "#weeks/#{@model.id}"
+      shortTitle: moment(@week.date).format('L')
+      url: "#weeks/#{@week.id}"
       title: @t('date_week_label', [
-        moment(@model.get('date')).format('LL')
+        moment(@week.date).format('LL')
       ])
 
-    days = for day in inflateDays(@model.get('date'))
+    days = for day in inflateDays(@week.date)
       out =
         day: moment(day.id()).lang('en').format('dddd')
         title: day.format('dddd')
         inFuture: moment() < day
         url: "#days/#{day.id()}"
 
-    _.extend copy, @model.toJSON(), days: days
+    _.extend copy, @week, days: days
 
 inflateDays = (date) ->
   days = for i in [0..6]

@@ -14,8 +14,8 @@ class BH.Views.WeekView extends BH.Views.MainView
     @collection.bind('reset', @onHistoryLoaded, @)
 
   render: ->
-    presenter = new BH.Presenters.WeekPresenter(@model)
-    properties = _.extend @getI18nValues(), presenter.week()
+    presenter = new BH.Presenters.WeekPresenter(@model.toJSON())
+    properties = _.extend @getI18nValues(), presenter.inflatedWeek()
     html = Mustache.to_html @template, properties
     @$el.html html
     @
@@ -27,8 +27,8 @@ class BH.Views.WeekView extends BH.Views.MainView
     @promptToDeleteAllVisits()
 
   pageTitle: ->
-    presenter = new BH.Presenters.WeekPresenter(@model)
-    presenter.week().title
+    presenter = new BH.Presenters.WeekPresenter(@model.toJSON())
+    presenter.inflatedWeek().title
 
   renderHistory: ->
     presenter = new BH.Presenters.WeekHistoryPresenter(@collection.toJSON())
