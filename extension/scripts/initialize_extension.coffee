@@ -2,7 +2,9 @@ window.apiHost = '$API_HOST$'
 window.siteHost = '$SITE_HOST$'
 window.env = '$ENV$'
 
-window.errorTracker = new BH.Trackers.ErrorTracker(Honeybadger)
+if env == 'prod'
+  window.errorTracker = new BH.Trackers.ErrorTracker(Honeybadger)
+
 window.analyticsTracker = new BH.Trackers.AnalyticsTracker(_gaq)
 
 load = ->
