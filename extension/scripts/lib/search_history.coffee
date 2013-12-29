@@ -5,6 +5,8 @@ class BH.Lib.SearchHistory
   fetch: (callback = ->) ->
     options =
       text: @query
+      startTime: 0
+      maxResults: 0
 
     @history.query options, (history) =>
       callback parse(history)
@@ -23,6 +25,7 @@ fillInVisit = (visit) ->
   visit.host = getDomain(visit.url)
   visit.location = visit.url
   visit.path = visit.url.replace(visit.domain, '')
+  visit.title = '(No Title)' if visit.title == ''
   visit
 
 getDomain = (url) ->

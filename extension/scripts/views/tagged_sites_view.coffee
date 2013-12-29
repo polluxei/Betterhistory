@@ -36,6 +36,18 @@ class BH.Views.TaggedSitesView extends BH.Views.MainView
       excludeTag: true
     dragAndTagView.render()
 
+    dragAndTagView.on 'site:change', (site) ->
+      $el = $(".visit[data-url='#{site.url}']")
+
+      if site.tags.indexOf(@model.get('name')) == -1
+        $el.remove()
+      else
+        site.tags = _.without(site.tags, @model.get('name'))
+        activeTagsView = new BH.Views.ActiveTagsView
+          model: new BH.Models.Site(site)
+          editable: false
+        $el.find('.active_tags').html activeTagsView.render().el
+
   deleteClicked: (ev) ->
     ev.preventDefault()
     $el = $(ev.currentTarget)

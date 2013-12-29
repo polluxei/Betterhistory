@@ -10,7 +10,7 @@
       <ol class='visits highlightable editable'>
         {{#visits}}
           {{#isGrouped}}
-            <li class='visit grouped_sites' draggable='true' data-id='{{id}}'>
+            <li class='visit grouped_sites' draggable='true'>
               {{^readOnly}}
                 <div class='drag_handle'>
                   <div class='line'></div>
@@ -43,7 +43,7 @@
               <a class='delete_grouped_visit delete' href='#' title='{{i18n_prompt_delete_button}}'>{{i18n_prompt_delete_button}}</a>
               <ol class='visits highlightable'>
                 {{#groupedVisits}}
-                  <li class='visit' draggable='true' data-id='{{id}}'>
+                  <li class='visit' draggable='true' data-url='{{url}}' data-title='{{title}}'>
                     {{^readOnly}}
                       <div class='drag_handle'>
                         <div class='line'></div>
@@ -71,7 +71,7 @@
             </li>
           {{/isGrouped}}
           {{^isGrouped}}
-            <li class='visit' draggable='true' data-id='{{id}}'>
+            <li class='visit' draggable='true' data-url='{{url}}' data-title='{{title}}'>
               {{^readOnly}}
                 <div class='drag_handle'>
                   <div class='line'></div>
