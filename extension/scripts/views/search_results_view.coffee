@@ -28,6 +28,7 @@ class BH.Views.SearchResultsView extends Backbone.View
     dragAndTagView = new BH.Views.DragAndTagView
       model: @model
     dragAndTagView.render()
+
     dragAndTagView.on 'site:change', (site) ->
       activeTagsView = new BH.Views.ActiveTagsView
         model: new BH.Models.Site(site)
@@ -37,16 +38,9 @@ class BH.Views.SearchResultsView extends Backbone.View
 
   deleteClicked: (ev) ->
     ev.preventDefault()
-    model = @_getModelFromElement($(ev.target))
-    model.destroy
-      success: => @_getElementFromModel(model).remove()
-
-  _getModelFromElement: (element) ->
-    history = @model.get('history')
-    history.get($(element).prev().data('id'))
-
-  _getElementFromModel: (model) ->
-    $("[data-id='#{model.id}']").parents('li')
+    $el = $(ev.currentTarget)
+    new BH.Chrome.History().deleteUrl $el.data('url'), ->
+      $el.parents('.visit').remove()
 
   getI18nValues: ->
     @t ['no_visits_found']
