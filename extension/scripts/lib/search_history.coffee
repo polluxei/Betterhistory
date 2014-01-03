@@ -1,6 +1,7 @@
 class BH.Lib.SearchHistory
   constructor: (@query) ->
     @history = new BH.Chrome.History()
+    @worker = BH.Modules.Worker.worker
 
   fetch: (callback = ->) ->
     options =
@@ -9,7 +10,11 @@ class BH.Lib.SearchHistory
       maxResults: 0
 
     @history.query options, (history) =>
-      callback parse(history)
+      options =
+        options: {text: @query}
+        results: history
+      @worker 'searchSanitizer', options, (results) ->
+        callback parse(results)
 
   destroy: (callback = ->) ->
     @fetch (history) =>
@@ -18,7 +23,7 @@ class BH.Lib.SearchHistory
       callback()
 
 parse = (visits) ->
-  for visit in visits
+  for visit, i in visits
     fillInVisit(visit)
 
 fillInVisit = (visit) ->
