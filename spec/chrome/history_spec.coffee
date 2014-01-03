@@ -19,7 +19,7 @@ describe "BH.Chrome.History", ->
       @history.query maxResults: 0, text: '', (visits) ->
         expect(visits).toEqual [
           lastVisitTime: 1386712800000
-          date: new Date('December 10, 2013 4:00 PM')
+          date: new Date('December 10, 2013 4:00 PM CST')
           extendedDate: 'translated extended_formal_date'
           time: 'translated local_time'
         ]
