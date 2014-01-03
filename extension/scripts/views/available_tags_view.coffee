@@ -10,8 +10,8 @@ class BH.Views.AvailableTagsView extends Backbone.View
 
   render: ->
     presenter = new BH.Presenters.TagsPresenter(@collection)
-    properties = presenter.selectedAndUnselectedTagsforSites(@draggedSites)
-    html = Mustache.to_html @template, properties
+    tags = presenter.selectedAndUnselectedTagsforSites(@draggedSites)
+    html = Mustache.to_html @template, tags: tags
     @$el.html html
 
     $('.available_tags li').each (i, tag) =>
@@ -68,11 +68,21 @@ class BH.Views.AvailableTagsView extends Backbone.View
         @tracker.siteUntagged()
         @trigger 'site:untagged', site
 
+      if collection.length > 1
+        @trigger 'sites:untagged',
+          domain: collection.at(0).get('url').match(/\w+:\/\/(.*?)\//)[0]
+          tags: _.intersection.apply(_, collection.pluck('tags'))
+
   tagSites: (tag, collection) ->
     collection.addTag tag, (result, operations) =>
       for site in collection.toJSON()
         @tracker.siteTagged()
         @trigger 'site:tagged', site
+
+      if collection.length > 1
+        @trigger 'sites:tagged',
+          domain: collection.at(0).get('url').match(/\w+:\/\/(.*?)\//)[0]
+          tags: _.intersection.apply(_, collection.pluck('tags'))
 
       @tracker.tagAdded() if operations.tagCreated
 

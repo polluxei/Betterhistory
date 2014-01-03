@@ -10,7 +10,7 @@ class BH.Views.TagsListView extends BH.Views.MainView
 
   render: ->
     presenter = new BH.Presenters.TagsPresenter(@collection)
-    properties = _.extend presenter.tagsSummary(), @getI18nValues()
+    properties = _.extend tags: presenter.tagsSummary(), @getI18nValues()
     html = Mustache.to_html @template, properties
     @$el.html html
     @

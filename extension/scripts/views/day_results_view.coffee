@@ -55,6 +55,13 @@ class BH.Views.DayResultsView extends Backbone.View
       $el = $(".visit[data-url='#{site.url}']")
       $el.find('.active_tags').html activeTagsView.render().el
 
+    dragAndTagView.on 'sites:change', (site) ->
+      activeTagsView = new BH.Views.ActiveTagsView
+        model: new BH.Models.Site(site)
+        editable: false
+      $el = $(".grouped_sites[data-domain='#{site.domain}'] > .sites")
+      $el.find('.active_tags').html activeTagsView.render().el
+
   visitClicked: (ev) ->
     if $(ev.target).hasClass('search_domain')
       ev.preventDefault()

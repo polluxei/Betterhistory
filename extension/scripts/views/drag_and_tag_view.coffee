@@ -50,6 +50,12 @@ class BH.Views.DragAndTagView extends Backbone.View
       availableTagsView.on 'site:tagged', (site) =>
         @trigger 'site:change', site
 
+      availableTagsView.on 'sites:untagged', (site) =>
+        @trigger 'sites:change', site
+
+      availableTagsView.on 'sites:tagged', (site) =>
+        @trigger 'sites:change', site
+
       collection.fetch()
 
     handleDragEnd = (ev) =>

@@ -10,7 +10,7 @@
       <ol class='visits highlightable editable'>
         {{#visits}}
           {{#isGrouped}}
-            <li class='visit grouped_sites' draggable='true'>
+            <li class='visit grouped_sites' draggable='true' data-domain='{{domain}}'>
               {{^readOnly}}
                 <div class='drag_handle'>
                   <div class='line'></div>
