@@ -8,12 +8,14 @@ class BH.Views.SearchView extends BH.Views.MainView
   events:
     'click .delete_all': 'clickedDeleteAll'
     'click .corner .delete': 'clickedCancelSearch'
+    'click .fresh_search': 'clickedFreshSearch'
     'keyup .search': 'onSearchTyped'
     'blur .search': 'onSearchBlurred'
 
   initialize: ->
     @collection.on('reset', @onHistoryChanged, @)
     @model.on('change:query', @onQueryChanged, @)
+    @model.on 'change:cacheDatetime', @onCacheChanged, @
 
     @page = new Backbone.Model(page: 1)
     @page.on('change:page', @renderSearchResults, @)
@@ -41,6 +43,13 @@ class BH.Views.SearchView extends BH.Views.MainView
     @assignTabIndices('.visit a:first-child')
     @updateDeleteButton()
 
+  onCacheChanged: ->
+    datetime = moment(@model.get('cacheDatetime'))
+    date = datetime.format(@t('extended_formal_date'))
+    time = datetime.format(@t('local_time'))
+    @$('.cached .datetime').text "#{time} #{date}"
+    @$('.cached').show()
+
   onQueryChanged: ->
     @updateQueryReferences()
     $('.pagination').html('')
@@ -56,6 +65,11 @@ class BH.Views.SearchView extends BH.Views.MainView
     $el.addClass('selected')
 
     @renderSearchResults()
+
+  clickedFreshSearch: (ev) ->
+    ev.preventDefault()
+    new BH.Lib.SearchHistory().expireCache()
+    window.location.reload()
 
   updateQueryReferences: ->
     presenter = new BH.Presenters.SearchPresenter(@model.toJSON())

@@ -9,12 +9,24 @@ class BH.Lib.SearchHistory
       startTime: 0
       maxResults: 0
 
-    @history.query options, (history) =>
-      options =
-        options: {text: @query}
-        results: history
-      @worker 'searchSanitizer', options, (results) ->
-        callback parse(results)
+    chrome.storage.local.get 'lastSearchCache', (data) =>
+      cache = data.lastSearchCache
+      if cache?.query == @query
+        callback cache.results, new Date(cache.datetime)
+      else
+        @history.query options, (history) =>
+          options =
+            options: {text: @query}
+            results: history
+          @worker 'searchSanitizer', options, (results) =>
+            chrome.storage.local.set lastSearchCache:
+              results: results
+              datetime: new Date().getTime()
+              query: @query
+            callback parse(results)
+
+  expireCache: ->
+    chrome.storage.local.remove 'lastSearchCache'
 
   destroy: (callback = ->) ->
     @fetch (history) =>
