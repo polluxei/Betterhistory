@@ -6,7 +6,7 @@ describe "BH.Chrome.History", ->
     beforeEach ->
       chrome.history.search.andCallFake (options, callback) ->
         callback [{
-          lastVisitTime: new Date('December 10, 2013 4:00 PM').getTime()
+          lastVisitTime: new Date('December 10, 2013 4:00 PM CST').getTime()
         }]
 
     it "calls to the chrome history search method with the passed options", ->
@@ -37,8 +37,8 @@ describe "BH.Chrome.History", ->
   describe "#deleteRange", ->
     beforeEach ->
       @options =
-        startTime: new Date('December 4, 2013').getTime()
-        endTime: new Date('December 10, 2013').getTime()
+        startTime: new Date('December 4, 2013 CST').getTime()
+        endTime: new Date('December 10, 2013 CST').getTime()
 
     it "calls the chrome history delete range method with the passed range", ->
       @history.deleteRange @options
