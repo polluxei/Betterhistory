@@ -1,8 +1,9 @@
 class BH.Presenters.SearchPresenter extends BH.Presenters.Base
-  constructor: (@model) ->
+  constructor: (@search) ->
 
-  search: ->
-    @terms = @model.get('query').split(' ')
+  searchInfo: ->
+    @terms = []
+    @terms = @search.query.split(' ') if @search.query?
     joined = @t('searching_title') + ' '
 
     # yuck
@@ -11,4 +12,4 @@ class BH.Presenters.SearchPresenter extends BH.Presenters.Base
       if i != @terms.length - 1
         joined += " #{@t('and')} "
 
-     _.extend @model.toJSON(), title: joined
+     _.extend @search, title: joined

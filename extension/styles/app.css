@@ -1,5 +1,41 @@
-.chrome-bootstrap header .controls a {
+.cached {
+  top: 112px;
+  position: relative;
+  padding: 10px;
+  background: #fbfbd5;
+}
+.cached .fresh_search {
+  float: right;
+}
+.all_weeks li {
+  position: relative;
+  padding-top: 8px;
+}
+.all_weeks li > a {
+  background: #EEE;
+  border-radius: 3px;
+  display: block;
+  height: 37px;
+}
+.chrome-bootstrap .all_weeks a {
   text-decoration: none;
+}
+.all_weeks li:hover > a {
+  background: #DDD;
+}
+.all_weeks h3 {
+  width: 50%;
+  padding: 10px;
+  margin: 0;
+  line-height: 16px;
+}
+.all_weeks .details {
+  position: absolute;
+  top: 18px;
+  right: 10px;
+  width: 250px;
+  text-align: right;
+  color: #888;
 }
 .server_error_view .warning,
 .login_error_view .warning,
@@ -541,6 +577,10 @@ body.new_tags .menu .tags.pulse .new {
   position: absolute;
   top: 10px;
   z-index: 1;
+}
+.chrome-bootstrap .day_view .back_to_week {
+  text-decoration: none;
+  opacity: 0;
 }
 .day_view .time {
   -webkit-transition: 150ms opacity;

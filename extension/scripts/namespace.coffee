@@ -13,6 +13,7 @@
   Persistence: {}
   Migrations: {}
   Init: {}
+  Chrome: {}
   Base: ->
 
 module.exports = @BH if onServer?

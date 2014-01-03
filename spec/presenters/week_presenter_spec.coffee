@@ -1,13 +1,12 @@
 describe 'BH.Presenters.WeekPresenter', ->
   beforeEach ->
-    global.settings = new BH.Models.Settings()
     @date = moment(new Date('October 8, 2012'))
-    model = new BH.Models.Week date: @date
-    @presenter = new BH.Presenters.WeekPresenter(model)
+    week = id: '10-8-12', date: @date
+    @presenter = new BH.Presenters.WeekPresenter(week)
 
-  describe '#week', ->
+  describe '#inflatedWeek', ->
     it 'returns the properties needed for a view template', ->
-      expect(@presenter.week()).toEqual
+      expect(@presenter.inflatedWeek()).toEqual
         days: [
           {
             day: 'Monday'

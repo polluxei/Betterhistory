@@ -2,7 +2,7 @@ watch = require('watch')
 exec = require('child_process').exec
 watch.createMonitor '/Users/roykolak/Sites/better-history/extension', (monitor) ->
   callback = (f) ->
-    if f.match /.coffee$|.html$|.json$/
+    if f.match /.coffee$|.html$|.json$|.css$/
       console.log f
       exec('make build')
 

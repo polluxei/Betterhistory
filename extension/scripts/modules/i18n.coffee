@@ -4,7 +4,7 @@ BH.Modules.I18n =
       keys = key
       lookup = {}
       for key in keys
-        lookup["i18n_#{key}"] = @chromeAPI.i18n.getMessage(key.toString())
+        lookup["i18n_#{key}"] = chrome.i18n.getMessage(key.toString())
       lookup
     else
-      @chromeAPI.i18n.getMessage key, replacements
+      chrome.i18n.getMessage key, replacements

@@ -15,8 +15,8 @@ class BH.Views.DayResultsView extends Backbone.View
     @chromeAPI = chrome
 
   render: ->
-    presenter = new BH.Presenters.DayHistoryPresenter(@model)
-    properties = _.extend @getI18nValues(), presenter.history(), readOnly: state.get('readOnly')
+    presenter = new BH.Presenters.DayHistoryPresenter(@collection.toJSON())
+    properties = _.extend @getI18nValues(), history: presenter.history(), readOnly: state.get('readOnly')
     html = Mustache.to_html @template, properties
     @$el.html html
 
@@ -45,8 +45,22 @@ class BH.Views.DayResultsView extends Backbone.View
 
   attachDragging: ->
     dragAndTagView = new BH.Views.DragAndTagView
-      model: @model
+      collection: @collection
     dragAndTagView.render()
+
+    dragAndTagView.on 'site:change', (site) ->
+      activeTagsView = new BH.Views.ActiveTagsView
+        model: new BH.Models.Site(site)
+        editable: false
+      $el = $(".visit[data-url='#{site.url}']")
+      $el.find('.active_tags').html activeTagsView.render().el
+
+    dragAndTagView.on 'sites:change', (site) ->
+      activeTagsView = new BH.Views.ActiveTagsView
+        model: new BH.Models.Site(site)
+        editable: false
+      $el = $(".grouped_sites[data-domain='#{site.domain}'] > .sites")
+      $el.find('.active_tags').html activeTagsView.render().el
 
   visitClicked: (ev) ->
     if $(ev.target).hasClass('search_domain')
@@ -55,11 +69,10 @@ class BH.Views.DayResultsView extends Backbone.View
 
   deleteVisitClicked: (ev) ->
     ev.preventDefault()
-    element = $(ev.currentTarget).parents('[data-id]').first()
-    intervalId = $(ev.currentTarget).parents('.interval').data('id')
-    interval = @model.get('history').get(intervalId)
-    interval.findVisitById($(element).data('id')).destroy
-      success: => element.remove()
+    $el = $(ev.currentTarget)
+    analyticsTracker.visitDeletion()
+    new BH.Chrome.History().deleteUrl $el.data('url'), ->
+      $el.parent('.visit').remove()
 
   deleteGroupedVisitClicked: (ev) ->
     ev.preventDefault()
@@ -78,8 +91,6 @@ class BH.Views.DayResultsView extends Backbone.View
       setTimeout ->
         $(visit).children('.delete').trigger('click')
       , i * 10
-
-      #$(ev.currentTarget).parents('.interval').remove()
 
   toggleGroupedVisitsClicked: (ev) ->
     ev.preventDefault()

@@ -10,7 +10,7 @@ class BH.Init.Persistence
   remote: (authId) ->
     throw "Ajax requied" unless @config.ajax?
     throw "State required" unless @config.state?
-    authId = authId || user.get('authId')
+    authId = authId || user?.get('authId')
 
     @remotePersistence ||= new BH.Persistence.Remote(authId, @config.ajax, @config.state)
     @remotePersistence.updateAuthId(authId) if authId?

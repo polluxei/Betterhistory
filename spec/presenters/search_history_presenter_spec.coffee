@@ -1,59 +1,48 @@
 describe 'BH.Presenters.SearchHistoryPresenter', ->
   beforeEach ->
-    model = new BH.Models.SearchHistory
-      query: 'search term'
-      history: new BH.Collections.Visits [
-        new BH.Models.Visit(
-          title: 'site 1'
-          url: 'http://www.google.com/1'
-        ),
-        new BH.Models.Visit(
-          title: 'site 2'
-          url: 'http://www.google.com/2'
-        ),
-        new BH.Models.Visit(
-          title: 'site 3'
-          url: 'http://www.google.com/3'
-        )
-      ]
-    @presenter =  new BH.Presenters.SearchHistoryPresenter(model)
+    query = 'site bing sunday'
+    visits = [
+      {
+        title: 'site 1'
+        url: 'http://www.google.com/1'
+        location: 'http://www.google.com/1'
+        date: new Date('December 14, 2013 4:00 PM')
+        time: '4:00 PM'
+        extendedDate: 'Saturday, December 14th, 2013'
+      }, {
+        title: 'visit 2'
+        url: 'http://www.bing.com/2'
+        location: 'http://www.bing.com/2'
+        date: new Date('December 15, 2013 4:00 PM')
+        time: '4:00 PM'
+        extendedDate: 'Sunday, December 14th, 2013'
+      }, {
+        title: 'site 3'
+        url: 'http://www.google.com/3'
+        location: 'http://www.google.com/3'
+        date: new Date('December 14, 2013 4:00 PM')
+        time: '4:00 PM'
+        extendedDate: 'Saturday, December 14th, 2013'
+      }
+    ]
+    @presenter =  new BH.Presenters.SearchHistoryPresenter(visits, query)
 
   describe '#history', ->
     it 'returns the properties for the view template', ->
-      expect(@presenter.history()).toEqual visits: [
+      expect(@presenter.history(0, 2)).toEqual [
         {
-          isGrouped: false
-          host: 'http://www.google.com/'
-          path: '1'
-          title: 'site 1'
+          title: '<span class="match">site</span> 1'
           url: 'http://www.google.com/1'
-          id: 'c172'
+          location: 'http://www.google.com/1'
+          date: new Date('December 14, 2013 4:00 PM')
+          time: '4:00 PM'
+          extendedDate: 'Saturday, December 14th, 2013'
         }, {
-          isGrouped: false
-          host: 'http://www.google.com/'
-          path: '2'
-          title: 'site 2'
-          url: 'http://www.google.com/2'
-          id: 'c173'
-        }, {
-          isGrouped: false
-          host: 'http://www.google.com/'
-          path: '3'
-          title: 'site 3'
-          url: 'http://www.google.com/3'
-          id: 'c174'
+          title: 'visit 2'
+          url: 'http://www.bing.com/2'
+          location: 'http://www.<span class="match">bing</span>.com/2'
+          date: new Date('December 15, 2013 4:00 PM')
+          time: '4:00 PM'
+          extendedDate: '<span class="match">Sunday</span>, December 14th, 2013'
         }
       ]
-
-    describe 'when a segment of history is requested', ->
-      it 'called the history model with a start and end range', ->
-        expect(@presenter.history(1, 2)).toEqual visits: [
-          {
-            isGrouped: false,
-            host: 'http://www.google.com/',
-            path: '2',
-            title: 'site 2',
-            url: 'http://www.google.com/2',
-            id: 'c177'
-          }
-        ]

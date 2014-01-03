@@ -38,7 +38,7 @@ class BH.Views.PromptView extends BH.Views.ModalView
 
 BH.Views.CreatePrompt = (content) ->
   view = new BH.Views.PromptView
-    model: new BH.Models.Prompt({content: content})
+    model: new Backbone.Model({content: content})
   $('body').append(view.render().el)
   view
 

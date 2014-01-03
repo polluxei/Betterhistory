@@ -8,24 +8,24 @@ class BH.Views.SearchView extends BH.Views.MainView
   events:
     'click .delete_all': 'clickedDeleteAll'
     'click .corner .delete': 'clickedCancelSearch'
+    'click .fresh_search': 'clickedFreshSearch'
     'keyup .search': 'onSearchTyped'
     'blur .search': 'onSearchBlurred'
 
   initialize: ->
-    @chromeAPI = chrome
-    @history = @options.history
-    @page = new Backbone.Model(page: 1)
-
-    @history.on('change:history', @onSearchHistoryChanged, @)
+    @collection.on('reset', @onHistoryChanged, @)
     @model.on('change:query', @onQueryChanged, @)
+    @model.on 'change:cacheDatetime', @onCacheChanged, @
+
+    @page = new Backbone.Model(page: 1)
     @page.on('change:page', @renderSearchResults, @)
 
   render: ->
-    presenter = new BH.Presenters.SearchPresenter(@model)
-    properties = _.extend(@getI18nValues(), presenter.search())
+    presenter = new BH.Presenters.SearchPresenter(@model.toJSON())
+    properties = _.extend(@getI18nValues(), presenter.searchInfo())
     html = Mustache.to_html @template, properties
     @$el.append html
-    if !@model.validQuery()
+    if @model.get('query') == ''
       @$el.addClass('loaded')
       @$('.title').text @t('search_title')
       @$('.number_of_results').text ''
@@ -38,16 +38,24 @@ class BH.Views.SearchView extends BH.Views.MainView
   pageTitle: ->
     @t 'searching_title'
 
-  onSearchHistoryChanged: ->
+  onHistoryChanged: ->
     @renderVisits()
     @assignTabIndices('.visit a:first-child')
     @updateDeleteButton()
 
+  onCacheChanged: ->
+    datetime = moment(@model.get('cacheDatetime'))
+    date = datetime.format(@t('extended_formal_date'))
+    time = datetime.format(@t('local_time'))
+    @$('.cached .datetime').text "#{time} #{date}"
+    @$('.cached').show()
+
   onQueryChanged: ->
     @updateQueryReferences()
     $('.pagination').html('')
-    if @model.validQuery()
-      @history.set {query: @model.get('query')}, silent: true
+    if @model.get('query') != ''
+      new BH.Lib.SearchHistory(@model.get('query')).fetch (history) =>
+        @collection.reset history
       @$('.corner').addClass('cancelable')
 
   onPageClicked: (ev) ->
@@ -58,9 +66,14 @@ class BH.Views.SearchView extends BH.Views.MainView
 
     @renderSearchResults()
 
+  clickedFreshSearch: (ev) ->
+    ev.preventDefault()
+    new BH.Lib.SearchHistory().expireCache()
+    window.location.reload()
+
   updateQueryReferences: ->
-    presenter = new BH.Presenters.SearchPresenter(@model)
-    properties = presenter.search()
+    presenter = new BH.Presenters.SearchPresenter(@model.toJSON())
+    properties = presenter.searchInfo()
     @$el.removeClass('loaded')
     @$('.title').text properties.title
     @$('.content').html('')
@@ -75,7 +88,7 @@ class BH.Views.SearchView extends BH.Views.MainView
     @$('.search').focus()
 
     searchPaginationView = new BH.Views.SearchPaginationView
-      results: @history.get('history').length
+      results: @collection.length
       query: @model.get('query')
       el: $('.pagination')
       model: @page
@@ -86,7 +99,8 @@ class BH.Views.SearchView extends BH.Views.MainView
   renderSearchResults: ->
     @searchResultsView.undelegateEvents() if @searchResultsView
     @searchResultsView = new BH.Views.SearchResultsView
-      model: @history
+      query: @model.get('query')
+      collection: @collection
       el: @$el.children('.content')
       page: @page.get('page') - 1
     @searchResultsView.render()
@@ -95,7 +109,7 @@ class BH.Views.SearchView extends BH.Views.MainView
 
   updateDeleteButton: ->
     deleteButton = @$('.delete_all')
-    if @history.isEmpty() || !@model.validQuery()
+    if @collection.length == 0 || @model.get('query') == ''
       deleteButton.attr('disabled', 'disabled')
     else
       deleteButton.removeAttr('disabled')
@@ -114,11 +128,9 @@ class BH.Views.SearchView extends BH.Views.MainView
   deleteAction: (prompt) ->
     if prompt.get('action')
       analyticsTracker.searchResultsDeletion()
-      @history.get('history').destroyAll()
-      @history.fetch
-        success: (model) =>
-          model.trigger('change:history') # make sure
-          @promptView.close()
+      new BH.Lib.SearchHistory(@model.get('query')).destroy =>
+        @model.set history: []
+        @promptView.close()
     else
       @promptView.close()
 

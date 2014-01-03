@@ -3,6 +3,7 @@ class BH.Router extends Backbone.Router
     '': 'reset'
     'tags': 'tags'
     'tags/:id': 'tag'
+    'weeks': 'weeks'
     'weeks/:id': 'week'
     'days/:id': 'day'
     'settings': 'settings'
@@ -17,7 +18,7 @@ class BH.Router extends Backbone.Router
 
     @app = new BH.Views.AppView
       el: $('.app')
-      collection: new BH.Collections.Weeks(null, {settings: settings})
+      collection: new BH.Collections.Weeks()
       settings: settings
       state: @state
     @app.render()
@@ -36,27 +37,42 @@ class BH.Router extends Backbone.Router
   tags: ->
     view = @app.loadTags()
     view.select()
-    @_delay -> view.collection.fetch()
+    delay ->
+      view.collection.fetch()
 
   tag: (id) ->
     view = @app.loadTag(id)
     view.select()
-    @_delay -> view.model.fetch()
+    delay ->
+      view.model.fetch()
+
+  weeks: ->
+    view = @app.loadWeeks()
+    view.select()
+    delay ->
+      new BH.Lib.WeeksHistory().fetch (history) ->
+        view.collection.reset(history)
 
   week: (id) ->
     view = @app.loadWeek(id)
     view.select()
-    @_delay -> view.history.fetch()
+    delay ->
+      new BH.Lib.WeekHistory(new Date(id)).fetch (history) ->
+        view.collection.reset(history)
 
   day: (id) ->
     view = @app.loadDay id
-    view.history.fetch()
     view.select()
+    delay ->
+      new BH.Lib.DayHistory(new Date(id)).fetch (history) ->
+        view.collection.reset history
 
   today: ->
     view = @app.loadDay moment(new Date()).id()
-    view.history.fetch()
     view.select()
+    delay ->
+      new BH.Lib.DayHistory new Date(id).fetch (history) ->
+        view.model.parseAndSet history
 
   settings: ->
     view = @app.loadSettings()
@@ -70,8 +86,11 @@ class BH.Router extends Backbone.Router
     view.page.set(page: parseInt(page, 10), {silent: true}) if page?
     view.model.set query: decodeURIComponent(query)
     view.select()
-    @_delay ->
-      view.history.fetch() if view.model.validQuery()
+    delay ->
+      if query != ''
+        new BH.Lib.SearchHistory(query).fetch (history, cacheDatetime) ->
+          view.collection.reset history
+          view.model.set cacheDatetime: cacheDatetime if cacheDatetime?
 
-  _delay: (callback) ->
-    setTimeout (-> callback()), 250
+delay = (callback) ->
+  setTimeout (-> callback()), 250

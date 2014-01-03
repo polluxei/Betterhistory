@@ -16,25 +16,23 @@ class BH.Presenters.TagsPresenter
           count: model.get('sites').length
           sites: orderedSites.slice(0, 10)
 
-    tags: out
+    out
 
   selectedAndUnselectedTagsforSites: (sites) ->
-    out = for tag in @collection.tagOrder
+    for tag in @collection.tagOrder
       model = @collection.findWhere(name: tag)
 
-      orderedSites = model.get('sites').sort (a,b) ->
-        b.datetime - a.datetime
-
-      tagged = false
       for site in sites
         result = _.find model.get('sites'), (taggedSite) ->
           taggedSite.url == site.url
-
         if result?
-          tagged = true
-          break
+          site.tags = [] unless site.tags
+          site.tags.push(model.get('name'))
+
+    commonTags = _.intersection.apply(_, _.pluck(sites, 'tags'))
+
+    for tag in @collection.tagOrder
+      model = @collection.findWhere(name: tag)
 
       name: model.get('name')
-      tagged: tagged
-
-    tags: out
+      tagged: commonTags.indexOf(model.get('name')) != -1
