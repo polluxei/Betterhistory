@@ -287,6 +287,9 @@ body.new_tags .about_tags strong {
 .tag_view .active_tags .no_tags {
   display: none;
 }
+.tag_view .controls a {
+  text-decoration: none;
+}
 .extra_help {
   opacity: 0.7;
   font-size: 11px;
@@ -331,6 +334,9 @@ body.new_tags .menu .tags.pulse .new {
 }
 .no_results {
   padding: 10px 15px;
+}
+.tags_view .controls a.how_to_tag {
+  text-decoration: none;
 }
 .tag_list li {
   position: relative;
