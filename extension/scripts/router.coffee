@@ -88,9 +88,12 @@ class BH.Router extends Backbone.Router
     view.select()
     delay ->
       if query != ''
-        new BH.Lib.SearchHistory(query).fetch (history, cacheDatetime) ->
+        new BH.Lib.SearchHistory(query).fetch (history, cacheDatetime = null) ->
           view.collection.reset history
-          view.model.set cacheDatetime: cacheDatetime if cacheDatetime?
+          if cacheDatetime?
+            view.model.set cacheDatetime: cacheDatetime
+          else
+            view.model.unset 'cacheDatetime'
 
 delay = (callback) ->
   setTimeout (-> callback()), 250

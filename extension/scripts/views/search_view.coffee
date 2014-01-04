@@ -44,19 +44,21 @@ class BH.Views.SearchView extends BH.Views.MainView
     @updateDeleteButton()
 
   onCacheChanged: ->
-    datetime = moment(@model.get('cacheDatetime'))
-    date = datetime.format(@t('extended_formal_date'))
-    time = datetime.format(@t('local_time'))
-    @$('.cached .datetime').text "#{time} #{date}"
-    @$('.cached').show()
+    if @model.get('cacheDatetime')
+      datetime = moment(@model.get('cacheDatetime'))
+      date = datetime.format(@t('extended_formal_date'))
+      time = datetime.format(@t('local_time'))
+      @$('.cached .datetime').text "#{time} #{date}"
+      @$('.cached').show()
+    else
+      @$('.cached').hide()
 
   onQueryChanged: ->
     @updateQueryReferences()
     $('.pagination').html('')
     if @model.get('query') != ''
-      new BH.Lib.SearchHistory(@model.get('query')).fetch (history) =>
-        @collection.reset history
       @$('.corner').addClass('cancelable')
+      @$('.cached').hide()
 
   onPageClicked: (ev) ->
     ev.preventDefault()

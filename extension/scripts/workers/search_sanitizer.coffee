@@ -8,7 +8,7 @@ class BH.Workers.SearchSanitizer
     prunedResults = []
     for result in results
       if prunedResults.length >= 1000
-        true
+        break
       else
         result.location = result.url
         if @verifyTextMatch(result)
