@@ -29,12 +29,10 @@ class BH.Views.SearchResultsView extends Backbone.View
       model: @model
     dragAndTagView.render()
 
-    dragAndTagView.on 'site:change', (site) ->
-      debugger
+    dragAndTagView.on 'site:change', (site, $el) ->
       activeTagsView = new BH.Views.ActiveTagsView
         model: new BH.Models.Site(site)
         editable: false
-      $el = $(".visit[data-url='#{site.url}']")
       $el.find('.active_tags').html activeTagsView.render().el
 
   deleteClicked: (ev) ->

@@ -68,7 +68,7 @@ class BH.Views.AvailableTagsView extends Backbone.View
         @tracker.siteUntagged()
         @trigger 'site:untagged', site
 
-      if collection.length > 1
+      if collection.length > 1 || collection.at(0).get('partOfGroup')
         @trigger 'sites:untagged',
           domain: collection.at(0).get('url').match(/\w+:\/\/(.*?)\//)[0]
           tags: _.intersection.apply(_, collection.pluck('tags'))
@@ -79,7 +79,7 @@ class BH.Views.AvailableTagsView extends Backbone.View
         @tracker.siteTagged()
         @trigger 'site:tagged', site
 
-      if collection.length > 1
+      if collection.length > 1 || collection.at(0).get('partOfGroup')
         @trigger 'sites:tagged',
           domain: collection.at(0).get('url').match(/\w+:\/\/(.*?)\//)[0]
           tags: _.intersection.apply(_, collection.pluck('tags'))

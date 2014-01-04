@@ -48,19 +48,18 @@ class BH.Views.DayResultsView extends Backbone.View
       collection: @collection
     dragAndTagView.render()
 
-    dragAndTagView.on 'site:change', (site) ->
+    dragAndTagView.on 'site:change', (site, $el) ->
       activeTagsView = new BH.Views.ActiveTagsView
         model: new BH.Models.Site(site)
         editable: false
-      $el = $(".visit[data-url='#{site.url}']")
       $el.find('.active_tags').html activeTagsView.render().el
 
-    dragAndTagView.on 'sites:change', (site) ->
+    dragAndTagView.on 'sites:change', (site, $el) ->
       activeTagsView = new BH.Views.ActiveTagsView
         model: new BH.Models.Site(site)
         editable: false
-      $el = $(".grouped_sites[data-domain='#{site.domain}'] > .sites")
-      $el.find('.active_tags').html activeTagsView.render().el
+      $activeTags = $el.children('.sites').find('.active_tags')
+      $activeTags.html activeTagsView.render().el
 
   visitClicked: (ev) ->
     if $(ev.target).hasClass('search_domain')

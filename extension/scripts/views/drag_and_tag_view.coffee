@@ -18,13 +18,14 @@ class BH.Views.DragAndTagView extends Backbone.View
         $el.find('ol.visits .visit').each ->
           data.sites.push
             url: $(this).data('url')
-            title: $(this).get('title')
+            title: $(this).data('title')
             datetime: new Date().getTime()
       else
         data.sites.push
           url: $el.data('url')
           title: $el.data('title')
           datetime: new Date().getTime()
+          partOfGroup: true if $el.parents('.grouped_sites').length > 0
 
       @tracker.siteTagDrag()
 
@@ -44,17 +45,15 @@ class BH.Views.DragAndTagView extends Backbone.View
         draggedSites: data.sites
         el: '.available_tags'
 
-      availableTagsView.on 'site:untagged', (site) =>
-        @trigger 'site:change', site
+      availableTagsView.on 'site:untagged site:tagged', (site) =>
+        if $el.find('ol.visits').length > 0
+          $visit = $el.find("[data-url='#{site.url}']")
+        @trigger 'site:change', site, $visit || $el
 
-      availableTagsView.on 'site:tagged', (site) =>
-        @trigger 'site:change', site
-
-      availableTagsView.on 'sites:untagged', (site) =>
-        @trigger 'sites:change', site
-
-      availableTagsView.on 'sites:tagged', (site) =>
-        @trigger 'sites:change', site
+      availableTagsView.on 'sites:untagged sites:tagged', (site) =>
+        if $el.parents('.grouped_sites').length > 0
+          $visit = $el.parents('.grouped_sites')
+        @trigger 'sites:change', site, $visit || $el
 
       collection.fetch()
 
