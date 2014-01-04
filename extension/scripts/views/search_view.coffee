@@ -90,7 +90,7 @@ class BH.Views.SearchView extends BH.Views.MainView
     @$('.search').focus()
 
     searchPaginationView = new BH.Views.SearchPaginationView
-      results: @collection.length
+      collection: @collection
       query: @model.get('query')
       el: $('.pagination')
       model: @page

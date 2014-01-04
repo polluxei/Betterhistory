@@ -28,11 +28,23 @@ class BH.Lib.SearchHistory
   expireCache: ->
     chrome.storage.local.remove 'lastSearchCache'
 
+  deleteUrl: (url, callback) ->
+    @history.deleteUrl url, ->
+      callback()
+
+    chrome.storage.local.get 'lastSearchCache', (data) =>
+      results = data.lastSearchCache.results
+      data.lastSearchCache.results = _.reject results, (visit) ->
+        visit.url == url
+      chrome.storage.local.set data
+
   destroy: (callback = ->) ->
     @fetch (history) =>
-      for visit in history
-        @history.deleteUrl visit.url
-      callback()
+      for visit, i in history
+        @history.deleteUrl visit.url, =>
+          if i == history.length
+            @expireCache()
+            callback()
 
 parse = (visits) ->
   for visit, i in visits
