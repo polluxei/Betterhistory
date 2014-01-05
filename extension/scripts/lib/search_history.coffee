@@ -5,7 +5,7 @@ class BH.Lib.SearchHistory
 
   fetch: (callback = ->) ->
     options =
-      text: @query
+      text: ''
       startTime: 0
       maxResults: 0
 

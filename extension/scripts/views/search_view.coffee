@@ -131,7 +131,8 @@ class BH.Views.SearchView extends BH.Views.MainView
     if prompt.get('action')
       analyticsTracker.searchResultsDeletion()
       new BH.Lib.SearchHistory(@model.get('query')).destroy =>
-        @model.set history: []
+        @collection.reset []
+        @model.unset 'cacheDatetime'
         @promptView.close()
     else
       @promptView.close()

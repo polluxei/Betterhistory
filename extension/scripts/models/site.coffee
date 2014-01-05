@@ -1,7 +1,4 @@
 class BH.Models.Site extends Backbone.Model
-  initialize: (attrs = {}, options = {}) ->
-    @chromeAPI = options.chrome
-
   fetch: (callback = ->) ->
     persistence.tag().fetchSiteTags @get('url'), (tags) =>
       @set tags: tags
