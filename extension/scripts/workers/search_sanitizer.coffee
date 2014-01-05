@@ -11,6 +11,8 @@ class BH.Workers.SearchSanitizer
         break
       else
         result.location = result.url
+        result.name = result.title
+
         if @verifyTextMatch(result)
           @removeScriptTags(result)
           prunedResults.push(result)
