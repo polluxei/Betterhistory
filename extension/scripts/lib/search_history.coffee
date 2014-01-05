@@ -55,6 +55,7 @@ fillInVisit = (visit) ->
   visit.location = visit.url
   visit.path = visit.url.replace(visit.domain, '')
   visit.title = '(No Title)' if visit.title == ''
+  visit.name = visit.title
   visit
 
 getDomain = (url) ->
