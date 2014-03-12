@@ -34,14 +34,13 @@ class BH.Views.Cache
 
     @cache.tags[id]
 
-  weeksView: () ->
-    return @cache.allWeeks if @cache.allWeeks
+  calendarView: ->
+    return @cache.calendar if @cache.calendar
 
-    @cache.allWeeks = new BH.Views.WeeksView
-      collection: new Backbone.Collection()
+    @cache.calendar = new BH.Views.CalendarView
 
-    @insert @cache.allWeeks.render().el
-    @cache.allWeeks
+    @insert @cache.calendar.render().el
+    @cache.calendar
 
   weekView: (id) ->
     return @cache.weeks[id] if @cache.weeks[id]

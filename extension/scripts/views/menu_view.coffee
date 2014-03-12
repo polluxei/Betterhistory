@@ -23,4 +23,4 @@ class BH.Views.MenuView extends Backbone.View
     analyticsTracker.weekView($el.data('week-id'), $el.index())
 
   getI18nValues: ->
-    @t ['all_weeks_link']
+    @t ['calendar_link']
