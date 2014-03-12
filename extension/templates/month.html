@@ -1,0 +1,23 @@
+<table class='calendar'>
+  <thead>
+    <tr>
+      <th>Sun</th>
+      <th>Mon</th>
+      <th>Tues</th>
+      <th>Wed</th>
+      <th>Thurs</th>
+      <th>Fri</th>
+      <th>Sat</th>
+    </th>
+  <tbody>
+    {{#weeks}}
+      <tr class='week' data-week-id={{id}}>
+        {{#days}}
+          <td class='{{#inMonth}}in_month{{/inMonth}}'>
+            <span class='date'>{{number}}</span>
+          </td>
+        {{/days}}
+      <tr>
+    {{/weeks}}
+  </tbody>
+</table>

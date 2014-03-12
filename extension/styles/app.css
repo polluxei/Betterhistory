@@ -1,3 +1,43 @@
+.calendar_view .calendar {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+.calendar td {
+  width: 14%;
+  height: 60px;
+  position: relative;
+  border: 3px solid #FFF;
+  background: #F6F6F6;
+}
+.calendar td.in_month {
+  background: #F0F6FE;
+}
+.calendar tbody tr:hover td {
+  background: #8AAAED;
+  cursor: pointer;
+  color: #FFF;
+}
+.calendar .date {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.calendar_view .spacer h3 {
+  margin: 4px 0 0;
+  text-align: center;
+}
+.calendar_view .controls a {
+  text-decoration: none;
+  position: absolute;
+  top: 14px;
+}
+.calendar_view .controls a.previous_month {
+  left: 0px;
+}
+.calendar_view .controls a.next_month {
+  right: 0px;
+}
 .cached {
   top: 112px;
   position: relative;
