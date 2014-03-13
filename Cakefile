@@ -17,11 +17,13 @@ popupStyles = [
   'styles/chrome-bootstrap.css',
   'styles/app.css'
   'styles/popup.css'
+  'styles/i18n.css'
 ]
 
 styles = [
   'styles/chrome-bootstrap.css',
   'styles/app.css'
+  'styles/i18n.css'
 ]
 
 backgroundScripts = [

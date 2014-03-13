@@ -23,6 +23,8 @@ build:
 	cp node_modules/underscore/underscore.js build/scripts/frameworks/
 	cp node_modules/mustache/mustache.js build/scripts/frameworks/
 	cp node_modules/moment/moment.js build/scripts/frameworks/
+	node_modules/.bin/lessc build/styles/app.less build/styles/app.css
+	rm build/styles/app.less
 	cake build:assets:dev
 	sed -i '' 's/\$$VERSION\$$/${VERSION}/g' build/manifest.json
 	sed -i '' 's/\$$LABEL\$$/ DEV/g' build/manifest.json
