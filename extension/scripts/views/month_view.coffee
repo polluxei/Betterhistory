@@ -10,9 +10,8 @@ class BH.Views.MonthView extends BH.Views.MainView
 
   render: ->
     presenter = new BH.Presenters.CalendarPresenter(@model.toJSON())
-    calendar = presenter.calendar()
-
-    properties = _.extend {}, @model.toJSON(), weeks: calendar
+    properties = _.extend {}, @getI18nValues(), @model.toJSON(),
+      weeks: presenter.calendar()
     html = Mustache.to_html @template, properties
     @$el.html html
     @
@@ -39,6 +38,24 @@ class BH.Views.MonthView extends BH.Views.MainView
 
   onDayMouseOut: ->
     @$('.selected').removeClass('selected')
+
+  getI18nValues: ->
+    properties = @t [
+      'sunday_short',
+      'monday_short',
+      'tuesday_short',
+      'wednesday_short',
+      'thursday_short',
+      'friday_short',
+      'saturday_short'
+    ]
+    properties['i18n_previous_month_link'] = @t('previous_month_link', [
+      @t('back_arrow')
+    ])
+    properties['i18n_next_month_link'] = @t('next_month_link', [
+      @t('forward_arrow')
+    ])
+    properties
 
 
 highlightBackward = (startingWeekDay, $el) ->

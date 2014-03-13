@@ -20,6 +20,9 @@
       &.in_month {
         background: #F0F6FE;
       }
+      &.today {
+        background: #D8E3F9;
+      }
       &.selected {
         background: #8AAAED;
         a {
@@ -38,15 +41,21 @@
     margin: 4px 0 15px;
     text-align: center;
   }
+  .bottom {
+    padding-top: 10px;
+    text-align: center;
+    position: relative;
+  }
   .previous_month, .next_month {
     text-decoration: none;
-    margin-top: 10px;
+    position: absolute;
+    top: 10px;
   }
   .previous_month {
-    float: left;
+    left: 0;
   }
   .next_month {
-    float: right;
+    right: 0;
   }
 }
 

@@ -862,6 +862,10 @@
     "message": "&larr;",
     "description": "ascii arrow"
   },
+  "forward_arrow": {
+    "message": "&rarr;",
+    "description": "ascii arrow"
+  },
 
   "search_by_domain": {
     "message": "More from site",
@@ -1380,5 +1384,47 @@
   },
   "calendar_title": {
     "message": "Calendar"
+  },
+  "sunday_short": {
+    "message": "Sun"
+  },
+  "monday_short": {
+    "message": "Mon"
+  },
+  "tuesday_short": {
+    "message": "Tue"
+  },
+  "wednesday_short": {
+    "message": "Wed"
+  },
+  "thursday_short": {
+    "message": "Thur"
+  },
+  "friday_short": {
+    "message": "Fri"
+  },
+  "saturday_short": {
+    "message": "Sat"
+  },
+  "previous_month_link": {
+    "message": "$arrow$ Previous",
+    "description": "previous month link",
+    "placeholders": {
+      "arrow": {
+        "content": "$1",
+        "example": "an arrow"
+      }
+    }
+  },
+  "next_month_link": {
+    "message": "Next $arrow$",
+    "description": "next month link",
+    "placeholders": {
+      "arrow": {
+        "content": "$1",
+        "example": "an arrow"
+      }
+    }
   }
+
 }

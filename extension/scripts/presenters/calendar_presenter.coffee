@@ -30,6 +30,7 @@ class BH.Presenters.CalendarPresenter extends BH.Presenters.Base
               number: date.getDate()
               day: days[date.getDay()]
               inMonth: true
+              today: isToday(date)
             }]
         else
           _.last(weeks).days.push
@@ -37,6 +38,7 @@ class BH.Presenters.CalendarPresenter extends BH.Presenters.Base
             day: days[date.getDay()]
             weekId: moment(date).format('M-D-YY')
             inMonth: true
+            today: isToday(date)
 
         date.setDate(date.getDate() + 1)
 
@@ -51,3 +53,8 @@ class BH.Presenters.CalendarPresenter extends BH.Presenters.Base
       index += 1
 
     weeks
+
+isToday = (date) ->
+  today = new Date()
+  today.setHours(0,0,0,0)
+  today.getTime() == date.getTime()

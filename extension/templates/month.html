@@ -2,19 +2,19 @@
 <table class='calendar'>
   <thead>
     <tr>
-      <th>Sun</th>
-      <th>Mon</th>
-      <th>Tues</th>
-      <th>Wed</th>
-      <th>Thurs</th>
-      <th>Fri</th>
-      <th>Sat</th>
+      <th>{{i18n_sunday_short}}</th>
+      <th>{{i18n_monday_short}}</th>
+      <th>{{i18n_tuesday_short}}</th>
+      <th>{{i18n_wednesday_short}}</th>
+      <th>{{i18n_thursday_short}}</th>
+      <th>{{i18n_friday_short}}</th>
+      <th>{{i18n_saturday_short}}</th>
     </th>
   <tbody>
     {{#weeks}}
       <tr class='week'>
         {{#days}}
-          <td class='{{#inMonth}}in_month{{/inMonth}}' data-day='{{day}}' data-week-id='{{weekId}}'>
+        <td class='{{#today}}today{{/today}} {{#inMonth}}in_month{{/inMonth}}' data-day='{{day}}' data-week-id='{{weekId}}'>
             <a href='#' class='date'>{{number}}</a>
           </td>
         {{/days}}
@@ -22,5 +22,8 @@
     {{/weeks}}
   </tbody>
 </table>
-<a href='#' class='previous_month'>&larr; Previous</a>
-<a href='#' class='next_month'>Next &rarr;</a>
+<div class='bottom'>
+  <span class='year'>2014</span>
+  <a href='#' class='previous_month'>{{{i18n_previous_month_link}}}</a>
+  <a href='#' class='next_month'>{{{i18n_next_month_link}}}</a>
+</div>
