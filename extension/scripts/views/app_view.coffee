@@ -58,9 +58,9 @@ class BH.Views.AppView extends Backbone.View
     @$('.menu .tags').parent().addClass 'selected'
     @cache.tagView(id)
 
-  loadWeeks: ->
-    @$('.menu .all_weeks').parent().addClass 'selected'
-    @cache.weeksView()
+  loadCalendar: ->
+    @$('.menu .calendar').addClass 'selected'
+    @cache.calendarView()
 
   loadWeek: (id) ->
     @updateMenuSelection(id)

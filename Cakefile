@@ -17,11 +17,13 @@ popupStyles = [
   'styles/chrome-bootstrap.css',
   'styles/app.css'
   'styles/popup.css'
+  'styles/i18n.css'
 ]
 
 styles = [
   'styles/chrome-bootstrap.css',
   'styles/app.css'
+  'styles/i18n.css'
 ]
 
 backgroundScripts = [
@@ -159,8 +161,8 @@ scripts = [
   'scripts/views/settings_view.js',
   'scripts/views/visit_view.js',
   'scripts/views/week_view.js',
-  'scripts/views/weeks_view.js',
-  'scripts/views/weeks_results_view.js',
+  'scripts/views/calendar_view.js',
+  'scripts/views/month_view.js',
   'scripts/views/tags_view.js',
   'scripts/views/tags_list_view.js',
   'scripts/views/tag_view.js',
@@ -188,6 +190,7 @@ scripts = [
   'scripts/presenters/day_presenter.js',
   'scripts/presenters/week_presenter.js',
   'scripts/presenters/weeks_presenter.js',
+  'scripts/presenters/calendar_presenter.js',
   'scripts/presenters/search_presenter.js',
   'scripts/presenters/day_history_presenter.js',
   'scripts/presenters/search_history_presenter.js',

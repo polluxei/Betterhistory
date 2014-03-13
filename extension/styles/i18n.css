@@ -1,0 +1,127 @@
+body {
+  direction: __MSG_@@bidi_dir__;
+}
+.chrome-bootstrap header .corner {
+  __MSG_@@bidi_start_edge__: auto;
+  __MSG_@@bidi_end_edge__: 0px;
+}
+.week_view .label {
+  __MSG_@@bidi_start_edge__: 10px;
+}
+.week_view .bar {
+  __MSG_@@bidi_start_edge__: 0;
+}
+.chrome-bootstrap .highlightable li .action {
+  __MSG_@@bidi_start_edge__: auto;
+  __MSG_@@bidi_end_edge__: 32px;
+}
+.chrome-bootstrap .highlightable.editable .delete {
+  __MSG_@@bidi_start_edge__: auto;
+  __MSG_@@bidi_end_edge__: 5px;
+}
+.view .description {
+  background-position:__MSG_@@bidi_start_edge__ 0;
+  padding-__MSG_@@bidi_start_edge__: 25px;
+}
+.mailing_list_view .logo,
+.sign_up_info_view .logo,
+.credits_view .logo,
+.auth_success_view .logo {
+  __MSG_@@bidi_end_edge__: -50px;
+}
+.credits_view .translators .language {
+  text-align: __MSG_@@bidi_end_edge__;
+  float: __MSG_@@bidi_end_edge__;
+}
+.visit .location {
+  background-image: -webkit-gradient(linear, __MSG_@@bidi_start_edge__ top, __MSG_@@bidi_end_edge__ top, color-stop(82%, #777), to(white));
+}
+.week_view .spinner,
+.search_view .spinner {
+  __MSG_@@bidi_start_edge__: 4px;
+}
+.cancelable .delete {
+  __MSG_@@bidi_start_edge__: auto;
+  __MSG_@@bidi_end_edge__: 5px;
+}
+.chrome-bootstrap .pagination li:last-child {
+  margin-__MSG_@@bidi_end_edge__: 20px;
+}
+.available_tags ul.tags li.new_tag {
+  padding-__MSG_@@bidi_start_edge__: 10px;
+  padding-__MSG_@@bidi_end_edge__: 14px;
+}
+.tag_mode {
+  text-align: __MSG_@@bidi_end_edge__;
+  padding-__MSG_@@bidi_end_edge__: 20px;
+}
+.about_tags .dismiss_instructions {
+  __MSG_@@bidi_end_edge__: 8px;
+}
+.tag_visit_view .tags .delete {
+  __MSG_@@bidi_end_edge__: 3px;
+}
+.controls .share,
+.controls .rename,
+.controls .how_to_tag {
+  margin-__MSG_@@bidi_end_edge__: 15px;
+}
+.tag_list .details {
+  __MSG_@@bidi_end_edge__: 10px;
+  text-align: __MSG_@@bidi_end_edge__;
+}
+.favicons {
+  float: __MSG_@@bidi_end_edge__;
+}
+.favicons li {
+  margin-__MSG_@@bidi_end_edge__: 5px;
+}
+.favicons li:last-child {
+  margin-__MSG_@@bidi_end_edge__: 0;
+}
+.interval header .delete {
+  __MSG_@@bidi_end_edge__: 15px;
+}
+.drag_ghost {
+  __MSG_@@bidi_end_edge__: 0;
+}
+#coverup {
+  __MSG_@@bidi_end_edge__: 0;
+}
+.navigation .available_tags {
+  transition: __MSG_@@bidi_start_edge__ 0.2s;
+  __MSG_@@bidi_start_edge__: -124px;
+}
+.dropzone.navigation .available_tags {
+  __MSG_@@bidi_start_edge__: 0;
+}
+.extra_help {
+  margin-__MSG_@@bidi_start_edge__: 15px;
+}
+.drag_handle {
+  __MSG_@@bidi_start_edge__: 0;
+}
+.visit.dragging .drag_handle {
+  border-__MSG_@@bidi_start_edge__: 5px solid #8AAAED;
+}
+.visits li.visit > .site,
+.visits li.visit > .sites {
+  padding-__MSG_@@bidi_start_edge__: 15px;
+}
+.day_view .time {
+  __MSG_@@bidi_end_edge__: 10px;
+}
+.chrome-bootstrap .highlightable li .tags {
+  float: __MSG_@@bidi_start_edge__;
+}
+.chrome-bootstrap .highlightable li .tags li:last-child {
+  margin-__MSG_@@bidi_end_edge__: 5px;
+  margin-__MSG_@@bidi_start_edge__: 0;
+}
+.available_tags ul.tags li {
+  padding-__MSG_@@bidi_start_edge__: 24px;
+  padding-__MSG_@@bidi_end_edge__: 0;
+}
+.small_spinner {
+  margin-__MSG_@@bidi_end_edge__: 5px;
+}

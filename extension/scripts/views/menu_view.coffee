@@ -4,7 +4,8 @@ class BH.Views.MenuView extends Backbone.View
   template: BH.Templates['menu']
 
   events:
-    'click .menu > *': 'weekClicked'
+    'click .menu > .week': 'weekClicked'
+    'click .menu > .calendar': 'calendarClicked'
 
   initialize: ->
     @chromeAPI = chrome
@@ -22,5 +23,11 @@ class BH.Views.MenuView extends Backbone.View
     $el.addClass 'selected'
     analyticsTracker.weekView($el.data('week-id'), $el.index())
 
+  calendarClicked: (ev) ->
+    @$('.menu > *').removeClass 'selected'
+    $el = $(ev.currentTarget)
+    $el.addClass 'selected'
+    analyticsTracker.calendarView()
+
   getI18nValues: ->
-    @t ['all_weeks_link']
+    @t ['calendar_link']
