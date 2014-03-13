@@ -2,18 +2,21 @@ class BH.Presenters.CalendarPresenter extends BH.Presenters.Base
   constructor: (@json) ->
 
   calendar: ->
+    days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
     stillInMonth = true
     dateMonth = new Date("#{@json.month} #{@json.year}")
-    weeks = [{
-      id: ''
-      days: [{}]
-    }]
+    weeks = []
     date = new Date(dateMonth)
 
     # Pad the beginning
     if date.getDay() != 0
-      for day in _.range(0, date.getDay() - 1)
-        _.first(weeks).days.push {}
+      weeks.push days: []
+      for day in _.range(1, date.getDay() + 1)
+        pastDate = new Date(date)
+        pastDate.setDate(pastDate.getDate() - day)
+        _.first(weeks).days.unshift
+          weekId: moment(pastDate).format('M-D-YY')
+          day: days[pastDate.getDay()]
 
     # Fill in the middle
     while stillInMonth
@@ -21,22 +24,30 @@ class BH.Presenters.CalendarPresenter extends BH.Presenters.Base
         stillInMonth = false
       else
         if date.getDay() == 0
-          weekId = moment(date).format("M-D-YY")
           weeks.push
-            id: weekId
             days:[{
+              weekId: moment(date).format('M-D-YY')
               number: date.getDate()
+              day: days[date.getDay()]
               inMonth: true
             }]
         else
           _.last(weeks).days.push
             number: date.getDate()
+            day: days[date.getDay()]
+            weekId: moment(date).format('M-D-YY')
             inMonth: true
 
         date.setDate(date.getDate() + 1)
 
     # Pad the ending
+    index = 1
     while _.last(weeks).days.length != 7
-      _.last(weeks).days.push {}
+      futureDate = new Date(date)
+      futureDate.setDate(futureDate.getDate() + index)
+      _.last(weeks).days.push
+        weekId: moment(futureDate).format('M-D-YY')
+        day: days[futureDate.getDay()]
+      index += 1
 
     weeks
