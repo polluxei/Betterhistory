@@ -20,6 +20,9 @@ class BH.Trackers.AnalyticsTracker
   weekView: (date, distanceFromCurrentWeek) ->
     @trackEvent(['Weeks', 'Click', date, distanceFromCurrentWeek])
 
+  calendarView: () ->
+    @trackEvent(['Calendar', 'Click'])
+
   visitDeletion: ->
     @trackEvent(['Visit', 'Delete'])
 

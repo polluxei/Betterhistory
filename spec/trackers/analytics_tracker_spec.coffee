@@ -26,6 +26,11 @@ describe 'BH.Trackers.AnalyticsTracker', ->
       @analyticsTracker.weekView('03-03-13', 4)
       expect(@analytics.push).toHaveBeenCalledWith ['_trackEvent', 'Weeks', 'Click', '03-03-13', 4]
 
+  describe '#calendarView', ->
+    it 'tracks the calendar view', ->
+      @analyticsTracker.calendarView()
+      expect(@analytics.push).toHaveBeenCalledWith ['_trackEvent', 'Calendar', 'Click']
+
   describe '#visitDeletion', ->
     it 'tracks visit deletion', ->
       @analyticsTracker.visitDeletion()
