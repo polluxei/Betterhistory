@@ -1,9 +1,16 @@
+.frame .calendar_view .content {
+  padding-top: 75px;
+}
 .calendar_view {
   .calendar {
     margin-top: 20px;
     table-layout: fixed;
     width: 100%;
     border-collapse: collapse;
+
+    th {
+      font-weight: normal;
+    }
 
     td {
       height: 60px;
@@ -27,23 +34,19 @@
       text-decoration: none;
     }
   }
-  .spacer h3 {
-    margin: 4px 0 0;
+  h3 {
+    margin: 4px 0 15px;
     text-align: center;
   }
-  .controls {
-    a {
-      text-decoration: none;
-      position: absolute;
-      top: 14px;
-
-      &.previous_month {
-        left: 0px;
-      }
-      &.next_month {
-        right: 0px;
-      }
-    }
+  .previous_month, .next_month {
+    text-decoration: none;
+    margin-top: 10px;
+  }
+  .previous_month {
+    float: left;
+  }
+  .next_month {
+    float: right;
   }
 }
 

@@ -4,7 +4,7 @@ class BH.Views.CalendarView extends BH.Views.MainView
 
   template: BH.Templates['calendar']
 
-  className: 'calendar_view with_controls'
+  className: 'calendar_view'
 
   events:
     'keyup .search': 'onSearchTyped'
