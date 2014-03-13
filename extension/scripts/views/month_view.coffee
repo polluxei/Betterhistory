@@ -7,11 +7,12 @@ class BH.Views.MonthView extends BH.Views.MainView
     'click .selected': 'onWeekClicked'
     'mouseover td': 'onDayMouseOver'
     'mouseout td': 'onDayMouseOut'
+    'click .previous_month': 'onPreviousMonthClick'
+    'click .next_month': 'onNextMonthClick'
 
   render: ->
     presenter = new BH.Presenters.CalendarPresenter(@model.toJSON())
-    properties = _.extend {}, @getI18nValues(), @model.toJSON(),
-      weeks: presenter.calendar()
+    properties = _.extend {}, @getI18nValues(), presenter.calendar()
     html = Mustache.to_html @template, properties
     @$el.html html
     @
@@ -20,6 +21,20 @@ class BH.Views.MonthView extends BH.Views.MainView
     ev.preventDefault()
     weekId = @$('.selected').first().data('week-id')
     router.navigate("weeks/#{weekId}", trigger: true)
+
+  onPreviousMonthClick: (ev) ->
+    ev.preventDefault()
+    date = @model.get('monthDate')
+    date.setMonth(date.getMonth() - 1)
+    @model.set monthDate: date
+    @render()
+
+  onNextMonthClick: (ev) ->
+    ev.preventDefault()
+    date = @model.get('monthDate')
+    date.setMonth(date.getMonth() + 1)
+    @model.set monthDate: date
+    @render()
 
   onDayMouseOver: (ev) ->
     @$('.selected').removeClass('selected')

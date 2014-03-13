@@ -1405,26 +1405,5 @@
   },
   "saturday_short": {
     "message": "Sat"
-  },
-  "previous_month_link": {
-    "message": "$arrow$ Previous",
-    "description": "previous month link",
-    "placeholders": {
-      "arrow": {
-        "content": "$1",
-        "example": "an arrow"
-      }
-    }
-  },
-  "next_month_link": {
-    "message": "Next $arrow$",
-    "description": "next month link",
-    "placeholders": {
-      "arrow": {
-        "content": "$1",
-        "example": "an arrow"
-      }
-    }
   }
-
 }

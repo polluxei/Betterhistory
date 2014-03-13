@@ -3,10 +3,8 @@ class BH.Presenters.CalendarPresenter extends BH.Presenters.Base
 
   calendar: ->
     days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
-    stillInMonth = true
-    dateMonth = new Date("#{@json.month} #{@json.year}")
     weeks = []
-    date = new Date(dateMonth)
+    date = new Date(@json.monthDate)
 
     # Pad the beginning
     if date.getDay() != 0
@@ -19,28 +17,25 @@ class BH.Presenters.CalendarPresenter extends BH.Presenters.Base
           day: days[pastDate.getDay()]
 
     # Fill in the middle
-    while stillInMonth
-      if date.getMonth() != dateMonth.getMonth()
-        stillInMonth = false
-      else
-        if date.getDay() == 0
-          weeks.push
-            days:[{
-              weekId: moment(date).format('M-D-YY')
-              number: date.getDate()
-              day: days[date.getDay()]
-              inMonth: true
-              today: isToday(date)
-            }]
-        else
-          _.last(weeks).days.push
+    while date.getMonth() == @json.monthDate.getMonth()
+      if date.getDay() == 0
+        weeks.push
+          days:[{
+            weekId: moment(date).format('M-D-YY')
             number: date.getDate()
             day: days[date.getDay()]
-            weekId: moment(date).format('M-D-YY')
             inMonth: true
             today: isToday(date)
+          }]
+      else
+        _.last(weeks).days.push
+          number: date.getDate()
+          day: days[date.getDay()]
+          weekId: moment(date).format('M-D-YY')
+          inMonth: true
+          today: isToday(date)
 
-        date.setDate(date.getDate() + 1)
+      date.setDate(date.getDate() + 1)
 
     # Pad the ending
     index = 1
@@ -52,7 +47,11 @@ class BH.Presenters.CalendarPresenter extends BH.Presenters.Base
         day: days[futureDate.getDay()]
       index += 1
 
-    weeks
+    month: moment(@json.monthDate).format('MMMM')
+    previousMonth: moment(new Date(@json.monthDate)).subtract('months', 1).format('MMMM')
+    nextMonth: moment(new Date(@json.monthDate)).add('months', 1).format('MMMM')
+    year: @json.monthDate.getFullYear()
+    weeks: weeks
 
 isToday = (date) ->
   today = new Date()

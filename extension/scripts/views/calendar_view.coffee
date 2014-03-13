@@ -17,9 +17,14 @@ class BH.Views.CalendarView extends BH.Views.MainView
     properties = _.extend @getI18nValues()
     html = Mustache.to_html @template, properties
     @$el.html html
+
+    date = new Date()
+    date.setDate(1)
+
     view = new BH.Views.MonthView
-      model: new Backbone.Model(month: 'March', year: '2014')
+      model: new Backbone.Model(monthDate: date)
     @$('.content').html(view.render().el)
+
     @
 
   pageTitle: ->
