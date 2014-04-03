@@ -3,11 +3,13 @@ class BH.Lib.SearchHistory
     @history = new BH.Chrome.History()
     @worker = BH.Modules.Worker.worker
 
-  fetch: (callback = ->) ->
-    options =
+  fetch: (options, callback = ->) ->
+    defaultOptions =
       text: ''
       startTime: 0
       maxResults: 0
+
+    options = _.extend defaultOptions, options
 
     chrome.storage.local.get 'lastSearchCache', (data) =>
       cache = data.lastSearchCache

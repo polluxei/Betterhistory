@@ -89,8 +89,16 @@ class BH.Router extends Backbone.Router
       filter: filter
     view.select()
     delay ->
+      # Super shitty, definitely need to move
+      options = if filter.week
+        startTime: moment(new Date(filter.week)).startOf('day').valueOf()
+        endTime: moment(new Date(filter.week)).add('days', 6).endOf('day').valueOf()
+      else
+        startTime: moment(new Date(filter.day)).startOf('day').valueOf()
+        endTime: moment(new Date(filter.day)).endOf('day').valueOf()
+
       if query != ''
-        new BH.Lib.SearchHistory(query).fetch (history, cacheDatetime = null) ->
+        new BH.Lib.SearchHistory(query).fetch options, (history, cacheDatetime = null) ->
           view.collection.reset history
           if cacheDatetime?
             view.model.set cacheDatetime: cacheDatetime
