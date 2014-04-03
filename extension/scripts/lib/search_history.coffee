@@ -13,7 +13,7 @@ class BH.Lib.SearchHistory
 
     chrome.storage.local.get 'lastSearchCache', (data) =>
       cache = data.lastSearchCache
-      if cache?.query == @query
+      if cache?.query == @query && options.startTime == 0
         callback cache.results, new Date(cache.datetime)
       else
         @history.query options, (history) =>

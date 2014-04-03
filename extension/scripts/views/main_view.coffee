@@ -24,10 +24,10 @@ class BH.Views.MainView extends Backbone.View
   onSearchTyped: (ev) ->
     term = @trimedSearchTerm()
     $el = $(ev.currentTarget)
-    if $el.data('filter')
+    if $el.data('filter') == 'true'
       params = BH.Lib.QueryParams.write JSON.parse($el.data('filter-by'))
     if ev.keyCode == 13 && term != ''
-      router.navigate("search/#{term}#{params}", true)
+      router.navigate("search/#{term}#{params || ''}", true)
 
   onSearchBlurred: ->
     @$('.search').val(@trimedSearchTerm())
