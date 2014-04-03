@@ -127,6 +127,7 @@ scripts = [
   'scripts/lib/week_history.js',
   'scripts/lib/search_history.js',
   'scripts/lib/day_history.js',
+  'scripts/lib/query_params.js',
   'scripts/chrome/sync_store.js',
   'scripts/chrome/local_store.js',
   'scripts/chrome/history.js',

@@ -9,6 +9,7 @@ class BH.Presenters.DayPresenter
       title: date.format('dddd')
       formalDate: date.format('LLL')
       weekUrl: "#weeks/#{weekId}"
+      filter: JSON.stringify(day: @day.id)
 
     _.extend properties, @day
 

@@ -7,7 +7,7 @@ class BH.Router extends Backbone.Router
     'days/:id': 'day'
     'calendar': 'calendar'
     'settings': 'settings'
-    'search/*query(/p:page)': 'search'
+    'search/*query(/p:page)(?*filterString)': 'search'
     'search': 'search'
     'today': 'today'
 
@@ -76,13 +76,17 @@ class BH.Router extends Backbone.Router
     view = @app.loadSettings()
     view.select()
 
-  search: (query = '', page) ->
+  search: (query, page, filterString) ->
+    filter = BH.Lib.QueryParams.read filterString
+
     # Load a fresh search view when the query is empty to
     # ensure a new WeekHistory instance is created because
     # this usually means a search has been canceled
     view = @app.loadSearch(expired: true if query == '' || page)
     view.page.set(page: parseInt(page, 10), {silent: true}) if page?
-    view.model.set query: decodeURIComponent(query)
+    view.model.set
+      query: decodeURIComponent(query)
+      filter: filter
     view.select()
     delay ->
       if query != ''

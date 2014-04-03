@@ -9,6 +9,7 @@ class BH.Views.WeekView extends BH.Views.MainView
     'click .delete_all': 'onDeleteAllClicked'
     'keyup .search': 'onSearchTyped'
     'blur .search': 'onSearchBlurred'
+    'click .remove_filter': 'onRemoveSearchFilterClick'
 
   initialize: ->
     @collection.bind('reset', @onHistoryLoaded, @)

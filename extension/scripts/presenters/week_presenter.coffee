@@ -5,6 +5,7 @@ class BH.Presenters.WeekPresenter extends BH.Presenters.Base
     copy =
       shortTitle: moment(@week.date).format('L')
       url: "#weeks/#{@week.id}"
+      filter: JSON.stringify(week: @week.id)
       title: @t('date_week_label', [
         moment(@week.date).format('LL')
       ])

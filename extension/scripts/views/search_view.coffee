@@ -83,7 +83,8 @@ class BH.Views.SearchView extends BH.Views.MainView
     # if we are on the first page, don't show it in the URL
     page = if @page.get('page') != 1 then "/p#{@page.get('page')}" else ""
 
-    router.navigate @urlFor('search', properties.query) + page
+    filterString = BH.Lib.QueryParams.write @model.get('filter')
+    router.navigate @urlFor('search', properties.query) + page + filterString
 
   renderVisits: ->
     @$el.addClass('loaded')
