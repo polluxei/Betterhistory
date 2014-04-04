@@ -23,7 +23,7 @@ class BH.Lib.SearchHistory
             results: history
 
           @worker 'searchSanitizer', options, (results) =>
-            setCache = (results) ->
+            setCache = (results) =>
               chrome.storage.local.set lastSearchCache:
                 results: results
                 datetime: new Date().getTime()
@@ -37,10 +37,11 @@ class BH.Lib.SearchHistory
                   startTime: startTime
                   endTime: endTime
                 results: results
-              }, (sanitizedResults) ->
+              }, (sanitizedResults) =>
                 setCache(sanitizedResults)
                 callback parse(sanitizedResults)
             else
+              setCache(results)
               callback parse(results)
 
   expireCache: ->
