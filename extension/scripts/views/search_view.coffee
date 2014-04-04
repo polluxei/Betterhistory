@@ -95,6 +95,7 @@ class BH.Views.SearchView extends BH.Views.MainView
       query: @model.get('query')
       el: $('.pagination')
       model: @page
+      filter: @model.get('filter')
     searchPaginationView.render()
 
     @renderSearchResults()
