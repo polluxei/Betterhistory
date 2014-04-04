@@ -11,11 +11,13 @@ class BH.Views.SearchView extends BH.Views.MainView
     'click .fresh_search': 'clickedFreshSearch'
     'keyup .search': 'onSearchTyped'
     'blur .search': 'onSearchBlurred'
+    'click .remove_filter': 'onRemoveFilterClick'
 
   initialize: ->
     @collection.on('reset', @onHistoryChanged, @)
     @model.on('change:query', @onQueryChanged, @)
     @model.on 'change:cacheDatetime', @onCacheChanged, @
+    @model.on 'change:filter', @onQueryChanged, @
 
     @page = new Backbone.Model(page: 1)
     @page.on('change:page', @renderSearchResults, @)
@@ -68,6 +70,11 @@ class BH.Views.SearchView extends BH.Views.MainView
 
     @renderSearchResults()
 
+  onRemoveFilterClick: (ev) ->
+    ev.preventDefault()
+    @$('.filters').hide()
+    @model.unset 'filter'
+
   clickedFreshSearch: (ev) ->
     ev.preventDefault()
     new BH.Lib.SearchHistory().expireCache()
@@ -86,9 +93,19 @@ class BH.Views.SearchView extends BH.Views.MainView
     filterString = BH.Lib.QueryParams.write @model.get('filter')
     router.navigate @urlFor('search', properties.query) + page + filterString
 
+  updateFilters: ->
+    if @model.get('filter')?.week || @model.get('filter')?.day
+      presenter = new BH.Presenters.SearchPresenter(@model.toJSON())
+      $('.filters .tag').text presenter.searchInfo().filterName
+      $('.filters').show()
+    else
+      $('.filters').hide()
+
   renderVisits: ->
     @$el.addClass('loaded')
     @$('.search').focus()
+
+    @updateFilters()
 
     searchPaginationView = new BH.Views.SearchPaginationView
       collection: @collection
