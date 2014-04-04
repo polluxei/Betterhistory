@@ -21,14 +21,27 @@ class BH.Lib.SearchHistory
           options =
             options: {text: @query}
             results: history
+
           @worker 'searchSanitizer', options, (results) =>
-            chrome.storage.local.set lastSearchCache:
-              results: results
-              datetime: new Date().getTime()
-              query: @query
-              startTime: startTime
-              endTime: endTime
-            callback parse(results)
+            setCache = (results) ->
+              chrome.storage.local.set lastSearchCache:
+                results: results
+                datetime: new Date().getTime()
+                query: @query
+                startTime: startTime
+                endTime: endTime
+
+            if startTime && endTime
+              @worker 'rangeSanitizer', {
+                options:
+                  startTime: startTime
+                  endTime: endTime
+                results: results
+              }, (sanitizedResults) ->
+                setCache(sanitizedResults)
+                callback parse(sanitizedResults)
+            else
+              callback parse(results)
 
   expireCache: ->
     chrome.storage.local.remove 'lastSearchCache'
