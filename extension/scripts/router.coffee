@@ -93,7 +93,7 @@ class BH.Router extends Backbone.Router
       options = if filter.week
         startTime: moment(new Date(filter.week)).startOf('day').valueOf()
         endTime: moment(new Date(filter.week)).add('days', 6).endOf('day').valueOf()
-      else
+      else if filter.day
         startTime: moment(new Date(filter.day)).startOf('day').valueOf()
         endTime: moment(new Date(filter.day)).endOf('day').valueOf()
 
