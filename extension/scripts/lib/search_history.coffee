@@ -10,10 +10,11 @@ class BH.Lib.SearchHistory
       maxResults: 0
 
     options = _.extend defaultOptions, options
+    {startTime, endTime} = options
 
     chrome.storage.local.get 'lastSearchCache', (data) =>
       cache = data.lastSearchCache
-      if cache?.query == @query && options.startTime == 0
+      if cache?.query == @query && cache?.startTime == startTime && cache?.endTime == endTime
         callback cache.results, new Date(cache.datetime)
       else
         @history.query options, (history) =>
@@ -25,6 +26,8 @@ class BH.Lib.SearchHistory
               results: results
               datetime: new Date().getTime()
               query: @query
+              startTime: startTime
+              endTime: endTime
             callback parse(results)
 
   expireCache: ->
