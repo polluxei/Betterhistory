@@ -15,6 +15,14 @@ class BH.Views.DayView extends BH.Views.MainView
   initialize: ->
     @collection.bind('reset', @onHistoryLoaded, @)
 
+    # on view selection, the search filter should always be seen
+    @on 'selected', =>
+      setTimeout =>
+        @$('.corner .tags').show()
+        @$('.corner .search').data('filter', 'true')
+      , 250
+    , @
+
   render: ->
     presenter = new BH.Presenters.DayPresenter(@model.toJSON())
     properties = _.extend @getI18nValues(), presenter.dayInfo()

@@ -22,6 +22,8 @@ class BH.Views.SearchView extends BH.Views.MainView
     @page = new Backbone.Model(page: 1)
     @page.on('change:page', @renderSearchResults, @)
 
+    @on 'selected', (=> @$('.filters').hide()), @
+
   render: ->
     presenter = new BH.Presenters.SearchPresenter(@model.toJSON())
     properties = _.extend(@getI18nValues(), presenter.searchInfo())
@@ -72,8 +74,11 @@ class BH.Views.SearchView extends BH.Views.MainView
 
   onRemoveFilterClick: (ev) ->
     ev.preventDefault()
-    @$('.filters').hide()
     @model.unset 'filter'
+    @$('.filters').hide()
+    presenter = new BH.Presenters.SearchPresenter(@model.toJSON())
+    properties = presenter.searchInfo()
+    router.navigate @urlFor('search', properties.query), trigger: true
 
   clickedFreshSearch: (ev) ->
     ev.preventDefault()
