@@ -19,4 +19,4 @@ class BH.Presenters.SearchPresenter extends BH.Presenters.Base
       date = moment(new Date(@search.filter.day)).format('L')
       @search.filterName = date
 
-     _.extend @search, title: joined
+    _.extend @search, title: joined

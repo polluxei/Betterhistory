@@ -74,7 +74,7 @@ class BH.Views.SearchView extends BH.Views.MainView
 
   onRemoveFilterClick: (ev) ->
     ev.preventDefault()
-    @model.unset 'filter'
+    @model.unset 'filter', silent: true
     @$('.filters').hide()
     presenter = new BH.Presenters.SearchPresenter(@model.toJSON())
     properties = presenter.searchInfo()
@@ -91,6 +91,9 @@ class BH.Views.SearchView extends BH.Views.MainView
     @$el.removeClass('loaded')
     @$('.title').text properties.title
     @$('.content').html('')
+
+    # Filters make for much faster searches...
+    @$('.spinner').text 'Searching deep...' unless properties.filterName
 
     # if we are on the first page, don't show it in the URL
     page = if @page.get('page') != 1 then "/p#{@page.get('page')}" else ""
