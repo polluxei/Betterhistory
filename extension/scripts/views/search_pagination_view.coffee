@@ -8,6 +8,7 @@ class BH.Views.SearchPaginationView extends BH.Views.MainView
   initialize: ->
     @chromeAPI = chrome
     @query = @options.query
+    @filter = @options.filter
     @pages = BH.Lib.Pagination.calculatePages(@collection.length)
 
     @collection.on 'remove', @onVisitRemove, @
@@ -26,7 +27,8 @@ class BH.Views.SearchPaginationView extends BH.Views.MainView
       paginationClass: if @pages == 1 then 'hidden' else ''
 
     properties.pages = for i in [1..@pages] by 1
-      url: "#{@urlFor('search', @query)}/p#{i}"
+      filter = BH.Lib.QueryParams.write @filter
+      url: "#{@urlFor('search', @query)}/p#{i}#{filter}"
       className: if i == @model.get('page') then 'selected' else ''
       number: i
 

@@ -50,3 +50,4 @@ describe 'BH.Presenters.WeekPresenter', ->
         id: '10-8-12'
         url: '#weeks/10-8-12'
         date: @date
+        filter: '{"week":"10-8-12"}'

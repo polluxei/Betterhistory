@@ -12,4 +12,11 @@ class BH.Presenters.SearchPresenter extends BH.Presenters.Base
       if i != @terms.length - 1
         joined += " #{@t('and')} "
 
-     _.extend @search, title: joined
+    if @search.filter?.week
+      date = moment(new Date(@search.filter.week)).format('L')
+      @search.filterName = "Week of #{date}"
+    else if @search.filter?.day
+      date = moment(new Date(@search.filter.day)).format('L')
+      @search.filterName = date
+
+    _.extend @search, title: joined

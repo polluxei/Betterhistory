@@ -14,3 +14,4 @@ describe 'BH.Presenters.DayPresenter', ->
         weekUrl: '#weeks/10-8-12'
         id: '10-11-12'
         date: @date
+        filter : '{"day":"10-11-12"}'

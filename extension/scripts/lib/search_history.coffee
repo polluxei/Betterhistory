@@ -3,27 +3,46 @@ class BH.Lib.SearchHistory
     @history = new BH.Chrome.History()
     @worker = BH.Modules.Worker.worker
 
-  fetch: (callback = ->) ->
-    options =
+  fetch: (options, callback = ->) ->
+    defaultOptions =
       text: ''
       startTime: 0
       maxResults: 0
 
+    options = _.extend defaultOptions, options
+    {startTime, endTime} = options
+
     chrome.storage.local.get 'lastSearchCache', (data) =>
       cache = data.lastSearchCache
-      if cache?.query == @query
+      if cache?.query == @query && cache?.startTime == startTime && cache?.endTime == endTime
         callback cache.results, new Date(cache.datetime)
       else
         @history.query options, (history) =>
           options =
             options: {text: @query}
             results: history
+
           @worker 'searchSanitizer', options, (results) =>
-            chrome.storage.local.set lastSearchCache:
-              results: results
-              datetime: new Date().getTime()
-              query: @query
-            callback parse(results)
+            setCache = (results) =>
+              chrome.storage.local.set lastSearchCache:
+                results: results
+                datetime: new Date().getTime()
+                query: @query
+                startTime: startTime
+                endTime: endTime
+
+            if startTime && endTime
+              @worker 'rangeSanitizer', {
+                options:
+                  startTime: startTime
+                  endTime: endTime
+                results: results
+              }, (sanitizedResults) =>
+                setCache(sanitizedResults)
+                callback parse(sanitizedResults)
+            else
+              setCache(results)
+              callback parse(results)
 
   expireCache: ->
     chrome.storage.local.remove 'lastSearchCache'

@@ -9,9 +9,18 @@ class BH.Views.WeekView extends BH.Views.MainView
     'click .delete_all': 'onDeleteAllClicked'
     'keyup .search': 'onSearchTyped'
     'blur .search': 'onSearchBlurred'
+    'click .remove_filter': 'onRemoveSearchFilterClick'
 
   initialize: ->
     @collection.bind('reset', @onHistoryLoaded, @)
+
+    # on view selection, the search filter should always be seen
+    @on 'selected', =>
+      setTimeout =>
+        @$('.corner .tags').show()
+        @$('.corner .search').data('filter', 'true')
+      , 250
+    , @
 
   render: ->
     presenter = new BH.Presenters.WeekPresenter(@model.toJSON())
