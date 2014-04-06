@@ -14,7 +14,7 @@ PROD_API_HOST=$(shell grep -E '"prod_api_host":.*?[^\\]"' package.json | sed 's/
 build:
 	rm -fr build
 	mkdir -p build
-	coffee -c --map extension/scripts/
+	node_modules/.bin/coffee -c --map extension/scripts/
 	cp -r extension/* build
 	cake concat:templates
 	cp node_modules/chrome-bootstrap/chrome-bootstrap.css build/styles/
@@ -43,7 +43,7 @@ build:
 	sed -i '' 's/\$$ENV\$$/dev/g' build/scripts/initialize_background.js
 
 release: build
-	coffee -c build/scripts/
+	node_modules/.bin/coffee -c build/scripts/
 	cp extension/scripts/frameworks/analytics.js build/scripts/frameworks/
 	cp extension/manifest.json build/manifest.json
 	sed -i '' 's/\$$VERSION\$$/${VERSION}/g' build/manifest.json
