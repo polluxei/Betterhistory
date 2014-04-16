@@ -589,14 +589,17 @@ body.new_tags .menu .tags.pulse .new {
 }
 .drag_handle {
   z-index: 1;
-  width: 10px;
+  width: 12px;
   height: 41px;
   position: absolute;
-  top: 2px;
+  top: 4px;
   display: none;
 }
+.grouped_sites .drag_handle {
+  top: 5px;
+}
 .search_view .drag_handle {
-  height: 95%;
+  height: 100%;
   top: 2px;
 }
 .search_view .filters {
@@ -612,8 +615,10 @@ body.new_tags .menu .tags.pulse .new {
 }
 .visit.dragging .drag_handle {
   display: block;
+  top: 2px;
+  height: 92%;
 }
-.visit.dragging .drag_handle .line {
+.visit.dragging .drag_handle .draggable_bumps {
   display: none;
 }
 .visit.dragging .site {
@@ -644,11 +649,25 @@ body.new_tags .menu .tags.pulse .new {
 .visit.dragging a.delete {
   display: none;
 }
-.line {
-  width: 1px;
+.draggable_bumps {
+  width: 8px;
   height: 100%;
-  float: left;
-  border-left: 1px solid #CCC;
+  background-image: linear-gradient(to bottom, #c1c1c1 50%, rgba(255, 255, 255, 0) 0%);
+  background-position: center;
+  background-size: 100% 17%;
+  background-repeat: repeat-y;
+}
+
+.search_view .draggable_bumps {
+  background-image: linear-gradient(to bottom, #c1c1c1 50%, rgba(255, 255, 255, 0) 0%);
+  background-size: 100% 14%;
+  height: 88%;
+}
+.bump_divider {
+  width: 13%;
+  height: 100%;
+  margin: 0 auto;
+  background-color: #F0F6FE;
 }
 .week_view .days .title {
   margin:0 0 3px;
