@@ -99,7 +99,7 @@ body {
   margin-__MSG_@@bidi_start_edge__: 15px;
 }
 .drag_handle {
-  __MSG_@@bidi_start_edge__: 0;
+  __MSG_@@bidi_start_edge__: 2px;
 }
 .visit.dragging .drag_handle {
   border-__MSG_@@bidi_start_edge__: 5px solid #8AAAED;

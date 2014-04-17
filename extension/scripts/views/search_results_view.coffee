@@ -45,4 +45,7 @@ class BH.Views.SearchResultsView extends Backbone.View
       @collection.remove @collection.where(url: url)
 
   getI18nValues: ->
-    @t ['no_visits_found']
+    @t [
+      'no_visits_found'
+      'prompt_delete_button'
+    ]

@@ -61,6 +61,7 @@ class BH.Views.DragAndTagView extends Backbone.View
       $el = $(ev.currentTarget)
       $el.removeClass 'dragging'
       $('.navigation').removeClass('dropzone')
+      $('.drag_ghost').remove()
 
     $('.visit').each (i, visit) ->
       visit.addEventListener('dragstart', handleDragStart, false)
