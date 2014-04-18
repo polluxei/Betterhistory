@@ -10,20 +10,27 @@ class BH.Views.DayView extends BH.Views.MainView
     'click .back_to_week': 'onBackToWeekClicked'
     'keyup .search': 'onSearchTyped'
     'blur .search': 'onSearchBlurred'
+    'click .remove_filter': 'onRemoveSearchFilterClick'
 
   initialize: ->
-    @chromeAPI = chrome
-    @history = @options.history
-    @history.bind('change', @onDayHistoryLoaded, @)
+    @collection.bind('reset', @onHistoryLoaded, @)
+
+    # on view selection, the search filter should always be seen
+    @on 'selected', =>
+      setTimeout =>
+        @$('.corner .tags').show()
+        @$('.corner .search').data('filter', 'true')
+      , 250
+    , @
 
   render: ->
-    presenter = new BH.Presenters.DayPresenter(@model)
-    properties = _.extend @getI18nValues(), presenter.day()
+    presenter = new BH.Presenters.DayPresenter(@model.toJSON())
+    properties = _.extend @getI18nValues(), presenter.dayInfo()
     html = Mustache.to_html(@template, properties)
     @$el.html html
     @
 
-  onDayHistoryLoaded: ->
+  onHistoryLoaded: ->
     @renderHistory()
     @assignTabIndices('.interval > .visits > .visit > a:first-child')
     @updateDeleteButton()
@@ -35,19 +42,22 @@ class BH.Views.DayView extends BH.Views.MainView
     @$('.content').html('')
 
   pageTitle: ->
-    presenter = new BH.Presenters.DayPresenter(@model)
-    presenter.day().formalDate
+    presenter = new BH.Presenters.DayPresenter(@model.toJSON())
+    presenter.dayInfo().formalDate
 
   renderHistory: ->
     @dayResultsView = new BH.Views.DayResultsView
-      model: @history
+      collection: @collection
     @$('.content').html @dayResultsView.render().el
     @dayResultsView.insertTags()
     @dayResultsView.attachDragging()
 
+    @$('.spinner').hide()
+    @$('.back_to_week').css opacity: 1
+
   updateDeleteButton: ->
     deleteButton = @$('button')
-    if @history.isEmpty()
+    if @collection.length == 0
       deleteButton.attr('disabled', 'disabled')
     else
       deleteButton.removeAttr('disabled')
@@ -56,9 +66,9 @@ class BH.Views.DayView extends BH.Views.MainView
     router.navigate(BH.Lib.Url.week(@options.weekModel.id))
 
   promptToDeleteAllVisits: ->
-    presenter = new BH.Presenters.DayPresenter(@model)
+    presenter = new BH.Presenters.DayPresenter(@model.toJSON())
 
-    promptMessage = @t('confirm_delete_all_visits', [presenter.day().formalDate])
+    promptMessage = @t('confirm_delete_all_visits', [presenter.dayInfo().formalDate])
     @promptView = BH.Views.CreatePrompt(promptMessage)
     @promptView.open()
     @promptView.model.on('change', @promptAction, @)
@@ -66,10 +76,8 @@ class BH.Views.DayView extends BH.Views.MainView
   promptAction: (prompt) ->
     if prompt.get('action')
       analyticsTracker.dayVisitsDeletion()
-      @history.destroy()
-      @history.fetch
-        success: =>
-          @promptView.close()
+      new BH.Lib.DayHistory(@model.get('date')).destroy ->
+        window.location.reload()
     else
       @promptView.close()
 

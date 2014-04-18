@@ -75,8 +75,7 @@ describe 'BH.Presenters.TagsPresenter', ->
 
   describe '#tagsSummary', ->
     it 'returns all the tags with a summary of their sites', ->
-      expect(@presenter.tagsSummary()).toEqual
-        tags: [{
+      expect(@presenter.tagsSummary()).toEqual [{
           name: 'recipes'
           count: 11
           sites: [@site6, @site3, @site5, @site2, @site1, @site4, @site10, @site11, @site12, @site13]
@@ -88,8 +87,7 @@ describe 'BH.Presenters.TagsPresenter', ->
 
     it 'returns all the tags with a summary of their sites orders by the tag order', ->
       @presenter.collection.tagOrder = ['cooking', 'recipes']
-      expect(@presenter.tagsSummary()).toEqual
-        tags: [{
+      expect(@presenter.tagsSummary()).toEqual [{
           name: 'cooking'
           count: 3
           sites: [@site9, @site7, @site8]
@@ -113,7 +111,7 @@ describe 'BH.Presenters.TagsPresenter', ->
 
     it 'returns all the tags with the currently tagged sites marked', ->
       results = @presenter.selectedAndUnselectedTagsforSites(@sites)
-      expect(results).toEqual tags: [
+      expect(results).toEqual [
         {
           name: 'recipes'
           tagged: false

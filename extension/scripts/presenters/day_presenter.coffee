@@ -1,17 +1,17 @@
 class BH.Presenters.DayPresenter
-  constructor: (model) ->
-    @model = model
+  constructor: (@day) ->
 
-  day: ->
-    date = @model.get('date')
+  dayInfo: ->
+    date = moment(@day.date)
     weekId = startingWeekDate(date).id()
 
     properties =
       title: date.format('dddd')
       formalDate: date.format('LLL')
       weekUrl: "#weeks/#{weekId}"
+      filter: JSON.stringify(day: @day.id)
 
-    _.extend properties, @model.toJSON()
+    _.extend properties, @day
 
 startingWeekDate = (date) ->
   moment(date).past(settings.get('startingWeekDay'), 0)

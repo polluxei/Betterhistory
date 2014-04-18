@@ -9,15 +9,22 @@ class BH.Views.WeekView extends BH.Views.MainView
     'click .delete_all': 'onDeleteAllClicked'
     'keyup .search': 'onSearchTyped'
     'blur .search': 'onSearchBlurred'
+    'click .remove_filter': 'onRemoveSearchFilterClick'
 
   initialize: ->
-    @chromeAPI = chrome
-    @history = @options.history
-    @history.bind('change', @onHistoryLoaded, @)
+    @collection.bind('reset', @onHistoryLoaded, @)
+
+    # on view selection, the search filter should always be seen
+    @on 'selected', =>
+      setTimeout =>
+        @$('.corner .tags').show()
+        @$('.corner .search').data('filter', 'true')
+      , 250
+    , @
 
   render: ->
-    presenter = new BH.Presenters.WeekPresenter(@model)
-    properties = _.extend @getI18nValues(), presenter.week()
+    presenter = new BH.Presenters.WeekPresenter(@model.toJSON())
+    properties = _.extend @getI18nValues(), presenter.inflatedWeek()
     html = Mustache.to_html @template, properties
     @$el.html html
     @
@@ -29,11 +36,11 @@ class BH.Views.WeekView extends BH.Views.MainView
     @promptToDeleteAllVisits()
 
   pageTitle: ->
-    presenter = new BH.Presenters.WeekPresenter(@model)
-    presenter.week().title
+    presenter = new BH.Presenters.WeekPresenter(@model.toJSON())
+    presenter.inflatedWeek().title
 
   renderHistory: ->
-    presenter = new BH.Presenters.WeekHistoryPresenter(@history)
+    presenter = new BH.Presenters.WeekHistoryPresenter(@collection.toJSON())
     history = presenter.history()
     for day in history.days
       container = @$("[data-day=#{day.day}]")
@@ -45,8 +52,8 @@ class BH.Views.WeekView extends BH.Views.MainView
     @$el.addClass('loaded')
 
   promptToDeleteAllVisits: ->
-    presenter = new BH.Presenters.WeekHistoryPresenter(@history)
-    promptMessage = @t('confirm_delete_all_visits', [presenter.history().title])
+    presenter = new BH.Presenters.WeekPresenter(@model.toJSON())
+    promptMessage = @t('confirm_delete_all_visits', [presenter.inflatedWeek().title])
     @promptView = BH.Views.CreatePrompt(promptMessage)
     @promptView.open()
     @promptView.model.on('change', @promptAction, @)
@@ -54,9 +61,9 @@ class BH.Views.WeekView extends BH.Views.MainView
   promptAction: (prompt) ->
     if prompt.get('action')
       analyticsTracker.weekVisitsDeletion()
-      @history.destroy()
-      @promptView.close()
-      @history.fetch()
+      new BH.Lib.WeekHistory(@model.get('date')).destroy =>
+        @promptView.close()
+        window.location.reload()
     else
       @promptView.close()
 

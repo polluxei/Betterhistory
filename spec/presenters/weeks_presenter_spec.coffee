@@ -1,8 +1,8 @@
 describe 'BH.Presenters.WeeksPresenter', ->
   beforeEach ->
-    collection = new BH.Collections.Weeks [
-      {date: moment('Oct 12, 2010')},
-      {date: moment('Oct 19, 2010')}
+    collection = new Backbone.Collection [
+      {id: '10-12-10', date: moment('Oct 12, 2010')},
+      {id: '10-19-10', date: moment('Oct 19, 2010')}
     ]
     @presenter = new BH.Presenters.WeeksPresenter(collection)
 

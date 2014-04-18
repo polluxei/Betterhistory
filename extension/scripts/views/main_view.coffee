@@ -16,10 +16,18 @@ class BH.Views.MainView extends Backbone.View
     @trigger('selected')
     @
 
+  onRemoveSearchFilterClick: (ev) ->
+    ev.preventDefault()
+    @$('.corner .tags').hide()
+    @$('.corner input').data('filter', false)
+
   onSearchTyped: (ev) ->
     term = @trimedSearchTerm()
+    $el = $(ev.currentTarget)
+    if $el.data('filter') == 'true'
+      params = BH.Lib.QueryParams.write JSON.parse($el.data('filter-by'))
     if ev.keyCode == 13 && term != ''
-      router.navigate('search/' + term, true)
+      router.navigate("search/#{term}#{params || ''}", true)
 
   onSearchBlurred: ->
     @$('.search').val(@trimedSearchTerm())

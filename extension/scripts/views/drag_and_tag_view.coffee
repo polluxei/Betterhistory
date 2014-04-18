@@ -14,46 +14,18 @@ class BH.Views.DragAndTagView extends Backbone.View
       $('.navigation').addClass('dropzone')
 
       data = sites: []
-      if $el.hasClass('searched')
-        count = 1
-        history = @model.get('history')
-        visit = history.get($el.data('id'))
-        data.sites.push
-          url: visit.get('url')
-          title: visit.get('title')
-          id: visit.get('id')
-          datetime: new Date().getTime()
-      else if $el.hasClass('tagged')
-        count = 1
-        sites = @model.get('sites')
-        visit = _.where(sites, url: $el.data('id'))
-        data.sites.push
-          url: visit[0].url
-          title: visit[0].title
-          id: visit[0].url
-          datetime: new Date().getTime()
-      else
-        intervalId = $el.parents('.interval').data('id')
-        interval = @model.get('history').get(intervalId)
-
-        if $el.find('ol.visits').length > 0
-          count = $el.find('.visits .visit').length
-          $el.find('ol.visits .visit').each ->
-            visit = interval.findVisitById($(this).data('id'))
-            data.sites.push
-              url: visit.get('url')
-              title: visit.get('title')
-              id: visit.get('id')
-              datetime: new Date().getTime()
-        else
-          visit = interval.findVisitById($el.data('id'))
-          count = 1
+      if $el.find('ol.visits').length > 0
+        $el.find('ol.visits .visit').each ->
           data.sites.push
-            url: visit.get('url')
-            title: visit.get('title')
-            id: visit.get('id')
+            url: $(this).data('url')
+            title: $(this).data('title')
             datetime: new Date().getTime()
-
+      else
+        data.sites.push
+          url: $el.data('url')
+          title: $el.data('title')
+          datetime: new Date().getTime()
+          partOfGroup: true if $el.parents('.grouped_sites').length > 0
 
       @tracker.siteTagDrag()
 
@@ -61,7 +33,7 @@ class BH.Views.DragAndTagView extends Backbone.View
         summaryEl = document.createElement 'div'
         summaryEl.className = 'drag_ghost'
         $('body').append(summaryEl)
-      summaryEl.innerHTML = @t('number_of_visits', [count])
+      summaryEl.innerHTML = @t('number_of_visits', [data.sites.length])
 
       ev.dataTransfer.setDragImage summaryEl, -15, -10
       ev.dataTransfer.setData 'application/json', JSON.stringify(data)
@@ -72,13 +44,24 @@ class BH.Views.DragAndTagView extends Backbone.View
         collection: collection
         draggedSites: data.sites
         el: '.available_tags'
-        excludedTag: (@model.get('name') if @excludeTag)
+
+      availableTagsView.on 'site:untagged site:tagged', (site) =>
+        if $el.find('ol.visits').length > 0
+          $visit = $el.find("[data-url='#{site.url}']")
+        @trigger 'site:change', site, $visit || $el
+
+      availableTagsView.on 'sites:untagged sites:tagged', (site) =>
+        if $el.parents('.grouped_sites').length > 0
+          $visit = $el.parents('.grouped_sites')
+        @trigger 'sites:change', site, $visit || $el
+
       collection.fetch()
 
     handleDragEnd = (ev) =>
       $el = $(ev.currentTarget)
       $el.removeClass 'dragging'
       $('.navigation').removeClass('dropzone')
+      $('.drag_ghost').remove()
 
     $('.visit').each (i, visit) ->
       visit.addEventListener('dragstart', handleDragStart, false)

@@ -3,14 +3,15 @@ describe 'BH.Presenters.DayPresenter', ->
     global.settings = new BH.Models.Settings
       startingWeekDay: 'monday'
     @date = moment(new Date('October 11, 2012'))
-    model = new BH.Models.Day(date: @date)
-    @presenter = new BH.Presenters.DayPresenter(model)
+    day = date: @date, id: '10-11-12'
+    @presenter = new BH.Presenters.DayPresenter(day)
 
-  describe '#day', ->
+  describe '#dayInfo', ->
     it 'returns the properties needed for a view template', ->
-      expect(@presenter.day()).toEqual
+      expect(@presenter.dayInfo()).toEqual
         title: '[translated thursday]'
         formalDate: 'translated formal_date'
         weekUrl: '#weeks/10-8-12'
         id: '10-11-12'
         date: @date
+        filter : '{"day":"10-11-12"}'

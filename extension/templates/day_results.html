@@ -10,14 +10,10 @@
       <ol class='visits highlightable editable'>
         {{#visits}}
           {{#isGrouped}}
-            <li class='visit grouped_sites' draggable='true' data-id='{{id}}'>
+            <li class='visit grouped_sites' draggable='true' data-domain='{{domain}}'>
               {{^readOnly}}
                 <div class='drag_handle'>
-                  <div class='line'></div>
-                  <div class='line'></div>
-                  <div class='line'></div>
-                  <div class='line'></div>
-                  <div class='line'></div>
+                  <div class='draggable_bumps'><div class='bump_divider'></div></div>
                 </div>
               {{/readOnly}}
               <a href='{{url}}' class='sites'>
@@ -43,14 +39,10 @@
               <a class='delete_grouped_visit delete' href='#' title='{{i18n_prompt_delete_button}}'>{{i18n_prompt_delete_button}}</a>
               <ol class='visits highlightable'>
                 {{#groupedVisits}}
-                  <li class='visit' draggable='true' data-id='{{id}}'>
+                  <li class='visit' draggable='true' data-url='{{url}}' data-title='{{title}}'>
                     {{^readOnly}}
                       <div class='drag_handle'>
-                        <div class='line'></div>
-                        <div class='line'></div>
-                        <div class='line'></div>
-                        <div class='line'></div>
-                        <div class='line'></div>
+                        <div class='draggable_bumps'><div class='bump_divider'></div></div>
                       </div>
                     {{/readOnly}}
                     <a href='{{url}}' class='site'>
@@ -64,21 +56,17 @@
                       </dl>
                     </a>
                     <a class='search_domain action' href='#search/{{host}}'>{{i18n_search_by_domain}}</a>
-                    <a class='delete_visit delete' href='#' title='{{i18n_prompt_delete_button}}'>{{i18n_prompt_delete_button}}</a>
+                    <a class='delete_visit delete' href='#' data-url='{{url}}' title='{{i18n_prompt_delete_button}}'>{{i18n_prompt_delete_button}}</a>
                   </li>
                 {{/groupedVisits}}
               </ol>
             </li>
           {{/isGrouped}}
           {{^isGrouped}}
-            <li class='visit' draggable='true' data-id='{{id}}'>
+            <li class='visit' draggable='true' data-url='{{url}}' data-title='{{title}}'>
               {{^readOnly}}
                 <div class='drag_handle'>
-                  <div class='line'></div>
-                  <div class='line'></div>
-                  <div class='line'></div>
-                  <div class='line'></div>
-                  <div class='line'></div>
+                  <div class='draggable_bumps'><div class='bump_divider'></div></div>
                 </div>
               {{/readOnly}}
               <a href='{{url}}' class='site'>
@@ -92,7 +80,7 @@
                 </dl>
               </a>
               <a class='search_domain action' href='#search/{{host}}'>{{i18n_search_by_domain}}</a>
-              <a class='delete_visit delete' href='#' title='{{i18n_prompt_delete_button}}'>{{i18n_prompt_delete_button}}</a>
+              <a class='delete_visit delete' href='#' data-url='{{url}}' title='{{i18n_prompt_delete_button}}'>{{i18n_prompt_delete_button}}</a>
             </li>
           {{/isGrouped}}
         {{/visits}}

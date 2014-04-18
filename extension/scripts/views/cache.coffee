@@ -46,45 +46,42 @@ class BH.Views.Cache
 
     @cache.tags[id]
 
+  calendarView: ->
+    return @cache.calendar if @cache.calendar
+
+    @cache.calendar = new BH.Views.CalendarView
+
+    @insert @cache.calendar.render().el
+    @cache.calendar
+
   weekView: (id) ->
-    if !@cache.weeks[id]
-      week = new BH.Models.Week(
-        {date: moment(new Date(id))},
-        {settings: @settings}
-      )
-      history = new BH.Models.WeekHistory(week.toHistory())
+    return @cache.weeks[id] if @cache.weeks[id]
 
-      @cache.weeks[id] = new BH.Views.WeekView
-        model: week
-        history: history
+    @cache.weeks[id] = new BH.Views.WeekView
+      model: new Backbone.Model(id: id, date: new Date(id))
+      collection: new Backbone.Collection()
 
-      @insert @cache.weeks[id].render().el
-
+    @insert @cache.weeks[id].render().el
     @cache.weeks[id]
 
   dayView: (id) ->
-    if !@cache.days[id]
-      day =     new BH.Models.Day {date: moment(new Date(id))}, settings: @settings
-      history = new BH.Models.DayHistory day.toHistory(), settings: @settings
+    return @cache.days[id] if @cache.days[id]
 
-      @cache.days[id] = new BH.Views.DayView
-        model: day
-        history: history
+    @cache.days[id] = new BH.Views.DayView
+      model: new Backbone.Model(id: id, date: new Date(id))
+      collection: new Backbone.Collection()
 
-      @insert @cache.days[id].render().el
-
+    @insert @cache.days[id].render().el
     @cache.days[id]
 
   searchView: (options)->
-    if !@cache.search || options.expired
-      search =  new BH.Models.Search()
-      history = new BH.Models.SearchHistory(search.toHistory())
+    return @cache.search if @cache.search || options.expired == true
 
-      @cache.search = new BH.Views.SearchView
-        model: search
-        history: history
+    @cache.search = new BH.Views.SearchView
+      model: new Backbone.Model()
+      collection: new Backbone.Collection()
 
-      @insert @cache.search.render().el
+    @insert @cache.search.render().el
     @cache.search
 
   settingsView: ->

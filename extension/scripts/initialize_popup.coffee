@@ -2,11 +2,13 @@ window.apiHost = '$API_HOST$'
 window.siteHost = '$SITE_HOST$'
 window.env = '$ENV$'
 
-errorTracker = new BH.Trackers.ErrorTracker(Honeybadger)
+if env == 'prod'
+  errorTracker = new BH.Trackers.ErrorTracker(Honeybadger)
+
 analyticsTracker = new BH.Trackers.AnalyticsTracker()
 
 load = ->
-  window.syncStore = new BH.Lib.SyncStore
+  window.syncStore = new BH.Chrome.SyncStore
     chrome: chrome
     tracker: analyticsTracker
 
@@ -27,10 +29,10 @@ load = ->
   window.state = new BH.Models.State({}, settings: settings)
 
   window.persistence = new BH.Init.Persistence
-    localStore: new BH.Lib.LocalStore
+    localStore: new BH.Chrome.LocalStore
       chrome: chrome
       tracker: analyticsTracker
-    syncStore: new BH.Lib.SyncStore
+    syncStore: new BH.Chrome.SyncStore
       chrome: chrome
       tracker: analyticsTracker
     ajax: $.ajax
@@ -43,8 +45,7 @@ load = ->
       title: tab.title
       url: tab.url
 
-    site = new BH.Models.Site attrs,
-      chrome: chrome
+    site = new BH.Models.Site attrs
 
     tags = new BH.Collections.Tags []
 

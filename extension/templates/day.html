@@ -4,9 +4,18 @@
     <span class='sub_title'>{{formalDate}}</span>
   </h1>
   <div class='corner'>
-    <input class='search' placeholder='{{i18n_search_input_placeholder_text}}' tabindex='1' type='text' />
+    <div class='fake_input'>
+      <ul class='tags'>
+        <li>
+          <a href='#' class='tag'>Day</a>
+          <a href='#' class='delete remove_filter'></a>
+        </li>
+      </ul>
+      <input class='search' placeholder='{{i18n_search_input_placeholder_text}}' tabindex='1' type='text' data-filter-by='{{filter}}' data-filter='true' />
+    </div>
   </div>
   <div class='controls'>
+    <div class='spinner'></div>
     <a class='text back_to_week' href='{{weekUrl}}'>
       {{{i18n_back_to_week_link}}}
     </a>

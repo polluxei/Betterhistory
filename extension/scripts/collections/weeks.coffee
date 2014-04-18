@@ -1,11 +1,9 @@
 class BH.Collections.Weeks extends Backbone.Collection
-  model: BH.Models.Week
-
-  initialize: (attrs, options) ->
-    @chromeAPI = chrome
-
   reload: (startingDay) ->
     @reset()
-    for i in _.range(10)
-      @add date: moment(new Date()).past(startingDay, i)
+    for i in _.range(7)
+      date = moment(new Date()).past(startingDay, i)
+      @add
+        id: date.format("M-D-YY")
+        date: date
     @trigger 'reloaded'

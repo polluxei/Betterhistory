@@ -1,0 +1,29 @@
+<h3>{{month}}</h3>
+<a href='#' class='previous_month'>&larr; {{previousMonth}}</a>
+<a href='#' class='next_month'>{{nextMonth}} &rarr;</a>
+<table class='calendar'>
+  <thead>
+    <tr>
+      <th>{{i18n_sunday_short}}</th>
+      <th>{{i18n_monday_short}}</th>
+      <th>{{i18n_tuesday_short}}</th>
+      <th>{{i18n_wednesday_short}}</th>
+      <th>{{i18n_thursday_short}}</th>
+      <th>{{i18n_friday_short}}</th>
+      <th>{{i18n_saturday_short}}</th>
+    </th>
+  <tbody>
+    {{#weeks}}
+      <tr class='week'>
+        {{#days}}
+        <td class='{{#today}}today{{/today}} {{#inMonth}}in_month{{/inMonth}}' data-day='{{day}}' data-week-id='{{weekId}}'>
+            <a href='#' class='date'>{{number}}</a>
+          </td>
+        {{/days}}
+      </tr>
+    {{/weeks}}
+  </tbody>
+</table>
+<div class='bottom'>
+  <span class='year'>{{year}}</span>
+</div>

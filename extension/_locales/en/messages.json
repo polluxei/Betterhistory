@@ -862,6 +862,10 @@
     "message": "&larr;",
     "description": "ascii arrow"
   },
+  "forward_arrow": {
+    "message": "&rarr;",
+    "description": "ascii arrow"
+  },
 
   "search_by_domain": {
     "message": "More from site",
@@ -1381,5 +1385,33 @@
   "devices_title": {
     "message": "Devices",
     "description": "title for devices sessions page"
+  },
+  "calendar_link": {
+    "message": "Calendar..",
+    "description": "link to view all months in main nav"
+  },
+  "calendar_title": {
+    "message": "Calendar"
+  },
+  "sunday_short": {
+    "message": "Sun"
+  },
+  "monday_short": {
+    "message": "Mon"
+  },
+  "tuesday_short": {
+    "message": "Tue"
+  },
+  "wednesday_short": {
+    "message": "Wed"
+  },
+  "thursday_short": {
+    "message": "Thur"
+  },
+  "friday_short": {
+    "message": "Fri"
+  },
+  "saturday_short": {
+    "message": "Sat"
   }
 }

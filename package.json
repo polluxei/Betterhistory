@@ -1,7 +1,7 @@
 {
   "name": "better-history",
   "description": "Better History extension for Chrome",
-  "version": "2.3.2",
+  "version": "2.5.2",
   "author": "Roy Kolak <roy.kolak@gmail.com>",
   "scripts": {
     "start": "node_modules/.bin/coffee dev.coffee",
@@ -24,6 +24,7 @@
   "devDependencies": {
     "chrome-bootstrap": "git://github.com/roykolak/chrome-bootstrap.git#v1.2.1",
     "better-history-sites-hasher": "git://github.com/roykolak/better-history-sites-hasher.git#v1.0.3",
+    "less": "1.7.0",
     "coffee-script": "1.6.1",
     "jasmine-node": "1.10.1",
     "glob": "3.1.12",

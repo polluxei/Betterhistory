@@ -6,8 +6,9 @@ class BH.Router extends Backbone.Router
     'devices': 'devices'
     'weeks/:id': 'week'
     'days/:id': 'day'
+    'calendar': 'calendar'
     'settings': 'settings'
-    'search/*query(/p:page)': 'search'
+    'search/*query(/p:page)(?*filterString)': 'search'
     'search': 'search'
     'today': 'today'
 
@@ -18,7 +19,7 @@ class BH.Router extends Backbone.Router
 
     @app = new BH.Views.AppView
       el: $('.app')
-      collection: new BH.Collections.Weeks(null, {settings: settings})
+      collection: new BH.Collections.Weeks()
       settings: settings
       state: @state
     @app.render()
@@ -37,7 +38,8 @@ class BH.Router extends Backbone.Router
   tags: ->
     view = @app.loadTags()
     view.select()
-    delay -> view.collection.fetch()
+    delay ->
+      view.collection.fetch()
 
   devices: ->
     view = @app.loadDevices()
@@ -47,37 +49,67 @@ class BH.Router extends Backbone.Router
   tag: (id) ->
     view = @app.loadTag(id)
     view.select()
-    delay -> view.model.fetch()
+    delay ->
+      view.model.fetch()
+
+  calendar: ->
+    view = @app.loadCalendar()
+    view.select()
 
   week: (id) ->
     view = @app.loadWeek(id)
     view.select()
-    delay -> view.history.fetch()
+    delay ->
+      new BH.Lib.WeekHistory(new Date(id)).fetch (history) ->
+        view.collection.reset(history)
 
   day: (id) ->
     view = @app.loadDay id
-    view.history.fetch()
     view.select()
+    delay ->
+      new BH.Lib.DayHistory(new Date(id)).fetch (history) ->
+        view.collection.reset history
 
   today: ->
-    view = @app.loadDay moment(new Date()).id()
-    view.history.fetch()
+    id = moment(new Date()).id()
+    view = @app.loadDay id
     view.select()
+    delay ->
+      new BH.Lib.DayHistory(new Date(id)).fetch (history) ->
+        view.collection.reset history
 
   settings: ->
     view = @app.loadSettings()
     view.select()
 
-  search: (query = '', page) ->
+  search: (query, page, filterString) ->
+    filter = BH.Lib.QueryParams.read filterString
+
     # Load a fresh search view when the query is empty to
     # ensure a new WeekHistory instance is created because
     # this usually means a search has been canceled
     view = @app.loadSearch(expired: true if query == '' || page)
     view.page.set(page: parseInt(page, 10), {silent: true}) if page?
-    view.model.set query: decodeURIComponent(query)
+    view.model.set
+      query: decodeURIComponent(query)
+      filter: filter
     view.select()
     delay ->
-      view.history.fetch() if view.model.validQuery()
+      # Super shitty, definitely need to move
+      options = if filter.week
+        startTime: moment(new Date(filter.week)).startOf('day').valueOf()
+        endTime: moment(new Date(filter.week)).add('days', 6).endOf('day').valueOf()
+      else if filter.day
+        startTime: moment(new Date(filter.day)).startOf('day').valueOf()
+        endTime: moment(new Date(filter.day)).endOf('day').valueOf()
+
+      if query != ''
+        new BH.Lib.SearchHistory(query).fetch options, (history, cacheDatetime = null) ->
+          view.collection.reset history
+          if cacheDatetime?
+            view.model.set cacheDatetime: cacheDatetime
+          else
+            view.model.unset 'cacheDatetime'
 
 delay = (callback) ->
   setTimeout (-> callback()), 250

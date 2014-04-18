@@ -6,13 +6,12 @@ class BH.Views.AvailableTagsView extends Backbone.View
   initialize: ->
     @tracker = analyticsTracker
     @draggedSites = @options.draggedSites
-    @excludedTag = @options.excludedTag
     @collection.on 'reset', @render, @
 
   render: ->
     presenter = new BH.Presenters.TagsPresenter(@collection)
-    properties = presenter.selectedAndUnselectedTagsforSites(@draggedSites)
-    html = Mustache.to_html @template, properties
+    tags = presenter.selectedAndUnselectedTagsforSites(@draggedSites)
+    html = Mustache.to_html @template, tags: tags
     @$el.html html
 
     $('.available_tags li').each (i, tag) =>
@@ -65,43 +64,29 @@ class BH.Views.AvailableTagsView extends Backbone.View
 
   untagSites: (tag, collection) ->
     collection.removeTag tag, =>
-      collection.each =>
+      for site in collection.toJSON()
         @tracker.siteUntagged()
-      @rerenderTags(collection)
+        @trigger 'site:untagged', site
+
+      if collection.length > 1 || collection.at(0).get('partOfGroup')
+        @trigger 'sites:untagged',
+          domain: collection.at(0).get('url').match(/\w+:\/\/(.*?)\//)[0]
+          tags: _.intersection.apply(_, collection.pluck('tags'))
 
   tagSites: (tag, collection) ->
     collection.addTag tag, (result, operations) =>
-      collection.each =>
+      for site in collection.toJSON()
         @tracker.siteTagged()
+        @trigger 'site:tagged', site
+
+      if collection.length > 1 || collection.at(0).get('partOfGroup')
+        @trigger 'sites:tagged',
+          domain: collection.at(0).get('url').match(/\w+:\/\/(.*?)\//)[0]
+          tags: _.intersection.apply(_, collection.pluck('tags'))
+
       @tracker.tagAdded() if operations.tagCreated
-      @rerenderTags(collection)
 
   inflateDraggedData: (data) ->
     sites = JSON.parse(data).sites
     new BH.Collections.Sites sites,
       chrome: chrome
-
-  rerenderTags: (collection) ->
-    for site in collection.toJSON()
-
-      # check if the tag to exclude in the ui has been remove, because
-      # the visit should also disappear then
-      if @excludedTag? && site.tags.indexOf(@excludedTag) == -1
-        $("[data-id='#{site.id}']").remove()
-
-      site.tags = _.without(site.tags, @excludedTag) if @excludedTag?
-      activeTagsView = new BH.Views.ActiveTagsView
-        model: new BH.Models.Site(site)
-        editable: false
-      $container = $("[data-id='#{site.id}']")
-      $container.find('.active_tags').html activeTagsView.render().el
-      $container.addClass('fade_out')
-
-    $parentVisit = $("[data-id=#{collection.at(0).id}").parents('.visit')
-    if $parentVisit.length > 0
-      # Are we dealing with all the children tags?
-      if collection.length == $parentVisit.find('.site').length
-        activeTagsView = new BH.Views.ActiveTagsView
-          model: new BH.Models.Site(tags: collection.sharedTags())
-          editable: false
-        $parentVisit.find('.active_tags').eq(0).html activeTagsView.render().el
