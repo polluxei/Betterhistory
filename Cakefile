@@ -24,6 +24,7 @@ styles = [
   'styles/chrome-bootstrap.css',
   'styles/app.css'
   'styles/i18n.css'
+  'styles/fontello.css'
 ]
 
 backgroundScripts = [
