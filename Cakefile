@@ -25,6 +25,7 @@ styles = [
   'styles/app.css'
   'styles/i18n.css'
   'styles/fontello.css'
+  'styles/pictonic.css'
 ]
 
 backgroundScripts = [
