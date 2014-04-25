@@ -22,6 +22,18 @@ class BH.Views.Cache
 
     @cache.allTags
 
+  devicesView: ->
+    if !@cache.devices
+      devices = new BH.Collections.Devices()
+
+      @cache.devices = new BH.Views.DevicesView
+        collection: devices
+        state: @state
+
+      @insert @cache.devices.render().el
+
+    @cache.devices
+
   tagView: (id) ->
     if !@cache.tags[id]
       tag = new BH.Models.Tag(name: id)

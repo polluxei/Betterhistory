@@ -24,6 +24,8 @@ styles = [
   'styles/chrome-bootstrap.css',
   'styles/app.css'
   'styles/i18n.css'
+  'styles/fontello.css'
+  'styles/pictonic.css'
 ]
 
 backgroundScripts = [
@@ -171,6 +173,7 @@ scripts = [
   'scripts/views/drag_and_tag_view.js',
   'scripts/views/active_tags_view.js',
   'scripts/views/available_tags_view.js',
+  'scripts/views/devices_view.js',
   'scripts/models/history.js',
   'scripts/models/history.js',
   'scripts/models/prompt.js',
@@ -183,6 +186,7 @@ scripts = [
   'scripts/collections/weeks.js',
   'scripts/collections/tags.js',
   'scripts/collections/sites.js',
+  'scripts/collections/devices.js',
   'scripts/presenters/base.js',
   'scripts/presenters/tag_presenter.js',
   'scripts/views/day_results_view.js',

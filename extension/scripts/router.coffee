@@ -3,6 +3,7 @@ class BH.Router extends Backbone.Router
     '': 'reset'
     'tags': 'tags'
     'tags/:id': 'tag'
+    'devices': 'devices'
     'weeks/:id': 'week'
     'days/:id': 'day'
     'calendar': 'calendar'
@@ -39,6 +40,11 @@ class BH.Router extends Backbone.Router
     view.select()
     delay ->
       view.collection.fetch()
+
+  devices: ->
+    view = @app.loadDevices()
+    view.select()
+    delay -> view.collection.fetch()
 
   tag: (id) ->
     view = @app.loadTag(id)
