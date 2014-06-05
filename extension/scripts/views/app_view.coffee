@@ -77,6 +77,12 @@ class BH.Views.AppView extends Backbone.View
     @updateMenuSelection(weekId)
     @cache.dayView(id)
 
+  loadToday: ->
+    @$('.menu > *').removeClass 'selected'
+    @$('.menu > .today').addClass 'selected'
+    id = moment(new Date()).id()
+    @cache.dayView(id)
+
   loadSettings: ->
     @updateMenuSelection()
     @$('.menu .setting').parent().addClass 'selected'
