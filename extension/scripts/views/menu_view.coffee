@@ -4,6 +4,7 @@ class BH.Views.MenuView extends Backbone.View
   template: BH.Templates['menu']
 
   events:
+    'click .menu > .today': 'todayClicked'
     'click .menu > .week': 'weekClicked'
     'click .menu > .calendar': 'calendarClicked'
 
@@ -17,17 +18,21 @@ class BH.Views.MenuView extends Backbone.View
     html = Mustache.to_html @template, properties
     @$el.html html
 
+  todayClicked: (ev) ->
+    @selectItem $(ev.currentTarget)
+    analyticsTracker.todayView()
+
   weekClicked: (ev) ->
-    @$('.menu > *').removeClass 'selected'
-    $el = $(ev.currentTarget)
-    $el.addClass 'selected'
+    @selectItem $(ev.currentTarget)
     analyticsTracker.weekView($el.data('week-id'), $el.index())
 
   calendarClicked: (ev) ->
-    @$('.menu > *').removeClass 'selected'
-    $el = $(ev.currentTarget)
-    $el.addClass 'selected'
+    @selectItem $(ev.currentTarget)
     analyticsTracker.calendarView()
+
+  selectItem: ($el) ->
+    @$('.menu > *').removeClass 'selected'
+    $el.addClass 'selected'
 
   getI18nValues: ->
     @t ['calendar_link']

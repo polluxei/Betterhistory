@@ -72,7 +72,7 @@ class BH.Router extends Backbone.Router
 
   today: ->
     id = moment(new Date()).id()
-    view = @app.loadDay id
+    view = @app.loadToday id
     view.select()
     delay ->
       new BH.Lib.DayHistory(new Date(id)).fetch (history) ->
