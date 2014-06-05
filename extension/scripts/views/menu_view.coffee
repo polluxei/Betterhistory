@@ -23,7 +23,8 @@ class BH.Views.MenuView extends Backbone.View
     analyticsTracker.todayView()
 
   weekClicked: (ev) ->
-    @selectItem $(ev.currentTarget)
+    $el = $(ev.currentTarget)
+    @selectItem $el
     analyticsTracker.weekView($el.data('week-id'), $el.index())
 
   calendarClicked: (ev) ->
