@@ -60,7 +60,6 @@
     "storage",
     "unlimitedStorage",
     "identity",
-    "sessions",
     "https://www.googleapis.com/",
     "https://accounts.google.com/",
     "http://*.better-history.com/"
