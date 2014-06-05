@@ -57,8 +57,8 @@ class BH.Lib.SearchHistory
         visit.url == url
       chrome.storage.local.set data
 
-  destroy: (callback = ->) ->
-    @fetch (history) =>
+  destroy: (options = {}, callback = ->) ->
+    @fetch options, (history) =>
       for visit, i in history
         @history.deleteUrl visit.url, =>
           if i == history.length

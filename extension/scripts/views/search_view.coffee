@@ -157,7 +157,16 @@ class BH.Views.SearchView extends BH.Views.MainView
   deleteAction: (prompt) ->
     if prompt.get('action')
       analyticsTracker.searchResultsDeletion()
-      new BH.Lib.SearchHistory(@model.get('query')).destroy =>
+
+      # Super shitty, definitely need to move
+      options = if weekFilter = @model.get('filter').week
+        startTime: moment(new Date(weekFilter)).startOf('day').valueOf()
+        endTime: moment(new Date(weekFilter)).add('days', 6).endOf('day').valueOf()
+      else if dayFilter = @model.get('filter').day
+        startTime: moment(new Date(dayFilter)).startOf('day').valueOf()
+        endTime: moment(new Date(dayFilter)).endOf('day').valueOf()
+
+      new BH.Lib.SearchHistory(@model.get('query')).destroy (options), =>
         @collection.reset []
         @model.unset 'cacheDatetime'
         @promptView.close()
