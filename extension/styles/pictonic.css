@@ -2,11 +2,11 @@
 @font-face
 {
     font-family: pictonic;
-    src: url("chrome-extension://__MSG_@@extension_id__/styles/font/pictonic.eot");
-    src: url("chrome-extension://__MSG_@@extension_id__/styles/font/pictonic.eot?#iefix") format("embedded-opentype"),
-         url("chrome-extension://__MSG_@@extension_id__/styles/font/pictonic.ttf") format("truetype"),
-         url("chrome-extension://__MSG_@@extension_id__/styles/font/pictonic.woff") format("woff"),
-         url("chrome-extension://__MSG_@@extension_id__/styles/font/pictonic.svg") format("svg");
+    src: url("chrome-extension://__MSG_@@extension_id__/fonts/pictonic.eot");
+    src: url("chrome-extension://__MSG_@@extension_id__/fonts/pictonic.eot?#iefix") format("embedded-opentype"),
+         url("chrome-extension://__MSG_@@extension_id__/fonts/pictonic.ttf") format("truetype"),
+         url("chrome-extension://__MSG_@@extension_id__/fonts/pictonic.woff") format("woff"),
+         url("chrome-extension://__MSG_@@extension_id__/fonts/pictonic.svg") format("svg");
     font-weight: normal;
     font-style: normal;
 }
