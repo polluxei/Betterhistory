@@ -71,10 +71,10 @@ class BH.Router extends Backbone.Router
         view.collection.reset history
 
   today: ->
-    id = moment(new Date()).id()
-    view = @app.loadToday id
+    view = @app.loadToday()
     view.select()
     delay ->
+      id = moment(new Date()).id()
       new BH.Lib.DayHistory(new Date(id)).fetch (history) ->
         view.collection.reset history
 
