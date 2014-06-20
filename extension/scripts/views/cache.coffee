@@ -6,8 +6,6 @@ class BH.Views.Cache
 
   expire: ->
     @cache =
-      weeks: {}
-      days: {}
       tags: {}
 
   tagsView: ->
@@ -45,34 +43,6 @@ class BH.Views.Cache
       @insert @cache.tags[id].render().el
 
     @cache.tags[id]
-
-  calendarView: ->
-    return @cache.calendar if @cache.calendar
-
-    @cache.calendar = new BH.Views.CalendarView
-
-    @insert @cache.calendar.render().el
-    @cache.calendar
-
-  weekView: (id) ->
-    return @cache.weeks[id] if @cache.weeks[id]
-
-    @cache.weeks[id] = new BH.Views.WeekView
-      model: new Backbone.Model(id: id, date: new Date(id))
-      collection: new Backbone.Collection()
-
-    @insert @cache.weeks[id].render().el
-    @cache.weeks[id]
-
-  dayView: (id) ->
-    return @cache.days[id] if @cache.days[id]
-
-    @cache.days[id] = new BH.Views.DayView
-      model: new Backbone.Model(id: id, date: new Date(id))
-      collection: new Backbone.Collection()
-
-    @insert @cache.days[id].render().el
-    @cache.days[id]
 
   searchView: (options)->
     return @cache.search if @cache.search || options.expired == true

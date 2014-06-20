@@ -4,13 +4,9 @@ class BH.Router extends Backbone.Router
     'tags': 'tags'
     'tags/:id': 'tag'
     'devices': 'devices'
-    'weeks/:id': 'week'
-    'days/:id': 'day'
-    'calendar': 'calendar'
     'settings': 'settings'
     'search/*query(/p:page)(?*filterString)': 'search'
     'search': 'search'
-    'today': 'today'
 
   initialize: (options) ->
     settings = options.settings
@@ -51,32 +47,6 @@ class BH.Router extends Backbone.Router
     view.select()
     delay ->
       view.model.fetch()
-
-  calendar: ->
-    view = @app.loadCalendar()
-    view.select()
-
-  week: (id) ->
-    view = @app.loadWeek(id)
-    view.select()
-    delay ->
-      new BH.Lib.WeekHistory(new Date(id)).fetch (history) ->
-        view.collection.reset(history)
-
-  day: (id) ->
-    view = @app.loadDay id
-    view.select()
-    delay ->
-      new BH.Lib.DayHistory(new Date(id)).fetch (history) ->
-        view.collection.reset history
-
-  today: ->
-    view = @app.loadToday()
-    view.select()
-    delay ->
-      id = moment(new Date()).id()
-      new BH.Lib.DayHistory(new Date(id)).fetch (history) ->
-        view.collection.reset history
 
   settings: ->
     view = @app.loadSettings()
