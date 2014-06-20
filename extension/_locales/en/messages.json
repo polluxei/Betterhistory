@@ -193,6 +193,10 @@
     "message": "Search title, url, or date",
     "description": "Placeholder text in the search input box"
   },
+  "search_link": {
+    "message": "Search",
+    "description": "Text for the link to Search"
+  },
   "settings_link": {
     "message": "Settings",
     "description": "Text for the link to Settings"
