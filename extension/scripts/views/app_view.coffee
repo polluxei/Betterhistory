@@ -34,6 +34,11 @@ class BH.Views.AppView extends Backbone.View
     @$('.menu .tags').parent().addClass 'selected'
     @cache.tagView(id)
 
+  loadTrail: (name) ->
+    @updateMenuSelection()
+    @$('.menu .new_trail').parent().addClass 'selected'
+    @cache.trailView(name)
+
   loadNewTrail: ->
     @updateMenuSelection()
     @$('.menu .new_trail').parent().addClass 'selected'

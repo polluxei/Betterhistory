@@ -169,6 +169,7 @@ scripts = [
   'scripts/views/trail_match_preview_view.js',
   'scripts/views/menu_view.js',
   'scripts/views/new_trail_view.js',
+  'scripts/views/trail_view.js',
   'scripts/models/history.js',
   'scripts/models/prompt.js',
   'scripts/models/search.js',

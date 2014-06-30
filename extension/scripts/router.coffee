@@ -8,6 +8,7 @@ class BH.Router extends Backbone.Router
     'search/*query(/p:page)(?*filterString)': 'search'
     'search': 'search'
     'trails/new': 'newTrail'
+    'trails/:name': 'trail'
 
   initialize: (options) ->
     settings = options.settings
@@ -43,6 +44,10 @@ class BH.Router extends Backbone.Router
     view.select()
     view.on 'build_trail', (model) =>
       @trails.add model
+
+  trail: (name) ->
+    view = @app.loadTrail(name)
+    view.select()
 
   settings: ->
     view = @app.loadSettings()

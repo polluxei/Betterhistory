@@ -7,6 +7,7 @@ class BH.Views.Cache
   expire: ->
     @cache =
       tags: {}
+      trails: {}
 
   tagsView: ->
     if !@cache.allTags
@@ -31,6 +32,14 @@ class BH.Views.Cache
       @insert @cache.devices.render().el
 
     @cache.devices
+
+  trailView: (name) ->
+    if !@cache.trails[name]
+      @cache.trails[name] = new BH.Views.TrailView
+        name: name
+      @insert @cache.trails[name].render().el
+
+    @cache.trails[name]
 
   newTrailView: ->
     if !@cache.newTrail
