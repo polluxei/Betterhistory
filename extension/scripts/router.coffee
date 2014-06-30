@@ -39,9 +39,9 @@ class BH.Router extends Backbone.Router
       view.model.fetch()
 
   newTrail: ->
-    newTrailModal = new BH.Modals.NewTrailModal()
-    newTrailModal.open()
-    newTrailModal.on 'build_trail', (model) =>
+    view = @app.loadNewTrail()
+    view.select()
+    view.on 'build_trail', (model) =>
       @trails.add model
 
   settings: ->

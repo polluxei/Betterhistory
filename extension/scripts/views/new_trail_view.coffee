@@ -1,4 +1,4 @@
-class BH.Modals.NewTrailModal extends BH.Modals.Base
+class BH.Views.NewTrailView extends BH.Views.MainView
   @include BH.Modules.I18n
 
   className: 'new_trail_view'
@@ -26,7 +26,8 @@ class BH.Modals.NewTrailModal extends BH.Modals.Base
       @historyCache = history
 
   render: ->
-    @$el.html @renderTemplate()
+    html = Mustache.to_html @template, @getI18nValues()
+    @$el.append html
     @
 
   matcherKeyUp: (ev) ->
@@ -60,11 +61,9 @@ class BH.Modals.NewTrailModal extends BH.Modals.Base
     for matcher in @model.get('matchers')
       @$('.matchers').append "<li><strong>#{matcher}</strong><a href='#' style='float: right;'>Remove</a></li>"
 
-  cancelClicked: (ev) ->
-    ev.preventDefault()
-    @close()
-
   buildTrailClicked: (ev) ->
     ev.preventDefault()
     @trigger 'build_trail', @model
-    @close()
+
+  getI18nValues: ->
+    @t ['search_input_placeholder_text']

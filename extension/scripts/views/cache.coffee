@@ -32,6 +32,13 @@ class BH.Views.Cache
 
     @cache.devices
 
+  newTrailView: ->
+    if !@cache.newTrail
+      @cache.newTrail = new BH.Views.NewTrailView()
+      @insert @cache.newTrail.render().el
+
+    @cache.newTrail
+
   tagView: (id) ->
     if !@cache.tags[id]
       tag = new BH.Models.Tag(name: id)

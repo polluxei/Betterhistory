@@ -1,6 +1,11 @@
-<a href='http://www.better-history.com/whats_a_trail' class='whats_a_trail'>What's a trail?</a>
-<h1 class='title'>Build a new trail</h1>
-<div class='content-area'>
+<header>
+  <h1>Build a new trail</h1>
+  <div class='corner'>
+    <input class='search' placeholder='{{i18n_search_input_placeholder_text}}' tabindex='1' type='text' />
+  </div>
+</header>
+<div class='content'>
+  <a href='http://www.better-history.com/whats_a_trail' class='whats_a_trail'>What's a trail?</a>
   <br />
   <div>
     <p style='font-size: 13px;'>Create browsing trails for sites you visit. Find the good stuff you saw faster than Google can because <strong>Trails are automatically kept up to date as you browse.</strong></p>
@@ -22,12 +27,5 @@
     <h3><label>What's this trail's name?</label></h3>
     <input type='text' placeholder='Enter a name' name='trail-name' />
   </div>
-</div>
-<div class='action-area'>
-  <a href='#' class='cancel'>cancel</a>
-  <div class='action-area-right'>
-    <div class='button-strip'>
-      <button class='build_trail'>Create trail</button>
-    </div>
-  </div>
+  <button class='build_trail'>Create trail</button>
 </div>
