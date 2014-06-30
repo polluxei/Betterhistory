@@ -65,4 +65,3 @@ class BH.Views.Cache
 
   insert: (html) ->
     $('.mainview').append html
-

@@ -6,6 +6,9 @@ class BH.Presenters.SearchHistoryPresenter extends BH.Presenters.Base
     if start? && end?
       for i in [start...end]
         out.push @markMatches(@visits[i]) if @visits[i]?
+    else
+      for visit in @visits
+        out.push @markMatches(visit)
     out
 
   markMatches: (visit) ->

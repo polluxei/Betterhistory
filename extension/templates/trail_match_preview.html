@@ -1,0 +1,17 @@
+<ol class='visits highlightable'>
+  {{#visits}}
+    <li class='visit visit_view searched'>
+      <div class='site'>
+        <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
+          <dt>
+            {{{name}}}
+          </dt>
+          <dd class='location'>{{{location}}}</dd>
+        </dl>
+      </div>
+    </li>
+  {{/visits}}
+</ol>
+{{^visits}}
+  <p class='no_visits'>{{i18n_no_visits_found}}</p>
+{{/visits}}

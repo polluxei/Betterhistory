@@ -7,29 +7,19 @@ class BH.Router extends Backbone.Router
     'settings': 'settings'
     'search/*query(/p:page)(?*filterString)': 'search'
     'search': 'search'
+    'trails/new': 'newTrail'
 
   initialize: (options) ->
     settings = options.settings
     tracker = options.tracker
-    @state = options.state
+
+    @trails = new Backbone.Collection()
 
     @app = new BH.Views.AppView
       el: $('.app')
-      collection: new BH.Collections.Weeks()
       settings: settings
-      state: @state
+      trails: @trails
     @app.render()
-
-    @on 'route', (route) =>
-      tracker.pageView(Backbone.history.getFragment())
-      window.scroll 0, 0
-      if settings.get('openLocation') == 'last_visit'
-        @state.set route: location.hash
-
-    @reset if location.hash == ''
-
-  reset: ->
-    @navigate @state.get('route'), trigger: true
 
   tags: ->
     view = @app.loadTags()
@@ -47,6 +37,12 @@ class BH.Router extends Backbone.Router
     view.select()
     delay ->
       view.model.fetch()
+
+  newTrail: ->
+    newTrailModal = new BH.Modals.NewTrailModal()
+    newTrailModal.open()
+    newTrailModal.on 'build_trail', (model) =>
+      @trails.add model
 
   settings: ->
     view = @app.loadSettings()
