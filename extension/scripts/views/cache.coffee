@@ -60,7 +60,7 @@ class BH.Views.Cache
 
     @cache.tags[id]
 
-  searchView: (options)->
+  searchView: (options = {}) ->
     return @cache.search if @cache.search || options.expired == true
 
     @cache.search = new BH.Views.SearchView

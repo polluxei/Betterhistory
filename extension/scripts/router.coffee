@@ -14,6 +14,9 @@ class BH.Router extends Backbone.Router
     settings = options.settings
     tracker = options.tracker
 
+    @cache = new BH.Views.Cache
+      settings: settings
+
     @trails = new Backbone.Collection()
 
     @app = new BH.Views.AppView
@@ -23,34 +26,34 @@ class BH.Router extends Backbone.Router
     @app.render()
 
   tags: ->
-    view = @app.loadTags()
+    view = @cache.tagsView()
     view.select()
     delay ->
       view.collection.fetch()
 
   devices: ->
-    view = @app.loadDevices()
+    view = @cache.devicesView()
     view.select()
     delay -> view.collection.fetch()
 
   tag: (id) ->
-    view = @app.loadTag(id)
+    view = @cache.tagView(id)
     view.select()
     delay ->
       view.model.fetch()
 
   newTrail: ->
-    view = @app.loadNewTrail()
+    view = @cache.newTrailView()
     view.select()
     view.on 'build_trail', (model) =>
       @trails.add model
 
   trail: (name) ->
-    view = @app.loadTrail(name)
+    view = @cache.trailView(name)
     view.select()
 
   settings: ->
-    view = @app.loadSettings()
+    view = @cache.settingsView()
     view.select()
 
   search: (query, page, filterString) ->
@@ -59,7 +62,7 @@ class BH.Router extends Backbone.Router
     # Load a fresh search view when the query is empty to
     # ensure a new WeekHistory instance is created because
     # this usually means a search has been canceled
-    view = @app.loadSearch(expired: true if query == '' || page)
+    view = @cache.searchView(expired: true if query == '' || page)
     view.page.set(page: parseInt(page, 10), {silent: true}) if page?
     view.model.set
       query: decodeURIComponent(query)

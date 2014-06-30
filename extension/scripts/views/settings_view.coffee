@@ -26,8 +26,6 @@ class BH.Views.SettingsView extends BH.Views.MainView
     @tracker = analyticsTracker
     @model.off 'change'
     @model.on 'change', (() => @model.save()), @model
-    @model.on 'change:openLocation', @options.state.updateRoute, @options.state
-    @model.on 'change:startingWeekDay', @options.state.updateRoute, @options.state
     window.user.on 'login', @onUserLogIn, @
     window.user.on 'logout', @onUserLogout, @
     @on 'selected', @activateSocialLinks, @
