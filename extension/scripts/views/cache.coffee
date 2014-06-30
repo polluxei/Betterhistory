@@ -33,6 +33,13 @@ class BH.Views.Cache
 
     @cache.devices
 
+  visitsView: ->
+    if !@cache.visits
+      @cache.visits = new BH.Views.VisitsView
+      @insert @cache.visits.render().el
+
+    @cache.visits
+
   trailView: (name) ->
     if !@cache.trails[name]
       @cache.trails[name] = new BH.Views.TrailView

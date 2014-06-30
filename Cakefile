@@ -170,6 +170,7 @@ scripts = [
   'scripts/views/menu_view.js',
   'scripts/views/new_trail_view.js',
   'scripts/views/trail_view.js',
+  'scripts/views/visits_view.js',
   'scripts/models/history.js',
   'scripts/models/prompt.js',
   'scripts/models/search.js',

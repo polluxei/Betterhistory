@@ -7,6 +7,7 @@ class BH.Router extends Backbone.Router
     'settings': 'settings'
     'search/*query(/p:page)(?*filterString)': 'search'
     'search': 'search'
+    'visits': 'visits'
     'trails/new': 'newTrail'
     'trails/:name': 'trail'
 
@@ -50,6 +51,10 @@ class BH.Router extends Backbone.Router
 
   trail: (name) ->
     view = @cache.trailView(name)
+    view.select()
+
+  visits: ->
+    view = @cache.visitsView()
     view.select()
 
   settings: ->
