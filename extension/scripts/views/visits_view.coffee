@@ -8,6 +8,7 @@ class BH.Views.VisitsView extends BH.Views.MainView
   initialize: ->
     @chromeAPI = chrome
     @tracker = analyticsTracker
+    @collection.on 'reset', @renderVisits, @
 
   pageTitle: ->
     'Visits'
@@ -17,6 +18,11 @@ class BH.Views.VisitsView extends BH.Views.MainView
     html = Mustache.to_html @template, properties
     @$el.append html
     @
+
+  renderVisits: ->
+    visitsResultsViews = new BH.Views.VisitsResultsView
+      collection: @collection
+    @$('.content').html visitsResultsViews.render().el
 
   getI18nValues: ->
     @t ['search_input_placeholder_text']

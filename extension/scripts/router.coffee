@@ -56,6 +56,10 @@ class BH.Router extends Backbone.Router
   visits: ->
     view = @cache.visitsView()
     view.select()
+    delay ->
+      new BH.Lib.VisitsHistory(new Date()).fetch (history) ->
+        console.log history
+        view.collection.reset history
 
   settings: ->
     view = @cache.settingsView()

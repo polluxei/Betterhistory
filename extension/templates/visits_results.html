@@ -1,0 +1,93 @@
+<ol class='history'>
+  {{#history}}
+    <li class='interval' data-id='{{id}}'>
+      <header>
+        <h4 class='title'>{{time}}</h4>
+        <a class='delete_interval delete' href='#' title='{{i18n_prompt_delete_button}}'>
+          {{i18n_prompt_delete_button}}
+        </a>
+      </header>
+      <ol class='visits highlightable editable'>
+        {{#visits}}
+          {{#isGrouped}}
+            <li class='visit grouped_sites' draggable='true' data-domain='{{domain}}'>
+              {{^readOnly}}
+                <div class='drag_handle'>
+                  <div class='draggable_bumps'><div class='bump_divider'></div></div>
+                </div>
+              {{/readOnly}}
+              <a href='{{url}}' class='sites'>
+                <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
+                  <dt>
+                    <div class='active_tags'></div>
+                    {{domain}}
+                  </dt>
+                  <dd class='time'>{{time}}</dd>
+                  <dd class='toggle_grouping'>
+                    <span class='show_visits'>
+                      <span class='arrow arrow_collapse'></span>
+                      {{i18n_expand_button}}
+                    </span>
+                    <span class='hide_visits'>
+                      <span class='arrow arrow_expand'></span>
+                      {{i18n_collapse_button}}
+                    </span>
+                  </dd>
+                </dl>
+              </a>
+              <a class='search_domain action' href='#search/{{host}}'>{{i18n_search_by_domain}}</a>
+              <a class='delete_grouped_visit delete' href='#' title='{{i18n_prompt_delete_button}}'>{{i18n_prompt_delete_button}}</a>
+              <ol class='visits highlightable'>
+                {{#groupedVisits}}
+                  <li class='visit' draggable='true' data-url='{{url}}' data-title='{{title}}'>
+                    {{^readOnly}}
+                      <div class='drag_handle'>
+                        <div class='draggable_bumps'><div class='bump_divider'></div></div>
+                      </div>
+                    {{/readOnly}}
+                    <a href='{{url}}' class='site'>
+                      <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
+                        <dt>
+                          <div class='active_tags'></div>
+                          {{{title}}}
+                        </dt>
+                        <dd class='time'>{{time}}</dd>
+                        <dd class='location'>{{host}}{{path}}</dd>
+                      </dl>
+                    </a>
+                    <a class='search_domain action' href='#search/{{host}}'>{{i18n_search_by_domain}}</a>
+                    <a class='delete_visit delete' href='#' data-url='{{url}}' title='{{i18n_prompt_delete_button}}'>{{i18n_prompt_delete_button}}</a>
+                  </li>
+                {{/groupedVisits}}
+              </ol>
+            </li>
+          {{/isGrouped}}
+          {{^isGrouped}}
+            <li class='visit' draggable='true' data-url='{{url}}' data-title='{{title}}'>
+              {{^readOnly}}
+                <div class='drag_handle'>
+                  <div class='draggable_bumps'><div class='bump_divider'></div></div>
+                </div>
+              {{/readOnly}}
+              <a href='{{url}}' class='site'>
+                <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
+                  <dt>
+                    <div class='active_tags'></div>
+                    {{{title}}}
+                  </dt>
+                  <dd class='time'>{{time}}</dd>
+                  <dd class='location'>{{host}}{{path}}</dd>
+                </dl>
+              </a>
+              <a class='search_domain action' href='#search/{{host}}'>{{i18n_search_by_domain}}</a>
+              <a class='delete_visit delete' href='#' data-url='{{url}}' title='{{i18n_prompt_delete_button}}'>{{i18n_prompt_delete_button}}</a>
+            </li>
+          {{/isGrouped}}
+        {{/visits}}
+      </ol>
+    </li>
+  {{/history}}
+</ol>
+{{^history}}
+  <p>{{i18n_no_visits_found}}</p>
+{{/history}}

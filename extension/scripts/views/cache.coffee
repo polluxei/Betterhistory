@@ -36,6 +36,7 @@ class BH.Views.Cache
   visitsView: ->
     if !@cache.visits
       @cache.visits = new BH.Views.VisitsView
+        collection: new Backbone.Collection()
       @insert @cache.visits.render().el
 
     @cache.visits
