@@ -58,7 +58,6 @@ class BH.Router extends Backbone.Router
     view.select()
     delay ->
       new BH.Lib.VisitsHistory(new Date()).fetch (history) ->
-        console.log history
         view.collection.reset history
 
   settings: ->
