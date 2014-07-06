@@ -1,13 +1,13 @@
 class BH.Router extends Backbone.Router
   routes:
-    '': 'reset'
+    '': 'visits'
     'tags': 'tags'
     'tags/:id': 'tag'
     'devices': 'devices'
     'settings': 'settings'
     'search/*query(/p:page)(?*filterString)': 'search'
     'search': 'search'
-    'visits': 'visits'
+    'visits(/:date)': 'visits'
     'trails/new': 'newTrail'
     'trails/:name': 'trail'
 
@@ -53,11 +53,12 @@ class BH.Router extends Backbone.Router
     view = @cache.trailView(name)
     view.select()
 
-  visits: ->
-    view = @cache.visitsView()
+  visits: (date = new Date()) ->
+    date = moment(date).startOf('day')
+    view = @cache.visitsView(date)
     view.select()
     delay ->
-      new BH.Lib.VisitsHistory(new Date()).fetch (history) ->
+      new BH.Lib.VisitsHistory(date.toDate()).fetch (history) ->
         view.collection.reset history
 
   settings: ->

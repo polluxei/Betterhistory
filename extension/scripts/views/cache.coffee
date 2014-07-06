@@ -33,12 +33,14 @@ class BH.Views.Cache
 
     @cache.devices
 
-  visitsView: ->
+  visitsView: (date)->
     if !@cache.visits
       @cache.visits = new BH.Views.VisitsView
         collection: new Backbone.Collection()
+        model: new Backbone.Model(date: date)
       @insert @cache.visits.render().el
 
+    @cache.visits.model.set date: date
     @cache.visits
 
   trailView: (name) ->

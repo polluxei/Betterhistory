@@ -32,7 +32,7 @@
     "backbone": "1.0.0",
     "underscore": "1.4.3",
     "mustache": "0.7.2",
-    "moment": "1.7.2",
+    "moment": "2.7.0",
     "timekeeper": "0.0.3",
     "uglify-js": "2.3.6",
     "watch": "0.8.0"

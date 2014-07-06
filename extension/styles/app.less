@@ -3,29 +3,53 @@
     padding-top: 155px;
   }
 
+  .controls {
+    display: flex;
+  }
+
   ol.pagination {
     display: flex;
     flex: 1;
-    width: 100%;
 
     li {
       flex: 1;
-      margin: 0 5px;
+      margin: 0 3px;
+    }
+    a {
+      height: 46px;
+      width: auto;
+      padding: 5px;
+      border-right: 1px solid lighten(#8AAAED, 20%);
+      border-bottom: 1px solid lighten(#8AAAED, 20%);
+    }
+  }
 
-      &:last-child {
-        margin-right: 0;
+  ol.pagination.control {
+    a {
+      display: table;
+      width: 15px;
+
+      .arrow {
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
       }
     }
+    &.next_control {
+      order: 1;
+    }
+    &.previous_control {
+      order: 3;
+    }
+  }
 
-    a {
-      width: auto;
-      height: auto;
-      padding: 5px;
+  ol.pagination:not(.control) {
+    flex: 21 0px;
+    order: 2;
 
-      strong {
-        display: block;
-        margin-bottom: -5px;
-      }
+    strong {
+      display: block;
+      margin-bottom: -5px;
     }
   }
 }

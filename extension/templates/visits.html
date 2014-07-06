@@ -4,47 +4,27 @@
     <input class='search' placeholder='{{i18n_search_input_placeholder_text}}' tabindex='1' type='text' />
   </div>
   <div class='controls'>
+    <ol class='pagination next_control control'>
+      <li>
+        <a href='#' class='next'>
+          <div class='arrow'>&laquo;</div>
+        </a>
+      </li>
+    </ol>
     <ol class='pagination'>
+      {{#dates}}
+        <li>
+          <a class='{{#selected}}selected{{/selected}} date' href='#visits/{{id}}'>
+            <strong>{{label}}</strong>
+            <span class='date'>{{date}}</span>
+          </a>
+        </li>
+      {{/dates}}
+    </ol>
+    <ol class='pagination previous_control control'>
       <li>
-        <a class='selected'>
-          <strong>Today</strong>
-          <span class='date'>July 4th</span>
-        </a>
-      </li>
-      <li>
-        <a>
-          <strong>Yesterday</strong>
-          <span class='date'>July 3th</span>
-        </a>
-      </li>
-      <li>
-        <a>
-          <strong>Thursday</strong>
-          <span class='date'>July 2nd</span>
-        </a>
-      </li>
-      <li>
-        <a>
-          <strong>Wednesday</strong>
-          <span class='date'>July 1st</span>
-        </a>
-      </li>
-      <li>
-        <a>
-          <strong>Tuesday</strong>
-          <span class='date'>June 31st</span>
-        </a>
-      </li>
-      <li>
-        <a>
-          <strong>Monday</strong>
-          <span class='date'>June 30th</span>
-        </a>
-      </li>
-      <li>
-        <a>
-          <strong>Sunday</strong>
-          <span class='date'>June 29th</span>
+        <a href='#' class='previous'>
+          <div class='arrow'>&raquo;</div>
         </a>
       </li>
     </ol>
