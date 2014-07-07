@@ -1,6 +1,24 @@
 .chrome-bootstrap .visits_view {
+  .loading {
+    text-align: center;
+  }
+  .spinner {
+    background: url(/images/spinner_large.gif);
+    display: inline-block;
+    margin-top: 40px;
+    opacity: 0.3;
+    width: 128px;
+    height: 128px;
+  }
   .content {
     padding-top: 155px;
+  }
+  .visits_content {
+    transition: opacity 250ms ease-in-out;
+    opacity: 1;
+  }
+  .disappear {
+    opacity: 0;
   }
 
   .controls {

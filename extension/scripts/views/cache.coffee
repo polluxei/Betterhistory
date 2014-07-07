@@ -9,6 +9,24 @@ class BH.Views.Cache
       tags: {}
       trails: {}
 
+  view: (name, args) ->
+    methodName = switch name
+      when 'tags' then 'tagsView'
+      when 'devices' then 'devicesView'
+      when 'visits' then 'visitsView'
+      when 'trail' then 'trailView'
+      when 'newTrail' then 'newTrailView'
+      when 'tag' then 'tagView'
+      when 'search' then 'searchView'
+      when 'settings' then 'settingsView'
+
+    view = @[methodName].apply(@, args)
+    view.select() if name != @lastRequest
+    @lastRequest = name
+    
+    view
+
+
   tagsView: ->
     if !@cache.allTags
       tags = new BH.Collections.Tags []

@@ -34,7 +34,11 @@ class BH.Views.VisitsView extends BH.Views.MainView
 
   onDateClicked: (ev) ->
     @$('a').removeClass('selected')
-    @$('.content').html ''
+    @$('.visits_content').addClass('disappear')
+    setTimeout =>
+      @$('.visits_content').html ''
+      @$('.loading').show()
+    , 250
     $(ev.currentTarget).addClass('selected')
 
   onNextClicked: (ev) ->
@@ -48,7 +52,11 @@ class BH.Views.VisitsView extends BH.Views.MainView
   renderVisits: ->
     visitsResultsViews = new BH.Views.VisitsResultsView
       collection: @collection
-    @$('.content').html visitsResultsViews.render().el
+    @$('.visits_content').removeClass('disappear')
+    setTimeout =>
+      @$('.loading').hide()
+      @$('.visits_content').html visitsResultsViews.render().el
+    , 250
 
   getI18nValues: ->
     @t ['search_input_placeholder_text']
