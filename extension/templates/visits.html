@@ -3,32 +3,7 @@
   <div class='corner'>
     <input class='search' placeholder='{{i18n_search_input_placeholder_text}}' tabindex='1' type='text' />
   </div>
-  <div class='controls'>
-    <ol class='pagination next_control control'>
-      <li>
-        <a href='#' class='next'>
-          <div class='arrow'>&laquo;</div>
-        </a>
-      </li>
-    </ol>
-    <ol class='pagination'>
-      {{#dates}}
-        <li>
-          <a class='{{#selected}}selected{{/selected}} date' href='#visits/{{id}}'>
-            <strong>{{label}}</strong>
-            <span class='date'>{{date}}</span>
-          </a>
-        </li>
-      {{/dates}}
-    </ol>
-    <ol class='pagination previous_control control'>
-      <li>
-        <a href='#' class='previous'>
-          <div class='arrow'>&raquo;</div>
-        </a>
-      </li>
-    </ol>
-  </div>
+  <div class='controls'></div>
 </header>
 <div class='content'>
   <div class='loading'>

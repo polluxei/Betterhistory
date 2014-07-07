@@ -5,11 +5,6 @@ class BH.Views.VisitsView extends BH.Views.MainView
 
   template: BH.Templates['visits']
 
-  events:
-    'click a.date': 'onDateClicked'
-    'click a.next': 'onNextClicked'
-    'click a.previous': 'onPreviousClicked'
-
   initialize: ->
     @chromeAPI = chrome
     @tracker = analyticsTracker
@@ -20,34 +15,20 @@ class BH.Views.VisitsView extends BH.Views.MainView
     'Visits'
 
   render: ->
-    dates = for i in [0..6]
-      date = moment().startOf('day').subtract 'days', i
-      label: date.format('dddd')
-      date: "#{date.format('MMM D')}#{date.format('Do')}"
-      selected: true if date.isSame(@model.get('date'))
-      id: date.format('M-D-YY')
-
-    properties = _.extend @getI18nValues(), dates: dates
-    html = Mustache.to_html @template, properties
+    html = Mustache.to_html @template, @getI18nValues()
     @$el.append html
+
+    timelineView = new BH.Views.TimelineView model: @model
+    @$('.controls').html timelineView.render().el
+
     @
 
-  onDateClicked: (ev) ->
-    @$('a').removeClass('selected')
+  onDateChange: (ev) ->
     @$('.visits_content').addClass('disappear')
     setTimeout =>
       @$('.visits_content').html ''
       @$('.loading').show()
     , 250
-    $(ev.currentTarget).addClass('selected')
-
-  onNextClicked: (ev) ->
-    ev.preventDefault()
-    console.log 'next'
-
-  onPreviousClicked: (ev) ->
-    ev.preventDefault()
-    console.log 'prev'
 
   renderVisits: ->
     visitsResultsViews = new BH.Views.VisitsResultsView
