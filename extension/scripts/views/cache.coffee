@@ -23,9 +23,8 @@ class BH.Views.Cache
     view = @[methodName].apply(@, args)
     view.select() if name != @lastRequest
     @lastRequest = name
-    
-    view
 
+    view
 
   tagsView: ->
     if !@cache.allTags

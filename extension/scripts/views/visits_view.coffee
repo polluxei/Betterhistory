@@ -52,11 +52,10 @@ class BH.Views.VisitsView extends BH.Views.MainView
   renderVisits: ->
     visitsResultsViews = new BH.Views.VisitsResultsView
       collection: @collection
+
+    @$('.loading').hide()
+    @$('.visits_content').html visitsResultsViews.render().el
     @$('.visits_content').removeClass('disappear')
-    setTimeout =>
-      @$('.loading').hide()
-      @$('.visits_content').html visitsResultsViews.render().el
-    , 250
 
   getI18nValues: ->
     @t ['search_input_placeholder_text']
