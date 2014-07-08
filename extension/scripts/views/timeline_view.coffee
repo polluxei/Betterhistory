@@ -26,7 +26,9 @@ class BH.Views.TimelineView extends BH.Views.MainView
       selected: true if date.isSame(@model.get('date'))
       id: date.format('M-D-YY')
 
-    html = Mustache.to_html @template, dates: dates
+    html = Mustache.to_html @template,
+      dates: dates
+      nextButtonDisabled: dates[0].id == moment().format('M-D-YY')
     @$el.append html
     @
 
@@ -39,10 +41,14 @@ class BH.Views.TimelineView extends BH.Views.MainView
 
   onNextClicked: (ev) ->
     ev.preventDefault()
-    date = moment(@model.get('date')).add('days', 7)
-    @model.set date: date.toDate()
+    
+    unless $(ev.currentTarget).hasClass('disabled')
+      date = moment(@model.get('date')).add('days', 7)
+      @model.set date: date.toDate()
 
   onPreviousClicked: (ev) ->
     ev.preventDefault()
-    date = moment(@model.get('date')).subtract('days', 7)
-    @model.set date: date.toDate()
+
+    unless $(ev.currentTarget).hasClass('disabled')
+      date = moment(@model.get('date')).subtract('days', 7)
+      @model.set date: date.toDate()
