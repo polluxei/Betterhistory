@@ -8,10 +8,20 @@ class BH.Views.TimelineView extends BH.Views.MainView
     'click a.next': 'onNextClicked'
     'click a.previous': 'onPreviousClicked'
 
+  initialize: ->
+    @model.on 'change:date', @onDateChanged, @
+
   render: ->
+    @$el.html ''
+
+    getLabel = (date) ->
+      return 'Today' if moment().startOf('day').isSame(date)
+      return 'Yesterday' if moment().subtract('days', 1).startOf('day').isSame(date)
+      date.format('dddd')
+
     dates = for i in [0..6]
-      date = moment().startOf('day').subtract 'days', i
-      label: date.format('dddd')
+      date = moment(@model.get('date')).startOf('day').subtract 'days', i
+      label: getLabel(date)
       date: "#{date.format('MMM D')}#{date.format('Do')}"
       selected: true if date.isSame(@model.get('date'))
       id: date.format('M-D-YY')
@@ -20,14 +30,19 @@ class BH.Views.TimelineView extends BH.Views.MainView
     @$el.append html
     @
 
+  onDateChanged: ->
+    @render()
+
   onDateClicked: (ev) ->
     @$('a').removeClass('selected')
     $(ev.currentTarget).addClass('selected')
 
   onNextClicked: (ev) ->
     ev.preventDefault()
-    console.log 'next'
+    date = moment(@model.get('date')).add('days', 7)
+    @model.set date: date.toDate()
 
   onPreviousClicked: (ev) ->
     ev.preventDefault()
-    console.log 'prev'
+    date = moment(@model.get('date')).subtract('days', 7)
+    @model.set date: date.toDate()
