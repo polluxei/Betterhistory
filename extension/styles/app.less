@@ -233,70 +233,6 @@
     }
   }
 }
-.frame .calendar_view .content {
-  padding-top: 75px;
-}
-.calendar_view {
-  .calendar {
-    margin-top: 20px;
-    table-layout: fixed;
-    width: 100%;
-    border-collapse: collapse;
-
-    th {
-      font-weight: normal;
-    }
-
-    td {
-      height: 60px;
-      position: relative;
-      background: #F6F6F6;
-      border: 2px solid #FFF;
-      &.in_month {
-        background: #F0F6FE;
-      }
-      &.today {
-        background: #D8E3F9;
-      }
-      &.selected {
-        background: #C4D4F6;
-        cursor: pointer;
-        a {
-          color: #FFF;
-        }
-      }
-      &.selected.in_month {
-        background: #8AAAED;
-      }
-    }
-    .date {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      text-decoration: none;
-    }
-  }
-  h3 {
-    margin: 4px 0 25px;
-    text-align: center;
-  }
-  .bottom {
-    padding-top: 10px;
-    text-align: center;
-    position: relative;
-  }
-  .previous_month, .next_month {
-    text-decoration: none;
-    position: absolute;
-    top: 78px;
-  }
-  .previous_month {
-    left: 170px;
-  }
-  .next_month {
-    right: 170px;
-  }
-}
 .cached {
   top: 112px;
   position: relative;
@@ -305,36 +241,6 @@
 }
 .cached .fresh_search {
   float: right;
-}
-.all_weeks li {
-  position: relative;
-  padding-top: 8px;
-}
-.all_weeks li > a {
-  background: #EEE;
-  border-radius: 3px;
-  display: block;
-  height: 37px;
-}
-.chrome-bootstrap .all_weeks a {
-  text-decoration: none;
-}
-.all_weeks li:hover > a {
-  background: #DDD;
-}
-.all_weeks h3 {
-  width: 50%;
-  padding: 10px;
-  margin: 0;
-  line-height: 16px;
-}
-.all_weeks .details {
-  position: absolute;
-  top: 18px;
-  right: 10px;
-  width: 250px;
-  text-align: right;
-  color: #888;
 }
 .server_error_view .warning,
 .login_error_view .warning,
