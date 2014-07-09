@@ -9,16 +9,14 @@
         </a>
       </header>
       -->
-      <ol class='visits highlightable editable'>
+      <ol class='visits highlightable editable draggable'>
         {{#visits}}
           {{#isGrouped}}
             <li class='visit grouped_sites' draggable='true' data-domain='{{domain}}'>
               {{^readOnly}}
-                <div class='drag_handle'>
-                  <div class='draggable_bumps'><div class='bump_divider'></div></div>
-                </div>
+                <div class='handle'></div>
               {{/readOnly}}
-              <a href='{{url}}' class='sites'>
+              <a href='{{url}}' class='item sites'>
                 <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
                   <dt>
                     <div class='active_tags'></div>
@@ -43,11 +41,9 @@
                 {{#groupedVisits}}
                   <li class='visit' draggable='true' data-url='{{url}}' data-title='{{title}}'>
                     {{^readOnly}}
-                      <div class='drag_handle'>
-                        <div class='draggable_bumps'><div class='bump_divider'></div></div>
-                      </div>
+                      <div class='handle'></div>
                     {{/readOnly}}
-                    <a href='{{url}}' class='site'>
+                    <a href='{{url}}' class='item site'>
                       <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
                         <dt>
                           <div class='active_tags'></div>
@@ -67,11 +63,9 @@
           {{^isGrouped}}
             <li class='visit' draggable='true' data-url='{{url}}' data-title='{{title}}'>
               {{^readOnly}}
-                <div class='drag_handle'>
-                  <div class='draggable_bumps'><div class='bump_divider'></div></div>
-                </div>
+                <div class='handle'></div>
               {{/readOnly}}
-              <a href='{{url}}' class='site'>
+              <a href='{{url}}' class='item site'>
                 <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
                   <dt>
                     <div class='active_tags'></div>

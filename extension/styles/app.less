@@ -1,15 +1,4 @@
 .chrome-bootstrap .visits_view {
-  .loading {
-    text-align: center;
-  }
-  .spinner {
-    background: url(/images/spinner_large.gif);
-    display: inline-block;
-    margin-top: 40px;
-    opacity: 0.3;
-    width: 128px;
-    height: 128px;
-  }
   .content {
     padding-top: 155px;
   }
@@ -826,14 +815,6 @@ body.new_tags .menu .tags.pulse .new {
   cursor: -webkit-grab;
   display: block;
 }
-.visit.dragging .drag_handle {
-  display: block;
-  top: 2px;
-  height: 92%;
-}
-.visit.dragging .drag_handle .draggable_bumps {
-  display: none;
-}
 .visit.dragging .site {
   background-color: #F0F6FE;
   color: #555;
@@ -861,70 +842,6 @@ body.new_tags .menu .tags.pulse .new {
 .visit.dragging a.action,
 .visit.dragging a.delete {
   display: none;
-}
-.draggable_bumps {
-  width: 8px;
-  height: 100%;
-  background-image: linear-gradient(to bottom, #c1c1c1 50%, rgba(255, 255, 255, 0) 0%);
-  background-position: center;
-  background-size: 100% 17%;
-  background-repeat: repeat-y;
-}
-
-.search_view .draggable_bumps {
-  background-image: linear-gradient(to bottom, #c1c1c1 50%, rgba(255, 255, 255, 0) 0%);
-  background-size: 100% 14%;
-  height: 88%;
-}
-.bump_divider {
-  width: 13%;
-  height: 100%;
-  margin: 0 auto;
-  background-color: #F0F6FE;
-}
-.week_view .days .title {
-  margin:0 0 3px;
-}
-.week_view .days * {
-  color: #303942;
-}
-.week_view .days .day {
-  margin-bottom: 15px;
-  position: relative;
-  background-color:#EEE;
-  border-radius: 5px;
-  height: 50px;
-}
-.week_view .day.future {
-  opacity: 0.6;
-}
-.week_view .day:hover .bar,
-.week_view .day a:focus .bar {
-  background-color:#CCC;
-}
-.week_view .day_view .page {
-  width: 766px;
-}
-.week_view .bar {
-  background: #DDD;
-  height: 100%;
-  min-width:1%;
-  position: absolute;
-  -webkit-transition:width 0.2s;
-  border-radius: 5px;
-}
-.week_view .bar_container {
-  width: 100%;
-  height: 100%;
-}
-.week_view .label {
-  position: absolute;
-  top: 10px;
-  z-index: 1;
-}
-.chrome-bootstrap .day_view .back_to_week {
-  text-decoration: none;
-  opacity: 0;
 }
 .visits_view .time {
   -webkit-transition: 150ms opacity;
@@ -1030,9 +947,6 @@ body.chrome-bootstrap .tag_visit_view ul li.site {
 .visit .location {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-}
-.chrome-bootstrap .visits .visit .location {
-  margin-top: 5px;
 }
 .visit .location > .search_domain:hover {
   color: #15C;

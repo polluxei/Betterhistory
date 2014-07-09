@@ -26,16 +26,12 @@ class BH.Views.VisitsView extends BH.Views.MainView
 
   onDateChange: (ev) ->
     @$('.visits_content').addClass('disappear')
-    setTimeout =>
-      @$('.visits_content').html ''
-      @$('.loading').show()
-    , 250
+    setTimeout (=> @$('.visits_content').html ''), 250
 
   renderVisits: ->
     visitsResultsViews = new BH.Views.VisitsResultsView
       collection: @collection
 
-    @$('.loading').hide()
     @$('.visits_content').html visitsResultsViews.render().el
     @$('.visits_content').removeClass('disappear')
 
