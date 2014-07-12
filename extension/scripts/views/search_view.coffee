@@ -90,8 +90,7 @@ class BH.Views.SearchView extends BH.Views.MainView
     # if we are on the first page, don't show it in the URL
     page = if @page.get('page') != 1 then "/p#{@page.get('page')}" else ""
 
-    filterString = BH.Lib.QueryParams.write @model.get('filter')
-    router.navigate @urlFor('search', properties.query) + page + filterString
+    router.navigate @urlFor('search', properties.query) + page
 
   renderVisits: ->
     @$el.addClass('loaded')
@@ -102,7 +101,6 @@ class BH.Views.SearchView extends BH.Views.MainView
       query: @model.get('query')
       el: $('.pagination')
       model: @page
-      filter: @model.get('filter')
     searchPaginationView.render()
 
     @renderSearchResults()
@@ -139,14 +137,6 @@ class BH.Views.SearchView extends BH.Views.MainView
   deleteAction: (prompt) ->
     if prompt.get('action')
       analyticsTracker.searchResultsDeletion()
-
-      # Super shitty, definitely need to move
-      options = if weekFilter = @model.get('filter').week
-        startTime: moment(new Date(weekFilter)).startOf('day').valueOf()
-        endTime: moment(new Date(weekFilter)).add('days', 6).endOf('day').valueOf()
-      else if dayFilter = @model.get('filter').day
-        startTime: moment(new Date(dayFilter)).startOf('day').valueOf()
-        endTime: moment(new Date(dayFilter)).endOf('day').valueOf()
 
       new BH.Lib.SearchHistory(@model.get('query')).destroy (options), =>
         @collection.reset []
