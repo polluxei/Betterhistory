@@ -7,7 +7,7 @@ class BH.Lib.SearchHistory
     defaultOptions =
       text: ''
       startTime: 0
-      maxResults: 0
+      maxResults: 5000
 
     options = _.extend defaultOptions, options
     {startTime, endTime} = options

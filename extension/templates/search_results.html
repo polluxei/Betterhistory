@@ -17,6 +17,15 @@
       <a class='delete_visit delete' href='#' data-url='{{url}}' title='{{i18n_prompt_delete_button}}'>{{i18n_prompt_delete_button}}</a>
     </li>
   {{/visits}}
+  {{#softSearch}}
+    <li class='search_deeper_container'>
+      <div class='search_deeper_controls'>
+        <br />
+        <button class='search_deeper'>Search deeper</button>
+        <strong>(can be a bit slow)</strong>
+      </div>
+    </li>
+  {{/softSearch}}
 </ol>
 {{^visits}}
   <p class='no_visits'>{{i18n_no_visits_found}}</p>

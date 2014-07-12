@@ -87,14 +87,14 @@ class BH.Views.Cache
 
     @cache.tags[id]
 
-  searchView: (options = {}) ->
-    return @cache.search if @cache.search || options.expired == true
+  searchView: ->
+    if !@cache.search
+      @cache.search = new BH.Views.SearchView
+        model: new Backbone.Model()
+        collection: new Backbone.Collection()
 
-    @cache.search = new BH.Views.SearchView
-      model: new Backbone.Model()
-      collection: new Backbone.Collection()
-
-    @insert @cache.search.render().el
+      @insert @cache.search.render().el
+      
     @cache.search
 
   settingsView: ->

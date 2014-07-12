@@ -5,6 +5,10 @@ class BH.Views.VisitsView extends BH.Views.MainView
 
   template: BH.Templates['visits']
 
+  events:
+    'keyup .search': 'onSearchTyped'
+    'blur .search': 'onSearchBlurred'
+
   initialize: ->
     @chromeAPI = chrome
     @tracker = analyticsTracker

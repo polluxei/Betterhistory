@@ -5,7 +5,7 @@ class BH.Router extends Backbone.Router
     'tags/:id': 'tag'
     'devices': 'devices'
     'settings': 'settings'
-    'search/*query(/p:page)(?*filterString)': 'search'
+    'search/*query(/p:page)': 'search'
     'search': 'search'
     'visits(/:date)': 'visits'
     'trails/new': 'newTrail'
@@ -58,28 +58,13 @@ class BH.Router extends Backbone.Router
   settings: ->
     view = @cache.view('settings')
 
-  search: (query, page, filterString) ->
-    filter = BH.Lib.QueryParams.read filterString
-
-    # Load a fresh search view when the query is empty to
-    # ensure a new WeekHistory instance is created because
-    # this usually means a search has been canceled
-    view = @cache.view('search', [expired: true if query == '' || page])
+  search: (query, page) ->
+    view = @cache.view('search')
     view.page.set(page: parseInt(page, 10), {silent: true}) if page?
-    view.model.set
-      query: decodeURIComponent(query)
-      filter: filter
+    view.model.set query: decodeURIComponent(query)
     delay ->
-      # Super shitty, definitely need to move
-      options = if filter.week
-        startTime: moment(new Date(filter.week)).startOf('day').valueOf()
-        endTime: moment(new Date(filter.week)).add('days', 6).endOf('day').valueOf()
-      else if filter.day
-        startTime: moment(new Date(filter.day)).startOf('day').valueOf()
-        endTime: moment(new Date(filter.day)).endOf('day').valueOf()
-
       if query != ''
-        new BH.Lib.SearchHistory(query).fetch options, (history, cacheDatetime = null) ->
+        new BH.Lib.SearchHistory(query).fetch {}, (history, cacheDatetime = null) ->
           view.collection.reset history
           if cacheDatetime?
             view.model.set cacheDatetime: cacheDatetime

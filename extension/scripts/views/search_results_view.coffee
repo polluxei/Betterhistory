@@ -9,7 +9,7 @@ class BH.Views.SearchResultsView extends Backbone.View
   render: ->
     [start, end] = BH.Lib.Pagination.calculateBounds(@options.page)
     presenter = new BH.Presenters.SearchHistoryPresenter(@collection.toJSON(), @options.query)
-    properties = _.extend @getI18nValues(), visits: presenter.history(start, end)
+    properties = _.extend @getI18nValues(), visits: presenter.history(start, end), softSearch: true
     html = Mustache.to_html @template, properties
     @$el.html html
     @

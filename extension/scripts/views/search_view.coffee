@@ -9,20 +9,17 @@ class BH.Views.SearchView extends BH.Views.MainView
     'click .delete_all': 'clickedDeleteAll'
     'click .corner .delete': 'clickedCancelSearch'
     'click .fresh_search': 'clickedFreshSearch'
+    'click .search_deeper': 'clickedSearchDeeper'
     'keyup .search': 'onSearchTyped'
     'blur .search': 'onSearchBlurred'
-    'click .remove_filter': 'onRemoveFilterClick'
 
   initialize: ->
     @collection.on('reset', @onHistoryChanged, @)
     @model.on('change:query', @onQueryChanged, @)
     @model.on 'change:cacheDatetime', @onCacheChanged, @
-    @model.on 'change:filter', @onQueryChanged, @
 
     @page = new Backbone.Model(page: 1)
     @page.on('change:page', @renderSearchResults, @)
-
-    @on 'selected', (=> @$('.filters').hide()), @
 
   render: ->
     presenter = new BH.Presenters.SearchPresenter(@model.toJSON())
@@ -72,18 +69,16 @@ class BH.Views.SearchView extends BH.Views.MainView
 
     @renderSearchResults()
 
-  onRemoveFilterClick: (ev) ->
-    ev.preventDefault()
-    @model.unset 'filter', silent: true
-    @$('.filters').hide()
-    presenter = new BH.Presenters.SearchPresenter(@model.toJSON())
-    properties = presenter.searchInfo()
-    router.navigate @urlFor('search', properties.query), trigger: true
-
   clickedFreshSearch: (ev) ->
     ev.preventDefault()
     new BH.Lib.SearchHistory().expireCache()
     window.location.reload()
+
+  clickedSearchDeeper: (ev) ->
+    ev.preventDefault()
+    @$('.search_deeper_controls').hide()
+    @$('.number_of_visits').html ''
+    @$el.removeClass('loaded')
 
   updateQueryReferences: ->
     presenter = new BH.Presenters.SearchPresenter(@model.toJSON())
@@ -92,28 +87,15 @@ class BH.Views.SearchView extends BH.Views.MainView
     @$('.title').text properties.title
     @$('.content').html('')
 
-    # Filters make for much faster searches...
-    @$('.spinner').text 'Searching deep...' unless properties.filterName
-
     # if we are on the first page, don't show it in the URL
     page = if @page.get('page') != 1 then "/p#{@page.get('page')}" else ""
 
     filterString = BH.Lib.QueryParams.write @model.get('filter')
     router.navigate @urlFor('search', properties.query) + page + filterString
 
-  updateFilters: ->
-    if @model.get('filter')?.week || @model.get('filter')?.day
-      presenter = new BH.Presenters.SearchPresenter(@model.toJSON())
-      $('.filters .tag').text presenter.searchInfo().filterName
-      $('.filters').show()
-    else
-      $('.filters').hide()
-
   renderVisits: ->
     @$el.addClass('loaded')
     @$('.search').focus()
-
-    @updateFilters()
 
     searchPaginationView = new BH.Views.SearchPaginationView
       collection: @collection
