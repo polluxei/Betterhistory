@@ -12,9 +12,12 @@ class BH.Lib.SearchHistory
     options = _.extend defaultOptions, options
     {startTime, endTime} = options
 
+    startAtResult = options.startAtResult
+    delete options.startAtResult
+
     chrome.storage.local.get 'lastSearchCache', (data) =>
       cache = data.lastSearchCache
-      if cache?.query == @query && cache?.startTime == startTime && cache?.endTime == endTime
+      if cache?.query == @query && cache?.startTime == startTime && cache?.endTime == endTime && !startAtResult
         callback cache.results, new Date(cache.datetime)
       else
         @history.query options, (history) =>

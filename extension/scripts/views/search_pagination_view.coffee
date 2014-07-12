@@ -11,6 +11,7 @@ class BH.Views.SearchPaginationView extends BH.Views.MainView
     @pages = BH.Lib.Pagination.calculatePages(@collection.length)
 
     @collection.on 'remove', @onVisitRemove, @
+    @collection.on 'add', @onVisitsAdd, @
 
     if @model.get('page') > @pages
       @model.set page: 1
@@ -40,6 +41,9 @@ class BH.Views.SearchPaginationView extends BH.Views.MainView
     else
       copy = @t('number_of_visits', [@collection.length])
       @$('.number_of_visits').text copy
+
+  onVisitsAdd: ->
+    @render()
 
   onPageClicked: (ev) ->
     $el = $(ev.currentTarget)

@@ -14,8 +14,10 @@ class BH.Views.SearchView extends BH.Views.MainView
     'blur .search': 'onSearchBlurred'
 
   initialize: ->
-    @collection.on('reset', @onHistoryChanged, @)
-    @model.on('change:query', @onQueryChanged, @)
+    @collection.on 'reset', @onHistoryChanged, @
+    @collection.on 'add', @onHistoryAdded, @
+
+    @model.on 'change:query', @onQueryChanged, @
     @model.on 'change:cacheDatetime', @onCacheChanged, @
 
     @page = new Backbone.Model(page: 1)
@@ -43,6 +45,8 @@ class BH.Views.SearchView extends BH.Views.MainView
     @renderVisits()
     @assignTabIndices('.visit a:first-child')
     @updateDeleteButton()
+
+  onHistoryAdded: ->
 
   onCacheChanged: ->
     if @model.get('cacheDatetime')
@@ -78,7 +82,18 @@ class BH.Views.SearchView extends BH.Views.MainView
     ev.preventDefault()
     @$('.search_deeper_controls').hide()
     @$('.number_of_visits').html ''
+    @$('.pagination').html ''
     @$el.removeClass('loaded')
+    @searchDeeper()
+
+  searchDeeper: ->
+    options =
+      startAtResult: 5001
+      maxResults: 0
+
+    new BH.Lib.SearchHistory(@model.get('query')).fetch (options), (history) =>
+      @collection.add history
+      @$el.addClass('loaded')
 
   updateQueryReferences: ->
     presenter = new BH.Presenters.SearchPresenter(@model.toJSON())
