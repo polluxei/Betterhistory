@@ -6,12 +6,21 @@ class BH.Views.SearchResultsView extends Backbone.View
   events:
     'click .delete_visit': 'deleteClicked'
 
+  initialize: ->
+    @page = @options.page
+
   render: ->
-    [start, end] = BH.Lib.Pagination.calculateBounds(@options.page)
+    [start, end] = BH.Lib.Pagination.calculateBounds(@page.get('page') - 1)
+
     presenter = new BH.Presenters.SearchHistoryPresenter(@collection.toJSON(), @options.query)
-    properties = _.extend @getI18nValues(), visits: presenter.history(start, end), softSearch: true
+
+    properties = _.extend @getI18nValues(),
+      visits: presenter.history(start, end)
+      extendSearch: @page.get('totalPages') == @page.get('page')
+
     html = Mustache.to_html @template, properties
     @$el.html html
+
     @
 
   insertTags: ->

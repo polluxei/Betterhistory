@@ -126,7 +126,7 @@ class BH.Views.SearchView extends BH.Views.MainView
       query: @model.get('query')
       collection: @collection
       el: @$el.children('.content')
-      page: @page.get('page') - 1
+      page: @page
     @searchResultsView.render()
     @searchResultsView.insertTags()
     @searchResultsView.attachDragging()

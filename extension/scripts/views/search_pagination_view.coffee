@@ -21,6 +21,7 @@ class BH.Views.SearchPaginationView extends BH.Views.MainView
 
   render: ->
     @pages = BH.Lib.Pagination.calculatePages(@collection.length)
+    @model.set totalPages: @pages
 
     properties =
       # Hide pagination if there is only one page of results
@@ -54,7 +55,7 @@ class BH.Views.SearchPaginationView extends BH.Views.MainView
     @$('a').removeClass('selected')
     $el.addClass('selected')
 
-    @model.set page: $el.data('page')
+    @model.set page: parseInt($el.data('page'), 10)
 
   getI18nValues: ->
     properties = []
