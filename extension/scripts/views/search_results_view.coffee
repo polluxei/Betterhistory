@@ -8,6 +8,7 @@ class BH.Views.SearchResultsView extends Backbone.View
 
   initialize: ->
     @page = @options.page
+    @collection.on 'add', @onVisitAdded, @
 
   render: ->
     [start, end] = BH.Lib.Pagination.calculateBounds(@page.get('page') - 1)
@@ -52,6 +53,11 @@ class BH.Views.SearchResultsView extends Backbone.View
     new BH.Lib.SearchHistory().deleteUrl url, =>
       $el.parents('.visit').remove()
       @collection.remove @collection.where(url: url)
+
+  onVisitAdded: (model) ->
+    if $('.visits li').length < 100
+      visitView = new BH.Views.VisitView model: model
+      @$('.visits').append visitView.render().el
 
   getI18nValues: ->
     @t [

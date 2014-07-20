@@ -174,6 +174,7 @@ scripts = [
   'scripts/views/visits_view.js',
   'scripts/views/visits_results_view.js',
   'scripts/views/timeline_view.js',
+  'scripts/views/visit_view.js',
   'scripts/models/history.js',
   'scripts/models/prompt.js',
   'scripts/models/search.js',

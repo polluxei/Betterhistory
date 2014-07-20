@@ -18,11 +18,17 @@
     </li>
   {{/visits}}
   {{#extendSearch}}
-    <li class='search_deeper_container'>
-      <div class='search_deeper_controls'>
-        <br />
-        <button class='search_deeper'>Search deeper</button>
-        <strong>(can be a bit slow)</strong>
+    <li class='search_deeper'>
+      <div class='wrapper'>
+        <div class='search_controls'>
+          <br />
+          <button class='search_deeper'>Search deeper</button>
+          <strong>(can be a bit slow)</strong>
+        </div>
+        <div class='working'>
+          <br />
+          <strong>Searching deeper...</strong>
+        </div>
       </div>
     </li>
   {{/extendSearch}}

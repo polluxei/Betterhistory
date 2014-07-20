@@ -15,7 +15,6 @@ class BH.Views.SearchView extends BH.Views.MainView
 
   initialize: ->
     @collection.on 'reset', @onHistoryChanged, @
-    @collection.on 'add', @onHistoryAdded, @
 
     @model.on 'change:query', @onQueryChanged, @
     @model.on 'change:cacheDatetime', @onCacheChanged, @
@@ -45,8 +44,6 @@ class BH.Views.SearchView extends BH.Views.MainView
     @renderVisits()
     @assignTabIndices('.visit a:first-child')
     @updateDeleteButton()
-
-  onHistoryAdded: ->
 
   onCacheChanged: ->
     if @model.get('cacheDatetime')
@@ -80,8 +77,8 @@ class BH.Views.SearchView extends BH.Views.MainView
 
   clickedSearchDeeper: (ev) ->
     ev.preventDefault()
-    @$('.search_deeper_controls').hide()
     @$('.number_of_visits').html ''
+    @$('.search_deeper').addClass('searching')
     @$('.pagination').html ''
     @$el.removeClass('loaded')
     @searchDeeper()
@@ -92,6 +89,7 @@ class BH.Views.SearchView extends BH.Views.MainView
       maxResults: 0
 
     new BH.Lib.SearchHistory(@model.get('query')).fetch (options), (history) =>
+      @$('.search_deeper').hide()
       @collection.add history
       @$el.addClass('loaded')
 

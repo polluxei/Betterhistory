@@ -1,8 +1,19 @@
-.search_deeper_container {
+.search_deeper {
   border-top: 1px solid rgb(238, 238, 238);
 
-  .search_deeper_controls {
+  .wrapper {
     padding: 0 0 200px 42px;
+  }
+  .working {
+    display: none;
+  }
+  &.searching {
+    .search_controls {
+      display: none;
+    }
+    .working {
+      display: block;
+    }
   }
 }
 .chrome-bootstrap .visits_view {
