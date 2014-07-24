@@ -52,7 +52,7 @@ class BH.Modals.CreditsModal extends BH.Modals.Base
       'close_button'
     ]
     properties['i18n_developed_by'] = @t('developed_by', [
-      '<a href="http://automagical.posterous.com/">',
+      '<a href="http://blog.milkshake-island.com/">',
       '</a>',
       'Roy Kolak'
     ])
