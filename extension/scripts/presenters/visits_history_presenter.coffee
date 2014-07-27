@@ -30,3 +30,4 @@ class BH.Presenters.VisitsHistoryPresenter extends BH.Presenters.Base
 visitData = (visit) ->
   _.extend visit,
     isGrouped: false
+    visit.time = visit.date.toLocaleTimeString(chrome.i18n.getUILanguage())

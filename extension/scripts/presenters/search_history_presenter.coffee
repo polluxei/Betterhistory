@@ -5,7 +5,7 @@ class BH.Presenters.SearchHistoryPresenter extends BH.Presenters.Base
     out = []
     if start? && end?
       for i in [start...end]
-        out.push @markMatches(@visits[i]) if @visits[i]?
+        out.push @addDateTime(@markMatches(@visits[i])) if @visits[i]?
     else
       for visit in @visits
         out.push @markMatches(visit)
@@ -16,8 +16,10 @@ class BH.Presenters.SearchHistoryPresenter extends BH.Presenters.Base
       regExp = new RegExp(term, "i")
       visit.name = wrapMatchInProperty(regExp, visit.name)
       visit.location = wrapMatchInProperty(regExp, visit.location)
-      visit.time = wrapMatchInProperty(regExp, visit.time)
-      visit.extendedDate = wrapMatchInProperty(regExp, visit.extendedDate)
+    visit
+
+  addDateTime: (visit) ->
+    visit.datetime = visit.date.toLocaleString(chrome.i18n.getUILanguage())
     visit
 
 wrapMatchInProperty = (regExp, property) ->

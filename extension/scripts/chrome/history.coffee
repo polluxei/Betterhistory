@@ -5,8 +5,6 @@ class BH.Chrome.History
     @chromeAPI.history.search options, (visits) =>
       for visit in visits
         visit.date = new Date(visit.lastVisitTime)
-        visit.extendedDate = visit.date.toLocaleString()
-
       callback(visits)
 
   deleteAll: (callback = ->) ->
