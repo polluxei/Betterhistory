@@ -22,7 +22,7 @@ build:
 	cp node_modules/backbone/backbone.js build/scripts/frameworks/
 	cp node_modules/underscore/underscore.js build/scripts/frameworks/
 	cp node_modules/mustache/mustache.js build/scripts/frameworks/
-	cp node_modules/moment/moment.js build/scripts/frameworks/
+	cp node_modules/moment/min/moment-with-langs.min.js build/scripts/frameworks/
 	node_modules/.bin/lessc build/styles/app.less build/styles/app.css
 	rm build/styles/app.less
 	cake build:assets:dev
