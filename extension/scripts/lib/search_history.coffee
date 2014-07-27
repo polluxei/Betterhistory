@@ -34,6 +34,7 @@ class BH.Lib.SearchHistory
                 startTime: startTime
                 endTime: endTime
 
+
             if startTime && endTime
               @worker 'rangeSanitizer', {
                 options:
