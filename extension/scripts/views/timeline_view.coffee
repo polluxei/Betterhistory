@@ -9,30 +9,21 @@ class BH.Views.TimelineView extends BH.Views.MainView
     'click a.previous': 'onPreviousClicked'
 
   initialize: ->
-    @model.on 'change:date', @onDateChanged, @
+
+    @state = new Backbone.Model
+      startDate: moment(new Date()).startOf('day').toDate()
+
+    @state.on 'change:startDate', @onStartDateChanged, @
 
   render: ->
     @$el.html ''
 
-    getLabel = (date) ->
-      return 'Today' if moment().startOf('day').isSame(date)
-      return 'Yesterday' if moment().subtract('days', 1).startOf('day').isSame(date)
-      date.format('dddd')
+    timelinePresenter = new BH.Presenters.Timeline(@model.toJSON())
+    @$el.append Mustache.to_html @template, timelinePresenter.timeline(@state.get('startDate'))
 
-    dates = for i in [0..6]
-      date = moment(@model.get('date')).startOf('day').subtract 'days', i
-      label: getLabel(date)
-      date: date.format('MMM Do')
-      selected: true if date.isSame(@model.get('date'))
-      id: date.format('M-D-YY')
-
-    html = Mustache.to_html @template,
-      dates: dates
-      nextButtonDisabled: dates[0].id == moment().format('M-D-YY')
-    @$el.append html
     @
 
-  onDateChanged: ->
+  onStartDateChanged: ->
     @render()
 
   onDateClicked: (ev) ->
@@ -43,12 +34,12 @@ class BH.Views.TimelineView extends BH.Views.MainView
     ev.preventDefault()
 
     unless $(ev.currentTarget).hasClass('disabled')
-      date = moment(@model.get('date')).add('days', 7)
-      @model.set date: date.toDate()
+      date = moment(@state.get('startDate')).add('days', 7)
+      @state.set startDate: date.startOf('day').toDate()
 
   onPreviousClicked: (ev) ->
     ev.preventDefault()
 
     unless $(ev.currentTarget).hasClass('disabled')
-      date = moment(@model.get('date')).subtract('days', 7)
-      @model.set date: date.toDate()
+      date = moment(@state.get('startDate')).subtract('days', 7)
+      @state.set startDate: date.startOf('day').toDate()

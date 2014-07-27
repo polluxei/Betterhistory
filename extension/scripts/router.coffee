@@ -49,10 +49,10 @@ class BH.Router extends Backbone.Router
     view = @cache.view('trail')
 
   visits: (date = new Date()) ->
-    date = moment(date).startOf('day')
+    date = moment(date).startOf('day').toDate()
     view = @cache.view('visits', [date])
     delay ->
-      new BH.Lib.VisitsHistory(date.toDate()).fetch (history) ->
+      new BH.Lib.VisitsHistory(date).fetch (history) ->
         view.collection.reset history
 
   settings: ->

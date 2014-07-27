@@ -191,6 +191,7 @@ scripts = [
   'scripts/presenters/search_history_presenter.js',
   'scripts/presenters/visits_history_presenter.js',
   'scripts/presenters/settings_presenter.js',
+  'scripts/presenters/timeline_presenter.js',
   'scripts/router.js',
   'scripts/init/tag_feature.js',
   'scripts/init/mailing_list.js',

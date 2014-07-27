@@ -22,8 +22,7 @@ class BH.Views.VisitsView extends BH.Views.MainView
     html = Mustache.to_html @template, @getI18nValues()
     @$el.append html
 
-    timelineView = new BH.Views.TimelineView
-      model: new Backbone.Model(@model.toJSON())
+    timelineView = new BH.Views.TimelineView model: @model
     @$('.controls').html timelineView.render().el
 
     @
