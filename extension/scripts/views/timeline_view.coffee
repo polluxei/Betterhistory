@@ -22,7 +22,7 @@ class BH.Views.TimelineView extends BH.Views.MainView
     dates = for i in [0..6]
       date = moment(@model.get('date')).startOf('day').subtract 'days', i
       label: getLabel(date)
-      date: "#{date.format('MMM D')}#{date.format('Do')}"
+      date: date.format('MMM Do')
       selected: true if date.isSame(@model.get('date'))
       id: date.format('M-D-YY')
 
@@ -41,7 +41,7 @@ class BH.Views.TimelineView extends BH.Views.MainView
 
   onNextClicked: (ev) ->
     ev.preventDefault()
-    
+
     unless $(ev.currentTarget).hasClass('disabled')
       date = moment(@model.get('date')).add('days', 7)
       @model.set date: date.toDate()
