@@ -139,7 +139,6 @@ scripts = [
   'scripts/modals/mailing_list_modal.js',
   'scripts/modals/how_to_tag_modal.js',
   'scripts/modals/new_tag_modal.js',
-  'scripts/modals/sign_up_info_modal.js',
   'scripts/modals/initial_syncing_modal.js',
   'scripts/modals/syncing_decision_modal.js',
   'scripts/modals/auth_error_modal.js',

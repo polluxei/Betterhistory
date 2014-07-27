@@ -12,7 +12,6 @@ class BH.Views.SettingsView extends BH.Views.MainView
     'click #sign_in': 'clickedSignIn'
     'change #time_grouping': 'changedTimeGrouping'
     'change #time_format': 'changedTimeFormat'
-    'click #domain_grouping': 'clickedDomainGrouping'
     'click #search_by_domain': 'clickedSearchByDomain'
     'click #search_by_selection': 'clickedSearchBySelection'
     'click .manually_sync_local': 'clickedManuallySyncLocal'
@@ -94,31 +93,14 @@ class BH.Views.SettingsView extends BH.Views.MainView
     @
 
   populateFields: ->
-    @$('#time_grouping').val @model.get('timeGrouping')
-    @$('#time_format').val @model.get('timeFormat')
-    @$('#domain_grouping').prop 'checked', @model.get('domainGrouping')
     @$('#search_by_domain').prop 'checked', @model.get('searchByDomain')
     @$('#search_by_selection').prop 'checked', @model.get('searchBySelection')
-
-  clickedSignUp: (ev) ->
-    ev.preventDefault()
-    signUpInfoModal = new BH.Modals.SignUpInfoModal()
-    signUpInfoModal.open()
 
   clickedSignIn: (ev) ->
     ev.preventDefault()
     @$('.login_spinner').show()
     userProcessor = new BH.Lib.UserProcessor()
     userProcessor.start()
-
-  changedTimeGrouping: (ev) ->
-    @model.set timeGrouping: $(ev.currentTarget).val()
-
-  changedTimeFormat: (ev) ->
-    @model.set timeFormat: $(ev.currentTarget).val()
-
-  clickedDomainGrouping: (ev) ->
-    @model.set domainGrouping: $(ev.currentTarget).is(':checked')
 
   clickedSearchByDomain: (ev) ->
     @model.set searchByDomain: $(ev.currentTarget).is(':checked')
@@ -151,10 +133,6 @@ class BH.Views.SettingsView extends BH.Views.MainView
       'settings_title',
       'clearing_history_section_title',
       'clear_history_button',
-      'visit_grouping_section_title',
-      'group_visits_by_label',
-      'time_format_label',
-      'group_visits_by_domain_label',
       'right_click_options_section_title',
       'search_by_text_selection_label',
       'search_by_domain_label',
@@ -169,8 +147,6 @@ class BH.Views.SettingsView extends BH.Views.MainView
       'manually_sync_local_link'
     ])
     properties['i18n_syncing_settings_login'] = @t('syncing_settings_login', [
-      '<a style="text-decoration: underline;" href="#" id="sign_up">',
-      '</a>',
       '<a style="text-decoration: underline;" href="#" id="sign_in">',
       '</a>'
     ])
