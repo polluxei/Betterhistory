@@ -21,18 +21,8 @@ class BH.Lib.VisitsHistory
         options: options
         results: results
 
-      @worker 'rangeSanitizer', options, (sanitizedResults) =>
-        options =
-          visits: sanitizedResults
-          interval: settings.get('timeGrouping')
-
-        @worker 'timeGrouper', options, (history) =>
-          if settings.get('domainGrouping')
-            options = intervals: history
-            @worker 'domainGrouper', options, (history) =>
-              callback parse(history)
-          else
-            callback parse(history)
+      @worker 'rangeSanitizer', options, (history) =>
+        callback history
 
   destroy: (callback = ->) ->
     options =
@@ -41,47 +31,3 @@ class BH.Lib.VisitsHistory
 
     @history.deleteRange options, =>
       callback()
-
-parse = (intervals) ->
-  out = []
-  for interval in intervals
-    visits = []
-    for visit in interval.visits
-      item = if _.isArray(visit)
-        fillInGroupedVisit(visit)
-      else
-        fillInVisit(visit)
-
-      visits.push item
-
-    out.push
-      id: interval.id
-      datetime: interval.datetime
-      visits: visits
-
-  out
-
-getDomain = (url) ->
-  match = url.match(/\w+:\/\/(.*?)\//)
-  if match == null then null else match[0]
-
-fillInVisit = (visit) ->
-  visit.domain = getDomain(visit.url)
-  visit.host = getDomain(visit.url)
-  visit.path = visit.url.replace(visit.domain, '')
-  visit.title = '(No Title)' if visit.title == ''
-  visit
-
-fillInGroupedVisit = (visits) ->
-  visits = for visit in visits
-    fillInVisit(visit)
-
-  visit = visits[0]
-
-  groupedVisit =
-    host: visit.domain
-    domain: visit.domain
-    url: visit.url
-    time: visits.time
-    isGrouped: true
-    visits: visits

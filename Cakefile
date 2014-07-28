@@ -189,7 +189,6 @@ scripts = [
   'scripts/presenters/sites_presenter.js',
   'scripts/presenters/search_presenter.js',
   'scripts/presenters/search_history_presenter.js',
-  'scripts/presenters/visits_history_presenter.js',
   'scripts/presenters/settings_presenter.js',
   'scripts/presenters/timeline_presenter.js',
   'scripts/router.js',

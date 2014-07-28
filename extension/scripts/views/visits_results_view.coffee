@@ -15,12 +15,18 @@ class BH.Views.VisitsResultsView extends Backbone.View
     @chromeAPI = chrome
 
   render: ->
-    presenter = new BH.Presenters.VisitsHistoryPresenter(@collection.toJSON())
-    properties = _.extend @getI18nValues(), history: presenter.history()
+    properties = _.extend @getI18nValues(), visits: @collection.toJSON()
     html = Mustache.to_html @template, properties
+
     @$el.html html
 
     @
+
+  inflateDates: ->
+    lang = chrome.i18n.getUILanguage()
+    $('.time').each (i, el) =>
+      timestamp = @collection.at(i).get('lastVisitTime')
+      $(el).text new Date(timestamp).toLocaleTimeString(lang)
 
   insertTags: ->
     persistence.tag().cached (operations) ->
