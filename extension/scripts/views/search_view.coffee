@@ -98,7 +98,7 @@ class BH.Views.SearchView extends BH.Views.MainView
     properties = presenter.searchInfo()
     @$el.removeClass('loaded')
     @$('.title').text properties.title
-    @$('.content').html('')
+    @$('.visits_content').html('')
 
     # if we are on the first page, don't show it in the URL
     page = if @page.get('page') != 1 then "/p#{@page.get('page')}" else ""
@@ -119,15 +119,22 @@ class BH.Views.SearchView extends BH.Views.MainView
     @renderSearchResults()
 
   renderSearchResults: ->
-    @searchResultsView.undelegateEvents() if @searchResultsView
-    @searchResultsView = new BH.Views.SearchResultsView
-      query: @model.get('query')
-      collection: @collection
-      el: @$el.children('.content')
-      page: @page
-    @searchResultsView.render()
-    @searchResultsView.insertTags()
-    @searchResultsView.attachDragging()
+    @$('.visits_content').addClass('disappear')
+    setTimeout =>
+      @$('.visits_content').html ''
+      @searchResultsView.undelegateEvents() if @searchResultsView
+
+      @searchResultsView = new BH.Views.SearchResultsView
+        query: @model.get('query')
+        collection: @collection
+        el: @$('.visits_content')
+        page: @page
+      @searchResultsView.render()
+      @searchResultsView.insertTags()
+      @searchResultsView.attachDragging()
+      @$('.visits_content').removeClass('disappear')
+      @delay = 50
+    , @delay || 0
 
   updateDeleteButton: ->
     deleteButton = @$('.delete_all')

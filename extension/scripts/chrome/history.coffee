@@ -3,8 +3,6 @@ class BH.Chrome.History
 
   query: (options, callback = ->) ->
     @chromeAPI.history.search options, (visits) =>
-      for visit in visits
-        visit.date = new Date(visit.lastVisitTime)
       callback(visits)
 
   deleteAll: (callback = ->) ->

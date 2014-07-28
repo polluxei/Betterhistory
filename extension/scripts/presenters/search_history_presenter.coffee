@@ -19,7 +19,7 @@ class BH.Presenters.SearchHistoryPresenter extends BH.Presenters.Base
     visit
 
   addDateTime: (visit) ->
-    visit.datetime = visit.date.toLocaleString(chrome.i18n.getUILanguage())
+    visit.datetime = new Date(visit.lastVisitTime).toLocaleString(chrome.i18n.getUILanguage())
     visit
 
 wrapMatchInProperty = (regExp, property) ->
