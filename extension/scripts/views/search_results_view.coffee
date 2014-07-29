@@ -24,6 +24,12 @@ class BH.Views.SearchResultsView extends Backbone.View
 
     @
 
+  inflateDates: ->
+    lang = chrome.i18n.getUILanguage()
+    $('.datetime').each (i, el) =>
+      timestamp = @collection.at(i).get('lastVisitTime')
+      $(el).text new Date(timestamp).toLocaleDateString(lang)
+
   insertTags: ->
     persistence.tag().cached (operations) ->
       $('.site').each ->
