@@ -12,7 +12,7 @@ class BH.Views.VisitsView extends BH.Views.MainView
   initialize: ->
     @chromeAPI = chrome
     @tracker = analyticsTracker
-    @collection.on 'reset', @renderVisits, @
+    @collection.on 'reset', @onCollectionReset, @
     @model.on 'change:date', @onDateChange, @
 
   pageTitle: ->
@@ -25,19 +25,17 @@ class BH.Views.VisitsView extends BH.Views.MainView
     timelineView = new BH.Views.TimelineView model: @model
     @$('.controls').html timelineView.render().el
 
+    @visitsResultsView = new BH.Views.VisitsResultsView
+      collection: @collection
+      el: @$('.visits_content')
+
     @
 
   onDateChange: (ev) ->
-    @$('.visits_content').addClass('disappear')
-    setTimeout (=> @$('.visits_content').html ''), 250
+    @visitsResultsView.resetRender()
 
-  renderVisits: ->
-    visitsResultsView = new BH.Views.VisitsResultsView
-      collection: @collection
-
-    @$('.visits_content').html visitsResultsView.render().el
-    @$('.visits_content').removeClass('disappear')
-    visitsResultsView.inflateDates()
+  onCollectionReset: ->
+    @visitsResultsView.render()
 
   getI18nValues: ->
     @t ['search_input_placeholder_text']

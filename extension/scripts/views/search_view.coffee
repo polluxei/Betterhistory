@@ -129,10 +129,12 @@ class BH.Views.SearchView extends BH.Views.MainView
         collection: @collection
         el: @$('.visits_content')
         page: @page
+      @$('.visits_content').removeClass('disappear')
+
       @searchResultsView.render()
       @searchResultsView.insertTags()
       @searchResultsView.attachDragging()
-      @$('.visits_content').removeClass('disappear')
+
       @delay = 50
     , @delay || 0
 

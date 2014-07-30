@@ -20,7 +20,22 @@ class BH.Views.VisitsResultsView extends Backbone.View
 
     @$el.html html
 
+    @show()
+    @insertTags()
+    @attachDragging()
+    @inflateDates()
+
     @
+
+  resetRender: ->
+    @hide()
+    setTimeout (=> @$('.visits_content').html ''), 250
+
+  show: ->
+    @$el.removeClass('disappear')
+
+  hide: ->
+    @$el.addClass('disappear')
 
   inflateDates: ->
     lang = chrome.i18n.getUILanguage()

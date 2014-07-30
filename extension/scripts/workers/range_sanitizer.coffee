@@ -7,6 +7,7 @@ class BH.Workers.RangeSanitizer
     for result in results
       if @verifyDateRange(result)
         result.location = result.url
+        result.title ||=  '(No title)'
         @removeScriptTags(result)
         prunedResults.push(result)
 
