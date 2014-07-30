@@ -4,4 +4,3 @@ class BH.Models.Settings extends Backbone.Model
   defaults: ->
     searchByDomain: true
     searchBySelection: true
-    openLocation: 'last_visit'
