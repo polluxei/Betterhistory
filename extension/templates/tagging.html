@@ -4,23 +4,11 @@
     <div class='url scroll'>{{url}}</div>
   </div>
   {{^readOnly}}
-    <p class='about_tags alert'>
-      <a href='#' class='delete dismiss_instructions'></a>
-      {{{i18n_about_tags_for_popup}}}
-    </p>
     <div class='autocomplete'></div>
   {{/readOnly}}
   <p class='shortcut'>{{shortcut}}</p>
 </div>
 <ul class='links'>
-  <li style='position: relative'>
-    <a id='explore_tags' href='chrome://history/#tags'>
-      {{i18n_explore_tags_link}}
-    </a>
-    {{#loggedIn}}
-      <div class='syncing_badge'>sync <span class='inline-tag'>ON</span></div>
-    {{/loggedIn}}
-  </li>
   <li>
     <a id='search_domain' href='chrome://history/#search/{{domain}}'>
       {{i18n_search_domain_history_link}}
@@ -30,5 +18,13 @@
     <a id='view_history' href='chrome://history/#today'>
       {{i18n_view_all_history_link}}
     </a>
+  </li>
+  <li style='position: relative'>
+    <a id='explore_tags' href='chrome://history/#tags'>
+      {{i18n_explore_tags_link}}
+    </a>
+    {{#loggedIn}}
+      <div class='syncing_badge'>sync <span class='inline-tag'>ON</span></div>
+    {{/loggedIn}}
   </li>
 </div>
