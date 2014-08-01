@@ -3,11 +3,6 @@ class BH.Chrome.History
 
   query: (options, callback = ->) ->
     @chromeAPI.history.search options, (visits) =>
-      for visit in visits
-        visit.date = new Date(visit.lastVisitTime)
-        visit.extendedDate = moment(visit.date).format(@chromeAPI.i18n.getMessage('extended_formal_date'))
-        visit.time = moment(visit.date).format(@chromeAPI.i18n.getMessage('local_time'))
-
       callback(visits)
 
   deleteAll: (callback = ->) ->

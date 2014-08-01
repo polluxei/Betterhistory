@@ -193,6 +193,10 @@
     "message": "Search title, url, or date",
     "description": "Placeholder text in the search input box"
   },
+  "search_link": {
+    "message": "Search",
+    "description": "Text for the link to Search"
+  },
   "settings_link": {
     "message": "Settings",
     "description": "Text for the link to Settings"
@@ -558,7 +562,7 @@
   },
 
   "number_of_visits": {
-    "message": "$number$ visits",
+    "message": "$number$ visit",
     "description": "Label to a number representing a number of visits",
     "placeholders": {
       "number": {
@@ -1064,23 +1068,15 @@
     "description": "title for tagging visited sites modal"
   },
   "sync_tags_link": {
-    "message": "Sync your tags - $signup_open$Get started$signup_close$ or $login_open$Login$login_close$",
+    "message": "Sync your tags - $login_open$Login$login_close$",
     "description": "link to sign up for syncing",
     "placeholders": {
-      "signup_open": {
-        "content": "$1",
-        "example": "open signup tag"
-      },
-      "signup_close": {
-        "content": "$2",
-        "example": "close signup tag"
-      },
       "login_open": {
-        "content": "$3",
+        "content": "$1",
         "example": "open login tag"
       },
       "login_close": {
-        "content": "$4",
+        "content": "$2",
         "example": "close login tag"
       }
     }
@@ -1232,23 +1228,15 @@
     "description": "tag syncing title"
   },
   "syncing_settings_login": {
-    "message": "Sync your tags - $signup_open$Sign up$signup_close$ or $login_open$Login$login_close$",
+    "message": "Sync your tags - $login_open$Login$login_close$",
     "description": "link to sign up for syncing",
     "placeholders": {
-      "signup_open": {
-        "content": "$1",
-        "example": "open signup tag"
-      },
-      "signup_close": {
-        "content": "$2",
-        "example": "close signup tag"
-      },
       "login_open": {
-        "content": "$3",
+        "content": "$1",
         "example": "open login tag"
       },
       "login_close": {
-        "content": "$4",
+        "content": "$2",
         "example": "close login tag"
       }
     }

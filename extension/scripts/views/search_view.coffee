@@ -9,20 +9,18 @@ class BH.Views.SearchView extends BH.Views.MainView
     'click .delete_all': 'clickedDeleteAll'
     'click .corner .delete': 'clickedCancelSearch'
     'click .fresh_search': 'clickedFreshSearch'
+    'click .search_deeper': 'clickedSearchDeeper'
     'keyup .search': 'onSearchTyped'
     'blur .search': 'onSearchBlurred'
-    'click .remove_filter': 'onRemoveFilterClick'
 
   initialize: ->
-    @collection.on('reset', @onHistoryChanged, @)
-    @model.on('change:query', @onQueryChanged, @)
+    @collection.on 'reset', @onHistoryChanged, @
+
+    @model.on 'change:query', @onQueryChanged, @
     @model.on 'change:cacheDatetime', @onCacheChanged, @
-    @model.on 'change:filter', @onQueryChanged, @
 
     @page = new Backbone.Model(page: 1)
     @page.on('change:page', @renderSearchResults, @)
-
-    @on 'selected', (=> @$('.filters').hide()), @
 
   render: ->
     presenter = new BH.Presenters.SearchPresenter(@model.toJSON())
@@ -72,69 +70,75 @@ class BH.Views.SearchView extends BH.Views.MainView
 
     @renderSearchResults()
 
-  onRemoveFilterClick: (ev) ->
-    ev.preventDefault()
-    @model.unset 'filter', silent: true
-    @$('.filters').hide()
-    presenter = new BH.Presenters.SearchPresenter(@model.toJSON())
-    properties = presenter.searchInfo()
-    router.navigate @urlFor('search', properties.query), trigger: true
-
   clickedFreshSearch: (ev) ->
     ev.preventDefault()
     new BH.Lib.SearchHistory().expireCache()
     window.location.reload()
+
+  clickedSearchDeeper: (ev) ->
+    ev.preventDefault()
+    @$('.number_of_visits').html ''
+    @$('.search_deeper').addClass('searching')
+    @$('.pagination').html ''
+    @$el.removeClass('loaded')
+    @searchDeeper()
+
+  searchDeeper: ->
+    # This is a shitty solution
+    @deepSearched = true
+
+    options =
+      startAtResult: 5001
+      maxResults: 0
+
+    new BH.Lib.SearchHistory(@model.get('query')).fetch (options), (history) =>
+      @$('.search_deeper').hide()
+      @collection.add history
+      @$el.addClass('loaded')
 
   updateQueryReferences: ->
     presenter = new BH.Presenters.SearchPresenter(@model.toJSON())
     properties = presenter.searchInfo()
     @$el.removeClass('loaded')
     @$('.title').text properties.title
-    @$('.content').html('')
-
-    # Filters make for much faster searches...
-    @$('.spinner').text 'Searching deep...' unless properties.filterName
+    @$('.visits_content').html('')
 
     # if we are on the first page, don't show it in the URL
     page = if @page.get('page') != 1 then "/p#{@page.get('page')}" else ""
 
-    filterString = BH.Lib.QueryParams.write @model.get('filter')
-    router.navigate @urlFor('search', properties.query) + page + filterString
-
-  updateFilters: ->
-    if @model.get('filter')?.week || @model.get('filter')?.day
-      presenter = new BH.Presenters.SearchPresenter(@model.toJSON())
-      $('.filters .tag').text presenter.searchInfo().filterName
-      $('.filters').show()
-    else
-      $('.filters').hide()
+    router.navigate @urlFor('search', properties.query) + page
 
   renderVisits: ->
     @$el.addClass('loaded')
     @$('.search').focus()
-
-    @updateFilters()
 
     searchPaginationView = new BH.Views.SearchPaginationView
       collection: @collection
       query: @model.get('query')
       el: $('.pagination')
       model: @page
-      filter: @model.get('filter')
     searchPaginationView.render()
 
     @renderSearchResults()
 
   renderSearchResults: ->
-    @searchResultsView.undelegateEvents() if @searchResultsView
-    @searchResultsView = new BH.Views.SearchResultsView
-      query: @model.get('query')
-      collection: @collection
-      el: @$el.children('.content')
-      page: @page.get('page') - 1
-    @searchResultsView.render()
-    @searchResultsView.insertTags()
-    @searchResultsView.attachDragging()
+    @$('.visits_content').addClass('disappear')
+    setTimeout =>
+      @$('.visits_content').html ''
+      @searchResultsView.undelegateEvents() if @searchResultsView
+
+      @searchResultsView = new BH.Views.SearchResultsView
+        query: @model.get('query')
+        collection: @collection
+        el: @$('.visits_content')
+        page: @page
+        deepSearched: @deepSearched
+      @$('.visits_content').removeClass('disappear')
+
+      @searchResultsView.render()
+
+      @delay = 50
+    , @delay || 0
 
   updateDeleteButton: ->
     deleteButton = @$('.delete_all')
@@ -158,15 +162,7 @@ class BH.Views.SearchView extends BH.Views.MainView
     if prompt.get('action')
       analyticsTracker.searchResultsDeletion()
 
-      # Super shitty, definitely need to move
-      options = if weekFilter = @model.get('filter').week
-        startTime: moment(new Date(weekFilter)).startOf('day').valueOf()
-        endTime: moment(new Date(weekFilter)).add('days', 6).endOf('day').valueOf()
-      else if dayFilter = @model.get('filter').day
-        startTime: moment(new Date(dayFilter)).startOf('day').valueOf()
-        endTime: moment(new Date(dayFilter)).endOf('day').valueOf()
-
-      new BH.Lib.SearchHistory(@model.get('query')).destroy (options), =>
+      new BH.Lib.SearchHistory(@model.get('query')).destroy {}, =>
         @collection.reset []
         @model.unset 'cacheDatetime'
         @promptView.close()

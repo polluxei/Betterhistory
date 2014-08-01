@@ -8,10 +8,10 @@ class BH.Views.SearchPaginationView extends BH.Views.MainView
   initialize: ->
     @chromeAPI = chrome
     @query = @options.query
-    @filter = @options.filter
     @pages = BH.Lib.Pagination.calculatePages(@collection.length)
 
     @collection.on 'remove', @onVisitRemove, @
+    @collection.on 'add', @onVisitsAdd, @
 
     if @model.get('page') > @pages
       @model.set page: 1
@@ -21,14 +21,14 @@ class BH.Views.SearchPaginationView extends BH.Views.MainView
 
   render: ->
     @pages = BH.Lib.Pagination.calculatePages(@collection.length)
+    @model.set totalPages: @pages
 
     properties =
       # Hide pagination if there is only one page of results
       paginationClass: if @pages == 1 then 'hidden' else ''
 
     properties.pages = for i in [1..@pages] by 1
-      filter = BH.Lib.QueryParams.write @filter
-      url: "#{@urlFor('search', @query)}/p#{i}#{filter}"
+      url: "#{@urlFor('search', @query)}/p#{i}"
       className: if i == @model.get('page') then 'selected' else ''
       number: i
 
@@ -43,6 +43,9 @@ class BH.Views.SearchPaginationView extends BH.Views.MainView
       copy = @t('number_of_visits', [@collection.length])
       @$('.number_of_visits').text copy
 
+  onVisitsAdd: ->
+    @render()
+
   onPageClicked: (ev) ->
     $el = $(ev.currentTarget)
     analyticsTracker.paginationClick()
@@ -52,7 +55,7 @@ class BH.Views.SearchPaginationView extends BH.Views.MainView
     @$('a').removeClass('selected')
     $el.addClass('selected')
 
-    @model.set page: $el.data('page')
+    @model.set page: parseInt($el.data('page'), 10)
 
   getI18nValues: ->
     properties = []

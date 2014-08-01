@@ -44,9 +44,6 @@ body {
   __MSG_@@bidi_start_edge__: auto;
   __MSG_@@bidi_end_edge__: 5px;
 }
-.chrome-bootstrap .pagination li:last-child {
-  margin-__MSG_@@bidi_end_edge__: 20px;
-}
 .available_tags ul.tags li.new_tag {
   padding-__MSG_@@bidi_start_edge__: 10px;
   padding-__MSG_@@bidi_end_edge__: 14px;

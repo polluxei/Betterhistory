@@ -46,7 +46,6 @@ load = ->
       tagState.trigger('synced')
 
   window.settings = new BH.Models.Settings({})
-  window.state = new BH.Models.State({}, settings: settings)
 
   window.persistence = new BH.Init.Persistence
     localStore: new BH.Chrome.LocalStore
@@ -56,20 +55,13 @@ load = ->
       chrome: chrome
       tracker: analyticsTracker
     ajax: $.ajax
-    state: state
 
   settings.fetch
     success: =>
-      state.fetch
-        success: =>
-          state.updateRoute()
-
-          window.router = new BH.Router
-            settings: settings
-            state: state
-            tracker: analyticsTracker
-
-          Backbone.history.start()
+      window.router = new BH.Router
+        settings: settings
+        tracker: analyticsTracker
+      Backbone.history.start()
 
   mailingList = new BH.Init.MailingList(syncStore: syncStore)
   mailingList.prompt ->
@@ -87,4 +79,3 @@ if env == 'prod'
     errorTracker.report e
 else
   load()
-

@@ -26,7 +26,6 @@ load = ->
     syncing: false
 
   settings = new BH.Models.Settings({})
-  window.state = new BH.Models.State({}, settings: settings)
 
   window.persistence = new BH.Init.Persistence
     localStore: new BH.Chrome.LocalStore
@@ -36,7 +35,6 @@ load = ->
       chrome: chrome
       tracker: analyticsTracker
     ajax: $.ajax
-    state: state
 
   chrome.tabs.query currentWindow: true, active: true, (tabs) =>
     tab = tabs[0] || {}

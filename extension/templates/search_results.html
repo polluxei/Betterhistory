@@ -1,9 +1,7 @@
-<ol class='visits highlightable editable'>
+<ol class='visits highlightable editable draggable'>
   {{#visits}}
     <li class='visit visit_view searched' draggable='true' data-url='{{url}}' data-title='{{title}}'>
-      <div class='drag_handle'>
-        <div class='draggable_bumps'><div class='bump_divider'></div></div>
-      </div>
+      <div class='handle'></div>
       <a href='{{url}}' class='site'>
         <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
           <dt>
@@ -11,12 +9,27 @@
             {{{name}}}
           </dt>
           <dd class='location'>{{{location}}}</dd>
-          <dd>{{{time}}} | {{{extendedDate}}}</dd>
+          <dd class='datetime'>{{{datetime}}}</dd>
         </dl>
       </a>
       <a class='delete_visit delete' href='#' data-url='{{url}}' title='{{i18n_prompt_delete_button}}'>{{i18n_prompt_delete_button}}</a>
     </li>
   {{/visits}}
+  {{#extendSearch}}
+    <li class='search_deeper'>
+      <div class='wrapper'>
+        <div class='search_controls'>
+          <br />
+          <button class='search_deeper'>Search deeper</button>
+          <strong>(can be a bit slow)</strong>
+        </div>
+        <div class='working'>
+          <br />
+          <strong>Searching deeper...</strong>
+        </div>
+      </div>
+    </li>
+  {{/extendSearch}}
 </ol>
 {{^visits}}
   <p class='no_visits'>{{i18n_no_visits_found}}</p>

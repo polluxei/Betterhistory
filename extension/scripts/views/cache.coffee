@@ -6,9 +6,25 @@ class BH.Views.Cache
 
   expire: ->
     @cache =
-      weeks: {}
-      days: {}
       tags: {}
+      trails: {}
+
+  view: (name, args) ->
+    methodName = switch name
+      when 'tags' then 'tagsView'
+      when 'devices' then 'devicesView'
+      when 'visits' then 'visitsView'
+      when 'trail' then 'trailView'
+      when 'newTrail' then 'newTrailView'
+      when 'tag' then 'tagView'
+      when 'search' then 'searchView'
+      when 'settings' then 'settingsView'
+
+    view = @[methodName].apply(@, args)
+    view.select() if name != @lastRequest
+    @lastRequest = name
+
+    view
 
   tagsView: ->
     if !@cache.allTags
@@ -34,6 +50,31 @@ class BH.Views.Cache
 
     @cache.devices
 
+  visitsView: (date)->
+    if !@cache.visits
+      @cache.visits = new BH.Views.VisitsView
+        collection: new Backbone.Collection()
+        model: new Backbone.Model(date: date)
+      @insert @cache.visits.render().el
+
+    @cache.visits.model.set date: date
+    @cache.visits
+
+  trailView: (name) ->
+    if !@cache.trails[name]
+      @cache.trails[name] = new BH.Views.TrailView
+        name: name
+      @insert @cache.trails[name].render().el
+
+    @cache.trails[name]
+
+  newTrailView: ->
+    if !@cache.newTrail
+      @cache.newTrail = new BH.Views.NewTrailView()
+      @insert @cache.newTrail.render().el
+
+    @cache.newTrail
+
   tagView: (id) ->
     if !@cache.tags[id]
       tag = new BH.Models.Tag(name: id)
@@ -46,42 +87,14 @@ class BH.Views.Cache
 
     @cache.tags[id]
 
-  calendarView: ->
-    return @cache.calendar if @cache.calendar
+  searchView: ->
+    if !@cache.search
+      @cache.search = new BH.Views.SearchView
+        model: new Backbone.Model()
+        collection: new Backbone.Collection()
 
-    @cache.calendar = new BH.Views.CalendarView
-
-    @insert @cache.calendar.render().el
-    @cache.calendar
-
-  weekView: (id) ->
-    return @cache.weeks[id] if @cache.weeks[id]
-
-    @cache.weeks[id] = new BH.Views.WeekView
-      model: new Backbone.Model(id: id, date: new Date(id))
-      collection: new Backbone.Collection()
-
-    @insert @cache.weeks[id].render().el
-    @cache.weeks[id]
-
-  dayView: (id) ->
-    return @cache.days[id] if @cache.days[id]
-
-    @cache.days[id] = new BH.Views.DayView
-      model: new Backbone.Model(id: id, date: new Date(id))
-      collection: new Backbone.Collection()
-
-    @insert @cache.days[id].render().el
-    @cache.days[id]
-
-  searchView: (options)->
-    return @cache.search if @cache.search || options.expired == true
-
-    @cache.search = new BH.Views.SearchView
-      model: new Backbone.Model()
-      collection: new Backbone.Collection()
-
-    @insert @cache.search.render().el
+      @insert @cache.search.render().el
+      
     @cache.search
 
   settingsView: ->
@@ -95,4 +108,3 @@ class BH.Views.Cache
 
   insert: (html) ->
     $('.mainview').append html
-

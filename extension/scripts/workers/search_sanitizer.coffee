@@ -26,10 +26,7 @@ class BH.Workers.SearchSanitizer
 
     for term in @terms
       regExp = new RegExp(term, "i")
-      if result.time.match(regExp) ||
-         result.extendedDate.match(regExp) ||
-         result.url.match(regExp) ||
-         result.title.match(regExp)
+      if result.url.match(regExp) || result.title.match(regExp)
         hits.push(true)
 
     if @terms? && hits.length == @terms.length then true else false

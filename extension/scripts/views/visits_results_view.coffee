@@ -1,7 +1,7 @@
-class BH.Views.DayResultsView extends Backbone.View
+class BH.Views.VisitsResultsView extends Backbone.View
   @include BH.Modules.I18n
 
-  template: BH.Templates['day_results']
+  template: BH.Templates['visits_results']
 
   events:
     'click .delete_visit': 'deleteVisitClicked'
@@ -15,12 +15,33 @@ class BH.Views.DayResultsView extends Backbone.View
     @chromeAPI = chrome
 
   render: ->
-    presenter = new BH.Presenters.DayHistoryPresenter(@collection.toJSON())
-    properties = _.extend @getI18nValues(), history: presenter.history(), readOnly: state.get('readOnly')
+    properties = _.extend @getI18nValues(), visits: @collection.toJSON()
     html = Mustache.to_html @template, properties
+
     @$el.html html
 
+    @show()
+    @insertTags()
+    @attachDragging()
+    @inflateDates()
+
     @
+
+  resetRender: ->
+    @hide()
+    setTimeout (=> @$('.visits_content').html ''), 250
+
+  show: ->
+    @$el.removeClass('disappear')
+
+  hide: ->
+    @$el.addClass('disappear')
+
+  inflateDates: ->
+    lang = chrome.i18n.getUILanguage()
+    $('.time').each (i, el) =>
+      timestamp = @collection.at(i).get('lastVisitTime')
+      $(el).text new Date(timestamp).toLocaleTimeString(lang)
 
   insertTags: ->
     persistence.tag().cached (operations) ->

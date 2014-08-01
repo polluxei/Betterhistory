@@ -1,19 +1,26 @@
 <ul class='menu'>
-  <li class='today'>
-    <a href='#today'>
-      Today
+  <li>
+    <a href='#visits'>
+      Visits
     </a>
   </li>
-  {{#weeks}}
-    <li class='week' data-week-id='{{id}}'>
-      <a href='{{url}}'>
-        {{{shortTitle}}}
-      </a>
-    </li>
-  {{/weeks}}
-  <li class='calendar'>
-    <a href='#calendar'>
-      {{i18n_calendar_link}}
+  <li>
+    <a class='tags' href='#tags'>
+      {{i18n_tags_link}}
+      <span class='syncing'></span>
+    </a>
+  </li>
+  <li>
+    <a class='devices' href='#devices'>
+      {{i18n_devices_link}}
+    </a>
+  </li>
+</ul>
+<div class='menu menu_view disappearable'></div>
+<ul class='menu disappearable'>
+  <li>
+    <a class='setting' href='#settings'>
+      {{i18n_settings_link}}
     </a>
   </li>
 </ul>

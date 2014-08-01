@@ -1,110 +1,70 @@
 class BH.Router extends Backbone.Router
   routes:
-    '': 'reset'
+    '': 'visits'
     'tags': 'tags'
     'tags/:id': 'tag'
     'devices': 'devices'
-    'weeks/:id': 'week'
-    'days/:id': 'day'
-    'calendar': 'calendar'
     'settings': 'settings'
-    'search/*query(/p:page)(?*filterString)': 'search'
+    'search/*query(/p:page)': 'search'
     'search': 'search'
-    'today': 'today'
+    'visits(/:date)': 'visits'
+    'trails/new': 'newTrail'
+    'trails/:name': 'trail'
 
   initialize: (options) ->
     settings = options.settings
     tracker = options.tracker
-    @state = options.state
+
+    @cache = new BH.Views.Cache
+      settings: settings
+
+    @trails = new Backbone.Collection()
 
     @app = new BH.Views.AppView
       el: $('.app')
-      collection: new BH.Collections.Weeks()
       settings: settings
-      state: @state
+      trails: @trails
     @app.render()
 
-    @on 'route', (route) =>
-      tracker.pageView(Backbone.history.getFragment())
-      window.scroll 0, 0
-      if settings.get('openLocation') == 'last_visit'
-        @state.set route: location.hash
-
-    @reset if location.hash == ''
-
-  reset: ->
-    @navigate @state.get('route'), trigger: true
-
   tags: ->
-    view = @app.loadTags()
-    view.select()
+    view = @cache.view('tags')
     delay ->
       view.collection.fetch()
 
   devices: ->
-    view = @app.loadDevices()
-    view.select()
+    view = @cache.view('devices')
     delay -> view.collection.fetch()
 
   tag: (id) ->
-    view = @app.loadTag(id)
-    view.select()
+    view = @cache.view('tag', [id])
     delay ->
       view.model.fetch()
 
-  calendar: ->
-    view = @app.loadCalendar()
-    view.select()
+  newTrail: ->
+    view = @cache.view('newTrail')
+    view.on 'build_trail', (model) =>
+      @trails.add model
 
-  week: (id) ->
-    view = @app.loadWeek(id)
-    view.select()
-    delay ->
-      new BH.Lib.WeekHistory(new Date(id)).fetch (history) ->
-        view.collection.reset(history)
+  trail: (name) ->
+    view = @cache.view('trail')
 
-  day: (id) ->
-    view = @app.loadDay id
-    view.select()
+  visits: (date = new Date()) ->
+    date = moment(date).startOf('day').toDate()
+    view = @cache.view('visits', [date])
     delay ->
-      new BH.Lib.DayHistory(new Date(id)).fetch (history) ->
-        view.collection.reset history
-
-  today: ->
-    view = @app.loadToday()
-    view.select()
-    delay ->
-      id = moment(new Date()).id()
-      new BH.Lib.DayHistory(new Date(id)).fetch (history) ->
+      new BH.Lib.VisitsHistory(date).fetch (history) ->
         view.collection.reset history
 
   settings: ->
-    view = @app.loadSettings()
-    view.select()
+    view = @cache.view('settings')
 
-  search: (query, page, filterString) ->
-    filter = BH.Lib.QueryParams.read filterString
-
-    # Load a fresh search view when the query is empty to
-    # ensure a new WeekHistory instance is created because
-    # this usually means a search has been canceled
-    view = @app.loadSearch(expired: true if query == '' || page)
+  search: (query, page) ->
+    view = @cache.view('search')
     view.page.set(page: parseInt(page, 10), {silent: true}) if page?
-    view.model.set
-      query: decodeURIComponent(query)
-      filter: filter
-    view.select()
+    view.model.set query: decodeURIComponent(query)
     delay ->
-      # Super shitty, definitely need to move
-      options = if filter.week
-        startTime: moment(new Date(filter.week)).startOf('day').valueOf()
-        endTime: moment(new Date(filter.week)).add('days', 6).endOf('day').valueOf()
-      else if filter.day
-        startTime: moment(new Date(filter.day)).startOf('day').valueOf()
-        endTime: moment(new Date(filter.day)).endOf('day').valueOf()
-
       if query != ''
-        new BH.Lib.SearchHistory(query).fetch options, (history, cacheDatetime = null) ->
+        new BH.Lib.SearchHistory(query).fetch {}, (history, cacheDatetime = null) ->
           view.collection.reset history
           if cacheDatetime?
             view.model.set cacheDatetime: cacheDatetime

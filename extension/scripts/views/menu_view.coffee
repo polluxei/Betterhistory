@@ -1,39 +1,25 @@
 class BH.Views.MenuView extends Backbone.View
   @include BH.Modules.I18n
 
+  className: 'menu_view'
+
   template: BH.Templates['menu']
 
   events:
-    'click .menu > .today': 'todayClicked'
-    'click .menu > .week': 'weekClicked'
-    'click .menu > .calendar': 'calendarClicked'
+    'click a': 'linkClicked'
 
   initialize: ->
-    @chromeAPI = chrome
+    @collection.on 'add', @render, @
 
   render: ->
-    presenter = new BH.Presenters.WeeksPresenter(@collection)
-    properties = _.extend {}, @getI18nValues(), presenter.weeks()
-
+    properties = _.extend {}, @getI18nValues(), trails: @collection.toJSON()
     html = Mustache.to_html @template, properties
     @$el.html html
+    @
 
-  todayClicked: (ev) ->
-    @selectItem $(ev.currentTarget)
-    analyticsTracker.todayView()
-
-  weekClicked: (ev) ->
-    $el = $(ev.currentTarget)
-    @selectItem $el
-    analyticsTracker.weekView($el.data('week-id'), $el.index())
-
-  calendarClicked: (ev) ->
-    @selectItem $(ev.currentTarget)
-    analyticsTracker.calendarView()
-
-  selectItem: ($el) ->
+  linkClicked: (ev) ->
     @$('.menu > *').removeClass 'selected'
-    $el.addClass 'selected'
+    $(ev.currentTarget).parent().addClass 'selected'
 
   getI18nValues: ->
-    @t ['calendar_link']
+    @t ['settings_link', 'tags_link', 'devices_link', 'search_link']
