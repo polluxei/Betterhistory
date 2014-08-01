@@ -562,7 +562,7 @@
   },
 
   "number_of_visits": {
-    "message": "$number$ visits",
+    "message": "$number$ visit",
     "description": "Label to a number representing a number of visits",
     "placeholders": {
       "number": {
