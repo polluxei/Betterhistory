@@ -9,6 +9,7 @@ class BH.Views.SearchResultsView extends Backbone.View
   initialize: ->
     @page = @options.page
     @collection.on 'add', @onVisitAdded, @
+    @page.on 'change:page', @onPageChange, @
 
   render: ->
     [start, end] = BH.Lib.Pagination.calculateBounds(@page.get('page') - 1)
@@ -17,18 +18,40 @@ class BH.Views.SearchResultsView extends Backbone.View
 
     properties = _.extend @getI18nValues(),
       visits: presenter.history(start, end)
-      extendSearch: @page.get('totalPages') == @page.get('page')
+      extendSearch: @page.get('totalPages') == @page.get('page') && !@options.deepSearched
 
     html = Mustache.to_html @template, properties
     @$el.html html
 
+    @show()
+    @insertTags()
+    @attachDragging()
+    @inflateDates()
+
     @
+
+  resetRender: ->
+    @hide()
+    setTimeout (=> @$('.visits_content').html ''), 250
+
+  show: ->
+    @$el.removeClass('disappear')
+
+  hide: ->
+    @$el.addClass('disappear')
 
   inflateDates: ->
     lang = chrome.i18n.getUILanguage()
-    $('.datetime').each (i, el) =>
-      timestamp = @collection.at(i).get('lastVisitTime')
-      $(el).text new Date(timestamp).toLocaleDateString(lang)
+
+    [start, end] = BH.Lib.Pagination.calculateBounds(@page.get('page') - 1)
+    presenter = new BH.Presenters.SearchHistoryPresenter(@collection.toJSON(), @options.query)
+    history = presenter.history(start, end)
+
+    $('.visit .datetime').each (i, el) =>
+      @inflateDate $(el), history[i].lastVisitTime, lang
+
+  inflateDate: ($el, timestamp, lang) ->
+    $el.text new Date(timestamp).toLocaleString(lang)
 
   insertTags: ->
     persistence.tag().cached (operations) ->
@@ -64,6 +87,12 @@ class BH.Views.SearchResultsView extends Backbone.View
     if $('.visits li').length < 100
       visitView = new BH.Views.VisitView model: model
       @$('.visits').append visitView.render().el
+
+      lang = chrome.i18n.getUILanguage()
+      @inflateDate visitView.$('.datetime'), model.get('lastVisitTime'), lang
+
+  onPageChange: ->
+    @render()
 
   getI18nValues: ->
     @t [

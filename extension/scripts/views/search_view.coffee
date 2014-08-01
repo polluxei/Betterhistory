@@ -84,6 +84,9 @@ class BH.Views.SearchView extends BH.Views.MainView
     @searchDeeper()
 
   searchDeeper: ->
+    # This is a shitty solution
+    @deepSearched = true
+
     options =
       startAtResult: 5001
       maxResults: 0
@@ -129,11 +132,10 @@ class BH.Views.SearchView extends BH.Views.MainView
         collection: @collection
         el: @$('.visits_content')
         page: @page
+        deepSearched: @deepSearched
       @$('.visits_content').removeClass('disappear')
 
       @searchResultsView.render()
-      @searchResultsView.insertTags()
-      @searchResultsView.attachDragging()
 
       @delay = 50
     , @delay || 0
