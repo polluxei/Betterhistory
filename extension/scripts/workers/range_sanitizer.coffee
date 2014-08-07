@@ -7,6 +7,7 @@ class BH.Workers.RangeSanitizer
     for result in results
       if @verifyDateRange(result)
         result.location = result.url
+        result.host = getDomain(result.url)
         result.title ||=  '(No title)'
         @removeScriptTags(result)
         prunedResults.push(result)
@@ -29,6 +30,10 @@ class BH.Workers.RangeSanitizer
     return -1 if a.lastVisitTime > b.lastVisitTime
     return 1 if a.lastVisitTime < b.lastVisitTime
     0
+
+getDomain = (url) ->
+  match = url.match(/\w+:\/\/(.*?)\//)
+  if match == null then null else match[0]
 
 unless onServer?
   self.addEventListener 'message', (e) ->

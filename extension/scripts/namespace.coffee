@@ -14,6 +14,7 @@
   Migrations: {}
   Init: {}
   Chrome: {}
+  lang: ''
   Base: ->
 
 module.exports = @BH if onServer?
