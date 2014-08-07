@@ -4,18 +4,21 @@ class BH.Views.VisitsResultsView extends Backbone.View
   template: BH.Templates['visits_results']
 
   events:
+    'click .delete_all': 'deleteAllClicked'
     'click .delete_visit': 'deleteVisitClicked'
-    'click .delete_grouped_visit': 'deleteGroupedVisitClicked'
-    'click .delete_interval': 'deleteIntervalClicked'
-    'click .show_visits': 'toggleGroupedVisitsClicked'
-    'click .hide_visits': 'toggleGroupedVisitsClicked'
     'click .visit > a': 'visitClicked'
 
   initialize: ->
     @chromeAPI = chrome
 
   render: ->
-    properties = _.extend @getI18nValues(), visits: @collection.toJSON()
+    properties = @getI18nValues()
+
+    if @collection.length > 0
+      properties.history =
+        visits: @collection.toJSON()
+        date: @model.get('date').toLocaleDateString('en')
+
     html = Mustache.to_html @template, properties
 
     @$el.html html
@@ -87,35 +90,32 @@ class BH.Views.VisitsResultsView extends Backbone.View
       ev.preventDefault()
       router.navigate($(ev.target).attr('href'), trigger: true)
 
+  deleteAllClicked: (ev) ->
+    ev.preventDefault()
+    @promptToDeleteAllVisits()
+
   deleteVisitClicked: (ev) ->
     ev.preventDefault()
     $el = $(ev.currentTarget)
     analyticsTracker.visitDeletion()
-    new BH.Chrome.History().deleteUrl $el.data('url'), ->
+    new BH.Chrome.History().deleteUrl $el.data('url'), =>
       $el.parent('.visit').remove()
 
-  deleteGroupedVisitClicked: (ev) ->
-    ev.preventDefault()
-    ev.stopPropagation()
-    analyticsTracker.groupedVisitsDeletion()
-    $(ev.currentTarget).siblings('.visits').children().each (i, visit) ->
-      $(visit).find('.delete_visit').trigger('click')
+  promptToDeleteAllVisits: ->
+    lang = chrome.i18n.getUILanguage()
+    timestamp = @model.get('date').toLocaleDateString(lang)
+    promptMessage = @t 'confirm_delete_all_visits', [timestamp]
+    @promptView = BH.Views.CreatePrompt(promptMessage)
+    @promptView.open()
+    @promptView.model.on('change', @promptAction, @)
 
-    $(ev.currentTarget).parents('.visit').remove()
-
-  deleteIntervalClicked: (ev) ->
-    ev.preventDefault()
-    analyticsTracker.timeIntervalDeletion()
-    visitElements = $(ev.currentTarget).parents('.interval').children('.visits').children()
-    $(visitElements).each (i, visit) ->
-      setTimeout ->
-        $(visit).children('.delete').trigger('click')
-      , i * 10
-
-  toggleGroupedVisitsClicked: (ev) ->
-    ev.preventDefault()
-    $(ev.currentTarget).parents('.visit')
-      .toggleClass('expanded')
+  promptAction: (prompt) ->
+    if prompt.get('action')
+      analyticsTracker.dayVisitsDeletion()
+      new BH.Lib.VisitsHistory(@model.get('date')).destroy ->
+        window.location.reload()
+    else
+      @promptView.close()
 
   getI18nValues: ->
     @t [
@@ -125,4 +125,5 @@ class BH.Views.VisitsResultsView extends Backbone.View
       'expand_button'
       'collapse_button'
       'search_by_domain'
+      'delete_all_visits_for_filter_button'
     ]

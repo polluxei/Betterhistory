@@ -27,6 +27,7 @@ class BH.Views.VisitsView extends BH.Views.MainView
 
     @visitsResultsView = new BH.Views.VisitsResultsView
       collection: @collection
+      model: @model
       el: @$('.visits_content')
 
     @

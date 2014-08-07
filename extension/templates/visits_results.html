@@ -1,24 +1,33 @@
-<ol class='visits highlightable editable draggable'>
-  {{#visits}}
-    <li class='visit' draggable='true' data-url='{{url}}' data-title='{{title}}'>
-      {{^readOnly}}
-        <div class='handle'></div>
-      {{/readOnly}}
-      <a href='{{url}}' class='item site'>
-        <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
-          <dt>
-            <div class='active_tags'></div>
-            {{{title}}}
-          </dt>
-          <dd class='time'>{{time}}</dd>
-          <dd class='location'>{{url}}</dd>
-        </dl>
-      </a>
-      <a class='search_domain action' href='#search/{{host}}'>{{i18n_search_by_domain}}</a>
-      <a class='delete_visit delete' href='#' data-url='{{url}}' title='{{i18n_prompt_delete_button}}'>{{i18n_prompt_delete_button}}</a>
-    </li>
-  {{/visits}}
-</ol>
-{{^visits}}
+{{#history}}
+  <div class='controls'>
+    <span class='text'>{{date}}</span>
+    <div class='spacer'></div>
+    <button class='delete_all'>
+      {{i18n_delete_all_visits_for_filter_button}}
+    </button>
+  </div>
+  <ol class='visits highlightable editable draggable'>
+    {{#visits}}
+      <li class='visit' draggable='true' data-url='{{url}}' data-title='{{title}}'>
+        {{^readOnly}}
+          <div class='handle'></div>
+        {{/readOnly}}
+        <a href='{{url}}' class='item site'>
+          <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
+            <dt>
+              <div class='active_tags'></div>
+              {{{title}}}
+            </dt>
+            <dd class='time'>{{time}}</dd>
+            <dd class='location'>{{url}}</dd>
+          </dl>
+        </a>
+        <a class='search_domain action' href='#search/{{host}}'>{{i18n_search_by_domain}}</a>
+        <a class='delete_visit delete' href='#' data-url='{{url}}' title='{{i18n_prompt_delete_button}}'>{{i18n_prompt_delete_button}}</a>
+      </li>
+    {{/visits}}
+  </ol>
+{{/history}}
+{{^history}}
   <p>{{i18n_no_visits_found}}</p>
-{{/visits}}
+{{/history}}
