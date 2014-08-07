@@ -41,17 +41,15 @@ class BH.Views.SearchResultsView extends Backbone.View
     @$el.addClass('disappear')
 
   inflateDates: ->
-    lang = chrome.i18n.getUILanguage()
-
     [start, end] = BH.Lib.Pagination.calculateBounds(@page.get('page') - 1)
     presenter = new BH.Presenters.SearchHistoryPresenter(@collection.toJSON(), @options.query)
     history = presenter.history(start, end)
 
     $('.visit .datetime').each (i, el) =>
-      @inflateDate $(el), history[i].lastVisitTime, lang
+      @inflateDate $(el), history[i].lastVisitTime
 
-  inflateDate: ($el, timestamp, lang) ->
-    $el.text new Date(timestamp).toLocaleString(lang)
+  inflateDate: ($el, timestamp) ->
+    $el.text new Date(timestamp).toLocaleString(BH.lang)
 
   insertTags: ->
     persistence.tag().cached (operations) ->
@@ -88,8 +86,7 @@ class BH.Views.SearchResultsView extends Backbone.View
       visitView = new BH.Views.VisitView model: model
       @$('.visits').append visitView.render().el
 
-      lang = chrome.i18n.getUILanguage()
-      @inflateDate visitView.$('.datetime'), model.get('lastVisitTime'), lang
+      @inflateDate visitView.$('.datetime'), model.get('lastVisitTime')
 
   onPageChange: ->
     @render()

@@ -8,6 +8,8 @@ if env == 'prod'
 window.analyticsTracker = new BH.Trackers.AnalyticsTracker(_gaq)
 
 load = ->
+  BH.lang = chrome.i18n.getUILanguage()
+
   analyticsTracker.historyOpen()
 
   window.syncStore = new BH.Chrome.SyncStore

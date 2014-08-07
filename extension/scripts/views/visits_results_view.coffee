@@ -41,10 +41,9 @@ class BH.Views.VisitsResultsView extends Backbone.View
     @$el.addClass('disappear')
 
   inflateDates: ->
-    lang = chrome.i18n.getUILanguage()
     $('.time').each (i, el) =>
       timestamp = @collection.at(i).get('lastVisitTime')
-      $(el).text new Date(timestamp).toLocaleTimeString(lang)
+      $(el).text new Date(timestamp).toLocaleTimeString(BH.lang)
 
   insertTags: ->
     persistence.tag().cached (operations) ->
@@ -102,8 +101,7 @@ class BH.Views.VisitsResultsView extends Backbone.View
       $el.parent('.visit').remove()
 
   promptToDeleteAllVisits: ->
-    lang = chrome.i18n.getUILanguage()
-    timestamp = @model.get('date').toLocaleDateString(lang)
+    timestamp = @model.get('date').toLocaleDateString(BH.lang)
     promptMessage = @t 'confirm_delete_all_visits', [timestamp]
     @promptView = BH.Views.CreatePrompt(promptMessage)
     @promptView.open()
