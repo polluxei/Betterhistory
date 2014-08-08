@@ -26,6 +26,10 @@ class BH.Router extends Backbone.Router
       trails: @trails
     @app.render()
 
+    @on 'route', ->
+      url = Backbone.history.getFragment()
+      window.analyticsTracker.pageView url
+
   tags: ->
     view = @cache.view('tags')
     delay ->
