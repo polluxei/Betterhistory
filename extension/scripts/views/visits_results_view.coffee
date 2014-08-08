@@ -15,9 +15,11 @@ class BH.Views.VisitsResultsView extends Backbone.View
     properties = @getI18nValues()
 
     if @collection.length > 0
+      date = @model.get('date')
       properties.history =
         visits: @collection.toJSON()
-        date: @model.get('date').toLocaleDateString('en')
+        date: date.toLocaleDateString('en')
+        day: moment(date).format('dddd')
 
     html = Mustache.to_html @template, properties
 
