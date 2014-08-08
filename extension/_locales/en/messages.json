@@ -190,7 +190,7 @@
   },
 
   "search_input_placeholder_text": {
-    "message": "Search title, url, or date",
+    "message": "Search title or url",
     "description": "Placeholder text in the search input box"
   },
   "search_link": {
