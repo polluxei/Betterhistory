@@ -7,7 +7,7 @@ class BH.Presenters.Timeline extends BH.Presenters.Base
       label: getLabel(date)
       date: date.format('MMM Do')
       selected: true if date.isSame(moment(@json.date).startOf('day'))
-      id: date.format('M-D-YY')
+      id: getId(date)
 
     dates: dates
     nextButtonDisabled: dates[0].id == moment().format('M-D-YY')
@@ -15,4 +15,11 @@ class BH.Presenters.Timeline extends BH.Presenters.Base
 getLabel = (date) ->
   return 'Today' if moment().startOf('day').isSame(date)
   return 'Yesterday' if moment().subtract('days', 1).startOf('day').isSame(date)
+
   date.format('dddd')
+
+getId = (date) ->
+  return 'today' if moment().startOf('day').isSame(date)
+  return 'yesterday' if moment().subtract('days', 1).startOf('day').isSame(date)
+
+  date.format('M-D-YY')
