@@ -78,7 +78,7 @@ class BH.Router extends Backbone.Router
     view.page.set(page: parseInt(page, 10), {silent: true}) if page?
     view.model.set query: decodeURIComponent(query)
     delay ->
-      if query != ''
+      if query? && query != ''
         new BH.Lib.SearchHistory(query).fetch {}, (history, cacheDatetime = null) ->
           view.collection.reset history
           if cacheDatetime?
