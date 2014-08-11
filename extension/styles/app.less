@@ -74,13 +74,34 @@
   }
   .hours {
     width: 738px;
+    margin: -34px 0;
     display: flex;
     position: fixed;
-    margin-top: -34px;
     padding: 10px 0;
     background-image: -webkit-linear-gradient(#ffffff, #ffffff 40%, rgba(255, 255, 255, 0.92));
     z-index: 100;
     border-bottom: none;
+
+    .moon {
+      background-image: url(/images/moon.png);
+      order: 1;
+      background-position: 6px 6px;
+      background-size: 18px;
+    }
+    .sun {
+      background-image: url(/images/sun.png);
+      order: 3;
+      background-position: 6px 5px;
+      background-size: 20px;
+    }
+    .moon, .sun {
+      background-repeat: no-repeat;
+      height: 25px;
+      width: 25px;
+      opacity: 0.6;
+      display: flex;
+      flex: 1;
+    }
 
     ol.pagination {
       li {

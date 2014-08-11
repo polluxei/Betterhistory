@@ -1,128 +1,17 @@
-<div class='controls hours'>
-  <ol class='pagination'>
-    <li>
-      <a href='#' class='disabled'>
-        12
-      </a>
-    </li>
-    <li>
-      <a href='#' class='disabled'>
-        1
-      </a>
-    </li>
-    <li>
-      <a href='#' class='disabled'>
-        2
-      </a>
-    </li>
-    <li>
-      <a href='#' class='disabled'>
-        3
-      </a>
-    </li>
-    <li>
-      <a href='#' class='disabled'>
-        4
-      </a>
-    </li>
-    <li>
-      <a href='#' class='disabled'>
-        5
-      </a>
-    </li>
-    <li>
-      <a href='#' class='disabled'>
-        6
-      </a>
-    </li>
-    <li>
-      <a href='#'>
-        7
-      </a>
-    </li>
-    <li>
-      <a href='#'>
-        8
-      </a>
-    </li>
-    <li>
-      <a href='#'>
-        9
-      </a>
-    </li>
-    <li>
-      <a href='#'>
-        10
-      </a>
-    </li>
-    <li>
-      <a href='#' class='disabled'>
-        11
-      </a>
-    </li>
-    <li>
-      <a href='#' class='disabled'>
-        12
-      </a>
-    </li>
-    <li>
-      <a href='#'>
-        1
-      </a>
-    </li>
-    <li>
-      <a href='#'>
-        2
-      </a>
-    </li>
-    <li>
-      <a href='#'>
-        3
-      </a>
-    </li>
-    <li>
-      <a href='#'>
-        4
-      </a>
-    </li>
-    <li>
-      <a href='#'>
-        5
-      </a>
-    </li>
-    <li>
-      <a href='#'>
-        6
-      </a>
-    </li>
-    <li>
-      <a href='#' class='disabled'>
-        7
-      </a>
-    </li>
-    <li>
-      <a href='#' class='disabled'>
-        8
-      </a>
-    </li>
-    <li>
-      <a href='#' class='disabled'>
-        9
-      </a>
-    </li>
-    <li>
-    <a href='#' class='disabled'>
-        10
-      </a>
-    </li>
-    <li>
-      <a href='#'>
-        11
-      </a>
-    </li>
-  </ol>
-</div>
 {{#history}}
+  <div class='controls hours'>
+    <div class='moon'></div>
+    <ol class='pagination'>
+      {{#hours}}
+        <li>
+          <a href='#hour_{{value}}' class='{{^enabled}}disabled{{/enabled}}'>
+            {{label}}
+          </a>
+        </li>
+      {{/hours}}
+    </ol>
+    <div class='sun'></div>
+  </div>
   <div class='controls' style='display:none;'>
     <span class='text'>
       <h3 style='margin: 0 0 5px;'>{{day}}</h3>
