@@ -31,3 +31,17 @@ class BH.Lib.VisitsHistory
 
     @history.deleteRange options, =>
       callback()
+
+  destroyHour: (hour, callback = ->) ->
+    startTime = new Date(@startTime)
+    startTime.setHours(hour)
+
+    endTime = new Date(@endTime)
+    endTime.setHours(hour)
+
+    options =
+      startTime: startTime.getTime()
+      endTime: endTime.getTime()
+
+    @history.deleteRange options, =>
+      callback()

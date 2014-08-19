@@ -12,37 +12,40 @@
     </ol>
     <div class='sun'></div>
   </div>
-  <div class='controls' style='display:none;'>
-    <span class='text'>
-      <h3 style='margin: 0 0 5px;'>{{day}}</h3>
-        {{date}}
-    </span>
-    <div class='spacer'></div>
-    <button class='delete_all'>
-      {{i18n_delete_all_visits_for_filter_button}}
-    </button>
+  <div>
+    {{#visitsByHour}}
+      <div id='hour_{{hour}}' style='padding-top: 10px;'>
+        <div class='controls' style='border: none; padding-left: 15px;'>
+          <h4 style='margin: 10px 0 0;'><strong>{{hour_label}}</strong></h4>
+          <div class='spacer'></div>
+          <button class='delete_hour' style='font-size: 11px;' data-hour='{{hour}}'>
+            {{i18n_delete_all_visits_for_filter_button}}
+          </button>
+        </div>
+        <ol class='visits highlightable editable draggable'>
+          {{#visits}}
+            <li class='visit' draggable='true' data-url='{{url}}' data-title='{{title}}'>
+              {{^readOnly}}
+                <div class='handle'></div>
+              {{/readOnly}}
+              <a href='{{url}}' class='item site'>
+                <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
+                  <dt>
+                    <div class='active_tags'></div>
+                    {{{title}}}
+                  </dt>
+                  <dd class='time'>{{time}}</dd>
+                  <dd class='location'>{{url}}</dd>
+                </dl>
+              </a>
+              <a class='search_domain action' href='#search/{{host}}'>{{i18n_search_by_domain}}</a>
+              <a class='delete_visit delete' href='#' data-url='{{url}}' title='{{i18n_prompt_delete_button}}'>{{i18n_prompt_delete_button}}</a>
+            </li>
+          {{/visits}}
+        </ol>
+      </div>
+    {{/visitsByHour}}
   </div>
-  <ol class='visits highlightable editable draggable' style='padding-top: 40px;'>
-    {{#visits}}
-      <li class='visit' draggable='true' data-url='{{url}}' data-title='{{title}}'>
-        {{^readOnly}}
-          <div class='handle'></div>
-        {{/readOnly}}
-        <a href='{{url}}' class='item site'>
-          <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
-            <dt>
-              <div class='active_tags'></div>
-              {{{title}}}
-            </dt>
-            <dd class='time'>{{time}}</dd>
-            <dd class='location'>{{url}}</dd>
-          </dl>
-        </a>
-        <a class='search_domain action' href='#search/{{host}}'>{{i18n_search_by_domain}}</a>
-        <a class='delete_visit delete' href='#' data-url='{{url}}' title='{{i18n_prompt_delete_button}}'>{{i18n_prompt_delete_button}}</a>
-      </li>
-    {{/visits}}
-  </ol>
 {{/history}}
 {{^history}}
   <p>{{i18n_no_visits_found}}</p>

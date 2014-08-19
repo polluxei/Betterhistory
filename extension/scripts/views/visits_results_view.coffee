@@ -4,9 +4,10 @@ class BH.Views.VisitsResultsView extends Backbone.View
   template: BH.Templates['visits_results']
 
   events:
-    'click .delete_all': 'deleteAllClicked'
+    'click .delete_hour': 'deleteHourClicked'
     'click .delete_visit': 'deleteVisitClicked'
     'click .visit > a': 'visitClicked'
+    'click .hours a': 'hourClicked'
 
   initialize: ->
     @chromeAPI = chrome
@@ -14,12 +15,13 @@ class BH.Views.VisitsResultsView extends Backbone.View
   render: ->
     properties = @getI18nValues()
     presenter = new BH.Presenters.VisitsPresenter()
+    visitsByHour = presenter.visitsByHour(@collection.toJSON())
     hours = presenter.hoursDistribution(@collection.toJSON())
 
     if @collection.length > 0
       date = @model.get('date')
       properties.history =
-        visits: @collection.toJSON()
+        visitsByHour: visitsByHour.reverse()
         date: date.toLocaleDateString('en')
         day: moment(date).format('dddd')
         hours: [
@@ -57,6 +59,34 @@ class BH.Views.VisitsResultsView extends Backbone.View
     @insertTags()
     @attachDragging()
     @inflateDates()
+
+
+    lastId = null
+    topMenu = @$('.hours')
+    topMenuHeight = topMenu.outerHeight()
+    menuItems = topMenu.find("a")
+    scrollItems = menuItems.map -> $($(this).attr("href"))
+
+    $(window).scroll ->
+
+      # Get container scroll position
+      fromTop = document.body.scrollTop
+
+      # Get id of current scroll item
+      cur = []
+      scrollItems.map (el) ->
+        offsetTop = el.getBoundingClientRect().top + document.body.scrollTop - 205
+        cur.push el if offsetTop < fromTop
+
+      # Get the id of the current element
+      id = cur[cur.length - 1]?.id
+      if lastId isnt id
+        lastId = id
+
+        # Set/remove active class
+        menuItems.removeClass("selected")
+        menuItems.filter("[href='##{id}']").addClass "selected"
+      return
 
     @
 
@@ -119,9 +149,17 @@ class BH.Views.VisitsResultsView extends Backbone.View
       ev.preventDefault()
       router.navigate($(ev.target).attr('href'), trigger: true)
 
-  deleteAllClicked: (ev) ->
+  hourClicked: (ev) ->
     ev.preventDefault()
-    @promptToDeleteAllVisits()
+    window.analyticsTracker.hourClick()
+
+    el = $($(ev.currentTarget).attr('href'))[0]
+    document.body.scrollTop = el.getBoundingClientRect().top + document.body.scrollTop - 155
+
+  deleteHourClicked: (ev) ->
+    ev.preventDefault()
+    hour = $(ev.currentTarget).data('hour')
+    @promptToDeleteHour(hour)
 
   deleteVisitClicked: (ev) ->
     ev.preventDefault()
@@ -130,17 +168,24 @@ class BH.Views.VisitsResultsView extends Backbone.View
     new BH.Chrome.History().deleteUrl $el.data('url'), =>
       $el.parent('.visit').remove()
 
-  promptToDeleteAllVisits: ->
-    timestamp = @model.get('date').toLocaleDateString(BH.lang)
+  promptToDeleteHour: (hour) ->
+    date = new Date(@model.get('date'))
+    date.setHours(hour)
+    date.setSeconds(0)
+    date.setMinutes(0)
+    timestamp = date.toLocaleString(BH.lang)
     promptMessage = @t 'confirm_delete_all_visits', [timestamp]
     @promptView = BH.Views.CreatePrompt(promptMessage)
     @promptView.open()
-    @promptView.model.on('change', @promptAction, @)
+    @promptView.model.on 'change', (prompt) =>
+      @promptAction(prompt, hour)
+    , @
 
-  promptAction: (prompt) ->
+  promptAction: (prompt, hour) ->
     if prompt.get('action')
       analyticsTracker.dayVisitsDeletion()
-      new BH.Lib.VisitsHistory(@model.get('date')).destroy ->
+      visitHistory = new BH.Lib.VisitsHistory(@model.get('date'))
+      visitHistory.destroyHour hour, ->
         window.location.reload()
     else
       @promptView.close()
