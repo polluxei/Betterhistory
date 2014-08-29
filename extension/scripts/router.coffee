@@ -67,7 +67,7 @@ class BH.Router extends Backbone.Router
     view = @cache.view('visits', [date])
 
     delay ->
-      new BH.Lib.VisitsHistory(date).fetch (history) ->
+      new ChromeHistorian.Day(date).fetch (history) ->
         view.collection.reset history
 
   settings: ->
@@ -79,7 +79,7 @@ class BH.Router extends Backbone.Router
     view.model.set query: decodeURIComponent(query)
     delay ->
       if query? && query != ''
-        new BH.Lib.SearchHistory(query).fetch {}, (history, cacheDatetime = null) ->
+        new ChromeHistorian.Search(query).fetch {}, (history, cacheDatetime = null) ->
           view.collection.reset history
           if cacheDatetime?
             view.model.set cacheDatetime: cacheDatetime

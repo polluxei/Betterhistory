@@ -98,6 +98,7 @@ popupScripts = [
 
 scripts = [
   'scripts/namespace.js',
+  'scripts/chrome_historian.js',
   'scripts/frameworks/honeybadger.js',
   'scripts/frameworks/underscore.js',
   'scripts/frameworks/zepto.min.js',
@@ -113,7 +114,6 @@ scripts = [
   'scripts/templates.js',
   'scripts/modules/i18n.js',
   'scripts/modules/url.js',
-  'scripts/modules/worker.js',
   'scripts/trackers/error_tracker.js',
   'scripts/trackers/analytics_tracker.js',
   'scripts/lib/date_i18n.js',
@@ -127,7 +127,6 @@ scripts = [
   'scripts/lib/syncer.js',
   'scripts/lib/search_history.js',
   'scripts/lib/query_params.js',
-  'scripts/lib/visits_history.js',
   'scripts/chrome/sync_store.js',
   'scripts/chrome/local_store.js',
   'scripts/chrome/history.js',
