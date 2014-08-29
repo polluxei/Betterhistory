@@ -79,7 +79,8 @@ class BH.Router extends Backbone.Router
     view.model.set query: decodeURIComponent(query)
     delay ->
       if query? && query != ''
-        new Historian.Search(query).fetch {}, (history, cacheDatetime = null) ->
+        view.historian = new Historian.Search(query)
+        view.historian.fetch {}, (history, cacheDatetime = null) ->
           view.collection.reset history
           if cacheDatetime?
             view.model.set cacheDatetime: cacheDatetime

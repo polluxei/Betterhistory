@@ -133,6 +133,7 @@ class BH.Views.SearchView extends BH.Views.MainView
         el: @$('.visits_content')
         page: @page
         deepSearched: @deepSearched
+        historian: @historian
       @$('.visits_content').removeClass('disappear')
 
       @searchResultsView.render()
