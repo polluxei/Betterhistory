@@ -72,7 +72,7 @@ class BH.Views.SearchView extends BH.Views.MainView
 
   clickedFreshSearch: (ev) ->
     ev.preventDefault()
-    new BH.Lib.SearchHistory().expireCache()
+    new Historian.Search().expireCache()
     window.location.reload()
 
   clickedSearchDeeper: (ev) ->
@@ -91,7 +91,7 @@ class BH.Views.SearchView extends BH.Views.MainView
       startAtResult: 5001
       maxResults: 0
 
-    new BH.Lib.SearchHistory(@model.get('query')).fetch (options), (history) =>
+    new Historian.Search(@model.get('query')).fetch (options), (history) =>
       @$('.search_deeper').hide()
       @collection.add history
       @$el.addClass('loaded')
@@ -162,7 +162,7 @@ class BH.Views.SearchView extends BH.Views.MainView
     if prompt.get('action')
       analyticsTracker.searchResultsDeletion()
 
-      new BH.Lib.SearchHistory(@model.get('query')).destroy {}, =>
+      new Historian.Search(@model.get('query')).destroy {}, =>
         @collection.reset []
         @model.unset 'cacheDatetime'
         @promptView.close()

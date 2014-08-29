@@ -165,7 +165,7 @@ class BH.Views.VisitsResultsView extends Backbone.View
     ev.preventDefault()
     $el = $(ev.currentTarget)
     analyticsTracker.visitDeletion()
-    new BH.Chrome.History().deleteUrl $el.data('url'), =>
+    Historian.deleteUrl $el.data('url'), =>
       $el.parent('.visit').remove()
 
   promptToDeleteHour: (hour) ->
@@ -184,8 +184,8 @@ class BH.Views.VisitsResultsView extends Backbone.View
   promptAction: (prompt, hour) ->
     if prompt.get('action')
       analyticsTracker.dayVisitsDeletion()
-      visitHistory = new BH.Lib.VisitsHistory(@model.get('date'))
-      visitHistory.destroyHour hour, ->
+      dayHistorian = new Historian.Day(@model.get('date'))
+      dayHistorian.destroyHour hour, ->
         window.location.reload()
     else
       @promptView.close()

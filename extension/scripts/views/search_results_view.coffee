@@ -77,7 +77,7 @@ class BH.Views.SearchResultsView extends Backbone.View
     $el = $(ev.currentTarget)
     url = $el.data('url')
 
-    new BH.Lib.SearchHistory().deleteUrl url, =>
+    Historian.deleteUrl url, =>
       $el.parents('.visit').remove()
       @collection.remove @collection.where(url: url)
 

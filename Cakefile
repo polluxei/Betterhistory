@@ -98,7 +98,7 @@ popupScripts = [
 
 scripts = [
   'scripts/namespace.js',
-  'scripts/chrome_historian.js',
+  'scripts/historian.js',
   'scripts/frameworks/honeybadger.js',
   'scripts/frameworks/underscore.js',
   'scripts/frameworks/zepto.min.js',
@@ -125,11 +125,9 @@ scripts = [
   'scripts/lib/syncing_translator.js',
   'scripts/lib/sites_hasher.js',
   'scripts/lib/syncer.js',
-  'scripts/lib/search_history.js',
   'scripts/lib/query_params.js',
   'scripts/chrome/sync_store.js',
   'scripts/chrome/local_store.js',
-  'scripts/chrome/history.js',
   'scripts/persistence/tag.js',
   'scripts/persistence/remote.js',
   'scripts/modals/base.js',

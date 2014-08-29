@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "chrome-bootstrap": "git://github.com/roykolak/chrome-bootstrap.git#v1.3.1",
-    "chrome-historian": "git://github.com/roykolak/chrome-historian.git#v0.1.0",
+    "chrome-historian": "git://github.com/roykolak/chrome-historian.git#v0.2.0",
     "better-history-sites-hasher": "git://github.com/roykolak/better-history-sites-hasher.git#v1.0.3",
     "less": "1.7.0",
     "coffee-script": "1.6.1",
