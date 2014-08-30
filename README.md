@@ -9,8 +9,13 @@ Stack
 * [Coffeescript](http://coffeescript.org/) for javascript
 * [Jasmine](http://pivotal.github.com/jasmine/) for specs
 * [Mustache](http://mustache.github.com/) for templating
-* [Chrome bootstrap](https://github.com/roykolak/chrome-bootstrap) for styles
 * [Node.js](https://github.com/joyent/node) for development
+
+Extracted Pieces
+----------------
+
+* [Chrome bootstrap](https://github.com/roykolak/chrome-bootstrap) for styles
+* [Chrome Historian](https://github.com/roykolak/chrome-bootstrap) for history management
 
 Setup
 -----------------
