@@ -14,7 +14,7 @@ Stack
 Extracted Pieces
 ----------------
 
-* [Chrome bootstrap](https://github.com/roykolak/chrome-bootstrap) for styles
+* [Chrome bootstrap](https://github.com/roykolak/chrome-bootstrap) for Chrome settings styles
 * [Chrome historian](https://github.com/roykolak/chrome-bootstrap) for history management
 
 Setup
