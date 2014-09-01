@@ -18,7 +18,7 @@ load = ->
       chrome: chrome
       tracker: analyticsTracker
 
-  chrome.runtime.onInstalled.addListener ->
+  chrome.runtime?.onInstalled?.addListener ->
     ensureDatetimeOnTaggedSites = new BH.Migrations.EnsureDatetimeOnTaggedSites
       analyticsTracker: analyticsTracker
     ensureDatetimeOnTaggedSites.run()
