@@ -18,6 +18,7 @@ build:
 	cp -r extension/* build
 	cake concat:templates
 	cp node_modules/chrome-bootstrap/chrome-bootstrap.css build/styles/
+	cp -r node_modules/chrome-historian/src/* build/scripts/
 	cp node_modules/better-history-sites-hasher/index.js build/scripts/lib/sites_hasher.js
 	cp node_modules/backbone/backbone.js build/scripts/frameworks/
 	cp node_modules/underscore/underscore.js build/scripts/frameworks/

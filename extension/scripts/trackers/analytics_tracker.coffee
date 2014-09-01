@@ -68,6 +68,9 @@ class BH.Trackers.AnalyticsTracker
   mailingListPrompt: ->
     @trackEvent(['Mailing List Prompt', 'Seen'])
 
+  hourClick: ->
+    @trackEvent(['Visits', 'Hour Click'])
+
   popupVisible: ->
     @trackEvent(['Popup', 'Seen'])
 

@@ -17,7 +17,6 @@
   }
 }
 .content .controls {
-  border: none;
   padding-top: 0;
   .text {
     padding-left: 45px;
@@ -26,6 +25,7 @@
 .visits_content {
   transition: opacity 250ms ease-in-out;
   opacity: 1;
+  margin-bottom: 300px;
 }
 .disappear {
   opacity: 0;
@@ -39,6 +39,9 @@
     display: flex;
     position: relative;
     width: 100%;
+    ol.pagination a {
+      height: 42px;
+    }
   }
 
   ol.pagination {
@@ -50,9 +53,7 @@
       margin: 0 3px;
     }
     a {
-      height: 42px;
       width: auto;
-      padding: 5px;
       border-right: 1px solid lighten(#8AAAED, 20%);
       border-bottom: 1px solid lighten(#8AAAED, 20%);
       transition: background 250ms;
@@ -71,11 +72,58 @@
       }
     }
   }
+  .hours {
+    width: 738px;
+    margin: -46px 0;
+    display: flex;
+    position: fixed;
+    padding: 10px 0;
+    background-image: -webkit-linear-gradient(#ffffff, #ffffff 40%, rgba(255, 255, 255, 0.92));
+    z-index: 100;
+
+    .moon {
+      background-image: url(/images/moon.png);
+      order: 1;
+      background-position: 6px 3px;
+      background-size: 18px;
+    }
+    .sun {
+      background-image: url(/images/sun.png);
+      order: 3;
+      background-position: 6px 2px;
+      background-size: 20px;
+    }
+    .moon, .sun {
+      background-repeat: no-repeat;
+      height: 25px;
+      width: 25px;
+      opacity: 0.6;
+      display: flex;
+      flex: 1;
+    }
+
+    ol.pagination {
+      li {
+        margin: 0 2px;
+        line-height: 13px;
+        a {
+          font-size: 11px;
+          height: 13px;
+          border-radius: 20px;
+          padding: 5px 0;
+        }
+      }
+    }
+    a {
+      background: #FFF;
+    }
+  }
 
   ol.pagination.control {
     a {
       display: table;
       width: 15px;
+      padding: 0 5px;
 
       .arrow {
         display: table-cell;
@@ -97,7 +145,7 @@
 
     strong {
       display: block;
-      margin-bottom: -7px;
+      margin-bottom: -10px;
     }
   }
 }
