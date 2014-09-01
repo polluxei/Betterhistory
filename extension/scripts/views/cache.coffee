@@ -21,10 +21,11 @@ class BH.Views.Cache
       when 'settings' then 'settingsView'
 
     view = @[methodName].apply(@, args)
-    view.select() if name != @lastRequest
+    isDifferentView = name != @lastRequest
+    view.select() if isDifferentView
     @lastRequest = name
 
-    view
+    [view, isDifferentView]
 
   tagsView: ->
     if !@cache.allTags
@@ -94,7 +95,7 @@ class BH.Views.Cache
         collection: new Backbone.Collection()
 
       @insert @cache.search.render().el
-      
+
     @cache.search
 
   settingsView: ->

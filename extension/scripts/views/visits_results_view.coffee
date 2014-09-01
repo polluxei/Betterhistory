@@ -70,7 +70,7 @@ class BH.Views.VisitsResultsView extends Backbone.View
 
   resetRender: ->
     @hide()
-    setTimeout (=> @$('.visits_content').html ''), 250
+    @$('.visits_content').html ''
 
   show: ->
     @$el.removeClass('disappear')

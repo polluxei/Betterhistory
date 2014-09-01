@@ -64,11 +64,18 @@ class BH.Router extends Backbone.Router
 
     date = date.startOf('day').toDate()
 
-    view = @cache.view('visits', [date])
+    [view, transitioningView] = @cache.view('visits', [date])
 
-    delay ->
+    queryHistory = ->
       new Historian.Day(date).fetch (history) ->
         view.collection.reset history
+
+    # if we need to transition to another view, delay the query until the
+    # transition fires. There can be a noticeable lag if the delay is skipped
+    if transitioningView
+      delay -> queryHistory()
+    else
+      queryHistory()
 
   settings: ->
     view = @cache.view('settings')
