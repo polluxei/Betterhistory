@@ -4,7 +4,7 @@
     <ol class='pagination'>
       {{#hours}}
         <li>
-          <a href='#hour_{{value}}' class='{{^enabled}}disabled{{/enabled}}'>
+          <a href='#hour_{{value}}' data-hour='{{value}}' class='{{^enabled}}disabled{{/enabled}}'>
             {{label}}
           </a>
         </li>

@@ -129,10 +129,13 @@ class BH.Views.VisitsResultsView extends Backbone.View
 
   hourClicked: (ev) ->
     ev.preventDefault()
-    window.analyticsTracker.hourClick()
+    $el = $(ev.currentTarget)
 
-    el = $($(ev.currentTarget).attr('href'))[0]
-    document.body.scrollTop = el.getBoundingClientRect().top + document.body.scrollTop - 155
+    window.analyticsTracker.hourClick($el.data('hour'))
+
+    $hour = $($el.attr('href'))[0]
+
+    document.body.scrollTop = $hour.getBoundingClientRect().top + document.body.scrollTop - 155
 
   deleteHourClicked: (ev) ->
     ev.preventDefault()
