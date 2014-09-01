@@ -81,7 +81,7 @@ class BH.Router extends Backbone.Router
     view = @cache.view('settings')
 
   search: (query, page) ->
-    view = @cache.view('search')
+    [view] = @cache.view('search')
     view.page.set(page: parseInt(page, 10), {silent: true}) if page?
     view.model.set query: decodeURIComponent(query)
     delay ->

@@ -29,17 +29,11 @@ class BH.Trackers.AnalyticsTracker
   visitDeletion: ->
     @trackEvent(['Visit', 'Delete'])
 
-  groupedVisitsDeletion: ->
-    @trackEvent(['Grouped visits', 'Delete'])
+  hourDeletion: ->
+    @trackEvent(['Day Hour', 'Delete'])
 
-  timeIntervalDeletion: ->
-    @trackEvent(['Time interval', 'Delete'])
-
-  dayVisitsDeletion: ->
-    @trackEvent(['Day visits', 'Delete'])
-
-  weekVisitsDeletion: ->
-    @trackEvent(['Week visits', 'Delete'])
+  searchResultDeletion: ->
+    @trackEvent(['Searched Visit', 'Delete'])
 
   searchResultsDeletion: ->
     @trackEvent(['Search results', 'Delete'])

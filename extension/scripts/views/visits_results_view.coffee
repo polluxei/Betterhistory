@@ -166,7 +166,7 @@ class BH.Views.VisitsResultsView extends Backbone.View
 
   promptAction: (prompt, hour) ->
     if prompt.get('action')
-      analyticsTracker.dayVisitsDeletion()
+      window.analyticsTracker.hourDeletion()
       dayHistorian = new Historian.Day(@model.get('date'))
       dayHistorian.destroyHour hour, ->
         window.location.reload()

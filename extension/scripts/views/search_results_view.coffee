@@ -81,6 +81,7 @@ class BH.Views.SearchResultsView extends Backbone.View
     @historian.deleteUrl url, =>
       $el.parents('.visit').remove()
       @collection.remove @collection.where(url: url)
+      window.analyticsTracker.searchResultDeletion()
 
   onVisitAdded: (model) ->
     if $('.visits li').length < 100
