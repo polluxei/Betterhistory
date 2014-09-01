@@ -30,6 +30,8 @@ class BH.Views.VisitsResultsView extends Backbone.View
 
     @$el.html html
 
+    document.body.scrollTop = 0
+
     @show()
     @insertTags()
     @attachDragging()
