@@ -52,15 +52,15 @@ class BH.Router extends Backbone.Router
   trail: (name) ->
     view = @cache.view('trail')
 
-  visits: (date = new Date()) ->
+  visits: (date = 'today') ->
     # special cases
     date = switch date
       when 'today'
-        moment(new Date())
+        moment()
       when 'yesterday'
-        moment(new Date()).subtract('days', 1)
+        moment().subtract('days', 1)
       else
-        moment(date)
+        moment(new Date(date))
 
     date = date.startOf('day').toDate()
 
