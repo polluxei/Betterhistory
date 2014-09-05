@@ -31,17 +31,20 @@ class BH.Router extends Backbone.Router
       window.analyticsTracker.pageView url
 
   tags: ->
-    view = @cache.view('tags')
-    delay ->
+    [view, transitioningView] = @cache.view('tags')
+
+    delay transitioningView, ->
       view.collection.fetch()
 
   devices: ->
-    view = @cache.view('devices')
-    delay -> view.collection.fetch()
+    [view, transitioningView] = @cache.view('devices')
+
+    delay transitioningView, ->
+      view.collection.fetch()
 
   tag: (id) ->
-    view = @cache.view('tag', [id])
-    delay ->
+    [view, transitioningView] = @cache.view('tag', [id])
+    delay transitioningView, ->
       view.model.fetch()
 
   newTrail: ->
@@ -66,16 +69,9 @@ class BH.Router extends Backbone.Router
 
     [view, transitioningView] = @cache.view('visits', [date])
 
-    queryHistory = ->
+    delay transitioningView, ->
       new Historian.Day(date).fetch (history) ->
         view.collection.reset history
-
-    # if we need to transition to another view, delay the query until the
-    # transition fires. There can be a noticeable lag if the delay is skipped
-    if transitioningView
-      delay -> queryHistory()
-    else
-      queryHistory()
 
   settings: ->
     view = @cache.view('settings')
@@ -94,5 +90,10 @@ class BH.Router extends Backbone.Router
           else
             view.model.unset 'cacheDatetime'
 
-delay = (callback) ->
-  setTimeout (-> callback()), 250
+# if we need to transition to another view, delay the query until the
+# transition fires. There can be a noticeable lag if the delay is skipped
+delay = (shouldDelay, callback) ->
+  if shouldDelay
+    setTimeout (-> callback()), 250
+  else
+    callback()
