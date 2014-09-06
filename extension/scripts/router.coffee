@@ -40,7 +40,8 @@ class BH.Router extends Backbone.Router
     [view, transitioningView] = @cache.view('devices')
 
     delay transitioningView, ->
-      view.collection.fetch()
+      new Historian.ActiveSessions().fetch (sessions) ->
+        view.collection.reset sessions
 
   tag: (id) ->
     [view, transitioningView] = @cache.view('tag', [id])
