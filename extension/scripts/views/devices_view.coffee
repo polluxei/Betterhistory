@@ -5,6 +5,10 @@ class BH.Views.DevicesView extends BH.Views.MainView
 
   template: BH.Templates['devices']
 
+  events:
+    'keyup .search': 'onSearchTyped'
+    'blur .search': 'onSearchBlurred'
+
   initialize: ->
     @chromeAPI = chrome
     @tracker = analyticsTracker
