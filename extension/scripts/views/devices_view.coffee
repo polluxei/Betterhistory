@@ -39,6 +39,8 @@ class BH.Views.DevicesView extends BH.Views.MainView
       model: @model
     @$('header').append devicesListView.render().el
 
+    devicesListView.$('a').eq(0)[0].click()
+
   getI18nValues: ->
     properties = @t ['devices_title', 'search_input_placeholder_text']
     properties
