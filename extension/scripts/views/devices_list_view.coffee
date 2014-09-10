@@ -8,10 +8,6 @@ class BH.Views.DevicesListView extends Backbone.View
   events:
     'click a': 'deviceClicked'
 
-  initialize: ->
-    @chromeAPI = chrome
-    @tracker = analyticsTracker
-
   render: ->
     html = Mustache.to_html @template, devices: @collection.toJSON()
     @$el.append html
@@ -20,6 +16,8 @@ class BH.Views.DevicesListView extends Backbone.View
   deviceClicked: (ev) ->
     ev.preventDefault()
     $el = $(ev.currentTarget)
+
+    window.analyticsTracker.deviceClick()
 
     @$('.selected').removeClass('selected')
     $el.addClass('selected')
