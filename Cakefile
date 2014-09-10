@@ -163,6 +163,7 @@ scripts = [
   'scripts/views/active_tags_view.js',
   'scripts/views/available_tags_view.js',
   'scripts/views/devices_view.js',
+  'scripts/views/devices_list_view.js',
   'scripts/views/devices_results_view.js',
   'scripts/views/trail_match_preview_view.js',
   'scripts/views/menu_view.js',

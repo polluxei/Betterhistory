@@ -14,8 +14,8 @@ class BH.Presenters.SearchHistoryPresenter extends BH.Presenters.Base
   markMatches: (visit) ->
     for term in @query.split(' ')
       regExp = new RegExp(term, "i")
-      visit.name = wrapMatchInProperty(regExp, visit.name)
-      visit.location = wrapMatchInProperty(regExp, visit.location)
+      visit.name = wrapMatchInProperty(regExp, visit.title)
+      visit.location = wrapMatchInProperty(regExp, visit.url)
     visit
 
 wrapMatchInProperty = (regExp, property) ->
