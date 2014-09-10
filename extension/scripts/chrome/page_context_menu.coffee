@@ -35,7 +35,7 @@ class BH.Chrome.PageContextMenu
         title: @chromeAPI.i18n.getMessage('visits_to_domain', [domain])
 
   listenToTabs: ->
-    @chromeAPI.tabs.onActivated.addListener (tabInfo) =>
+    @chromeAPI.tabs?.onActivated?.addListener (tabInfo) =>
       @onTabSelectionChanged(tabInfo.tabId) if @menu
 
     @chromeAPI.tabs.onUpdated.addListener (tabId, changedInfo, tab) =>
