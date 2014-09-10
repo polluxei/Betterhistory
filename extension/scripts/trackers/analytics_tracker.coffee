@@ -41,6 +41,9 @@ class BH.Trackers.AnalyticsTracker
   paginationClick: ->
     @trackEvent(['Pagination', 'Click'])
 
+  deviceClick: ->
+    @trackEvent(['Device', 'Click'])
+
   omniboxSearch: ->
     @trackEvent(['Omnibox', 'Search'])
 

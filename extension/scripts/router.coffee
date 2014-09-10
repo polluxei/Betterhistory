@@ -40,7 +40,8 @@ class BH.Router extends Backbone.Router
     [view, transitioningView] = @cache.view('devices')
 
     delay transitioningView, ->
-      view.collection.fetch()
+      new Historian.Devices().fetch (devices) ->
+        view.collection.reset devices
 
   tag: (id) ->
     [view, transitioningView] = @cache.view('tag', [id])
@@ -77,6 +78,9 @@ class BH.Router extends Backbone.Router
     view = @cache.view('settings')
 
   search: (query, page) ->
+    # weak...
+    $('.menu > *').removeClass 'selected'
+
     [view] = @cache.view('search')
     view.page.set(page: parseInt(page, 10), {silent: true}) if page?
     view.model.set query: decodeURIComponent(query)
