@@ -41,3 +41,7 @@ class BH.Views.MainView extends Backbone.View
     @$(selector).each (i) ->
       $(@).attr 'tabindex', i + 2
     @$('.search').focus()
+
+  browserFeatureNotSupported: ->
+    @$('.content').html 'Sorry, this is not supported in your browser. We recommend using the latest <a href="https://www.google.com/chrome/browser/" target="_blank">Chrome</a>.'
+

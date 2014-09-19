@@ -16,6 +16,9 @@ class BH.Views.DevicesView extends BH.Views.MainView
 
     @model = new Backbone.Model()
 
+    @feature = new Backbone.Model(supported: true)
+    @feature.on 'change:supported', @onFeatureSupportedChange, @
+
   pageTitle: ->
     @t('devices_title')
 
@@ -40,6 +43,10 @@ class BH.Views.DevicesView extends BH.Views.MainView
     @$('header').append devicesListView.render().el
 
     devicesListView.$('a').eq(0)[0].click()
+
+  onFeatureSupportedChange: ->
+    @tracker.featureNotSupported('devices')
+    @browserFeatureNotSupported()
 
   getI18nValues: ->
     properties = @t ['devices_title', 'search_input_placeholder_text']

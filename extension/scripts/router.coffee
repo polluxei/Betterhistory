@@ -41,7 +41,10 @@ class BH.Router extends Backbone.Router
 
     delay transitioningView, ->
       new Historian.Devices().fetch (devices) ->
-        view.collection.reset devices
+        if devices
+          view.collection.reset devices
+        else
+          view.feature.set supported: false
 
   tag: (id) ->
     [view, transitioningView] = @cache.view('tag', [id])
@@ -72,7 +75,10 @@ class BH.Router extends Backbone.Router
 
     delay transitioningView, ->
       new Historian.Day(date).fetch (history) ->
-        view.collection.reset history
+        if history
+          view.collection.reset history
+        else
+          view.feature.set supported: false
 
   settings: ->
     view = @cache.view('settings')

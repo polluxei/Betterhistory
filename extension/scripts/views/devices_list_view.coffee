@@ -9,7 +9,8 @@ class BH.Views.DevicesListView extends Backbone.View
     'click a': 'deviceClicked'
 
   render: ->
-    html = Mustache.to_html @template, devices: @collection.toJSON()
+    presenter = new BH.Presenters.DevicesPresenter()
+    html = Mustache.to_html @template, presenter.deviceList(@collection.toJSON())
     @$el.append html
     @
 

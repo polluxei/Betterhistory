@@ -15,6 +15,9 @@ class BH.Views.VisitsView extends BH.Views.MainView
     @collection.on 'reset', @onCollectionReset, @
     @model.on 'change:date', @onDateChange, @
 
+    @feature = new Backbone.Model(supported: true)
+    @feature.on 'change:supported', @onFeatureSupportedChange, @
+
   pageTitle: ->
     'Visits'
 
@@ -37,6 +40,10 @@ class BH.Views.VisitsView extends BH.Views.MainView
 
   onCollectionReset: ->
     @visitsResultsView.render()
+
+  onFeatureSupportedChange: ->
+    @tracker.featureNotSupported('Query (by day)')
+    @browserFeatureNotSupported()
 
   getI18nValues: ->
     @t ['search_input_placeholder_text']
