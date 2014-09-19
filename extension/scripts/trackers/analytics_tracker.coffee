@@ -26,6 +26,9 @@ class BH.Trackers.AnalyticsTracker
   calendarView: () ->
     @trackEvent(['Calendar', 'Click'])
 
+  featureNotSupported: (feature) ->
+    @trackEvent(['Feature', 'Not Supported', feature])
+
   visitDeletion: ->
     @trackEvent(['Visit', 'Delete'])
 

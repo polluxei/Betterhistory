@@ -1,11 +1,18 @@
 <div class='controls'>
-  <ol class='pagination {{paginationClass}}'>
-    {{#devices}}
-      <li>
-        <a href='#' data-name='{{name}}' style='padding: 0 10px; width: auto;'>{{name}}</a>
-      </li>
-    {{/devices}}
-  </ol>
+  {{#availableDevices}}
+    <ol class='pagination {{paginationClass}}'>
+      {{#devices}}
+        <li>
+          <a href='#' data-name='{{name}}' style='padding: 0 10px; width: auto;'>{{name}}</a>
+        </li>
+      {{/devices}}
+    </ol>
+  {{/availableDevices}}
+  {{^availableDevices}}
+    <span class='match' style='padding: 2px 5px'>
+      No active device sessions found
+    </span>
+  {{/availableDevices}}
   <div class='spacer'></div>
   <span class='text'>(Updated every few minutes)</span>
 </div>
