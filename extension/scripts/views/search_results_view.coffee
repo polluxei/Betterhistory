@@ -8,7 +8,6 @@ class BH.Views.SearchResultsView extends Backbone.View
 
   initialize: ->
     @page = @options.page
-    @historian = @options.historian
     @collection.on 'add', @onVisitAdded, @
     @page.on 'change:page', @onPageChange, @
 
@@ -78,7 +77,7 @@ class BH.Views.SearchResultsView extends Backbone.View
     $el = $(ev.currentTarget)
     url = $el.data('url')
 
-    @historian.deleteUrl url, =>
+    Historian.deleteUrl url, =>
       $el.parents('.visit').remove()
       @collection.remove @collection.where(url: url)
       window.analyticsTracker.searchResultDeletion()

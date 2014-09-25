@@ -5,11 +5,8 @@ class BH.Router extends Backbone.Router
     'tags/:id': 'tag'
     'devices': 'devices'
     'settings': 'settings'
-    'search/*query(/p:page)': 'search'
-    'search': 'search'
+    'search(/:query)': 'search'
     'visits(/:date)': 'visits'
-    'trails/new': 'newTrail'
-    'trails/:name': 'trail'
 
   initialize: (options) ->
     settings = options.settings
@@ -31,12 +28,16 @@ class BH.Router extends Backbone.Router
       window.analyticsTracker.pageView url
 
   tags: ->
+    @app.selectNav '.tags'
+
     [view, transitioningView] = @cache.view('tags')
 
     delay transitioningView, ->
       view.collection.fetch()
 
   devices: ->
+    @app.selectNav '.devices'
+
     [view, transitioningView] = @cache.view('devices')
 
     delay transitioningView, ->
@@ -47,19 +48,14 @@ class BH.Router extends Backbone.Router
           view.feature.set supported: false
 
   tag: (id) ->
+    @app.selectNav '.tags'
     [view, transitioningView] = @cache.view('tag', [id])
     delay transitioningView, ->
       view.model.fetch()
 
-  newTrail: ->
-    view = @cache.view('newTrail')
-    view.on 'build_trail', (model) =>
-      @trails.add model
-
-  trail: (name) ->
-    view = @cache.view('trail')
-
   visits: (date = 'today') ->
+    @app.selectNav '.visits'
+
     # special cases
     date = switch date
       when 'today'
@@ -81,17 +77,16 @@ class BH.Router extends Backbone.Router
           view.feature.set supported: false
 
   settings: ->
+    @app.selectNav '.settings'
     view = @cache.view('settings')
 
-  search: (query, page) ->
-    # weak...
-    $('.menu > *').removeClass 'selected'
-
+  search: (query) ->
+    @app.selectNav '.search'
     [view] = @cache.view('search')
-    view.page.set(page: parseInt(page, 10), {silent: true}) if page?
-    view.model.set query: decodeURIComponent(query)
+    view.model.set query: decodeURIComponent(query) if query
+
     delay true, ->
-      if query? && query != ''
+      if query?
         view.historian = new Historian.Search(query)
         view.historian.fetch {}, (history, cacheDatetime = null) ->
           view.collection.reset history

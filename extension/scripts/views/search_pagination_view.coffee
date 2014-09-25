@@ -47,15 +47,12 @@ class BH.Views.SearchPaginationView extends BH.Views.MainView
     @render()
 
   onPageClicked: (ev) ->
+    ev.preventDefault()
     $el = $(ev.currentTarget)
-    analyticsTracker.paginationClick()
-
-    router.navigate($el.attr('href'))
-
     @$('a').removeClass('selected')
     $el.addClass('selected')
-
     @model.set page: parseInt($el.data('page'), 10)
+    analyticsTracker.paginationClick()
 
   getI18nValues: ->
     properties = []

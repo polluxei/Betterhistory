@@ -1,13 +1,10 @@
 class BH.Views.SearchView extends BH.Views.MainView
   @include BH.Modules.I18n
-  @include BH.Modules.Url
 
   className: 'search_view with_controls'
   template: BH.Templates['search']
 
   events:
-    'click .delete_all': 'clickedDeleteAll'
-    'click .corner .delete': 'clickedCancelSearch'
     'click .fresh_search': 'clickedFreshSearch'
     'click .search_deeper': 'clickedSearchDeeper'
     'keyup .search': 'onSearchTyped'
@@ -15,35 +12,30 @@ class BH.Views.SearchView extends BH.Views.MainView
 
   initialize: ->
     @collection.on 'reset', @onHistoryChanged, @
-
     @model.on 'change:query', @onQueryChanged, @
     @model.on 'change:cacheDatetime', @onCacheChanged, @
-
-    @page = new Backbone.Model(page: 1)
-    @page.on('change:page', @renderSearchResults, @)
 
   render: ->
     presenter = new BH.Presenters.SearchPresenter(@model.toJSON())
     properties = _.extend(@getI18nValues(), presenter.searchInfo())
     html = Mustache.to_html @template, properties
     @$el.append html
-    if @model.get('query') == ''
-      @$el.addClass('loaded')
-      @$('.title').text @t('search_title')
-      @$('.number_of_results').text ''
-      setTimeout =>
-        @assignTabIndices('.visit a:first-child')
-      , 0
-    @updateDeleteButton()
+
+    @searchControlsView = new BH.Views.SearchControlsView
+      model: @model
+      collection: @collection
+      el: @$('.search_controls')
+    @searchControlsView.render()
+
     @
 
   pageTitle: ->
     @t 'searching_title'
 
   onHistoryChanged: ->
+    @$el.removeClass 'loading'
     @renderVisits()
     @assignTabIndices('.visit a:first-child')
-    @updateDeleteButton()
 
   onCacheChanged: ->
     if @model.get('cacheDatetime')
@@ -56,19 +48,15 @@ class BH.Views.SearchView extends BH.Views.MainView
       @$('.cached').hide()
 
   onQueryChanged: ->
-    @updateQueryReferences()
-    $('.pagination').html('')
-    if @model.get('query') != ''
-      @$('.corner').addClass('cancelable')
+    @searchControlsView.render()
+    if @model.get('query')?
       @$('.cached').hide()
+      @$el.addClass('loading')
 
-  onPageClicked: (ev) ->
-    ev.preventDefault()
-    $el = $(ev.currentTarget)
-    $('.pagination a').removeClass('selected')
-    $el.addClass('selected')
-
-    @renderSearchResults()
+      presenter = new BH.Presenters.SearchPresenter(@model.toJSON())
+      properties = presenter.searchInfo()
+      @$('.title').text properties.title
+      @$('.visits_content').html('')
 
   clickedFreshSearch: (ev) ->
     ev.preventDefault()
@@ -80,7 +68,7 @@ class BH.Views.SearchView extends BH.Views.MainView
     @$('.number_of_visits').html ''
     @$('.search_deeper').addClass('searching')
     @$('.pagination').html ''
-    @$el.removeClass('loaded')
+    @$el.addClass('loading')
     @searchDeeper()
 
   searchDeeper: ->
@@ -94,34 +82,12 @@ class BH.Views.SearchView extends BH.Views.MainView
     new Historian.Search(@model.get('query')).fetch (options), (history) =>
       @$('.search_deeper').hide()
       @collection.add history
-      @$el.addClass('loaded')
-
-  updateQueryReferences: ->
-    presenter = new BH.Presenters.SearchPresenter(@model.toJSON())
-    properties = presenter.searchInfo()
-    @$el.removeClass('loaded')
-    @$('.title').text properties.title
-    @$('.visits_content').html('')
-
-    # if we are on the first page, don't show it in the URL
-    page = if @page.get('page') != 1 then "/p#{@page.get('page')}" else ""
-
-    router.navigate @urlFor('search', properties.query) + page
+      @$el.removeClass('loading')
 
   renderVisits: ->
-    @$el.addClass('loaded')
+    @$el.removeClass('loading')
     @$('.search').focus()
 
-    searchPaginationView = new BH.Views.SearchPaginationView
-      collection: @collection
-      query: @model.get('query')
-      el: $('.pagination')
-      model: @page
-    searchPaginationView.render()
-
-    @renderSearchResults()
-
-  renderSearchResults: ->
     @$('.visits_content').addClass('disappear')
     setTimeout =>
       @$('.visits_content').html ''
@@ -131,9 +97,8 @@ class BH.Views.SearchView extends BH.Views.MainView
         query: @model.get('query')
         collection: @collection
         el: @$('.visits_content')
-        page: @page
+        page: @searchControlsView.page
         deepSearched: @deepSearched
-        historian: @historian
       @$('.visits_content').removeClass('disappear')
 
       @searchResultsView.render()
@@ -141,39 +106,8 @@ class BH.Views.SearchView extends BH.Views.MainView
       @delay = 50
     , @delay || 0
 
-  updateDeleteButton: ->
-    deleteButton = @$('.delete_all')
-    if @collection.length == 0 || @model.get('query') == ''
-      deleteButton.attr('disabled', 'disabled')
-    else
-      deleteButton.removeAttr('disabled')
-
-  clickedCancelSearch: (ev) ->
-    ev.preventDefault()
-    router.navigate('search', trigger: true)
-
-  clickedDeleteAll: (ev) ->
-    ev.preventDefault()
-    if $(ev.target).parent().attr('disabled') != 'disabled'
-      @promptView = BH.Views.CreatePrompt(@t('confirm_delete_all_search_results'))
-      @promptView.open()
-      @promptView.model.on('change', @deleteAction, @)
-
-  deleteAction: (prompt) ->
-    if prompt.get('action')
-      analyticsTracker.searchResultsDeletion()
-
-      new Historian.Search(@model.get('query')).destroy {}, =>
-        @collection.reset []
-        @model.unset 'cacheDatetime'
-        @promptView.close()
-    else
-      @promptView.close()
-
   getI18nValues: ->
     @t [
-      'search_time_frame',
       'search_input_placeholder_text',
-      'delete_all_visits_for_search_button',
       'no_visits_found'
     ]
