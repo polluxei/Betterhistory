@@ -5,7 +5,7 @@ class BH.Router extends Backbone.Router
     'tags/:id': 'tag'
     'devices': 'devices'
     'settings': 'settings'
-    'search(/:query)': 'search'
+    'search(/*query)': 'search'
     'visits(/:date)': 'visits'
 
   initialize: (options) ->
