@@ -16,15 +16,6 @@
   "chrome_url_overrides": {
     "history": "index.html"
   },
-  "commands": {
-    "_execute_browser_action": {
-      "suggested_key": {
-        "default": "Ctrl+Shift+E",
-        "mac": "Command+Shift+E"
-      },
-      "description": "Show browser action popup"
-    }
-  },
   "oauth2": {
     "client_id": "298917046046-5i2dvc5e32p6u3o7jv99v9p9fhltem3l.apps.googleusercontent.com",
     "scopes": [
@@ -37,8 +28,7 @@
       "19": "images/icons/icon19.png",
       "38": "images/icons/icon38.png"
     },
-    "default_title": "__MSG_manifest_browser_action_title__",
-    "default_popup": "popup.html"
+    "default_title": "__MSG_manifest_browser_action_title__"
   },
   "background": {
     "scripts": [

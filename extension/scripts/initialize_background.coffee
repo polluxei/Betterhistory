@@ -24,6 +24,11 @@ load = ->
     ensureDatetimeOnTaggedSites.run()
 
 
+  browserActions = new BH.Chrome.BrowserActions
+    chrome: chrome
+    tracker: analyticsTracker
+  browserActions.listen()
+
   omnibox = new BH.Chrome.Omnibox
     chrome: chrome
     tracker: analyticsTracker

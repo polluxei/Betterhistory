@@ -43,6 +43,7 @@ backgroundScripts = [
   "scripts/chrome/page_context_menu.js",
   "scripts/chrome/selection_context_menu.js",
   "scripts/chrome/omnibox.js",
+  "scripts/chrome/browser_actions.js",
   "scripts/chrome/sync_store.js",
   "scripts/chrome/local_store.js",
   "scripts/lib/example_tags.js",
