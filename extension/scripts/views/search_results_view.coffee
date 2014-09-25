@@ -28,6 +28,8 @@ class BH.Views.SearchResultsView extends Backbone.View
     @attachDragging()
     @inflateDates()
 
+    document.body.scrollTop = 0
+
     @
 
   resetRender: ->
