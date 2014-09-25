@@ -5,8 +5,9 @@ class BH.Router extends Backbone.Router
     'tags/:id': 'tag'
     'devices': 'devices'
     'settings': 'settings'
-    'search/*query(/p:page)': 'search'
     'search': 'search'
+    'search/:query': 'search'
+    'search/:query/p:page': 'search'
     'visits(/:date)': 'visits'
     'trails/new': 'newTrail'
     'trails/:name': 'trail'
@@ -89,7 +90,8 @@ class BH.Router extends Backbone.Router
 
     [view] = @cache.view('search')
     view.page.set(page: parseInt(page, 10), {silent: true}) if page?
-    view.model.set query: decodeURIComponent(query)
+    view.model.set query: decodeURIComponent(query) if query
+
     delay true, ->
       if query? && query != ''
         view.historian = new Historian.Search(query)

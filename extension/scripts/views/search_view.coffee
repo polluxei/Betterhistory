@@ -27,7 +27,7 @@ class BH.Views.SearchView extends BH.Views.MainView
     properties = _.extend(@getI18nValues(), presenter.searchInfo())
     html = Mustache.to_html @template, properties
     @$el.append html
-    if @model.get('query') == ''
+    if !@model.get('query')?
       @$el.addClass('loaded')
       @$('.title').text @t('search_title')
       @$('.number_of_results').text ''
@@ -97,16 +97,17 @@ class BH.Views.SearchView extends BH.Views.MainView
       @$el.addClass('loaded')
 
   updateQueryReferences: ->
-    presenter = new BH.Presenters.SearchPresenter(@model.toJSON())
-    properties = presenter.searchInfo()
-    @$el.removeClass('loaded')
-    @$('.title').text properties.title
-    @$('.visits_content').html('')
+    if @model.get('query')?
+      presenter = new BH.Presenters.SearchPresenter(@model.toJSON())
+      properties = presenter.searchInfo()
+      @$el.removeClass('loaded')
+      @$('.title').text properties.title
+      @$('.visits_content').html('')
 
-    # if we are on the first page, don't show it in the URL
-    page = if @page.get('page') != 1 then "/p#{@page.get('page')}" else ""
+      # if we are on the first page, don't show it in the URL
+      page = if @page.get('page') != 1 then "/p#{@page.get('page')}" else ""
 
-    router.navigate @urlFor('search', properties.query) + page
+      router.navigate @urlFor('search', properties.query) + page
 
   renderVisits: ->
     @$el.addClass('loaded')

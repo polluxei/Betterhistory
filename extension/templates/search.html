@@ -7,6 +7,9 @@
     <input class='search' placeholder='{{i18n_search_input_placeholder_text}}' tabindex='1' type='text' />
   </div>
   <div class='controls'>
+  {{^query}}
+    <span class='text'>Pssst... try searching for something</span>
+  {{/query}}
     <div class='spinner'></div>
     <div class='filters'>
       <ul class='tags'>
