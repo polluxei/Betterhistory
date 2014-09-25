@@ -13,13 +13,6 @@ buildScriptTag = (src) ->
 buildStyleTag = (src) ->
   "<link rel='stylesheet' type='text/css' href='#{src}'/>"
 
-popupStyles = [
-  'styles/chrome-bootstrap.css',
-  'styles/app.css'
-  'styles/popup.css'
-  'styles/i18n.css'
-]
-
 styles = [
   'styles/chrome-bootstrap.css',
   'styles/app.css'
@@ -56,46 +49,6 @@ backgroundScripts = [
   "scripts/init/persistence.js",
   "scripts/initialize_background.js"
 ]
-
-popupScripts = [
-  'scripts/namespace.js',
-  'scripts/frameworks/honeybadger.js',
-  'scripts/frameworks/underscore.js',
-  'scripts/frameworks/zepto.min.js',
-  'scripts/frameworks/backbone.js',
-  'scripts/frameworks/mustache.js',
-  'scripts/frameworks/analytics.js',
-  'scripts/frameworks/mixin.js',
-  'scripts/templates.js',
-  'scripts/trackers/error_tracker.js',
-  'scripts/trackers/analytics_tracker.js',
-  'scripts/chrome/local_store.js',
-  'scripts/chrome/sync_store.js',
-  'scripts/lib/image_data.js',
-  'scripts/lib/syncing_translator.js',
-  'scripts/lib/syncer.js',
-  'scripts/persistence/tag.js',
-  'scripts/persistence/remote.js',
-  'scripts/modules/i18n.js',
-  'scripts/modules/url.js',
-  'scripts/models/site.js',
-  'scripts/models/tag.js',
-  'scripts/models/user.js',
-  'scripts/models/settings.js',
-  'scripts/models/state.js',
-  'scripts/collections/tags.js',
-  'scripts/views/main_view.js',
-  'scripts/views/tagging_view.js',
-  'scripts/views/active_tags_view.js',
-  'scripts/views/autocomplete_tags_view.js',
-  'scripts/views/suggestions_view.js',
-  'scripts/presenters/site_presenter.js',
-  'scripts/presenters/tags_presenter.js',
-  'scripts/init/tag_feature.js',
-  'scripts/init/persistence.js',
-  'scripts/initialize_popup.js'
-]
-
 
 scripts = [
   'scripts/namespace.js',
@@ -230,16 +183,6 @@ task 'build:assets:dev', '', ->
 
   fs.writeFileSync 'build/index.html', code
 
-  code = fs.readFileSync('extension/popup.html').toString()
-
-  scriptTags = (buildScriptTag(script) for script in popupScripts)
-  styleTags = (buildStyleTag(style) for style in popupStyles)
-
-  code = code.replace '<%= scripts %>', scriptTags.join("\n    ")
-  code = code.replace '<%= styles %>', styleTags.join("\n    ")
-
-  fs.writeFileSync 'build/popup.html', code
-
 task 'build:assets:prod', '', ->
   manifest = fs.readFileSync('build/manifest.json').toString()
 
@@ -271,21 +214,3 @@ task 'build:assets:prod', '', ->
   code = code.replace '<%= wallet.js %>', 'https://wallet.google.com/inapp/lib/buy.js'
 
   fs.writeFileSync 'build/index.html', code
-
-  code = fs.readFileSync('extension/popup.html').toString()
-
-  scriptContent = ''
-  styleContent = ''
-
-  for script in popupScripts
-    scriptContent += fs.readFileSync("build/#{script}") + "\n\n\n"
-  fs.writeFileSync('build/popupScripts.js', scriptContent)
-
-  for style in popupStyles
-    styleContent += fs.readFileSync("build/#{style}") + "\n\n\n"
-  fs.writeFileSync('build/popupStyles.css', styleContent)
-
-  code = code.replace '<%= scripts %>', buildScriptTag('popupScripts.js')
-  code = code.replace '<%= styles %>', buildStyleTag('popupStyles.css')
-
-  fs.writeFileSync 'build/popup.html', code
