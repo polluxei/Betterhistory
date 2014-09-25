@@ -38,7 +38,7 @@ class BH.Chrome.PageContextMenu
     @chromeAPI.tabs?.onActivated?.addListener (tabInfo) =>
       @onTabSelectionChanged(tabInfo.tabId) if @menu
 
-    @chromeAPI.tabs.onUpdated.addListener (tabId, changedInfo, tab) =>
+    @chromeAPI.tabs?.onUpdated?.addListener (tabId, changedInfo, tab) =>
       @onTabUpdated(tab) if @menu
 
   onTabSelectionChanged: (tabId) ->
