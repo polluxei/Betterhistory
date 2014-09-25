@@ -3,28 +3,9 @@
     <span class='title'>{{title}}</span>
   </h1>
   <div class='corner'>
-    <a href='#' class='delete'>cancel</a>
     <input class='search' placeholder='{{i18n_search_input_placeholder_text}}' tabindex='1' type='text' />
   </div>
-  <div class='controls'>
-  {{^query}}
-    <span class='text'>Pssst... try searching for something</span>
-  {{/query}}
-    <div class='spinner'></div>
-    <div class='filters'>
-      <ul class='tags'>
-        <li>
-        <a href='#' class='tag'></a>
-          <a href='#' class='delete remove_filter'></a>
-        </li>
-      </ul>
-    </div>
-    <div class='pagination' style='margin: 0; position: relative;'></div>
-    <div class='spacer'></div>
-    <button class='delete_all'>
-      {{i18n_delete_all_visits_for_search_button}}
-    </button>
-  </div>
+  <div class='search_controls'></div>
 </header>
 <div class='fade'></div>
 <div class='cached' style='display: none'>

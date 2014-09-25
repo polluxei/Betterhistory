@@ -153,6 +153,7 @@ scripts = [
   'scripts/views/search_results_view.js',
   'scripts/views/search_pagination_view.js',
   'scripts/views/search_view.js',
+  'scripts/views/search_controls_view.js',
   'scripts/views/settings_view.js',
   'scripts/views/visit_view.js',
   'scripts/views/tags_view.js',

@@ -5,9 +5,7 @@ class BH.Router extends Backbone.Router
     'tags/:id': 'tag'
     'devices': 'devices'
     'settings': 'settings'
-    'search': 'search'
-    'search/:query': 'search'
-    'search/:query/p:page': 'search'
+    'search(/:query)': 'search'
     'visits(/:date)': 'visits'
     'trails/new': 'newTrail'
     'trails/:name': 'trail'
@@ -84,16 +82,15 @@ class BH.Router extends Backbone.Router
   settings: ->
     view = @cache.view('settings')
 
-  search: (query, page) ->
+  search: (query) ->
     # weak...
     $('.menu > *').removeClass 'selected'
 
     [view] = @cache.view('search')
-    view.page.set(page: parseInt(page, 10), {silent: true}) if page?
     view.model.set query: decodeURIComponent(query) if query
 
     delay true, ->
-      if query? && query != ''
+      if query?
         view.historian = new Historian.Search(query)
         view.historian.fetch {}, (history, cacheDatetime = null) ->
           view.collection.reset history

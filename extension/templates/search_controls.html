@@ -1,0 +1,11 @@
+<div class='controls'>
+  {{^query}}
+    <span class='text search_hint'>Pssst... try searching for something</span>
+  {{/query}}
+  <div class='spinner'></div>
+  <div class='pagination' style='margin: 0; position: relative;'></div>
+  <div class='spacer'></div>
+  <button class='delete_all' disabled>
+    {{i18n_delete_all_visits_for_search_button}}
+  </button>
+</div>

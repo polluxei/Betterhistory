@@ -811,8 +811,13 @@ body.new_tags .menu .tags.pulse .new {
 .search_view.loaded .count {
   opacity: 1;
 }
-.loaded .spinner {
-  opacity: 0;
+.search_view {
+  .spinner {
+    opacity: 0;
+  }
+  &.loading .spinner {
+    opacity: 1;
+  }
 }
 body.chrome-bootstrap .tag_visit_view ul.sites {
   margin: 0;
@@ -958,5 +963,5 @@ body.chrome-bootstrap .tag_visit_view ul li.site {
   color: #FFF;
 }
 body .hidden {
-  display: none;
+  display: none !important;
 }
