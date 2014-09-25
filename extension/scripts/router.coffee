@@ -7,8 +7,6 @@ class BH.Router extends Backbone.Router
     'settings': 'settings'
     'search(/:query)': 'search'
     'visits(/:date)': 'visits'
-    'trails/new': 'newTrail'
-    'trails/:name': 'trail'
 
   initialize: (options) ->
     settings = options.settings
@@ -55,16 +53,9 @@ class BH.Router extends Backbone.Router
     delay transitioningView, ->
       view.model.fetch()
 
-  newTrail: ->
-    view = @cache.view('newTrail')
-    view.on 'build_trail', (model) =>
-      @trails.add model
-
-  trail: (name) ->
-    view = @cache.view('trail')
-
   visits: (date = 'today') ->
     @app.selectNav '.visits'
+
     # special cases
     date = switch date
       when 'today'
