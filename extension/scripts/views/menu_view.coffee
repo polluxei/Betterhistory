@@ -5,9 +5,6 @@ class BH.Views.MenuView extends Backbone.View
 
   template: BH.Templates['menu']
 
-  events:
-    'click a': 'linkClicked'
-
   initialize: ->
     @collection.on 'add', @render, @
 
@@ -17,9 +14,9 @@ class BH.Views.MenuView extends Backbone.View
     @$el.html html
     @
 
-  linkClicked: (ev) ->
+  select: (selector) ->
     @$('.menu > *').removeClass 'selected'
-    $(ev.currentTarget).parent().addClass 'selected'
+    @$(selector).parent().addClass 'selected'
 
   getI18nValues: ->
     @t ['settings_link', 'tags_link', 'devices_link', 'search_link']

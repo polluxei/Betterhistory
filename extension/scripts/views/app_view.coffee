@@ -15,5 +15,8 @@ class BH.Views.AppView extends Backbone.View
     @$('.navigation').append @menuView.render().el
     @
 
+  selectNav: (selector) ->
+    @menuView.select selector
+
   getI18nValues: ->
     @t ['history_title']

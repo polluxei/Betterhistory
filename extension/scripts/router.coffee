@@ -30,12 +30,16 @@ class BH.Router extends Backbone.Router
       window.analyticsTracker.pageView url
 
   tags: ->
+    @app.selectNav '.tags'
+
     [view, transitioningView] = @cache.view('tags')
 
     delay transitioningView, ->
       view.collection.fetch()
 
   devices: ->
+    @app.selectNav '.devices'
+
     [view, transitioningView] = @cache.view('devices')
 
     delay transitioningView, ->
@@ -46,6 +50,7 @@ class BH.Router extends Backbone.Router
           view.feature.set supported: false
 
   tag: (id) ->
+    @app.selectNav '.tags'
     [view, transitioningView] = @cache.view('tag', [id])
     delay transitioningView, ->
       view.model.fetch()
@@ -59,6 +64,7 @@ class BH.Router extends Backbone.Router
     view = @cache.view('trail')
 
   visits: (date = 'today') ->
+    @app.selectNav '.visits'
     # special cases
     date = switch date
       when 'today'
@@ -80,12 +86,11 @@ class BH.Router extends Backbone.Router
           view.feature.set supported: false
 
   settings: ->
+    @app.selectNav '.settings'
     view = @cache.view('settings')
 
   search: (query) ->
-    # weak...
-    $('.menu > *').removeClass 'selected'
-
+    @app.selectNav '.search'
     [view] = @cache.view('search')
     view.model.set query: decodeURIComponent(query) if query
 
