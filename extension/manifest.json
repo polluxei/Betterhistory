@@ -45,6 +45,7 @@
     "unlimitedStorage",
     "identity",
     "sessions",
+    "downloads",
     "https://www.googleapis.com/",
     "https://accounts.google.com/",
     "http://*.better-history.com/"
