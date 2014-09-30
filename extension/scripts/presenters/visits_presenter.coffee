@@ -42,7 +42,7 @@ class BH.Presenters.VisitsPresenter
       visits: []
 
     for visit in visits
-      hour = new Date(visit.lastVisitTime).getHours()
+      hour = new Date(visit.lastVisitTime || visit.startTime).getHours()
       out[hour].visits.push visit
 
     _.reject out, (item) -> item.visits.length == 0

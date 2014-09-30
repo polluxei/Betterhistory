@@ -4,8 +4,10 @@ class BH.Views.VisitsResultsView extends Backbone.View
   template: BH.Templates['visits_results']
 
   events:
+    'click .download': 'downloadClicked'
     'click .delete_hour': 'deleteHourClicked'
     'click .delete_visit': 'deleteVisitClicked'
+    'click .delete_download': 'deleteDownloadClicked'
     'click .visit > a': 'visitClicked'
     'click .hours a': 'hourClicked'
 
@@ -36,6 +38,7 @@ class BH.Views.VisitsResultsView extends Backbone.View
     @insertTags()
     @attachDragging()
     @inflateDates()
+    @inflateDownloadIcons()
 
     # Mark first available hour as selected
     @$('.controls.hours a:not(.disabled)').eq(0).addClass('selected')
@@ -82,8 +85,18 @@ class BH.Views.VisitsResultsView extends Backbone.View
 
   inflateDates: ->
     $('.time').each (i, el) =>
-      timestamp = @collection.at(i).get('lastVisitTime')
+      model = @collection.at(i)
+      timestamp = model.get('lastVisitTime') || model.get('startTime')
       $(el).text new Date(timestamp).toLocaleTimeString(BH.lang)
+
+  inflateDownloadIcons: ->
+    callback = (el, uri) ->
+      $(el).find('.description').css backgroundImage: "url(#{uri})"
+
+    $('.download').each (i, el) =>
+      downloadId = parseInt($(el).data('download-id'), 10)
+      chrome.downloads.getFileIcon downloadId, {}, (uri) ->
+        callback(el, uri)
 
   insertTags: ->
     persistence.tag().cached (operations) ->
@@ -139,6 +152,12 @@ class BH.Views.VisitsResultsView extends Backbone.View
 
     document.body.scrollTop = $hour.getBoundingClientRect().top + document.body.scrollTop - 155
 
+  downloadClicked: (ev) ->
+    ev.preventDefault()
+    $el = $(ev.currentTarget)
+    downloadId = parseInt $el.data('download-id'), 10
+    chrome.downloads.show downloadId
+
   deleteHourClicked: (ev) ->
     ev.preventDefault()
     hour = $(ev.currentTarget).data('hour')
@@ -149,6 +168,13 @@ class BH.Views.VisitsResultsView extends Backbone.View
     $el = $(ev.currentTarget)
     analyticsTracker.visitDeletion()
     Historian.deleteUrl $el.data('url'), =>
+      $el.parent('.visit').remove()
+
+  deleteDownloadClicked: (ev) ->
+    ev.preventDefault()
+    $el = $(ev.currentTarget)
+    analyticsTracker.downloadDeletion()
+    Historian.deleteDownload $el.data('url'), =>
       $el.parent('.visit').remove()
 
   promptToDeleteHour: (hour) ->

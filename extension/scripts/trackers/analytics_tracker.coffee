@@ -32,6 +32,9 @@ class BH.Trackers.AnalyticsTracker
   visitDeletion: ->
     @trackEvent(['Visit', 'Delete'])
 
+  downloadDeletion: ->
+    @trackEvent(['Download', 'Delete'])
+
   hourDeletion: ->
     @trackEvent(['Day Hour', 'Delete'])
 
