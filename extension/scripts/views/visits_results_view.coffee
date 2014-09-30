@@ -7,6 +7,7 @@ class BH.Views.VisitsResultsView extends Backbone.View
     'click .download': 'downloadClicked'
     'click .delete_hour': 'deleteHourClicked'
     'click .delete_visit': 'deleteVisitClicked'
+    'click .delete_download': 'deleteDownloadClicked'
     'click .visit > a': 'visitClicked'
     'click .hours a': 'hourClicked'
 
@@ -167,6 +168,13 @@ class BH.Views.VisitsResultsView extends Backbone.View
     $el = $(ev.currentTarget)
     analyticsTracker.visitDeletion()
     Historian.deleteUrl $el.data('url'), =>
+      $el.parent('.visit').remove()
+
+  deleteDownloadClicked: (ev) ->
+    ev.preventDefault()
+    $el = $(ev.currentTarget)
+    analyticsTracker.downloadDeletion()
+    Historian.deleteDownload $el.data('url'), =>
       $el.parent('.visit').remove()
 
   promptToDeleteHour: (hour) ->

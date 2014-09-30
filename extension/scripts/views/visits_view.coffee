@@ -19,7 +19,7 @@ class BH.Views.VisitsView extends BH.Views.MainView
     @feature.on 'change:supported', @onFeatureSupportedChange, @
 
   pageTitle: ->
-    'Visits'
+    'Activity'
 
   render: ->
     html = Mustache.to_html @template, @getI18nValues()
