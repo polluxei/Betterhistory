@@ -43,6 +43,9 @@ class BH.Views.VisitsResultsView extends Backbone.View
     # Mark first available hour as selected
     @$('.controls.hours a:not(.disabled)').eq(0).addClass('selected')
 
+    window.analyticsTracker.dayActivityDownloadCount(@$('.visits a.download').length)
+    window.analyticsTracker.dayActivityVisitCount(@$('.visits a.site').length)
+
 
     lastId = null
     topMenu = @$('.hours')

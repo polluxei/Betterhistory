@@ -17,6 +17,12 @@ class BH.Trackers.AnalyticsTracker
   historyOpen: ->
     @trackEvent(['History', 'Open'])
 
+  dayActivityVisitCount: (amount) ->
+    @trackEvent(['Activity', 'Day View', 'Visit Count', amount])
+
+  dayActivityDownloadCount: (amount) ->
+    @trackEvent(['Activity', 'Day View', 'Download Count', amount])
+
   weekView: (date, distanceFromCurrentWeek) ->
     @trackEvent(['Weeks', 'Click', date, distanceFromCurrentWeek])
 
