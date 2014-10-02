@@ -5,6 +5,7 @@ class BH.Views.SearchResultsView extends Backbone.View
 
   events:
     'click .delete_visit': 'deleteClicked'
+    'click .delete_download': 'deleteDownloadClicked'
 
   initialize: ->
     @page = @options.page
@@ -93,6 +94,18 @@ class BH.Views.SearchResultsView extends Backbone.View
     Historian.deleteUrl url, =>
       $el.parents('.visit').remove()
       @collection.remove @collection.where(url: url)
+      new Historian.Search().expireCache()
+      window.analyticsTracker.searchResultDeletion()
+
+  deleteDownloadClicked: (ev) ->
+    ev.preventDefault()
+    $el = $(ev.currentTarget)
+    url = $el.data('url')
+
+    Historian.deleteDownload url, =>
+      $el.parents('.visit').remove()
+      @collection.remove @collection.where(url: url)
+      new Historian.Search().expireCache()
       window.analyticsTracker.searchResultDeletion()
 
   onVisitAdded: (model) ->
