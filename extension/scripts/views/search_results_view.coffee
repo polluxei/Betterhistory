@@ -27,6 +27,7 @@ class BH.Views.SearchResultsView extends Backbone.View
     @insertTags()
     @attachDragging()
     @inflateDates()
+    @inflateDownloadIcons()
 
     document.body.scrollTop = 0
 
@@ -48,10 +49,20 @@ class BH.Views.SearchResultsView extends Backbone.View
     history = presenter.history(start, end)
 
     $('.visit .datetime').each (i, el) =>
-      @inflateDate $(el), history[i].lastVisitTime
+      @inflateDate $(el), history[i].lastVisitTime || history[i].startTime
 
   inflateDate: ($el, timestamp) ->
     $el.text new Date(timestamp).toLocaleString(BH.lang)
+
+  inflateDownloadIcons: ->
+    callback = (el, uri) ->
+      $(el).find('.description').css backgroundImage: "url(#{uri})"
+
+    $('.download').each (i, el) =>
+      downloadId = parseInt($(el).data('download-id'), 10)
+      chrome.downloads.getFileIcon downloadId, {}, (uri) ->
+        callback(el, uri)
+
 
   insertTags: ->
     persistence.tag().cached (operations) ->

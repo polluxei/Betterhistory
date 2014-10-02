@@ -1,19 +1,35 @@
 <ol class='visits highlightable editable draggable'>
   {{#visits}}
-    <li class='visit visit_view searched' draggable='true' data-url='{{url}}' data-title='{{title}}'>
-      <div class='handle'></div>
-      <a href='{{url}}' class='site'>
-        <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
-          <dt>
-            <div class='active_tags'></div>
-            {{{name}}}
-          </dt>
-          <dd class='location'>{{{location}}}</dd>
-          <dd class='datetime'>{{{datetime}}}</dd>
-        </dl>
-      </a>
-      <a class='delete_visit delete' href='#' data-url='{{url}}' title='{{i18n_prompt_delete_button}}'>{{i18n_prompt_delete_button}}</a>
-    </li>
+    {{#filename}}
+      <li class='visit visit_view' data-url='{{url}}'>
+        <a href='{{url}}' class='item download' data-download-id='{{id}}'>
+          <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
+            <dt>
+            {{{name}}} ({{size}} MB)
+            </dt>
+            <dd class='location'>{{{location}}}</dd>
+            <dd class='datetime'>{{{time}}}</dd>
+          </dl>
+        </a>
+        <a class='delete_download delete' href='#' data-url='{{url}}' title='{{i18n_prompt_delete_button}}'>{{i18n_prompt_delete_button}}</a>
+      </li>
+    {{/filename}}
+    {{^filename}}
+      <li class='visit visit_view searched' draggable='true' data-url='{{url}}' data-title='{{title}}'>
+        <div class='handle'></div>
+        <a href='{{url}}' class='site'>
+          <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
+            <dt>
+              <div class='active_tags'></div>
+              {{{name}}}
+            </dt>
+            <dd class='location'>{{{location}}}</dd>
+            <dd class='datetime'>{{{datetime}}}</dd>
+          </dl>
+        </a>
+        <a class='delete_visit delete' href='#' data-url='{{url}}' title='{{i18n_prompt_delete_button}}'>{{i18n_prompt_delete_button}}</a>
+      </li>
+    {{/filename}}
   {{/visits}}
   {{#extendSearch}}
     <li class='search_deeper'>
