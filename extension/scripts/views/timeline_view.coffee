@@ -1,6 +1,4 @@
 class BH.Views.TimelineView extends BH.Views.MainView
-  className: 'timeline_view'
-
   template: BH.Templates['timeline']
 
   events:

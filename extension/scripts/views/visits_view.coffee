@@ -25,8 +25,10 @@ class BH.Views.VisitsView extends BH.Views.MainView
     html = Mustache.to_html @template, @getI18nValues()
     @$el.append html
 
-    timelineView = new BH.Views.TimelineView model: @model
-    @$('.controls').html timelineView.render().el
+    @timelineView = new BH.Views.TimelineView
+      model: @model
+      el: @$('.timeline_view')
+    @timelineView.render()
 
     @visitsResultsView = new BH.Views.VisitsResultsView
       collection: @collection
@@ -36,6 +38,7 @@ class BH.Views.VisitsView extends BH.Views.MainView
     @
 
   onDateChange: (ev) ->
+    @timelineView.render()
     @visitsResultsView.resetRender()
 
   onCollectionReset: ->
