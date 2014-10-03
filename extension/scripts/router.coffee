@@ -83,10 +83,10 @@ class BH.Router extends Backbone.Router
   search: (query) ->
     @app.selectNav '.search'
     [view] = @cache.view('search')
-    view.model.set query: decodeURIComponent(query) if query
 
-    delay true, ->
-      if query?
+    delay true, =>
+      if query
+        view.model.set query: decodeURIComponent(query)
         view.historian = new Historian.Search(query)
         view.historian.fetch {}, (history, cacheDatetime = null) ->
           view.collection.reset history
@@ -94,6 +94,17 @@ class BH.Router extends Backbone.Router
             view.model.set cacheDatetime: cacheDatetime
           else
             view.model.unset 'cacheDatetime'
+      else
+        view.historian = new Historian.Search()
+        view.historian.fetchCache (cache) =>
+          if cache?.query?
+            @navigate "search/#{cache.query}", trigger: false
+            view.model.set
+              query: cache.query
+              cacheDatetime: new Date(cache.datetime)
+            view.collection.reset cache.results
+
+
 
 # if we need to transition to another view, delay the query until the
 # transition fires. There can be a noticeable lag if the delay is skipped

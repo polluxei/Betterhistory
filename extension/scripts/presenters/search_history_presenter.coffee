@@ -1,5 +1,5 @@
 class BH.Presenters.SearchHistoryPresenter extends BH.Presenters.Base
-  constructor: (@visits, @query) ->
+  constructor: (@visits, @query = '') ->
 
   history: (start, end) ->
     out = []
