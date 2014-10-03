@@ -43,6 +43,7 @@ class BH.Views.VisitsView extends BH.Views.MainView
 
   onCollectionReset: ->
     @visitsResultsView.render()
+    @assignTabIndices('.visits > .visit > a.item')
 
   onFeatureSupportedChange: ->
     @tracker.featureNotSupported('Query (by day)')

@@ -35,7 +35,7 @@ class BH.Views.SearchView extends BH.Views.MainView
   onHistoryChanged: ->
     @$el.removeClass 'loading'
     @renderVisits()
-    @assignTabIndices('.visit a:first-child')
+    @assignTabIndices('.visit a.item')
 
   onCacheChanged: ->
     if @model.get('cacheDatetime')

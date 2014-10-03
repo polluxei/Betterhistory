@@ -68,6 +68,8 @@ class BH.Router extends Backbone.Router
     date = date.startOf('day').toDate()
 
     [view, transitioningView] = @cache.view('visits', [date])
+    view.$('.search').focus()
+
 
     delay transitioningView, ->
       new Historian.Day(date).fetch (history) ->
