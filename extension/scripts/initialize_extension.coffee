@@ -65,6 +65,12 @@ load = ->
         tracker: analyticsTracker
       Backbone.history.start()
 
+      persistence.tag().fetchTags (tags) ->
+        defaultTags = ['games', 'places to travel', 'clothing', 'recipes', 'friends', 'funny videos', 'world news', 'productivity']
+        if tags.length > 0
+          if _.difference(tags, defaultTags).length != 0
+            $('.tags_menu').show() if tags.length > 0
+
   mailingList = new BH.Init.MailingList(syncStore: syncStore)
   mailingList.prompt ->
     new BH.Modals.MailingListModal().open()
@@ -73,9 +79,6 @@ load = ->
   tagFeature = new BH.Init.TagFeature(syncStore: syncStore)
   tagFeature.announce ->
     $('body').addClass('new_tags')
-
-  persistence.tag().fetchTags (tags) ->
-    $('.tags_menu').show() if tags.length > 0
 
 if env == 'prod'
   try

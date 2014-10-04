@@ -35,8 +35,8 @@ class BH.Views.VisitsResultsView extends Backbone.View
     document.body.scrollTop = 0
 
     @show()
-    @insertTags()
-    @attachDragging()
+    #@insertTags()
+    #@attachDragging()
     @inflateDates()
     @inflateDownloadIcons()
 
