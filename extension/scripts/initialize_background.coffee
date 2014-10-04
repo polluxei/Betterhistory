@@ -56,8 +56,8 @@ load = ->
     syncStore: syncStore
 
   tagFeature.prepopulate =>
-    exampleTags = new BH.Lib.ExampleTags()
-    exampleTags.load()
+    # exampleTags = new BH.Lib.ExampleTags()
+    # exampleTags.load()
 
   chrome.runtime.onMessage.addListener (message) ->
     if message.action == 'calculate hash'

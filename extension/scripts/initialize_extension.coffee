@@ -74,6 +74,9 @@ load = ->
   tagFeature.announce ->
     $('body').addClass('new_tags')
 
+  persistence.tag().fetchTags (tags) ->
+    $('.tags_menu').show() if tags.length > 0
+
 if env == 'prod'
   try
     load()
