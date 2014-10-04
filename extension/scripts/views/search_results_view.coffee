@@ -25,8 +25,8 @@ class BH.Views.SearchResultsView extends Backbone.View
     @$el.html html
 
     @show()
-    @insertTags()
-    @attachDragging()
+    #@insertTags()
+    #@attachDragging()
     @inflateDates()
     @inflateDownloadIcons()
 
