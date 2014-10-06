@@ -25,8 +25,6 @@ class BH.Views.SearchResultsView extends Backbone.View
     @$el.html html
 
     @show()
-    #@insertTags()
-    #@attachDragging()
     @inflateDates()
     @inflateDownloadIcons()
 
@@ -63,28 +61,6 @@ class BH.Views.SearchResultsView extends Backbone.View
       downloadId = parseInt($(el).data('download-id'), 10)
       chrome.downloads.getFileIcon downloadId, {}, (uri) ->
         callback(el, uri)
-
-
-  insertTags: ->
-    persistence.tag().cached (operations) ->
-      $('.site').each ->
-        $el = $(this)
-        tags = operations.siteTags $el.attr('href')
-        activeTagsView = new BH.Views.ActiveTagsView
-          model: new BH.Models.Site(tags: tags)
-          editable: false
-        $el.find('.active_tags').html activeTagsView.render().el
-
-  attachDragging: ->
-    dragAndTagView = new BH.Views.DragAndTagView
-      model: @model
-    dragAndTagView.render()
-
-    dragAndTagView.on 'site:change', (site, $el) ->
-      activeTagsView = new BH.Views.ActiveTagsView
-        model: new BH.Models.Site(site)
-        editable: false
-      $el.find('.active_tags').html activeTagsView.render().el
 
   deleteClicked: (ev) ->
     ev.preventDefault()

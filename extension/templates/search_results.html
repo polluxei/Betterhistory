@@ -1,4 +1,4 @@
-<ol class='visits highlightable editable draggable'>
+<ol class='visits highlightable editable'>
   {{#visits}}
     {{#filename}}
       <li class='visit visit_view' data-url='{{url}}'>
@@ -15,7 +15,7 @@
       </li>
     {{/filename}}
     {{^filename}}
-      <li class='visit visit_view searched' draggable='true' data-url='{{url}}' data-title='{{title}}'>
+      <li class='visit visit_view searched' data-url='{{url}}' data-title='{{title}}'>
         <a href='{{url}}' class='site'>
           <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
             <dt>

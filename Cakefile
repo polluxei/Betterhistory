@@ -114,7 +114,6 @@ scripts = [
   'scripts/views/tags_list_view.js',
   'scripts/views/tag_view.js',
   'scripts/views/tagged_sites_view.js',
-  'scripts/views/drag_and_tag_view.js',
   'scripts/views/active_tags_view.js',
   'scripts/views/available_tags_view.js',
   'scripts/views/devices_view.js',

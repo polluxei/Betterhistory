@@ -22,7 +22,7 @@
             {{i18n_delete_all_visits_for_filter_button}}
           </button>
         </div>
-        <ol class='visits highlightable editable draggable'>
+        <ol class='visits highlightable editable'>
           {{#visits}}
             {{#filename}}
               <li class='visit' data-url='{{url}}'>
@@ -40,7 +40,7 @@
               </li>
             {{/filename}}
             {{^filename}}
-              <li class='visit' draggable='true' data-url='{{url}}' data-title='{{title}}'>
+              <li class='visit' data-url='{{url}}' data-title='{{title}}'>
                 <a href='{{url}}' class='item site'>
                   <dl class='description' style='background-image: url(chrome://favicon/{{url}})'>
                     <dt>

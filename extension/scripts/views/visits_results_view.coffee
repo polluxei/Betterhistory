@@ -35,8 +35,6 @@ class BH.Views.VisitsResultsView extends Backbone.View
     document.body.scrollTop = 0
 
     @show()
-    #@insertTags()
-    #@attachDragging()
     @inflateDates()
     @inflateDownloadIcons()
 
@@ -100,45 +98,6 @@ class BH.Views.VisitsResultsView extends Backbone.View
       downloadId = parseInt($(el).data('download-id'), 10)
       chrome.downloads.getFileIcon downloadId, {}, (uri) ->
         callback(el, uri)
-
-  insertTags: ->
-    persistence.tag().cached (operations) ->
-      $('.site').each ->
-        $el = $(this)
-        tags = operations.siteTags $el.attr('href')
-        if tags.length > 0
-          activeTagsView = new BH.Views.ActiveTagsView
-            model: new BH.Models.Site(tags: tags)
-            editable: false
-          $el.find('.active_tags').html activeTagsView.render().el
-
-      $('.grouped_sites').each (i, siteEl) =>
-        $el = $(siteEl)
-        urls = []
-        $el.find('a.site').each -> urls.push($(this).attr('href'))
-        sharedTags = operations.sitesTags urls
-        activeTagsView = new BH.Views.ActiveTagsView
-          model: new BH.Models.Site(tags: sharedTags)
-          editable: false
-        $el.find('.active_tags').eq(0).html activeTagsView.render().el
-
-  attachDragging: ->
-    dragAndTagView = new BH.Views.DragAndTagView
-      collection: @collection
-    dragAndTagView.render()
-
-    dragAndTagView.on 'site:change', (site, $el) ->
-      activeTagsView = new BH.Views.ActiveTagsView
-        model: new BH.Models.Site(site)
-        editable: false
-      $el.find('.active_tags').html activeTagsView.render().el
-
-    dragAndTagView.on 'sites:change', (site, $el) ->
-      activeTagsView = new BH.Views.ActiveTagsView
-        model: new BH.Models.Site(site)
-        editable: false
-      $activeTags = $el.children('.sites').find('.active_tags')
-      $activeTags.html activeTagsView.render().el
 
   visitClicked: (ev) ->
     if $(ev.target).hasClass('search_domain')
