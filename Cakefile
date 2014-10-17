@@ -39,10 +39,6 @@ backgroundScripts = [
   "scripts/chrome/browser_actions.js",
   "scripts/chrome/sync_store.js",
   "scripts/chrome/local_store.js",
-  "scripts/lib/example_tags.js",
-  'scripts/lib/syncing_translator.js',
-  'scripts/lib/sites_hasher.js',
-  'scripts/migrations/ensure_datetime_on_tagged_sites.js',
   'scripts/persistence/tag.js',
   'scripts/persistence/remote.js',
   "scripts/init/tag_feature.js",
@@ -72,31 +68,15 @@ scripts = [
   'scripts/trackers/analytics_tracker.js',
   'scripts/lib/date_i18n.js',
   'scripts/lib/pagination.js',
-  'scripts/lib/example_tags.js',
   'scripts/lib/image_data.js',
-  'scripts/lib/google_user_info.js',
-  'scripts/lib/user_processor.js',
-  'scripts/lib/syncing_translator.js',
-  'scripts/lib/sites_hasher.js',
-  'scripts/lib/syncer.js',
   'scripts/lib/query_params.js',
   'scripts/chrome/sync_store.js',
   'scripts/chrome/local_store.js',
   'scripts/persistence/tag.js',
   'scripts/persistence/remote.js',
   'scripts/modals/base.js',
-  'scripts/modals/rename_tag_modal.js',
-  'scripts/modals/read_only_explanation_modal.js',
   'scripts/modals/credits_modal.js',
   'scripts/modals/mailing_list_modal.js',
-  'scripts/modals/how_to_tag_modal.js',
-  'scripts/modals/new_tag_modal.js',
-  'scripts/modals/initial_syncing_modal.js',
-  'scripts/modals/syncing_decision_modal.js',
-  'scripts/modals/auth_error_modal.js',
-  'scripts/modals/server_error_modal.js',
-  'scripts/modals/connection_required_modal.js',
-  'scripts/modals/login_error_modal.js',
   'scripts/views/main_view.js',
   'scripts/views/app_view.js',
   'scripts/views/cache.js',
@@ -130,7 +110,6 @@ scripts = [
   'scripts/models/settings.js',
   'scripts/models/tag.js',
   'scripts/models/site.js',
-  'scripts/models/user.js',
   'scripts/collections/tags.js',
   'scripts/collections/sites.js',
   'scripts/collections/devices.js',
@@ -145,7 +124,6 @@ scripts = [
   'scripts/presenters/timeline_presenter.js',
   'scripts/presenters/visits_presenter.js',
   'scripts/router.js',
-  'scripts/init/tag_feature.js',
   'scripts/init/mailing_list.js',
   'scripts/init/persistence.js',
   'scripts/initialize_extension.js'
@@ -178,7 +156,6 @@ task 'build:assets:dev', '', ->
 
   code = code.replace '<%= scripts %>', scriptTags.join("\n    ")
   code = code.replace '<%= styles %>', styleTags.join("\n    ")
-  code = code.replace '<%= wallet.js %>', 'https://sandbox.google.com/checkout/inapp/lib/buy.js'
 
   fs.writeFileSync 'build/index.html', code
 
@@ -210,6 +187,5 @@ task 'build:assets:prod', '', ->
 
   code = code.replace '<%= scripts %>', buildScriptTag('scripts.js')
   code = code.replace '<%= styles %>', buildStyleTag('styles.css')
-  code = code.replace '<%= wallet.js %>', 'https://wallet.google.com/inapp/lib/buy.js'
 
   fs.writeFileSync 'build/index.html', code

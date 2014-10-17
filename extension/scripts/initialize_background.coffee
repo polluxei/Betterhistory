@@ -18,12 +18,6 @@ load = ->
       chrome: chrome
       tracker: analyticsTracker
 
-  chrome.runtime?.onInstalled?.addListener ->
-    ensureDatetimeOnTaggedSites = new BH.Migrations.EnsureDatetimeOnTaggedSites
-      analyticsTracker: analyticsTracker
-    ensureDatetimeOnTaggedSites.run()
-
-
   browserActions = new BH.Chrome.BrowserActions
     chrome: chrome
     tracker: analyticsTracker
@@ -51,26 +45,6 @@ load = ->
 
     if settings.searchByDomain != false
       pageContextMenu.create()
-
-  tagFeature = new BH.Init.TagFeature
-    syncStore: syncStore
-
-  tagFeature.prepopulate =>
-    # exampleTags = new BH.Lib.ExampleTags()
-    # exampleTags.load()
-
-  chrome.runtime.onMessage.addListener (message) ->
-    if message.action == 'calculate hash'
-      persistence.tag().fetchTags (tags, compiledTags) =>
-        if tags.length > 0
-          syncingTranslator = new BH.Lib.SyncingTranslator()
-          syncingTranslator.forServer compiledTags, (sites) =>
-            sitesHasher = new BH.Lib.SitesHasher(CryptoJS.SHA1)
-            sitesHash = sitesHasher.generate(sites).toString()
-            persistence.tag().setSitesHash sitesHash
-          , skipImages: true
-        else
-          persistence.tag().setSitesHash ''
 
 if env == 'prod'
   try
