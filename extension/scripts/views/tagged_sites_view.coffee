@@ -13,7 +13,7 @@ class BH.Views.TaggedSitesView extends BH.Views.MainView
 
   render: ->
     presenter = new BH.Presenters.TagPresenter(@model)
-    properties = _.extend presenter.sites(), @getI18nValues(), tagState.toJSON()
+    properties = _.extend presenter.sites(), @getI18nValues()
     html = Mustache.to_html @template, properties
     @$el.html html
     @
