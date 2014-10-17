@@ -21,32 +21,6 @@ load = ->
 
   new BH.Lib.DateI18n().configure()
 
-  window.tagState = new Backbone.Model
-    readOnly: false
-    syncing: false
-
-  # crazy fast feedback
-  tagState.on 'change:syncing', ->
-    if tagState.get('syncing') == true
-      $('body').addClass('syncing')
-    else
-      $('body').removeClass('syncing')
-
-  window.user = new BH.Models.User({})
-  window.user.fetch()
-
-  window.user.on 'change', ->
-    @trigger('login') if @get('authId')
-
-  window.user.on 'logout', ->
-    googleUserInfo = new BH.Lib.GoogleUserInfo()
-    googleUserInfo.revoke()
-
-  window.user.on 'login', ->
-    syncer = new BH.Lib.Syncer()
-    syncer.updateIfNeeded ->
-      tagState.trigger('synced')
-
   window.settings = new BH.Models.Settings({})
 
   window.persistence = new BH.Init.Persistence
@@ -75,10 +49,6 @@ load = ->
   mailingList.prompt ->
     new BH.Modals.MailingListModal().open()
     analyticsTracker.mailingListPrompt()
-
-  tagFeature = new BH.Init.TagFeature(syncStore: syncStore)
-  tagFeature.announce ->
-    $('body').addClass('new_tags')
 
 if env == 'prod'
   try

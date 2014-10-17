@@ -8,61 +8,20 @@ class BH.Views.SettingsView extends BH.Views.MainView
   events:
     'click .clear_history': 'clickedClearHistory'
     'click .credits': 'clickedCredits'
-    'click #sign_up': 'clickedSignUp'
-    'click #sign_in': 'clickedSignIn'
     'change #time_grouping': 'changedTimeGrouping'
     'change #time_format': 'changedTimeFormat'
     'click #search_by_domain': 'clickedSearchByDomain'
     'click #search_by_selection': 'clickedSearchBySelection'
-    'click .manually_sync_local': 'clickedManuallySyncLocal'
-    'click .logout': 'clickedLogout'
 
   initialize: ->
     @chromeAPI = chrome
     @tracker = analyticsTracker
     @model.off 'change'
     @model.on 'change', (() => @model.save()), @model
-    window.user.on 'login', @onUserLogIn, @
-    window.user.on 'logout', @onUserLogout, @
     @on 'selected', @activateSocialLinks, @
 
   pageTitle: ->
     @t('settings_title')
-
-  onUserLogIn: ->
-    @$('.logged_out').hide()
-    @$('.avatar').attr('src', user.get('avatar'))
-    @$('.name').text("#{user.get('firstName')} #{user.get('lastName')}")
-    @$('.logged_in').show()
-    @$('.login_spinner').hide()
-
-  onUserLogout: ->
-    @$('.logged_out').show()
-    @$('.logged_in').hide()
-    @$('.login_spinner').hide()
-
-  clickedLogout: (ev) ->
-    ev.preventDefault()
-    user.logout()
-
-  clickedManuallySyncLocal: (ev) ->
-    ev.preventDefault()
-
-    initialSyncingModal = new BH.Modals.InitialSyncingModal()
-    initialSyncingModal.open()
-
-    initialSyncingModal.on 'open', =>
-      persistence.remote().deleteSites ->
-        persistence.tag().fetchTags (tags, compiledTags) ->
-          if tags.length == 0
-            initialSyncingModal.doneSyncing()
-          else
-            syncingTranslator = new BH.Lib.SyncingTranslator()
-            syncingTranslator.forServer compiledTags, (sites) ->
-              persistence.remote().updateSites sites, ->
-                setTimeout ->
-                  initialSyncingModal.doneSyncing()
-                , 2000
 
   activateSocialLinks: ->
     !((d,s,id) ->
@@ -87,20 +46,11 @@ class BH.Views.SettingsView extends BH.Views.MainView
     html = Mustache.to_html @template, properties
     @$el.append html
     @populateFields()
-    setTimeout =>
-      @onUserLogIn() if user.get('authId')
-    , 500
     @
 
   populateFields: ->
     @$('#search_by_domain').prop 'checked', @model.get('searchByDomain')
     @$('#search_by_selection').prop 'checked', @model.get('searchBySelection')
-
-  clickedSignIn: (ev) ->
-    ev.preventDefault()
-    @$('.login_spinner').show()
-    userProcessor = new BH.Lib.UserProcessor()
-    userProcessor.start()
 
   clickedSearchByDomain: (ev) ->
     @model.set searchByDomain: $(ev.currentTarget).is(':checked')

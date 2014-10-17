@@ -16,12 +16,6 @@
   "chrome_url_overrides": {
     "history": "index.html"
   },
-  "oauth2": {
-    "client_id": "298917046046-5i2dvc5e32p6u3o7jv99v9p9fhltem3l.apps.googleusercontent.com",
-    "scopes": [
-      "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile"
-    ]
-  },
   "offline_enabled": true,
   "browser_action": {
     "default_icon": {
@@ -45,10 +39,7 @@
     "unlimitedStorage",
     "identity",
     "sessions",
-    "downloads",
-    "https://www.googleapis.com/",
-    "https://accounts.google.com/",
-    "http://*.better-history.com/"
+    "downloads"
   ],
   "content_security_policy": "script-src 'self' 'unsafe-eval' https://wallet.google.com https://sandbox.google.com https://ssl.google-analytics.com https://platform.twitter.com https://apis.google.com; object-src 'self';"
 }
