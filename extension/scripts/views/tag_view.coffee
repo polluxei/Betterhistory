@@ -9,8 +9,6 @@ class BH.Views.TagView extends BH.Views.MainView
   events:
     'click .delete_sites': 'onDeleteSitesClicked'
     'click .rename': 'onRenameClicked'
-    'click .share': 'onShareClicked'
-    'click .read_only_explanation': 'onReadOnlyExplanationClicked'
     'keyup .search': 'onSearchTyped'
     'blur .search': 'onSearchBlurred'
 
@@ -21,27 +19,14 @@ class BH.Views.TagView extends BH.Views.MainView
     @model.on 'change', @onSitesLoaded, @
     @model.on 'change:name', @onNameChange, @
 
-    tagState.on 'change:readOnly', @onReadOnlyChange, @
-    tagState.on 'synced', @onSynced, @
-
   pageTitle: ->
     @t('tag_title', [@options.name])
 
   render: ->
-    properties = _.extend @getI18nValues(), {tagsUrl: '#tags'}, tagState.toJSON()
+    properties = _.extend @getI18nValues(), {tagsUrl: '#tags'}
     html = Mustache.to_html @template, properties
     @$el.append html
     @
-
-  onReadOnlyChange: ->
-    @$el.html ''
-    @render()
-    @model.fetch()
-
-  onSynced: ->
-    @$el.html ''
-    @render()
-    @model.fetch()
 
   onSitesLoaded: ->
     @renderTaggedSites()
@@ -58,11 +43,6 @@ class BH.Views.TagView extends BH.Views.MainView
     @taggedSitesView.attachDragging()
     @taggedSitesView.insertTags()
 
-  onReadOnlyExplanationClicked: (ev) ->
-    ev.preventDefault()
-    readOnlyExplanationModal = new BH.Modals.ReadOnlyExplanationModal()
-    readOnlyExplanationModal.open()
-
   onDeleteSitesClicked: (ev) ->
     @tracker.deleteTagClick()
     @promptToDeleteAllSites()
@@ -77,29 +57,6 @@ class BH.Views.TagView extends BH.Views.MainView
     renameTagModal.open()
     $('.new_tag').focus()
 
-  onShareClicked: (ev) ->
-    ev.preventDefault()
-    @tracker.shareClicked()
-
-    if @model.get('url')
-      url = encodeURIComponent(@model.get('url'))
-      @chromeAPI.tabs.create url: "http://#{window.siteHost}/from_ext/#{url}"
-    else
-      $smallSpinner = @$('.small_spinner')
-
-      unless $smallSpinner.hasClass('show')
-        $smallSpinner.addClass('show')
-
-        @model.share
-          success: (data) =>
-            $smallSpinner.removeClass('show')
-            url = encodeURIComponent(data.url)
-            @chromeAPI.tabs.create url: "http://#{window.siteHost}/from_ext/#{url}"
-            @model.set(url: data.url)
-          error: =>
-            $smallSpinner.removeClass('show')
-            alert('There was an error. Please try again later')
-
   promptToDeleteAllSites: ->
     promptMessage = @t('confirm_delete_tag', [@options.name])
     @promptView = BH.Views.CreatePrompt(promptMessage)
@@ -112,9 +69,6 @@ class BH.Views.TagView extends BH.Views.MainView
       @model.destroy =>
       @promptView.close()
       @tracker.tagRemoved()
-
-      if user.isLoggedIn()
-        persistence.remote().deleteTag(tagName)
 
       router.navigate '#tags', trigger: true
     else
