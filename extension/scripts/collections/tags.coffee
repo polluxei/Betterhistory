@@ -2,7 +2,6 @@ class BH.Collections.Tags extends Backbone.Collection
   model: BH.Models.Tag
 
   initialize: ->
-    @on('sync', @sync) if user.isLoggedIn()
 
   fetch: (callback = ->) ->
     persistence.tag().fetchTags (tags, compiledTags) =>
