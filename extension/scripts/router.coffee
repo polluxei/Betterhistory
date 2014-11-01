@@ -74,7 +74,8 @@ class BH.Router extends Backbone.Router
     delay transitioningView, ->
       new Historian.Day(date).fetch (history) ->
         if history
-          view.collection.reset history
+          if history.length != view.collection.length
+            view.collection.reset history
         else
           view.feature.set supported: false
 
@@ -101,10 +102,14 @@ class BH.Router extends Backbone.Router
         view.historian.fetchCache (cache) =>
           if cache?.query?
             @navigate "search/#{cache.query}", trigger: false
-            view.model.set
-              query: cache.query
-              cacheDatetime: new Date(cache.datetime)
-            view.collection.reset cache.results
+
+            # Only trigger data reset if cache times differ. This is to prevent data
+            # reload flicker inbetween navigating to and from /#search
+            if view.model.get('cacheDatetime')?.getTime() != cache.datetime.getTime()
+              view.model.set
+                query: cache.query
+                cacheDatetime: new Date(cache.datetime)
+              view.collection.reset cache.results
 
 
 
