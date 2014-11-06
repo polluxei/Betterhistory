@@ -21,7 +21,7 @@ class BH.Views.VisitsResultsView extends Backbone.View
     hours = presenter.hoursDistribution(@collection.toJSON())
 
     if @collection.length > 0
-      date = @model.get('date')
+      date = new Date(@model.get('date'))
       properties.history =
         visitsByHour: visitsByHour.reverse()
         date: date.toLocaleDateString('en')
@@ -155,7 +155,8 @@ class BH.Views.VisitsResultsView extends Backbone.View
   promptAction: (prompt, hour) ->
     if prompt.get('action')
       window.analyticsTracker.hourDeletion()
-      dayHistorian = new Historian.Day(@model.get('date'))
+      date = new Date(@model.get('date'))
+      dayHistorian = new Historian.Day(date)
       dayHistorian.destroyHour hour, ->
         window.location.reload()
     else

@@ -67,7 +67,7 @@ class BH.Router extends Backbone.Router
 
     date = date.startOf('day').toDate()
 
-    [view, transitioningView] = @cache.view('visits', [date])
+    [view, transitioningView] = @cache.view('visits', [date.getTime()])
     view.$('.search').focus()
 
 
