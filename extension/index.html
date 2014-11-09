@@ -3,11 +3,60 @@
   <head>
     <meta charset="utf-8">
     <meta name="twitter:widgets:csp" content="on">
-    <%= styles %>
+    <link rel='stylesheet' type='text/css' href='styles/chrome-bootstrap.css'/>
+    <link rel='stylesheet' type='text/css' href='styles/app.css'/>
+    <link rel='stylesheet' type='text/css' href='styles/i18n.css'/>
     <title>Better History</title>
   </head>
   <body class="chrome-bootstrap">
     <div class="app"></div>
-    <%= scripts %>
+    <script src='scripts/namespace.js'></script>
+    <script src='scripts/frameworks/historian.js'></script>
+    <script src='scripts/frameworks/honeybadger.js'></script>
+    <script src='scripts/frameworks/underscore-min.js'></script>
+    <script src='scripts/frameworks/zepto.min.js'></script>
+    <script src='scripts/frameworks/zepto_additions.js'></script>
+    <script src='scripts/frameworks/backbone-min.js'></script>
+    <script src='scripts/frameworks/mustache.js'></script>
+    <script src='scripts/frameworks/moment-with-langs.js'></script>
+    <script src='scripts/frameworks/analytics.js'></script>
+    <script src='scripts/templates.js'></script>
+    <script src='scripts/trackers/error_tracker.js'></script>
+    <script src='scripts/trackers/analytics_tracker.js'></script>
+    <script src='scripts/lib/pagination.js'></script>
+    <script src='scripts/chrome/sync_store.js'></script>
+    <script src='scripts/chrome/i18n.js'></script>
+    <script src='scripts/modals/base.js'></script>
+    <script src='scripts/modals/prompt_modal.js'></script>
+    <script src='scripts/modals/credits_modal.js'></script>
+    <script src='scripts/modals/mailing_list_modal.js'></script>
+    <script src='scripts/views/main_view.js'></script>
+    <script src='scripts/views/app_view.js'></script>
+    <script src='scripts/views/cache.js'></script>
+    <script src='scripts/views/main_view.js'></script>
+    <script src='scripts/views/menu_view.js'></script>
+    <script src='scripts/views/modal_view.js'></script>
+    <script src='scripts/views/search_results_view.js'></script>
+    <script src='scripts/views/search_pagination_view.js'></script>
+    <script src='scripts/views/search_view.js'></script>
+    <script src='scripts/views/search_controls_view.js'></script>
+    <script src='scripts/views/settings_view.js'></script>
+    <script src='scripts/views/visit_view.js'></script>
+    <script src='scripts/views/devices_view.js'></script>
+    <script src='scripts/views/devices_list_view.js'></script>
+    <script src='scripts/views/devices_results_view.js'></script>
+    <script src='scripts/views/menu_view.js'></script>
+    <script src='scripts/views/visits_view.js'></script>
+    <script src='scripts/views/visits_results_view.js'></script>
+    <script src='scripts/views/timeline_view.js'></script>
+    <script src='scripts/views/visit_view.js'></script>
+    <script src='scripts/presenters/search_presenter.js'></script>
+    <script src='scripts/presenters/search_history_presenter.js'></script>
+    <script src='scripts/presenters/devices_presenter.js'></script>
+    <script src='scripts/presenters/timeline_presenter.js'></script>
+    <script src='scripts/presenters/visits_presenter.js'></script>
+    <script src='scripts/router.js'></script>
+    <script src='scripts/init/mailing_list.js'></script>
+    <script src='scripts/initialize_extension.js'></script>
   </body>
 </html>

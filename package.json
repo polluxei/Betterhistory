@@ -5,8 +5,7 @@
   "author": "Roy Kolak <roy.kolak@gmail.com>",
   "scripts": {
     "start": "node_modules/.bin/coffee dev.coffee",
-    "test": "node_modules/jasmine-node/bin/jasmine-node --coffee spec/",
-    "serve": "node_modules/.bin/nf start"
+    "test": "node_modules/jasmine-node/bin/jasmine-node --coffee spec/"
   },
   "repository": {
     "type": "git",
@@ -15,28 +14,7 @@
   "config": {
     "dev_analytics": "UA-43184519-1",
     "prod_analytics": "UA-43186716-1",
-    "error_tracking": "eb2245d5729a3c65d7e429f4e7690a62",
-    "dev_site_host": "local.better-history.com:3000",
-    "prod_site_host": "www.better-history.com",
-    "dev_api_host": "local.better-history.com:3001",
-    "prod_api_host": "api.better-history.com"
-  },
-  "devDependencies": {
-    "chrome-bootstrap": "1.4.1",
-    "chrome-historian": "1.6.1",
-    "better-history-sites-hasher": "git://github.com/roykolak/better-history-sites-hasher.git#v1.0.3",
-    "less": "1.7.0",
-    "coffee-script": "1.6.1",
-    "jasmine-node": "1.10.1",
-    "glob": "3.1.12",
-    "js-yaml": "1.0.3",
-    "backbone": "1.0.0",
-    "underscore": "1.4.3",
-    "mustache": "0.7.2",
-    "moment": "2.7.0",
-    "timekeeper": "0.0.3",
-    "uglify-js": "2.3.6",
-    "watch": "0.8.0"
+    "error_tracking": "eb2245d5729a3c65d7e429f4e7690a62"
   },
   "license": "GPLv3"
 }
