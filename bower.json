@@ -1,0 +1,27 @@
+{
+  "name": "better-history",
+  "version": "3.7.8",
+  "homepage": "https://github.com/roykolak/better-history",
+  "authors": [
+    "Roy Kolak <roy.kolak@gmail.com>"
+  ],
+  "license": "GPLv3",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "extension/scripts/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "backbone": "~1.1.2",
+    "chrome-bootstrap": "~1.4.1",
+    "chrome-historian": "~1.7.0",
+    "underscore": "~1.7.0",
+    "moment": "~2.8.4",
+    "zepto": "~1.1.4",
+    "mustache": "~0.8.2"
+  }
+}

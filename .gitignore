@@ -7,5 +7,4 @@ node_modules
 
 /extension/scripts/**/*.js
 /extension/scripts/**/*.map
-
-!/extension/scripts/frameworks/*.js
+/extension/bower_components
