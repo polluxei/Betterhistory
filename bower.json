@@ -22,6 +22,8 @@
     "underscore": "~1.7.0",
     "moment": "~2.8.4",
     "zepto": "~1.1.4",
-    "mustache": "~0.8.2"
+    "mustache": "~0.8.2",
+    "honeybadger.js": "~0.1.2",
+    "bower-google-analytics": "~0.1.1"
   }
 }

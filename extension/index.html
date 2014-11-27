@@ -3,23 +3,24 @@
   <head>
     <meta charset="utf-8">
     <meta name="twitter:widgets:csp" content="on">
-    <link rel='stylesheet' type='text/css' href='styles/chrome-bootstrap.css'/>
+    <link rel='stylesheet' type='text/css' href='bower_components/chrome-bootstrap/chrome-bootstrap.css'/>
+
     <link rel='stylesheet' type='text/css' href='styles/app.css'/>
     <link rel='stylesheet' type='text/css' href='styles/i18n.css'/>
     <title>Better History</title>
   </head>
   <body class="chrome-bootstrap">
     <div class="app"></div>
+    <script src='bower_components/chrome-historian/historian.js'></script>
+    <script src='bower_components/honeybadger.js/honeybadger.js'></script>
+    <script src='bower_components/underscore/underscore-min.js'></script>
+    <script src='bower_components/zepto/zepto.min.js'></script>
+    <script src='bower_components/backbone/backbone.js'></script>
+    <script src='bower_components/mustache/mustache.js'></script>
+    <script src='bower_components/moment/min/moment-with-locales.min.js'></script>
+    <script src='bower_components/bower-google-analytics/analytics.js'></script>
+
     <script src='scripts/namespace.js'></script>
-    <script src='scripts/frameworks/historian.js'></script>
-    <script src='scripts/frameworks/honeybadger.js'></script>
-    <script src='scripts/frameworks/underscore-min.js'></script>
-    <script src='scripts/frameworks/zepto.min.js'></script>
-    <script src='scripts/frameworks/zepto_additions.js'></script>
-    <script src='scripts/frameworks/backbone-min.js'></script>
-    <script src='scripts/frameworks/mustache.js'></script>
-    <script src='scripts/frameworks/moment-with-langs.js'></script>
-    <script src='scripts/frameworks/analytics.js'></script>
     <script src='scripts/templates.js'></script>
     <script src='scripts/trackers/error_tracker.js'></script>
     <script src='scripts/trackers/analytics_tracker.js'></script>
