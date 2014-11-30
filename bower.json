@@ -1,10 +1,5 @@
 {
-  "name": "better-history",
-  "version": "3.7.8",
-  "homepage": "https://github.com/better-history/better-history",
-  "authors": [
-    "Roy Kolak <roy.kolak@gmail.com>"
-  ],
+  "name": "Better History",
   "license": "GPLv3",
   "private": true,
   "dependencies": {
