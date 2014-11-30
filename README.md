@@ -6,9 +6,7 @@ Chrome is an excellent browser, but browsing your history kinda stinks.
 Getting rolling
 ----------------
 
-Better History is crazy easy to get developing on.
-
-1. Just clone this repo
+1. Clone this repo
 2. Run a `bower install` (for dependencies)
 3. Install the repo's directory as an extension
 
