@@ -26,10 +26,10 @@
   },
   "background": {
     "scripts": [
-      "scripts/namespace.js",
       "bower_components/honeybadger.js/honeybadger.js",
       "bower_components/underscore/underscore-min.js",
       "bower_components/bower-google-analytics/analytics.js",
+      "scripts/namespace.js",
       "scripts/trackers/error_tracker.js",
       "scripts/trackers/analytics_tracker.js",
       "scripts/chrome/page_context_menu.js",
