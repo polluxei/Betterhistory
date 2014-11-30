@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "visit_view.js",
+  "sourceRoot": "",
+  "sources": [
+    "visit_view.coffee"
+  ],
+  "names": [],
+  "mappings": ";;AAAA;CAAA,KAAA;oSAAA;CAAA;CAAA,CAAM,GAAQ;CACb;CAAA;;;;CAAA;;CAAA,EAAY,MAAX,GAAD;;CAAA,CACa,CAAF,IAAa,CAAvB,CAAuB;;CADxB,EAGS,GAAR,GAAQ;CACN,GAAA,MAAA;CAAA,CAAmC,CAA5B,CAAP,CAAyC,CAAzC,CAAO,CAAQ;CAAf,EACI,CAAH,EAAD;CAFM,YAGN;CANH,IAGS;;CAHT;;CADgC,OAAQ;CAAzC"
+}
