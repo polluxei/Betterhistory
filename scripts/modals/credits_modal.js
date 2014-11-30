@@ -1,7 +1,7 @@
 (function() {
   var CreditsModal = BH.Modals.Base.extend({
     className: 'credits_view',
-    template: BH.Templates.credits,
+    template: 'credits.html',
 
     events: {
       'click .close': 'closeClicked'

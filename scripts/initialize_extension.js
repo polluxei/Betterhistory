@@ -6,6 +6,7 @@
   window.analyticsTracker = new BH.Trackers.AnalyticsTracker();
 
   var load = function() {
+    Historian.setWorkerPath('bower_components/chrome-historian/src/workers/');
     if(chrome && chrome.i18n && chrome.i18n.getUILanguage) {
       BH.lang = chrome.i18n.getUILanguage();
     }

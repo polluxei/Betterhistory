@@ -2,14 +2,15 @@
   var AppView = Backbone.View.extend({
     className: 'app_view',
 
-    template: BH.Templates.app,
+    template: 'app.html',
 
     initialize: function() {
       this.menuView = new BH.Views.MenuView();
     },
 
-    render: function() {
-      var html = Mustache.to_html(this.template, this.getI18nValues());
+    render: function(cb) {
+      var template = BH.Lib.Template.fetch(this.template);
+      var html = Mustache.to_html(template, this.getI18nValues());
       this.$el.html(html);
       this.$('.navigation').append(this.menuView.render().el);
       return this;

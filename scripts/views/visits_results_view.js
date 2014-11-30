@@ -1,6 +1,6 @@
 (function() {
   var VisitsResultsView = Backbone.View.extend({
-    template: BH.Templates.visits_results,
+    template: 'visits_results.html',
 
     events: {
       'click .download': 'downloadClicked',
@@ -27,7 +27,8 @@
         };
       }
 
-      html = Mustache.to_html(this.template, properties);
+      var template = BH.Lib.Template.fetch(this.template);
+      var html = Mustache.to_html(template, properties);
 
       this.$el.html(html);
 
@@ -44,38 +45,38 @@
       window.analyticsTracker.dayActivityVisitCount(this.$('.visits a.site').length);
 
 
-      var lastId = null;
-      var topMenu = this.$('.hours');
-      var topMenuHeight = topMenu.outerHeight();
-      var menuItems = topMenu.find("a");
-      var scrollItems = menuItems.map(function() { $($(this).attr("href")); });
+      // var lastId = null;
+      // var topMenu = this.$('.hours');
+      // var topMenuHeight = topMenu.outerHeight();
+      // var menuItems = topMenu.find("a");
+      // var scrollItems = menuItems.map(function() { $($(this).attr("href")); });
 
-      $(window).scroll(function() {
-        // Get container scroll position
-        var fromTop = document.body.scrollTop;
+      // $(window).scroll(function() {
+      //   // Get container scroll position
+      //   var fromTop = document.body.scrollTop;
 
-        // Get id of current scroll item
-        var cur = [];
-        scrollItems.map(function(el) {
-          var offsetTop = el.getBoundingClientRect().top + document.body.scrollTop - 205;
-          if(offsetTop < fromTop) {
-            cur.push(el);
-          }
-        });
+      //   // Get id of current scroll item
+      //   var cur = [];
+      //   scrollItems.map(function(el) {
+      //     var offsetTop = el.getBoundingClientRect().top + document.body.scrollTop - 205;
+      //     if(offsetTop < fromTop) {
+      //       cur.push(el);
+      //     }
+      //   });
 
-        // Get the id of the current element
-        if(cur[cur.length - 1]) {
-          var id = cur[cur.length - 1].id;
-          if(lastId !== id) {
-            lastId = id;
+      //   // Get the id of the current element
+      //   if(cur[cur.length - 1]) {
+      //     var id = cur[cur.length - 1].id;
+      //     if(lastId !== id) {
+      //       lastId = id;
 
-            // Set/remove active class
-            menuItems.removeClass("selected");
-            menuItems.filter("[href='#" + id + "']").addClass("selected");
-          }
-          return;
-        }
-      });
+      //       // Set/remove active class
+      //       menuItems.removeClass("selected");
+      //       menuItems.filter("[href='#" + id + "']").addClass("selected");
+      //     }
+      //     return;
+      //   }
+      // });
 
       return this;
     },

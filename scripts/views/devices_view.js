@@ -2,7 +2,7 @@
   var DevicesView = BH.Views.MainView.extend({
     className: 'devices_view with_controls',
 
-    template: BH.Templates.devices,
+    template: 'devices.html',
 
     events: {
       'keyup .search': 'onSearchTyped',
@@ -25,7 +25,8 @@
 
     render: function() {
       var properties = _.extend(this.getI18nValues(), {devices: this.collection.toJSON()});
-      var html = Mustache.to_html(this.template, properties);
+      var template = BH.Lib.Template.fetch(this.template);
+      var html = Mustache.to_html(template, properties);
       this.$el.append(html);
 
       var devicesResultsView = new BH.Views.DevicesResultsView({

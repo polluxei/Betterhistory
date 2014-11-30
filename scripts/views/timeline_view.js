@@ -1,6 +1,6 @@
 (function() {
   var TimelineView = BH.Views.MainView.extend({
-    template: BH.Templates.timeline,
+    template: 'timeline.html',
 
     events: {
       'click a.date': 'onDateClicked',
@@ -20,8 +20,9 @@
       this.$el.html('');
 
       var timelinePresenter = new BH.Presenters.Timeline(this.model.toJSON());
+      var template = BH.Lib.Template.fetch(this.template);
       var properties = timelinePresenter.timeline(this.state.get('startDate'));
-      this.$el.append(Mustache.to_html(this.template, properties));
+      this.$el.append(Mustache.to_html(template, properties));
 
       return this;
     },

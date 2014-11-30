@@ -12,8 +12,9 @@
     },
 
     renderTemplate: function(json) {
+      var template = BH.Lib.Template.fetch(this.template);
       var overlay = $(BH.Templates.modal);
-      $('.page', overlay).append(Mustache.to_html(this.template, json));
+      $('.page', overlay).append(Mustache.to_html(template, json));
       return overlay;
     },
 

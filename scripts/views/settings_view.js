@@ -2,7 +2,7 @@
   var SettingsView = BH.Views.MainView.extend({
     className: 'settings_view',
 
-    template: BH.Templates.settings,
+    template: 'settings.html',
 
     events: {
       'click .clear_history': 'clickedClearHistory',
@@ -47,7 +47,8 @@
     },
 
     render: function() {
-      var html = Mustache.to_html(this.template, this.getI18nValues());
+      var template = BH.Lib.Template.fetch(this.template);
+      var html = Mustache.to_html(template, this.getI18nValues());
       this.$el.append(html);
       this.populateFields();
       return this;

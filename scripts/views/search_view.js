@@ -1,7 +1,7 @@
 (function() {
   var SearchView = BH.Views.MainView.extend({
     className: 'search_view with_controls',
-    template: BH.Templates.search,
+    template: 'search.html',
 
     events: {
       'click .fresh_search': 'clickedFreshSearch',
@@ -19,7 +19,8 @@
     render: function() {
       var presenter = new BH.Presenters.SearchPresenter(this.model.toJSON());
       var properties = _.extend(this.getI18nValues(), presenter.searchInfo());
-      var html = Mustache.to_html(this.template, properties);
+      var template = BH.Lib.Template.fetch(this.template);
+      var html = Mustache.to_html(template, properties);
       this.$el.append(html);
 
       this.searchControlsView = new BH.Views.SearchControlsView({

@@ -2,7 +2,7 @@
   var DevicesListView = Backbone.View.extend({
     className: 'devices_list_view',
 
-    template: BH.Templates.devices_list,
+    template: 'devices_list.html',
 
     events: {
       'click a': 'deviceClicked'
@@ -10,7 +10,8 @@
 
     render: function() {
       presenter = new BH.Presenters.DevicesPresenter();
-      var html = Mustache.to_html(this.template, presenter.deviceList(this.collection.toJSON()));
+      var template = BH.Lib.Template.fetch(this.template);
+      var html = Mustache.to_html(template, presenter.deviceList(this.collection.toJSON()));
       this.$el.append(html);
       return this;
     },

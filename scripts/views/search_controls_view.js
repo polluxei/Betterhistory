@@ -1,7 +1,7 @@
 (function() {
   var SearchControlsView = Backbone.View.extend({
     className: 'search_controls_view',
-    template: BH.Templates.search_controls,
+    template: 'search_controls.html',
 
     events: {
       'click .delete_all': 'clickedDeleteAll'
@@ -14,7 +14,8 @@
 
     render: function() {
       var properties = _.extend(this.getI18nValues(), this.model.toJSON());
-      var html = Mustache.to_html(this.template, properties);
+      var template = BH.Lib.Template.fetch(this.template);
+      var html = Mustache.to_html(template, properties);
       this.$el.html(html);
       return this;
     },

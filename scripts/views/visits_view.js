@@ -2,7 +2,7 @@
   var VisitsView = BH.Views.MainView.extend({
     className: 'visits_view',
 
-    template: BH.Templates.visits,
+    template: 'visits.html',
 
     events: {
       'keyup .search': 'onSearchTyped',
@@ -23,7 +23,8 @@
     },
 
     render: function() {
-      var html = Mustache.to_html(this.template, this.getI18nValues());
+      var template = BH.Lib.Template.fetch(this.template);
+      var html = Mustache.to_html(template, this.getI18nValues());
       this.$el.append(html);
 
       this.timelineView = new BH.Views.TimelineView({

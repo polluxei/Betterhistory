@@ -5,11 +5,11 @@
   };
 
   var track = function(params) {
-    _gaq.push(params);
+    ga.apply(ga, params);
   };
 
   AnalyticsTracker = function() {
-    if(!_gaq) {
+    if(!ga) {
       throw("Analytics not set");
     }
     return {

@@ -2,10 +2,11 @@
   var MenuView = Backbone.View.extend({
     className: 'menu_view',
 
-    template: BH.Templates.menu,
+    template: 'menu.html',
 
     render: function() {
-      var html = Mustache.to_html(this.template, this.getI18nValues());
+      var template = BH.Lib.Template.fetch(this.template);
+      var html = Mustache.to_html(template, this.getI18nValues());
       this.$el.html(html);
       return this;
     },

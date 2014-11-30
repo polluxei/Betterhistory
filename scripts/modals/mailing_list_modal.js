@@ -1,7 +1,7 @@
 (function() {
    var MailingListModal = BH.Modals.Base.extend({
     className: 'mailing_list_view',
-    template: BH.Templates.mailing_list,
+    template: 'mailing_list.html',
 
     events: {
       'click .close': 'closeClicked',

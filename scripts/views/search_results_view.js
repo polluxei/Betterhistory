@@ -1,6 +1,6 @@
 (function() {
   var SearchResultsView = Backbone.View.extend({
-    template: BH.Templates.search_results,
+    template: 'search_results.html',
 
     events: {
       'click .delete_visit': 'deleteClicked',
@@ -25,7 +25,8 @@
         extendSearch: this.page.get('totalPages') === this.page.get('page') && !this.options.deepSearched
       });
 
-      var html = Mustache.to_html(this.template, properties);
+      var template = BH.Lib.Template.fetch(this.template);
+      var html = Mustache.to_html(template, properties);
       this.$el.html(html);
 
       this.show();

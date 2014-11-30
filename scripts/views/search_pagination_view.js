@@ -1,7 +1,7 @@
 (function() {
   var SearchPaginationView = BH.Views.MainView.extend({
     className: 'search_pagination_view',
-    template: BH.Templates.search_pagination,
+    template: 'search_pagination.html',
 
     initialize: function(options) {
       this.query = options.query;

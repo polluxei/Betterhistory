@@ -2,7 +2,7 @@
   var DevicesResultsView = Backbone.View.extend({
     className: 'devices_results_view',
 
-    template: BH.Templates.devices_results,
+    template: 'devices_results.html',
 
     initialize: function() {
       this.model.on('change:name', this.onDeviceChange, this);
@@ -11,7 +11,8 @@
 
     render: function() {
       var properties = _.extend(this.getI18nValues(), {sessions: this.collection.toJSON()});
-      var html = Mustache.to_html(this.template, properties);
+      var template = BH.Lib.Template.fetch(this.template);
+      var html = Mustache.to_html(template, properties);
       this.$el.html(html);
       return this;
     },
