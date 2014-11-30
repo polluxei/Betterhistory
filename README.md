@@ -3,10 +3,13 @@ Better History for Chrome
 
 Chrome is an excellent browser, but browsing your history kinda stinks.
 
-Extracted Pieces
+Getting rolling
 ----------------
 
-Inorder to keep the codebase small, pieces of processing, design, etc has been extracted into their own libraries. Below are the extractions to date.
+Better History is crazy easy to get developing on.
 
-* [Chrome bootstrap](https://github.com/roykolak/chrome-bootstrap) for Chrome settings styles
-* [Chrome historian](https://github.com/roykolak/chrome-bootstrap) for history management
+1. Just clone this repo
+2. Run a `bower install` (for dependencies)
+3. Install the repo's directory as an extension
+
+Any changes you make to your cloned repo will be seen immediately in the installed extension. Though sometimes changing translation files (in _locales/) requires a manual extension refresh in Chrome's extension settings.
