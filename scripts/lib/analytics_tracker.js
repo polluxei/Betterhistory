@@ -111,5 +111,5 @@
     };
   };
 
-  BH.Trackers.AnalyticsTracker = AnalyticsTracker;
+  BH.Lib.AnalyticsTracker = AnalyticsTracker;
 })();

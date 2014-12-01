@@ -1,9 +1,9 @@
 (function() {
   if(BH.config.env === 'prod') {
-    window.errorTracker = new BH.Trackers.ErrorTracker(Honeybadger);
+    window.errorTracker = new BH.Lib.ErrorTracker(Honeybadger);
   }
 
-  window.analyticsTracker = new BH.Trackers.AnalyticsTracker();
+  window.analyticsTracker = new BH.Lib.AnalyticsTracker();
 
   var load = function() {
     Historian.setWorkerPath('bower_components/chrome-historian/src/workers/');

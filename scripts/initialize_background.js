@@ -1,6 +1,6 @@
 (function() {
-  var errorTracker = new BH.Trackers.ErrorTracker(Honeybadger),
-      analyticsTracker = new BH.Trackers.AnalyticsTracker();
+  var errorTracker = new BH.Lib.ErrorTracker(Honeybadger),
+      analyticsTracker = new BH.Lib.AnalyticsTracker();
 
   load = function() {
     syncStore = new BH.Chrome.SyncStore({

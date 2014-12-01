@@ -15,5 +15,5 @@
       this.tracker.notify(e, {context: data});
   };
 
-  BH.Trackers.ErrorTracker = ErrorTracker;
+  BH.Lib.ErrorTracker = ErrorTracker;
 })();
