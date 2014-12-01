@@ -9,6 +9,7 @@
 
     initialize: function(options) {
       this.page = options.page;
+      this.query = options.query;
       this.collection.on('add', this.onVisitAdded, this);
       this.page.on('change:page', this.onPageChange, this);
     },
@@ -18,7 +19,7 @@
       var start = result.start;
       var end = result.end;
 
-      var presenter = new BH.Presenters.SearchHistoryPresenter(this.collection.toJSON(), this.options.query);
+      var presenter = new BH.Presenters.SearchHistoryPresenter(this.collection.toJSON(), this.query);
 
       var properties = _.extend(this.getI18nValues(), {
         visits: presenter.history(start, end),
@@ -58,7 +59,7 @@
       var result = BH.Lib.Pagination.calculateBounds(this.page.get('page') - 1);
       var start = result.start;
       var end = result.end;
-      var presenter = new BH.Presenters.SearchHistoryPresenter(this.collection.toJSON(), this.options.query);
+      var presenter = new BH.Presenters.SearchHistoryPresenter(this.collection.toJSON(), this.query);
       var history = presenter.history(start, end);
 
       var _this = this;

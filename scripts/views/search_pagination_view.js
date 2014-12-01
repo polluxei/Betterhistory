@@ -38,7 +38,8 @@
         });
       });
 
-      var html = Mustache.to_html(this.template, _.extend(this.getI18nValues(), properties));
+      var template = BH.Lib.Template.fetch(this.template);
+      var html = Mustache.to_html(template, _.extend(this.getI18nValues(), properties));
       this.$el.html(html);
     },
 
