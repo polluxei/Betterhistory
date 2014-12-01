@@ -1,9 +1,11 @@
 (function() {
   var ErrorTracker = function(tracker) {
     this.tracker = tracker;
-    this.tracker.setContext({version: BH.config.version});
+    if(BH.config.version) {
+      this.tracker.setContext({version: BH.config.version});
+    }
     this.tracker.configure({
-      api_key: BH.config.errorsKey,
+      api_key: BH.config.errorKey,
       environment: BH.config.env,
       onerror: true
     });

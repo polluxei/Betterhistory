@@ -5,13 +5,17 @@
   };
 
   var track = function(params) {
-    ga.apply(ga, params);
+    _gaq.push(params);
   };
 
   AnalyticsTracker = function() {
-    if(!ga) {
+    if(!_gaq) {
       throw("Analytics not set");
     }
+
+    _gaq.push(['_setAccount', BH.config.analyticsKey]);
+
+
     return {
       pageView: function(url) {
         // Don't track what people search for
