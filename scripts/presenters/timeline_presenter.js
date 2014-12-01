@@ -4,7 +4,7 @@
     if(moment().startOf('day').isSame(date)) {
       return 'Today';
     }
-    if(moment().subtract('days', 1).startOf('day').isSame(date)) {
+    if(moment().subtract(1, 'days').startOf('day').isSame(date)) {
       return 'Yesterday';
     }
 
@@ -15,7 +15,7 @@
     if(moment().startOf('day').isSame(date)) {
       return 'today';
     }
-    if(moment().subtract('days', 1).startOf('day').isSame(date)) {
+    if(moment().subtract(1, 'days').startOf('day').isSame(date)) {
       return 'yesterday';
     }
 
@@ -29,7 +29,7 @@
   Timeline.prototype.timeline = function(startDate) {
     var _this = this;
     dates = _.map(_.range(0, 6), function(i) {
-      var date = moment(startDate).startOf('day').subtract('days', i);
+      var date = moment(startDate).startOf('day').subtract(i, 'days');
       return {
         label: getLabel(date),
         date: date.format('MMM Do'),
