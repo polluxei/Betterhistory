@@ -7,6 +7,7 @@
 
   var load = function() {
     Historian.setWorkerPath('bower_components/chrome-historian/src/workers/');
+
     if(chrome && chrome.i18n && chrome.i18n.getUILanguage) {
       BH.lang = chrome.i18n.getUILanguage();
     }
@@ -32,8 +33,7 @@
     });
     Backbone.history.start();
 
-    var mailingList = new BH.Init.MailingList({syncStore: syncStore});
-    mailingList.prompt(function() {
+    BH.Modals.MailingListModal.prompt(syncStore, function() {
       new BH.Modals.MailingListModal().open();
       analyticsTracker.mailingListPrompt();
     });

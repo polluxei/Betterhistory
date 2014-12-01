@@ -38,5 +38,23 @@
     }
   });
 
+  MailingListModal.prompt = function(syncStore, callback) {
+    var properties = ['mailingListPromptTimer', 'mailingListPromptSeen'];
+    syncStore.get(properties, function(data) {
+      var mailingListPromptTimer = data.mailingListPromptTimer || 5,
+          mailingListPromptSeen = data.mailingListPromptSeen;
+
+      if(!mailingListPromptSeen) {
+        if(mailingListPromptTimer == 1) {
+          callback();
+          syncStore.remove('mailingListPromptTimer');
+          syncStore.set({mailingListPromptSeen: true});
+        } else {
+          syncStore.set({mailingListPromptTimer: (mailingListPromptTimer - 1)});
+        }
+      }
+    });
+  };
+
   BH.Modals.MailingListModal = MailingListModal;
 })();
