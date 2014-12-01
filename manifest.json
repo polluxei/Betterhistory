@@ -1,5 +1,5 @@
 {
-  "name": "__MSG_manifest_name__",
+  "name": "__MSG_manifest_name__ DEV",
   "version": "3.8.7",
   "manifest_version": 2,
   "description": "__MSG_manifest_description__",
