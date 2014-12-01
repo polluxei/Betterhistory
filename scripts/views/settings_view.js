@@ -79,7 +79,7 @@
 
     clickedClearHistory: function(ev) {
       ev.preventDefault();
-      this.chromeAPI.tabs.create({url:'chrome://settings/clearBrowserData'});
+      chrome.tabs.create({url:'chrome://settings/clearBrowserData'});
     },
 
     clickedCredits: function(ev) {
