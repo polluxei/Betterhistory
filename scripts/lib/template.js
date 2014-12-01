@@ -5,7 +5,7 @@
         return BH.Templates[name];
       } else {
         result = $.ajax({url: '/templates/' + name, async: false});
-        return result.response;
+        return result.responseText;
       }
     }
   };
