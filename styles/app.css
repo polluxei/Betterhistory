@@ -190,16 +190,6 @@
 .search_view .pagination {
   margin-right: 10px;
 }
-.small_spinner {
-  background: url(/images/small_spinner.gif);
-  width: 16px;
-  height: 16px;
-  margin-top: 4px;
-  display: none;
-}
-.small_spinner.show {
-  display: block;
-}
 .interval header {
   position: relative;
   z-index: 1;
