@@ -30,7 +30,7 @@
     var out = [],
         _this = this;
 
-    if(start && end) {
+    if(typeof start !== 'undefined' && typeof end !== 'undefined') {
       _.range(start, end).forEach(function(i) {
         if(_this.visits[i]) {
           out.push(markMatches(_this.visits[i], _this.query));

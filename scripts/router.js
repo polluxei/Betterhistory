@@ -1,14 +1,4 @@
 (function() {
-  // if we need to transition to another view, delay the query until the
-  // transition fires. There can be a noticeable lag if the delay is skipped
-  var delay = function(shouldDelay, callback) {
-    if(shouldDelay) {
-      setTimeout(function() { callback(); }, 250);
-    } else {
-      callback();
-    }
-  };
-
   var Router = Backbone.Router.extend({
     routes: {
       '': 'visits',
@@ -139,6 +129,15 @@
     }
   });
 
+  // if we need to transition to another view, delay the query until the
+  // transition fires. There can be a noticeable lag if the delay is skipped
+  var delay = function(shouldDelay, callback) {
+    if(shouldDelay) {
+      setTimeout(function() { callback(); }, 250);
+    } else {
+      callback();
+    }
+  };
 
   BH.Router = Router;
 })();
