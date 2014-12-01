@@ -316,13 +316,11 @@
 .search_view.loaded .count {
   opacity: 1;
 }
-.search_view {
-  .spinner {
-    opacity: 0;
-  }
-  &.loading .spinner {
-    opacity: 1;
-  }
+.search_view .spinner {
+  opacity: 0;
+}
+.search_view.loading .spinner {
+  opacity: 1;
 }
 .visit .description {
   background-repeat: no-repeat;
@@ -380,7 +378,7 @@
   -webkit-margin-end: 10px;
 }
 .mailing_list_view .logo,
-.credits_view .logo, {
+.credits_view .logo {
   position: absolute;
   opacity: 0.4;
   top: -50px;
