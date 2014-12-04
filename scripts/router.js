@@ -57,7 +57,7 @@
           date = moment();
           break;
         case 'yesterday':
-          date = moment().subtract('days', 1);
+          date = moment().subtract(1, 'days');
           break;
         default:
           date = moment(new Date(date));
