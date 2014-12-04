@@ -10,6 +10,7 @@
     initialize: function(options) {
       this.page = options.page;
       this.query = options.query;
+      this.deepSearched = options.deepSearched;
       this.collection.on('add', this.onVisitAdded, this);
       this.page.on('change:page', this.onPageChange, this);
     },
@@ -23,7 +24,7 @@
 
       var properties = _.extend(this.getI18nValues(), {
         visits: presenter.history(start, end),
-        extendSearch: this.page.get('totalPages') === this.page.get('page') && !this.options.deepSearched
+        extendSearch: this.page.get('totalPages') === this.page.get('page') && !this.deepSearched
       });
 
       var template = BH.Lib.Template.fetch(this.template);
