@@ -1,0 +1,16 @@
+{
+  "name": "Better History",
+  "license": "GPLv3",
+  "private": true,
+  "dependencies": {
+    "backbone": "~1.1.2",
+    "chrome-bootstrap": "~1.4.1",
+    "chrome-historian": "~1.8.0",
+    "underscore": "~1.7.0",
+    "moment": "~2.8.4",
+    "jquery": "~2.1.1",
+    "mustache": "~0.8.2",
+    "honeybadger.js": "~0.1.2",
+    "bower-google-analytics": "~0.1.1"
+  }
+}

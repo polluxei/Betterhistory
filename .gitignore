@@ -1,11 +1,5 @@
 .DS_Store
 *.swp
-*.zip
-build
-node_modules
 *.log
 
-/extension/scripts/**/*.js
-/extension/scripts/**/*.map
-
-!/extension/scripts/frameworks/*.js
+bower_components
