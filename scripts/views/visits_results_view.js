@@ -11,6 +11,11 @@
       'click .hours a': 'hourClicked'
     },
 
+    initialize: function() {
+      this.hourModel = new Backbone.Model();
+      this.hourModel.on('change:hour', this.onHourChanged, this);
+    },
+
     render: function() {
       var properties = this.getI18nValues();
       var presenter = new BH.Presenters.VisitsPresenter();
@@ -45,37 +50,9 @@
       window.analyticsTracker.dayActivityVisitCount(this.$('.visits a.site').length);
 
 
-      var lastId = null;
-      var topMenu = this.$('.hours');
-      var topMenuHeight = topMenu.outerHeight();
-      var menuItems = topMenu.find("a");
-      var scrollItems = menuItems.map(function() {
-        var item = $($(this).attr("href"));
-        if (item.length) { return item; }
-      });
-
-      $(window).scroll(function() {
-        // Get container scroll position
-        var fromTop = $(this).scrollTop() + topMenuHeight;
-
-        // Get id of current scroll item
-        var cur = scrollItems.map(function() {
-          if(($(this).offset().top - 205) < fromTop) {
-            return this;
-          }
-        });
-
-        // Get the id of the current element
-        cur = cur[cur.length - 1];
-        var id = cur && cur.length ? cur[0].id : "";
-
-        if(lastId !== id) {
-          lastId = id;
-
-          // Set/remove active class
-          menuItems.removeClass("selected");
-          menuItems.filter("[href='#" + id + "']").addClass("selected");
-        }
+      var _this = this;
+      hourScrollSpy(function(hour) {
+        _this.hourModel.set({hour: hour});
       });
 
       return this;
@@ -125,15 +102,15 @@
 
     hourClicked: function(ev) {
       ev.preventDefault();
-      $el = $(ev.currentTarget);
+      var hour = $(ev.currentTarget).data('hour');
+      scrollToHour(hour);
+      window.analyticsTracker.hourClick(hour);
+    },
 
-      window.analyticsTracker.hourClick($el.data('hour'));
-
-      var topMenuHeight = this.$('.hours').outerHeight(),
-          href = $el.attr("href"),
-          offsetTop = href === "#" ? 0 : $(href).offset().top - topMenuHeight + 1;
-
-      $('html, body').stop().animate({scrollTop: offsetTop - 120}, 200);
+    onHourChanged: function() {
+      var hour = this.hourModel.get('hour');
+      this.$('.hours a').removeClass("selected");
+      this.$(".hours a[data-hour='" + hour + "']").addClass("selected");
     },
 
     downloadClicked: function(ev) {
@@ -176,6 +153,7 @@
       var promptMessage = BH.Chrome.I18n.t('confirm_delete_all_visits', [timestamp]);
       this.promptView = BH.Modals.CreatePrompt(promptMessage);
       this.promptView.open();
+
       var _this = this;
       this.promptView.model.on('change', function(prompt) {
         _this.promptAction(prompt, hour);
@@ -187,8 +165,20 @@
         window.analyticsTracker.hourDeletion();
         var date = new Date(this.model.get('date'));
         var dayHistorian = new Historian.Day(date);
+
+        var _this = this;
         dayHistorian.destroyHour(hour, function() {
-          window.location.reload();
+
+          // Remove the hour container from the DOM and unselect
+          // the active hour in the menu.
+          $('.hour_visits[data-hour=' + hour + ']').remove();
+          $('a[data-hour=' + hour + ']').addClass('disabled');
+
+          // After an hour is removed, the active hour in the menu
+          // must be updated. Manually trigger a scroll event.
+          $(window).trigger('scroll');
+
+          _this.promptView.close();
         });
       } else {
         this.promptView.close();
@@ -207,6 +197,49 @@
       ]);
     }
   });
+
+  var hourScrollSpy = function(cb) {
+    var lastId = null;
+    var topMenu = $('.hours');
+    var topMenuHeight = topMenu.outerHeight();
+    var menuItems = topMenu.find("a");
+    var scrollItems = menuItems.map(function() {
+      var item = $($(this).attr("href"));
+      if (item.length) { return item; }
+    });
+
+    $(window).scroll(function() {
+      // Get container scroll position
+      var fromTop = $(this).scrollTop() + topMenuHeight;
+
+      // Get id of current scroll item
+      var cur = scrollItems.map(function() {
+        if(($(this).offset().top - 205) < fromTop) {
+          return this;
+        }
+      });
+
+      // Get the id of the current element
+      cur = cur[cur.length - 1];
+      var id = cur && cur.length ? cur[0].id : "";
+
+      if(lastId !== id) {
+        lastId = id;
+
+        var $el = menuItems.filter("[href='#" + id + "']");
+        cb($el.data('hour'));
+      }
+    });
+  };
+
+  var scrollToHour = function(hour) {
+    var topMenuHeight = $('.hours').outerHeight(),
+        $el = $('.hour_visits[data-hour=' + hour + ']');
+
+    var offsetTop = $el.offset().top - topMenuHeight + 1;
+
+    $('html, body').stop().animate({scrollTop: offsetTop - 120}, 300);
+  };
 
   BH.Views.VisitsResultsView = VisitsResultsView;
 })();
