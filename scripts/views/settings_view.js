@@ -13,6 +13,7 @@
 
     initialize: function() {
       this.on('selected', this.activateSocialLinks, this);
+      this.model.on('change', this.modelChanged, this);
     },
 
     pageTitle: function() {
@@ -57,6 +58,10 @@
     populateFields: function() {
       this.$('#search_by_domain').prop('checked', this.model.get('searchByDomain'));
       this.$('#search_by_selection').prop('checked', this.model.get('searchBySelection'));
+    },
+
+    modelChanged: function() {
+      new ChromeSync().save({settings: this.model.toJSON()});
     },
 
     clickedSearchByDomain: function(ev) {

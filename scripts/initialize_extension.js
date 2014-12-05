@@ -12,11 +12,6 @@
       BH.lang = chrome.i18n.getUILanguage();
     }
 
-    window.syncStore = new BH.Chrome.SyncStore({
-      chrome: chrome,
-      tracker: analyticsTracker
-    });
-
     analyticsTracker.historyOpen();
 
     Settings = Backbone.Model.extend({
@@ -33,7 +28,7 @@
     });
     Backbone.history.start();
 
-    BH.Modals.MailingListModal.prompt(syncStore, function() {
+    BH.Modals.MailingListModal.prompt(function() {
       new BH.Modals.MailingListModal().open();
       analyticsTracker.mailingListPrompt();
     });

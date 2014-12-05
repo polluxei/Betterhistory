@@ -38,19 +38,20 @@
     }
   });
 
-  MailingListModal.prompt = function(syncStore, callback) {
+  MailingListModal.prompt = function(callback) {
+    var chromeSync = new ChromeSync();
     var properties = ['mailingListPromptTimer', 'mailingListPromptSeen'];
-    syncStore.get(properties, function(data) {
+    chromeSync.get(properties, function(data) {
       var mailingListPromptTimer = data.mailingListPromptTimer || 5,
           mailingListPromptSeen = data.mailingListPromptSeen;
 
       if(!mailingListPromptSeen) {
         if(mailingListPromptTimer == 1) {
           callback();
-          syncStore.remove('mailingListPromptTimer');
-          syncStore.set({mailingListPromptSeen: true});
+          chromeSync.remove('mailingListPromptTimer');
+          chromeSync.save({mailingListPromptSeen: true});
         } else {
-          syncStore.set({mailingListPromptTimer: (mailingListPromptTimer - 1)});
+          chromeSync.save({mailingListPromptTimer: (mailingListPromptTimer - 1)});
         }
       }
     });
