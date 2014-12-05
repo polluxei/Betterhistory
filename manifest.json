@@ -27,6 +27,7 @@
   "background": {
     "scripts": [
       "bower_components/honeybadger.js/honeybadger.js",
+      "bower_components/chrome-sync/chrome_sync.js",
       "bower_components/underscore/underscore-min.js",
       "scripts/namespace.js",
       "scripts/config.js",
@@ -37,7 +38,6 @@
       "scripts/chrome/selection_context_menu.js",
       "scripts/chrome/omnibox.js",
       "scripts/chrome/browser_actions.js",
-      "scripts/chrome/sync_store.js",
       "scripts/chrome/i18n.js",
       "scripts/initialize_background.js"
     ],
