@@ -309,6 +309,14 @@
 .search_view .spinner {
   opacity: 0;
 }
+.search_view .title .tags {
+  display: inline;
+  margin-left: 5px;
+}
+.search_view .title .tags li {
+  font-size: 17px;
+  padding: 3px 7px;
+}
 .search_view.loading .spinner {
   opacity: 1;
 }
@@ -367,8 +375,7 @@
   display: inline;
   -webkit-margin-end: 10px;
 }
-.mailing_list_view .logo,
-.credits_view .logo {
+.modal .logo {
   position: absolute;
   opacity: 0.4;
   top: -50px;
@@ -397,7 +404,8 @@
 .prompt_view .spinner {
   -webkit-transition: opacity .2s ease-in .2s;
 }
-.mailing_list_view .page {
+.mailing_list_view .page,
+.search_tips_view .page {
   width: 500px;
 }
 .mailing_list_view p {

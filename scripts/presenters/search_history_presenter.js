@@ -12,11 +12,17 @@
   };
 
   var markMatches = function(visit, query) {
-    query.split(' ').forEach(function(term) {
-      regExp = new RegExp(term, "i");
-      visit.name = wrapMatchInProperty(regExp, visit.title);
-      visit.location = wrapMatchInProperty(regExp, visit.url);
-    });
+    // Don't try and highlight regex matches
+    if(query.match(/^\/.*\/$/)) {
+      visit.name = visit.title;
+      visit.location = visit.url;
+    } else {
+      query.split(' ').forEach(function(term) {
+        regExp = new RegExp(term, "i");
+        visit.name = wrapMatchInProperty(regExp, visit.title);
+        visit.location = wrapMatchInProperty(regExp, visit.url);
+      });
+    }
 
     return visit;
   };

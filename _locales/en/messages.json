@@ -1401,5 +1401,11 @@
   },
   "saturday_short": {
     "message": "Sat"
+  },
+  "search_tips_title": {
+    "message": "Search tips"
+  },
+  "search_suggestion_link": {
+    "message": "Have a suggestion?"
   }
 }
