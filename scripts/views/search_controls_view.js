@@ -4,7 +4,8 @@
     template: 'search_controls.html',
 
     events: {
-      'click .delete_all': 'clickedDeleteAll'
+      'click .delete_all': 'clickedDeleteAll',
+      'click #search_tips': 'clickedSearchTips'
     },
 
     initialize: function() {
@@ -59,6 +60,11 @@
       } else {
         this.promptView.close();
       }
+    },
+
+    clickedSearchTips: function(ev) {
+      ev.preventDefault();
+      new BH.Modals.SearchTipsModal().open();
     },
 
     getI18nValues: function() {

@@ -23,10 +23,7 @@ body {
   background-position:__MSG_@@bidi_start_edge__ 0;
   padding-__MSG_@@bidi_start_edge__: 25px;
 }
-.mailing_list_view .logo,
-.sign_up_info_view .logo,
-.credits_view .logo,
-.auth_success_view .logo {
+.modal .logo {
   __MSG_@@bidi_end_edge__: -50px;
 }
 .credits_view .translators .language {

@@ -1,6 +1,6 @@
 (function() {
   var PromptModal = BH.Modals.Base.extend({
-    className: 'prompt_view',
+    className: 'prompt_view modal',
     template: 'prompt.html',
 
     events: {

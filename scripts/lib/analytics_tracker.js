@@ -105,6 +105,10 @@
         trackEvent(['Mailing List Prompt', 'Seen']);
       },
 
+      searchTipsModalOpened: function() {
+        trackEvent(['Search Tips Modal', 'Open']);
+      },
+
       hourClick: function(hour) {
         trackEvent(['Visits', 'Hour Click', hour]);
       }
