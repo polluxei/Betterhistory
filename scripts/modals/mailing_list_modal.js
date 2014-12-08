@@ -1,6 +1,6 @@
 (function() {
    var MailingListModal = BH.Modals.Base.extend({
-    className: 'mailing_list_view',
+    className: 'mailing_list_view modal',
     template: 'mailing_list.html',
 
     events: {

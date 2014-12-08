@@ -25,7 +25,8 @@
     getI18nValues: function() {
       return BH.Chrome.I18n.t([
         'close_button',
-        'search_tips_title'
+        'search_tips_title',
+        'search_suggestion_link'
       ]);
     }
   });
