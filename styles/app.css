@@ -311,6 +311,11 @@
 }
 .search_view .title .tags {
   display: inline;
+  margin-left: 5px;
+}
+.search_view .title .tags li {
+  font-size: 17px;
+  padding: 3px 7px;
 }
 .search_view.loading .spinner {
   opacity: 1;

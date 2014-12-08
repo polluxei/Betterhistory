@@ -4,7 +4,8 @@
     template: 'search_tips.html',
 
     events: {
-      'click .close': 'closeClicked'
+      'click .close': 'closeClicked',
+      'click .content-area a': 'linkClicked'
     },
 
     initialize: function() {
@@ -19,6 +20,10 @@
 
     closeClicked: function(ev) {
       ev.preventDefault();
+      this.close();
+    },
+
+    linkClicked: function(ev) {
       this.close();
     },
 
