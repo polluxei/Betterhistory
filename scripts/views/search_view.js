@@ -63,7 +63,7 @@
 
         var presenter = new BH.Presenters.SearchPresenter(this.model.toJSON());
         var properties = presenter.searchInfo();
-        this.$('.title').text(properties.title);
+        this.$('.title').html(properties.title);
         this.$('.visits_content').html('');
       }
     },

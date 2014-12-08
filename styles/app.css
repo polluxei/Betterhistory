@@ -309,6 +309,9 @@
 .search_view .spinner {
   opacity: 0;
 }
+.search_view .title .tags {
+  display: inline;
+}
 .search_view.loading .spinner {
   opacity: 1;
 }
