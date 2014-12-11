@@ -4,6 +4,7 @@ this.BH = {
   Lib: {},
   Trackers: {},
   Presenters: {},
+  Templates: {},
   Init: {},
   Chrome: {},
   lang: 'en'
