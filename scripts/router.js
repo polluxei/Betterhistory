@@ -92,6 +92,7 @@
       this.app.selectNav('.search');
       var view = this.cache.view('search').view;
 
+      var _this = this;
       delay(true, function() {
         if(query) {
           view.model.set({query: decodeURIComponent(query)});
@@ -108,7 +109,7 @@
           view.historian = new Historian.Search();
           view.historian.fetchCache(function(cache) {
             if(cache && cache.query) {
-              this.navigate("search/" + cache.query, {trigger: false});
+             _this.navigate("search/" + cache.query, {trigger: false});
 
               // Only trigger data reset if cache times differ. This is to prevent data
               // reload flicker between navigating to and from /#search
