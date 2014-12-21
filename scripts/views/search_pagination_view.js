@@ -30,7 +30,7 @@
       };
 
       var _this = this;
-      _.range(1, this.pages).forEach(function(i) {
+      _.range(1, this.pages + 1).forEach(function(i) {
         properties.pages.push({
           url: "#search/" + _this.query + "/p" + i,
           className: (i === _this.model.get('page') ? 'selected' : ''),
