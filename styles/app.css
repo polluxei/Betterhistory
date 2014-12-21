@@ -263,14 +263,6 @@
 .chrome-bootstrap .hide_visits:hover .arrow {
   border-top-color: #777;
 }
-#coverup {
-  position: absolute;
-  top: 0;
-  z-index: 2;
-  background: #FFF;
-  width: 70px;
-  height:30px;
-}
 
 .visits_view .time {
   -webkit-transition: 150ms opacity;
