@@ -5,7 +5,7 @@
 
     render: function() {
       var template = BH.Lib.Template.fetch(this.template);
-      var html = Mustache.to_html(this.template, this.model.toJSON());
+      var html = Mustache.to_html(template, this.model.toJSON());
       this.$el.html(html);
       return this;
     }
