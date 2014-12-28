@@ -45,6 +45,10 @@
         trackEvent(['Feature', 'Not Supported', feature]);
       },
 
+      searchVisitDomain: function() {
+        trackEvent(['Visit', 'Search domain']);
+      },
+
       visitDeletion: function() {
         trackEvent(['Visit', 'Delete']);
       },

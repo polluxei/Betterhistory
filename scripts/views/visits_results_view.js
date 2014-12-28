@@ -96,6 +96,7 @@
     visitClicked: function(ev) {
       if($(ev.target).hasClass('search_domain')) {
         ev.preventDefault();
+        window.analyticsTracker.searchVisitDomain();
         router.navigate($(ev.target).attr('href'), {trigger: true});
       }
     },
