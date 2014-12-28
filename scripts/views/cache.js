@@ -75,8 +75,7 @@
   Cache.prototype.settingsView = function() {
     if(!this.cache.settings) {
       this.cache.settings = new BH.Views.SettingsView({
-        model: this.settings,
-        state: this.state
+        model: this.settings
       });
 
       insert(this.cache.settings.render().el);
