@@ -20,12 +20,17 @@
         searchByDomain: true
       }
     });
+
     var settings = new Settings();
+    new ChromeSync().get('settings', function(props) {
+      settings.set(props.settings);
+    });
 
     window.router = new BH.Router({
       settings: settings,
       tracker: analyticsTracker
     });
+
     Backbone.history.start();
 
     BH.Modals.MailingListModal.prompt(function() {
