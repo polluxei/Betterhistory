@@ -62,6 +62,7 @@
 
     modelChanged: function() {
       new ChromeSync().save({settings: this.model.toJSON()});
+      this.populateFields();
     },
 
     clickedSearchByDomain: function(ev) {
