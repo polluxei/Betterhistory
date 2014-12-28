@@ -76,6 +76,8 @@
       this.$('.cached').hide();
       this.$('.pagination').html('');
       this.$el.addClass('loading');
+
+      this.searchControlsView.page.set({page: 1});
       Backbone.history.loadUrl(Backbone.history.fragment);
     },
 
