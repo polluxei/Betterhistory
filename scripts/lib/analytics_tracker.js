@@ -65,6 +65,14 @@
         trackEvent(['Search results', 'Delete']);
       },
 
+      searchDeeper: function() {
+        trackEvent(['Search results', 'Search deeper']);
+      },
+
+      expireCache: function() {
+        trackEvent(['Search results', 'Expire cache']);
+      },
+
       paginationClick: function() {
         trackEvent(['Pagination', 'Click']);
       },

@@ -71,15 +71,23 @@
     clickedFreshSearch: function(ev) {
       ev.preventDefault();
       new Historian.Search().expireCache();
-      window.location.reload();
+      window.analyticsTracker.expireCache();
+      this.$('.visits_content').html('');
+      this.$('.cached').hide();
+      this.$('.pagination').html('');
+      this.$el.addClass('loading');
+      Backbone.history.loadUrl(Backbone.history.fragment);
     },
 
     clickedSearchDeeper: function(ev) {
       ev.preventDefault();
+      window.analyticsTracker.searchDeeper();
+
       this.$('.number_of_visits').html('');
       this.$('.search_deeper').addClass('searching');
       this.$('.pagination').html('');
       this.$el.addClass('loading');
+
       this.searchDeeper();
     },
 
