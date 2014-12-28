@@ -58,8 +58,8 @@
 
     inflateDates: function() {
       var result = BH.Lib.Pagination.calculateBounds(this.page.get('page') - 1);
-      var start = result.start;
-      var end = result.end;
+      var start = result[0];
+      var end = result[1];
       var presenter = new BH.Presenters.SearchHistoryPresenter(this.collection.toJSON(), this.query);
       var history = presenter.history(start, end);
 
