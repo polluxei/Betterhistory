@@ -4,8 +4,10 @@
       if(BH.Templates && BH.Templates[name]) {
         return BH.Templates[name];
       } else {
-        result = $.ajax({url: '/templates/' + name, async: false});
-        return result.responseText;
+        var req = new XMLHttpRequest();
+        req.open ('POST', '/templates/' + name, false);
+        req.send();
+        return req.response;
       }
     }
   };
