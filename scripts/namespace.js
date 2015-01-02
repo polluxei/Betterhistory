@@ -7,5 +7,10 @@ this.BH = {
   Templates: {},
   Init: {},
   Chrome: {},
-  lang: 'en'
+  lang: 'en',
+  version: null
 };
+
+if(chrome && chrome.runtime && chrome.runtime.getManifest) {
+  this.BH.version = chrome.runtime.getManifest().version;
+}
