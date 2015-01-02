@@ -28,7 +28,7 @@
 
   Timeline.prototype.timeline = function(startDate) {
     var _this = this;
-    dates = _.map(_.range(0, 6), function(i) {
+    dates = _.map(_.range(0, 7), function(i) {
       var date = moment(startDate).startOf('day').subtract(i, 'days');
       return {
         label: getLabel(date),
