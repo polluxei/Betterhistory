@@ -105,7 +105,7 @@
       ev.preventDefault();
       var hour = $(ev.currentTarget).data('hour');
       scrollToHour(hour);
-      window.analyticsTracker.hourClick(hour);
+      window.analyticsTracker.hourClick(hour.toString());
     },
 
     onHourChanged: function() {
