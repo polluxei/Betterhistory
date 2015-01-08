@@ -237,9 +237,11 @@
     var topMenuHeight = $('.hours').outerHeight(),
         $el = $('.hour_visits[data-hour=' + hour + ']');
 
-    var offsetTop = $el.offset().top - topMenuHeight + 1;
+    if($el.length > 0) {
+      var offsetTop = $el.offset().top - topMenuHeight + 1;
 
-    $('html, body').stop().animate({scrollTop: offsetTop - 120}, 300);
+      $('html, body').stop().animate({scrollTop: offsetTop - 120}, 300);
+    }
   };
 
   BH.Views.VisitsResultsView = VisitsResultsView;
