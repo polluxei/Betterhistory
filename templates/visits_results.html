@@ -1,5 +1,5 @@
 {{#history}}
-  <div class='controls hours'>
+  <div class='controls hours' style="display:none">
     <div class='moon'></div>
     <ol class='pagination'>
       {{#hours}}
@@ -14,15 +14,15 @@
   </div>
   <div>
     {{#visitsByHour}}
-    <div id='hour_{{hour}}' class='hour_visits' data-hour='{{hour}}' style='padding-top: 10px;'>
-        <div class='controls' style='border: none;'>
-          <h4 style='margin: 10px 0 0;'><strong>{{hour_label}}</strong></h4>
-          <div class='spacer'></div>
-          <button class='delete_hour' style='font-size: 11px;' data-hour='{{hour}}'>
-            {{i18n_delete_all_visits_for_filter_button}}
-          </button>
-        </div>
-        <ol class='visits highlightable editable'>
+    <div id='hour_{{hour}}' class='hour_visits' data-hour='{{hour}}' style='padding-top: 10px; border-top: 1px solid #F6F6F6;'>
+      <div style="font-size: 11px; color: #666;">
+        <a class='delete_hour' style='font-size: 11px; float: right; margin-right: 10px;' data-hour='{{hour}}'>
+          {{i18n_delete_all_visits_for_filter_button}}
+        </a>
+        <h4 style='margin: 10px 0 10px 30px;'>{{hour_label}} - 24 visits</h4>
+      </div>
+      <div>
+        <ol class='visits highlightable editable' style="margin-top: 0;">
           {{#visits}}
             {{#filename}}
               <li class='visit' data-url='{{url}}'>

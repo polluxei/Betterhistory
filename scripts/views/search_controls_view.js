@@ -18,6 +18,9 @@
       var template = BH.Lib.Template.fetch(this.template);
       var html = Mustache.to_html(template, properties);
       this.$el.html(html);
+
+
+
       return this;
     },
 

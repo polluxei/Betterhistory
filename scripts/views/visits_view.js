@@ -29,6 +29,7 @@
 
       this.timelineView = new BH.Views.TimelineView({
         model: this.model,
+        collection: this.collection,
         el: this.$('.timeline_view')
       });
       this.timelineView.render();
@@ -43,7 +44,6 @@
     },
 
     onDateChange: function(ev) {
-      this.timelineView.render();
       this.visitsResultsView.resetRender();
     },
 

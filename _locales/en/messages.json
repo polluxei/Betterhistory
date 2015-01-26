@@ -495,7 +495,7 @@
     "description": "Text for expand button"
   },
   "delete_all_visits_for_filter_button": {
-    "message": "Delete...",
+    "message": "Delete hour...",
     "description": "Text for delete all visits for a day filter button"
   },
   "no_visits_found": {

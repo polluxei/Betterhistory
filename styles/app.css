@@ -1,3 +1,35 @@
+body {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.line {
+  fill: none;
+  stroke: #8AAAED;
+  stroke-width: 1px;
+}
+.hover-line {
+  stroke: #6E7B8B;
+}
+.point {
+  fill: #8AAAED;
+  stroke: #8AAAED;
+  stroke-width: 1.5px;
+}
+.point.empty {
+  display: none;
+}
+.area {
+  fill: #dfe8fa;
+  stroke-width: 0;
+}
+
 .search_deeper {
   border-top: 1px solid rgb(238, 238, 238);
 }
@@ -30,7 +62,7 @@
   padding-top: 155px;
 }
 
-.chrome-bootstrap .visits_view .timeline_view {
+.chrome-bootstrap .visits_view .timeline_view .controls {
   display: flex;
   position: relative;
   width: 100%;
@@ -139,7 +171,7 @@
   margin-bottom: -10px;
 }
 .cached {
-  top: 112px;
+  top: 142px;
   position: relative;
   padding: 10px;
   background: #fbfbd5;
@@ -186,6 +218,9 @@
   width: 120px;
   padding-left: 50px;
   padding-top: 8px;
+}
+.chrome-bootstrap .frame .search_view .content {
+  padding-top: 135px;
 }
 .search_view .pagination {
   margin-right: 10px;
@@ -316,8 +351,9 @@
   background-repeat: no-repeat;
   background-size: 17px;
   padding: 0;
+  width: 100%;
 }
-.visit dl dt {
+.chrome-bootstrap .visit dl dt {
   font-size: 100%;
   width: 655px;
 }
@@ -337,6 +373,7 @@
 .visit .location {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  width: 85%;
 }
 .visit .location > .search_domain:hover {
   color: #15C;

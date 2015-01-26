@@ -37,7 +37,9 @@
     ].reverse();
   };
 
-  VisitsPresenter.prototype.visitsByHour = function(visits) {
+  VisitsPresenter.prototype.visitsByHour = function(visits, options) {
+    options = _.defaults(options || {}, {rejectEmptyHours: true});
+
     var out = _.map(_.range(0, 24), function(hour) {
       date = new Date();
       date.setHours(hour);
@@ -54,10 +56,14 @@
       var hour = new Date(visit.lastVisitTime || visit.startTime).getHours();
       out[hour].visits.push(visit);
     });
-
-    return _.reject(out, function(item) {
-      return item.visits.length === 0;
-    });
+    
+    if(options.rejectEmptyHours) {
+      return _.reject(out, function(item) {
+        return item.visits.length === 0;
+      });
+    } else {
+      return out;
+    }
   };
 
   BH.Presenters.VisitsPresenter = VisitsPresenter;

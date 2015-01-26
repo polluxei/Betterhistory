@@ -12,6 +12,7 @@
     "jquery": "~2.1.1",
     "mustache": "~0.8.2",
     "honeybadger.js": "~0.1.2",
-    "bower-google-analytics": "~0.1.1"
+    "bower-google-analytics": "~0.1.1",
+    "d3": "~3.5.3"
   }
 }
