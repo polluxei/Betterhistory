@@ -33,10 +33,10 @@
 
     Backbone.history.start();
 
-    BH.Modals.MailingListModal.prompt(function() {
-      new BH.Modals.MailingListModal().open();
-      analyticsTracker.mailingListPrompt();
-    });
+    // BH.Modals.MailingListModal.prompt(function() {
+    //   new BH.Modals.MailingListModal().open();
+    //   analyticsTracker.mailingListPrompt();
+    // });
   };
 
   if(BH.config.env === 'prod') {
